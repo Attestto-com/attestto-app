@@ -1,32 +1,76 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
+import type { FaceStatus } from '../composables/useFaceDetection'
 
-defineEmits<{ start: []; back: [] }>()
+const props = defineProps<{
+  cameraActive: boolean
+  faceStatus: FaceStatus
+}>()
 
-const checks = ref([
+const emit = defineEmits<{
+  start: []
+  back: []
+  videoMounted: [el: HTMLVideoElement]
+}>()
+
+const videoEl = ref<HTMLVideoElement | null>(null)
+
+const checks = computed(() => [
   { label: 'Identidad verificada', icon: 'badge', ok: true },
   { label: 'Dictamen medico valido', icon: 'local_hospital', ok: true },
-  { label: 'Camara activa', icon: 'videocam', ok: true },
+  { label: 'Camara activa', icon: 'videocam', ok: props.cameraActive },
   { label: 'Microfono activo', icon: 'mic', ok: true },
-  { label: 'Rostro detectado', icon: 'face', ok: true },
+  { label: 'Rostro detectado', icon: 'face', ok: props.faceStatus === 'present' },
   { label: 'Cooldown cumplido', icon: 'schedule', ok: true },
 ])
 
 const allChecksPass = computed(() => checks.value.every((c) => c.ok))
+
+const faceLabel = computed(() => {
+  switch (props.faceStatus) {
+    case 'present': return 'Rostro detectado'
+    case 'absent': return 'No se detecta rostro'
+    case 'multiple': return 'Multiples rostros'
+    case 'initializing': return 'Inicializando...'
+    case 'error': return 'Error de camara'
+    default: return 'Esperando...'
+  }
+})
+
+const faceClass = computed(() => {
+  if (props.faceStatus === 'present') return 'ok'
+  if (props.faceStatus === 'initializing') return 'pending'
+  return 'error'
+})
+
+onMounted(() => {
+  if (videoEl.value) {
+    emit('videoMounted', videoEl.value)
+  }
+})
 </script>
 
 <template>
   <div class="pre-exam-screen">
     <header class="screen-header">
-      <q-btn flat round icon="arrow_back" color="white" @click="$emit('back')" />
+      <q-btn flat round icon="arrow_back" color="white" @click="emit('back')" />
       <span>Verificacion previa</span>
     </header>
 
-    <!-- Camera preview placeholder -->
+    <!-- Camera preview -->
     <div class="camera-preview">
-      <q-icon name="videocam" size="64px" color="grey-6" />
-      <div class="camera-label">Camara de verificacion</div>
-      <div class="face-status ok">Rostro detectado</div>
+      <video
+        ref="videoEl"
+        autoplay
+        playsinline
+        muted
+        class="camera-video"
+      />
+      <div v-if="!cameraActive" class="camera-placeholder">
+        <q-icon name="videocam_off" size="48px" color="grey-6" />
+        <div>Activando camara...</div>
+      </div>
+      <div :class="['face-status', faceClass]">{{ faceLabel }}</div>
     </div>
 
     <!-- Checklist -->
@@ -48,18 +92,23 @@ const allChecksPass = computed(() => checks.value.every((c) => c.ok))
         <div class="rule">40 preguntas</div>
         <div class="rule">40 minutos</div>
         <div class="rule">80% para aprobar</div>
-        <div class="rule">Pantalla bloqueada</div>
+        <div class="rule">Pantalla completa</div>
         <div class="rule">Captura en anomalias</div>
+        <div class="rule">Deteccion de voz</div>
       </div>
     </div>
 
     <button
       class="start-btn"
       :disabled="!allChecksPass"
-      @click="$emit('start')"
+      @click="emit('start')"
     >
       COMENZAR EXAMEN
     </button>
+
+    <p v-if="!allChecksPass" class="hint">
+      Todos los requisitos deben estar activos para iniciar
+    </p>
   </div>
 </template>
 
@@ -81,31 +130,57 @@ const allChecksPass = computed(() => checks.value.every((c) => c.ok))
 }
 
 .camera-preview {
+  position: relative;
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.camera-video {
+  width: 100%;
+  max-height: 280px;
+  object-fit: cover;
+  transform: scaleX(-1); /* mirror */
+}
+
+.camera-placeholder {
+  position: absolute;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   gap: var(--space-sm);
-  background: var(--bg-card);
-  border-radius: var(--radius-lg);
-  padding: var(--space-xl);
-  min-height: 200px;
-}
-
-.camera-label {
-  font-size: 13px;
   color: var(--text-muted);
+  font-size: 13px;
 }
 
 .face-status {
+  position: absolute;
+  bottom: var(--space-sm);
+  left: 50%;
+  transform: translateX(-50%);
   font-size: 13px;
-  padding: 4px 12px;
+  padding: 4px 16px;
   border-radius: var(--radius-full);
+  backdrop-filter: blur(8px);
 }
 
 .face-status.ok {
-  background: rgba(74, 222, 128, 0.15);
+  background: rgba(74, 222, 128, 0.2);
   color: var(--success);
+}
+
+.face-status.pending {
+  background: rgba(251, 191, 36, 0.2);
+  color: var(--alert);
+}
+
+.face-status.error {
+  background: rgba(239, 68, 68, 0.2);
+  color: var(--critical);
 }
 
 .checklist {
@@ -159,5 +234,11 @@ const allChecksPass = computed(() => checks.value.every((c) => c.ok))
 .start-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.hint {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: center;
 }
 </style>

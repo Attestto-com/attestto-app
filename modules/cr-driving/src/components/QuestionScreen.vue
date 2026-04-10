@@ -11,6 +11,10 @@ const props = defineProps<{
   timeRemaining: number
   feedbackVisible: boolean
   lastAnswer: { selected: number; correct: number; isCorrect: boolean } | null
+  faceStatus?: string
+  lockdownActive?: boolean
+  voiceActive?: boolean
+  violationCount?: number
 }>()
 
 const emit = defineEmits<{
@@ -107,15 +111,29 @@ function optionClass(index: number): string {
       <div class="auto-advance">Siguiente en 3s...</div>
     </div>
 
-    <!-- Bottom status bar -->
+    <!-- Bottom proctoring status bar -->
     <div class="status-bar">
-      <div class="status-item">
-        <q-icon name="face" size="16px" color="positive" />
+      <div class="status-item" :title="'Rostro: ' + (faceStatus ?? 'unknown')">
+        <q-icon
+          name="face"
+          size="16px"
+          :color="faceStatus === 'present' ? 'positive' : faceStatus === 'multiple' ? 'negative' : 'warning'"
+        />
       </div>
-      <div class="status-item">
-        <q-icon name="lock" size="16px" color="positive" />
+      <div class="status-item" title="Pantalla bloqueada">
+        <q-icon
+          name="lock"
+          size="16px"
+          :color="lockdownActive ? 'positive' : 'negative'"
+        />
       </div>
-      <div class="status-dot ok" />
+      <div v-if="voiceActive" class="status-item" title="Voz detectada">
+        <q-icon name="mic" size="16px" color="negative" />
+      </div>
+      <div v-if="(violationCount ?? 0) > 0" class="status-item violation-count">
+        {{ violationCount }}
+      </div>
+      <div :class="['status-dot', faceStatus === 'present' && lockdownActive ? 'ok' : 'warn']" />
     </div>
   </div>
 </template>
@@ -316,5 +334,18 @@ function optionClass(index: number): string {
 
 .status-dot.ok {
   background: var(--success);
+}
+
+.status-dot.warn {
+  background: var(--warning);
+}
+
+.violation-count {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--critical);
+  background: rgba(239, 68, 68, 0.15);
+  padding: 2px 6px;
+  border-radius: var(--radius-full);
 }
 </style>
