@@ -15,7 +15,9 @@
     "pinia": "^2.3.0",
     "quasar": "^2.17.7",
     "@quasar/extras": "^1.16.15",
-    "@attestto/module-sdk": "workspace:*"
+    "@attestto/module-sdk": "workspace:*",
+    "app-module-cr-driving": "workspace:*",
+    "app-module-cr-medical": "workspace:*"
   },
   "devDependencies": {
     "@quasar/vite-plugin": "^1.9.0",

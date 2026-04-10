@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useVaultStore } from '@/stores/vault'
+import { seedDemoInbox } from '@/composables/useDemoData'
 
 const vault = useVaultStore()
 const router = useRouter()
@@ -13,8 +14,12 @@ async function handleUnlock() {
   error.value = ''
   try {
     const ok = await vault.unlock()
-    if (ok) router.replace({ name: 'home' })
-    else error.value = 'No se pudo desbloquear'
+    if (ok) {
+      seedDemoInbox()
+      router.replace({ name: 'home' })
+    } else {
+      error.value = 'No se pudo desbloquear'
+    }
   } catch {
     error.value = 'Error de autenticacion'
   } finally {

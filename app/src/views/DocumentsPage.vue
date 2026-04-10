@@ -49,7 +49,7 @@ const statusConfig = {
       <p>No hay documentos</p>
     </div>
 
-    <button class="add-doc-btn" @click="/* TODO: file picker */">
+    <button class="add-doc-btn" @click="() => {}">
       <q-icon name="add" size="20px" />
       Abrir documento
     </button>

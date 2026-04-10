@@ -1,10 +1,17 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { useVaultStore } from '@/stores/vault'
 import CredentialCard from '@/components/CredentialCard.vue'
+import type { VerifiableCredential } from '@attestto/module-sdk'
 
+const router = useRouter()
 const vault = useVaultStore()
 const activeTab = ref<'credentials' | 'accounts'>('credentials')
+
+function handleCredentialTap(vc: VerifiableCredential) {
+  router.push({ name: 'credential-detail', params: { id: vc.id } })
+}
 
 const countryFlags: Record<string, string> = {
   CR: '🇨🇷 Costa Rica',
@@ -49,6 +56,7 @@ const countryFlags: Record<string, string> = {
               v-for="vc in creds"
               :key="vc.id"
               :credential="vc"
+              @tap="handleCredentialTap"
             />
           </div>
         </section>

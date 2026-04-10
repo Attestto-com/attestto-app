@@ -1,10 +1,15 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import BottomNav from '@/components/BottomNav.vue'
+import { bootstrapModules } from '@/composables/useModuleBootstrap'
 
 const route = useRoute()
 const showNav = computed(() => route.meta.nav === true)
+
+onMounted(() => {
+  bootstrapModules()
+})
 </script>
 
 <template>

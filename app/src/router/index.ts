@@ -38,6 +38,12 @@ const router = createRouter({
       meta: { requiresAuth: true },
     },
     {
+      path: '/wallet/:id',
+      name: 'credential-detail',
+      component: () => import('@/views/CredentialDetail.vue'),
+      meta: { requiresAuth: true },
+    },
+    {
       path: '/verify',
       name: 'verify',
       component: () => import('@/views/VerifyPage.vue'),
