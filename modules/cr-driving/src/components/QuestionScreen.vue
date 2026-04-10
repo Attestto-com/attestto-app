@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
 import type { ExamQuestion } from '../types'
+import { encodeWatermark, buildWatermarkPayload } from '../composables/useWatermark'
 
 const props = defineProps<{
   question: ExamQuestion
@@ -15,6 +16,8 @@ const props = defineProps<{
   lockdownActive?: boolean
   voiceActive?: boolean
   violationCount?: number
+  sessionId?: string
+  userDid?: string
 }>()
 
 const emit = defineEmits<{
@@ -31,6 +34,13 @@ const timerDisplay = computed(() => {
 })
 
 const timerUrgent = computed(() => props.timeRemaining < 120)
+
+// Invisible watermark embedded in question text
+const watermarkText = computed(() => {
+  if (!props.sessionId || !props.userDid) return ''
+  const payload = buildWatermarkPayload(props.sessionId, props.userDid, props.questionNumber)
+  return encodeWatermark(payload)
+})
 
 // Reset selection on new question
 watch(
@@ -86,7 +96,7 @@ function optionClass(index: number): string {
     <!-- Question card -->
     <div class="question-card">
       <div class="category-tag">{{ question.category }}</div>
-      <p class="question-text">{{ question.question }}</p>
+      <p class="question-text">{{ question.question }}<span class="watermark">{{ watermarkText }}</span></p>
     </div>
 
     <!-- Options -->
@@ -338,6 +348,15 @@ function optionClass(index: number): string {
 
 .status-dot.warn {
   background: var(--warning);
+}
+
+.watermark {
+  font-size: 0;
+  line-height: 0;
+  user-select: none;
+  pointer-events: none;
+  position: absolute;
+  opacity: 0;
 }
 
 .violation-count {

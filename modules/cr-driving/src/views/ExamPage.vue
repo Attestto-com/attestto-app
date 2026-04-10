@@ -34,6 +34,7 @@ const issuedVc = ref<Record<string, unknown> | null>(null)
 const signing = ref(false)
 const signError = ref('')
 const anchoring = ref(false)
+const exporting = ref(false)
 const anchorTx = ref('')
 const anchorError = ref('')
 
@@ -237,6 +238,25 @@ async function handleAnchor() {
   }
 }
 
+async function handleExportEvidence() {
+  exporting.value = true
+  try {
+    const { buildEvidenceBundle, downloadEvidence } = await import('../composables/useEvidenceExport')
+    const result = exam.getResult()
+    if (!result) throw new Error('No exam result')
+
+    const bundle = buildEvidenceBundle(
+      exam.session.value?.id ?? 'unknown',
+      result,
+    )
+    await downloadEvidence(bundle, result.chainHead)
+  } catch {
+    // Silent fail — evidence export is best-effort
+  } finally {
+    exporting.value = false
+  }
+}
+
 function handleBackToHome() {
   cleanup()
   exam.reset()
@@ -306,6 +326,8 @@ onUnmounted(() => cleanup())
       :lockdown-active="lockdown.active.value"
       :voice-active="voice.voiceActive.value"
       :violation-count="lockdown.violationCount.value"
+      :session-id="exam.session.value?.id"
+      :user-did="''"
       @answer="handleAnswer"
       @next="handleNextQuestion"
     />
@@ -367,6 +389,11 @@ onUnmounted(() => cleanup())
             <div v-if="anchorError" class="anchor-error">{{ anchorError }}</div>
           </div>
         </div>
+
+        <button class="action-btn secondary" :disabled="exporting" @click="handleExportEvidence">
+          <q-spinner-dots v-if="exporting" size="14px" />
+          <template v-else>Exportar evidencia</template>
+        </button>
 
         <button class="action-btn primary" @click="handleBackToHome">
           Volver al inicio
@@ -516,6 +543,16 @@ onUnmounted(() => cleanup())
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
+}
+
+.action-btn.secondary {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+}
+
+.action-btn.secondary:disabled {
+  opacity: 0.5;
 }
 
 .action-btn.primary {
