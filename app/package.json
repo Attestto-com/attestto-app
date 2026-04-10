@@ -18,6 +18,8 @@
     "@noble/curves": "^1.8.0",
     "@noble/hashes": "^1.7.0",
     "idb-keyval": "^6.2.0",
+    "qr-scanner": "^1.4.2",
+    "pdfjs-dist": "^4.10.38",
     "@attestto/module-sdk": "workspace:*",
     "app-module-cr-driving": "workspace:*",
     "app-module-cr-medical": "workspace:*"

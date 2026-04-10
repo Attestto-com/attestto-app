@@ -1,4 +1,5 @@
 import type { ExamQuestion, ExamConfig } from '../types'
+import { generateQuestions, loadManualContext } from './useQuestionGenerator'
 
 // Lazy-loaded question banks
 let seedQuestions: ExamQuestion[] | null = null
@@ -112,14 +113,46 @@ function shuffle<T>(arr: T[]): T[] {
 }
 
 /**
+ * Try to generate fresh questions via LLM, fall back to seed banks.
+ * Returns null if LLM is unavailable.
+ */
+async function tryLlmQuestions(
+  config: ExamConfig,
+  weakTopics: string[],
+): Promise<ExamQuestion[] | null> {
+  try {
+    const context = await loadManualContext(config.licenseType, weakTopics)
+    if (!context) return null
+
+    const questions = await generateQuestions({
+      licenseType: config.licenseType,
+      categories: weakTopics,
+      count: Math.min(config.questionCount, 15),
+      difficulty: 'medium',
+      context,
+    })
+
+    return questions.length > 0 ? questions : null
+  } catch {
+    return null
+  }
+}
+
+/**
  * Select questions for an exam session.
- * Prioritizes weak categories, then fills with shuffled pool.
+ * Tries LLM-generated questions first (~15), fills remainder from seed banks.
+ * Falls back entirely to seed banks if LLM unavailable.
  */
 export async function selectQuestions(
   config: ExamConfig,
   weakTopics: string[] = [],
 ): Promise<ExamQuestion[]> {
   await loadAllQuestions()
+
+  // Try LLM for a portion of questions
+  const llmQuestions = await tryLlmQuestions(config, weakTopics)
+  const llmCount = llmQuestions?.length ?? 0
+  const seedCount = config.questionCount - llmCount
 
   const all = [
     ...(seedQuestions ?? []),
@@ -154,13 +187,16 @@ export async function selectQuestions(
     (q) => !weakTopics.some((t) => q.category.toLowerCase().includes(t.toLowerCase())),
   )
 
-  // Take ~30% from weak topics, rest random
-  const weakCount = Math.min(Math.floor(config.questionCount * 0.3), weak.length)
-  const restCount = config.questionCount - weakCount
+  // Take ~30% from weak topics, rest random (from seed pool only)
+  const weakCount = Math.min(Math.floor(seedCount * 0.3), weak.length)
+  const restCount = seedCount - weakCount
 
-  const selected = [...shuffle(weak).slice(0, weakCount), ...shuffle(rest).slice(0, restCount)]
+  const seedSelected = [...shuffle(weak).slice(0, weakCount), ...shuffle(rest).slice(0, restCount)]
 
-  return shuffle(selected).slice(0, config.questionCount)
+  // Merge LLM + seed, shuffle final mix
+  const combined = [...(llmQuestions ?? []), ...seedSelected]
+
+  return shuffle(combined).slice(0, config.questionCount)
 }
 
 export function getDefaultConfig(): ExamConfig {
