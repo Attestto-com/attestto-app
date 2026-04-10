@@ -1,0 +1,62 @@
+:root {
+  /* Base */
+  --bg-base: #0f1923;
+  --bg-card: #1a1f2e;
+  --bg-elevated: #242938;
+
+  /* Brand */
+  --primary: #594FD3;
+  --primary-hover: #6b62e0;
+
+  /* Semantic */
+  --success: #4ade80;
+  --warning: #f97316;
+  --alert: #fbbf24;
+  --critical: #ef4444;
+
+  /* Text */
+  --text-primary: #e2e8f0;
+  --text-muted: #94a3b8;
+  --text-inverse: #0f1923;
+
+  /* Currency */
+  --crc: #003da5;
+  --usd: #22c55e;
+  --eur: #594FD3;
+
+  /* Borders & Shadows */
+  --border-subtle: rgba(148, 163, 184, 0.12);
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-base);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior: none;
+}
+
+/* Safe area for mobile notch/home indicator */
+.safe-area-top { padding-top: env(safe-area-inset-top); }
+.safe-area-bottom { padding-bottom: env(safe-area-inset-bottom); }

@@ -1,0 +1,20 @@
+{
+  "name": "attestto-app",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Attestto — sovereign citizen wallet. Identity, credentials, documents, money, exams.",
+  "scripts": {
+    "dev": "pnpm --filter @attestto/app dev",
+    "build": "pnpm --filter @attestto/app build",
+    "preview": "pnpm --filter @attestto/app preview",
+    "lint": "eslint . --ext .vue,.ts,.tsx",
+    "typecheck": "pnpm -r typecheck"
+  },
+  "engines": {
+    "node": ">=20",
+    "pnpm": ">=9"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["@parcel/watcher", "esbuild", "vue-demi"]
+  }
+}
