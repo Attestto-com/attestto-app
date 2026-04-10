@@ -40,13 +40,38 @@ Colors, spacing, radii defined in `app/src/styles/tokens.css`. Dark theme only.
 | `--success` | #4ade80 | Valid/verified |
 | `--critical` | #ef4444 | Invalid/failed |
 
+## Crypto
+
+- **WebAuthn** passkey for vault unlock (`app/src/composables/useCrypto.ts`)
+- **Ed25519** signing via `@noble/curves` — key in IndexedDB, gated behind WebAuthn
+- **AES-256-GCM** encrypted vault (`app/src/composables/useEncryptedVault.ts`) — not yet wired to vault.ts
+- **SHA-256 hash chain** in exam sessions (Web Crypto API)
+- **Solana anchor** via HTTP to attestto-anchor (`app/src/composables/useAnchor.ts`)
+
+## i18n
+
+- `vue-i18n` with `es` (Spanish) and `en` (English) locale files
+- Default locale: `es`, persisted to localStorage
+- Language toggle in Settings page
+- Key views wired: LockScreen, HomePage, SettingsPage, BottomNav
+- Remaining views use hardcoded Spanish — see `TODO.md`
+
 ## Scripts
 
 ```bash
 pnpm dev          # Start dev server (app/)
 pnpm build        # Build PWA (app/)
+pnpm test         # Run tests (vitest, 30 tests)
 pnpm typecheck    # Typecheck all packages
 ```
+
+## CI
+
+GitHub Actions (`.github/workflows/ci.yml`): install → typecheck → test → build on push/PR to main.
+
+## Production TODO
+
+See `TODO.md` for hardening tasks (encrypted vault wiring, full signature verification, anchor service, i18n coverage, test expansion).
 
 ## Rules
 
