@@ -1,9 +1,23 @@
-import { ref } from 'vue'
-import type { MasteryState, ExamResult } from '../types'
+import { ref, computed } from 'vue'
+import type { MasteryState, CategoryScore, ExamResult } from '../types'
 
 const STORAGE_KEY = 'cr-driving:mastery'
+const GREEN_THRESHOLD = 80 // percent
 
-const mastery = ref<MasteryState>(loadMastery())
+/**
+ * Decay rate per month based on renewal count.
+ * First-timers forget faster. Experienced drivers retain longer.
+ */
+const DECAY_RATES: Record<number, number> = {
+  0: 10, // first-timer: -10%/month
+  1: 5,  // 1st renewal: -5%/month
+}
+const DEFAULT_DECAY = 2 // 2nd+ renewal: -2%/month
+
+/** Current content version — bump when law changes are merged */
+const CONTENT_VERSION = '2026-04-10'
+
+const mastery = ref<MasteryState>(loadAndDecay())
 
 function loadMastery(): MasteryState {
   try {
@@ -17,22 +31,88 @@ function loadMastery(): MasteryState {
     streak: 0,
     categoryScores: {},
     weakTopics: [],
+    renewalCount: 0,
+    allGreen: false,
+    pendingLawChanges: [],
   }
 }
 
-function saveMastery(): void {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(mastery.value))
+/**
+ * Load mastery and apply time-based decay + law change resets.
+ * Called once on composable init (app open).
+ */
+function loadAndDecay(): MasteryState {
+  const m = loadMastery()
+  const now = Date.now()
+  const decayRate = DECAY_RATES[m.renewalCount] ?? DEFAULT_DECAY
+  const decayPerMs = decayRate / (30 * 24 * 60 * 60 * 1000) // per millisecond
+
+  // Apply decay to each category
+  for (const [cat, score] of Object.entries(m.categoryScores)) {
+    if (!score.lastPracticed) continue
+
+    const lastPracticed = new Date(score.lastPracticed).getTime()
+    const elapsedMs = now - lastPracticed
+    if (elapsedMs <= 0) continue
+
+    const decayPercent = elapsedMs * decayPerMs
+    const currentPct = score.total > 0 ? (score.correct / score.total) * 100 : 0
+    const decayedPct = Math.max(0, currentPct - decayPercent)
+
+    // Adjust correct count to reflect decayed percentage
+    if (score.total > 0) {
+      score.correct = Math.round((decayedPct / 100) * score.total)
+    }
+
+    // Check for law change: if content version doesn't match, reset to 0
+    if (score.contentVersion && score.contentVersion !== CONTENT_VERSION) {
+      score.correct = 0
+      score.total = 0
+      if (!m.pendingLawChanges.includes(cat)) {
+        m.pendingLawChanges.push(cat)
+      }
+    }
+  }
+
+  // Recalculate weak topics and allGreen
+  recalculate(m)
+  saveMastery(m)
+  return m
+}
+
+function recalculate(m: MasteryState): void {
+  const entries = Object.entries(m.categoryScores)
+  const categorized = entries.map(([cat, s]) => ({
+    cat,
+    pct: s.total > 0 ? Math.round((s.correct / s.total) * 100) : 0,
+  }))
+
+  m.weakTopics = categorized
+    .filter((c) => c.pct < GREEN_THRESHOLD)
+    .sort((a, b) => a.pct - b.pct)
+    .map((c) => c.cat)
+
+  m.allGreen = entries.length > 0 && categorized.every((c) => c.pct >= GREEN_THRESHOLD)
+}
+
+function saveMastery(m?: MasteryState): void {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(m ?? mastery.value))
 }
 
 export function useMastery() {
+  const allGreen = computed(() => mastery.value.allGreen)
+  const pendingLawChanges = computed(() => mastery.value.pendingLawChanges)
+  const canIssueVC = computed(() => mastery.value.allGreen && mastery.value.pendingLawChanges.length === 0)
+
   function updateFromResult(result: ExamResult): void {
     const m = mastery.value
+    const today = new Date().toISOString().slice(0, 10)
+
     m.totalAttempts++
     m.lastScore = result.score
 
-    const today = new Date().toISOString().slice(0, 10)
+    // Streak
     const yesterday = new Date(Date.now() - 86400_000).toISOString().slice(0, 10)
-
     if (m.lastAttemptDate === yesterday || m.lastAttemptDate === today) {
       m.streak++
     } else if (m.lastAttemptDate !== today) {
@@ -40,21 +120,26 @@ export function useMastery() {
     }
     m.lastAttemptDate = today
 
-    // Update category scores (cumulative)
+    // Update category scores
     for (const cat of result.categoryBreakdown) {
-      const existing = m.categoryScores[cat.category] ?? { correct: 0, total: 0 }
+      const existing = m.categoryScores[cat.category] ?? {
+        correct: 0,
+        total: 0,
+        lastPracticed: '',
+        contentVersion: CONTENT_VERSION,
+      }
       existing.correct += cat.correct
       existing.total += cat.total
+      existing.lastPracticed = new Date().toISOString()
+      existing.contentVersion = CONTENT_VERSION
       m.categoryScores[cat.category] = existing
+
+      // Clear pending law change if user practiced this category
+      const idx = m.pendingLawChanges.indexOf(cat.category)
+      if (idx >= 0) m.pendingLawChanges.splice(idx, 1)
     }
 
-    // Recalculate weak topics
-    m.weakTopics = Object.entries(m.categoryScores)
-      .map(([cat, { correct, total }]) => ({ cat, pct: Math.round((correct / total) * 100) }))
-      .filter((c) => c.pct < 70)
-      .sort((a, b) => a.pct - b.pct)
-      .map((c) => c.cat)
-
+    recalculate(m)
     saveMastery()
   }
 
@@ -69,10 +154,19 @@ export function useMastery() {
     return Object.entries(mastery.value.categoryScores)
       .map(([category, { correct, total }]) => ({
         category,
-        percent: Math.round((correct / total) * 100),
+        percent: total > 0 ? Math.round((correct / total) * 100) : 0,
       }))
       .sort((a, b) => b.percent - a.percent)
       .slice(0, limit)
+  }
+
+  function getAllCategories(): { category: string; percent: number; isGreen: boolean }[] {
+    return Object.entries(mastery.value.categoryScores)
+      .map(([category, { correct, total }]) => {
+        const percent = total > 0 ? Math.round((correct / total) * 100) : 0
+        return { category, percent, isGreen: percent >= GREEN_THRESHOLD }
+      })
+      .sort((a, b) => a.percent - b.percent)
   }
 
   function getOverallAccuracy(): number {
@@ -83,11 +177,28 @@ export function useMastery() {
     return totalQ > 0 ? Math.round((totalCorrect / totalQ) * 100) : 0
   }
 
+  function getDecayRate(): number {
+    return DECAY_RATES[mastery.value.renewalCount] ?? DEFAULT_DECAY
+  }
+
+  /** Acknowledge a law change for a category (user has been notified) */
+  function acknowledgeLawChange(category: string): void {
+    const idx = mastery.value.pendingLawChanges.indexOf(category)
+    if (idx >= 0) mastery.value.pendingLawChanges.splice(idx, 1)
+    saveMastery()
+  }
+
   return {
     mastery,
+    allGreen,
+    pendingLawChanges,
+    canIssueVC,
     updateFromResult,
     canRetry,
     getTopCategories,
+    getAllCategories,
     getOverallAccuracy,
+    getDecayRate,
+    acknowledgeLawChange,
   }
 }

@@ -60,8 +60,8 @@ export function useExam() {
     session.value.answers.push(answer)
     if (isCorrect) session.value.score++
 
-    // Update chain head (simplified — real version uses SHA-256)
-    session.value.chainHead = simpleHash(session.value.chainHead + JSON.stringify(answer))
+    // Update chain head with SHA-256
+    chainAppend(JSON.stringify(answer))
 
     // Show feedback
     lastAnswer.value = { selected, correct: q.correct, isCorrect }
@@ -88,6 +88,13 @@ export function useExam() {
     } else {
       session.value.incidents.push({ type, severity, timestamp: Date.now(), count: 1 })
     }
+    // Record in hash chain
+    chainAppend(JSON.stringify({ type, severity, timestamp: Date.now() }))
+  }
+
+  /** Record any proctor event in the hash chain without creating an incident */
+  function recordEvent(type: string, data?: Record<string, unknown>): void {
+    chainAppend(JSON.stringify({ type, data, timestamp: Date.now() }))
   }
 
   function getResult(): ExamResult | null {
@@ -160,17 +167,27 @@ export function useExam() {
     submitAnswer,
     nextQuestion,
     addIncident,
+    recordEvent,
     getResult,
     reset,
   }
 }
 
-function simpleHash(input: string): string {
-  let hash = 0
-  for (let i = 0; i < input.length; i++) {
-    const char = input.charCodeAt(i)
-    hash = ((hash << 5) - hash) + char
-    hash |= 0
-  }
-  return Math.abs(hash).toString(16).padStart(16, '0')
+/** SHA-256 hash chain — each event hashed with previous head for tamper-proof audit trail */
+async function sha256(input: string): Promise<string> {
+  const data = new TextEncoder().encode(input)
+  const hash = await crypto.subtle.digest('SHA-256', data)
+  return Array.from(new Uint8Array(hash))
+    .map((b) => b.toString(16).padStart(2, '0'))
+    .join('')
+}
+
+let chainAppendQueue = Promise.resolve()
+
+function chainAppend(payload: string): void {
+  chainAppendQueue = chainAppendQueue.then(async () => {
+    if (!session.value) return
+    const prev = session.value.chainHead
+    session.value.chainHead = await sha256(JSON.stringify({ prev, payload }))
+  })
 }

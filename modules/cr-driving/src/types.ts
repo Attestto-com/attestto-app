@@ -15,13 +15,28 @@ export interface ExamAnswer {
   timestamp: number
 }
 
+export interface CategoryScore {
+  correct: number
+  total: number
+  /** ISO date of last practice for this category */
+  lastPracticed: string
+  /** Content version this score was tested against */
+  contentVersion: string
+}
+
 export interface MasteryState {
   totalAttempts: number
   lastScore: number
   lastAttemptDate: string
   streak: number
-  categoryScores: Record<string, { correct: number; total: number }>
+  categoryScores: Record<string, CategoryScore>
   weakTopics: string[]
+  /** Number of completed license renewals (0 = first-timer) */
+  renewalCount: number
+  /** Whether all categories are green (above threshold) — gate for VC issuance */
+  allGreen: boolean
+  /** Categories reset due to law changes, pending acknowledgement */
+  pendingLawChanges: string[]
 }
 
 export interface ExamConfig {
