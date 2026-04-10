@@ -8,7 +8,9 @@
     "build": "pnpm --filter @attestto/app build",
     "preview": "pnpm --filter @attestto/app preview",
     "lint": "eslint . --ext .vue,.ts,.tsx",
-    "typecheck": "pnpm -r typecheck"
+    "typecheck": "pnpm -r typecheck",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "engines": {
     "node": ">=20",

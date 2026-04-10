@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useVaultStore } from '@/stores/vault'
 import { useInboxStore } from '@/stores/inbox'
 import InboxCard from '@/components/InboxCard.vue'
 import type { InboxItem } from '@attestto/module-sdk'
 
+const { t } = useI18n()
 const vault = useVaultStore()
 const inbox = useInboxStore()
 const router = useRouter()
@@ -14,16 +16,16 @@ function handleInboxTap(item: InboxItem) {
 }
 
 const quickActions = [
-  { icon: 'qr_code_scanner', label: 'Escanear', action: () => router.push({ name: 'verify' }) },
-  { icon: 'payment', label: 'Pagar', action: () => {} },
-  { icon: 'verified', label: 'Verificar', action: () => router.push({ name: 'verify' }) },
+  { icon: 'qr_code_scanner', labelKey: 'home.scan', action: () => router.push({ name: 'verify' }) },
+  { icon: 'payment', labelKey: 'home.pay', action: () => {} },
+  { icon: 'verified', labelKey: 'home.verify', action: () => router.push({ name: 'verify' }) },
 ]
 </script>
 
 <template>
   <q-page class="home-page" padding>
     <header class="home-header">
-      <div class="greeting">Hola, {{ vault.displayName?.split(' ')[0] ?? 'usuario' }}</div>
+      <div class="greeting">{{ t('home.greeting', { name: vault.displayName?.split(' ')[0] ?? t('home.userFallback') }) }}</div>
       <div class="header-actions">
         <q-btn flat round icon="notifications_none" color="white" size="sm" />
         <q-btn flat round icon="person_outline" color="white" size="sm" @click="router.push({ name: 'settings' })" />
@@ -32,7 +34,7 @@ const quickActions = [
 
     <!-- Pending -->
     <section v-if="inbox.pending.length" class="section">
-      <h3 class="section-title">Pendiente</h3>
+      <h3 class="section-title">{{ t('home.pending') }}</h3>
       <div class="card-stack">
         <InboxCard
           v-for="item in inbox.pending"
@@ -46,12 +48,12 @@ const quickActions = [
     <!-- Empty state -->
     <div v-if="!inbox.pending.length && !inbox.recent.length" class="empty-state">
       <q-icon name="check_circle" size="48px" color="positive" />
-      <p>Todo al dia</p>
+      <p>{{ t('home.allCaughtUp') }}</p>
     </div>
 
     <!-- Recent -->
     <section v-if="inbox.recent.length" class="section">
-      <h3 class="section-title">Reciente</h3>
+      <h3 class="section-title">{{ t('home.recent') }}</h3>
       <div class="recent-list">
         <div v-for="item in inbox.recent" :key="item.id" class="recent-item">
           <q-icon :name="item.icon" size="16px" />
@@ -63,16 +65,16 @@ const quickActions = [
 
     <!-- Quick actions -->
     <section class="section">
-      <h3 class="section-title">Acciones rapidas</h3>
+      <h3 class="section-title">{{ t('home.quickActions') }}</h3>
       <div class="quick-actions">
         <button
           v-for="qa in quickActions"
-          :key="qa.label"
+          :key="qa.labelKey"
           class="quick-action"
           @click="qa.action"
         >
           <q-icon :name="qa.icon" size="24px" />
-          <span>{{ qa.label }}</span>
+          <span>{{ t(qa.labelKey) }}</span>
         </button>
       </div>
     </section>

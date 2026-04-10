@@ -1,16 +1,18 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
 
-const tabs = [
-  { name: 'home', label: 'Home', icon: 'home' },
-  { name: 'wallet', label: 'Wallet', icon: 'account_balance_wallet' },
-  { name: 'documents', label: 'Docs', icon: 'description' },
-  { name: 'settings', label: 'Mas', icon: 'more_horiz' },
-]
+const tabs = computed(() => [
+  { name: 'home', label: t('nav.home'), icon: 'home' },
+  { name: 'wallet', label: t('nav.wallet'), icon: 'account_balance_wallet' },
+  { name: 'documents', label: t('nav.docs'), icon: 'description' },
+  { name: 'settings', label: t('nav.more'), icon: 'more_horiz' },
+])
 
 const active = computed(() => route.name as string)
 </script>

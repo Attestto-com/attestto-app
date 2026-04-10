@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useVaultStore } from '@/stores/vault'
 import { seedDemoInbox } from '@/composables/useDemoData'
 import { isRegistered } from '@/composables/useCrypto'
 
+const { t } = useI18n()
 const vault = useVaultStore()
 const router = useRouter()
 const unlocking = ref(false)
@@ -21,13 +23,13 @@ async function handleUnlock() {
       seedDemoInbox()
       router.replace({ name: 'home' })
     } else {
-      error.value = 'No se pudo desbloquear'
+      error.value = t('lock.unlockFailed')
     }
   } catch (e: unknown) {
     if (e instanceof DOMException && e.name === 'NotAllowedError') {
-      error.value = 'Autenticacion cancelada'
+      error.value = t('lock.authCancelled')
     } else {
-      error.value = 'Error de autenticacion'
+      error.value = t('lock.authError')
     }
   } finally {
     unlocking.value = false
@@ -46,7 +48,7 @@ async function handleUnlock() {
       </button>
 
       <p class="unlock-hint">
-        {{ isFirstTime ? 'Crear identidad' : 'Desbloquear con biometrico o PIN' }}
+        {{ isFirstTime ? t('lock.createIdentity') : t('lock.unlockHint') }}
       </p>
 
       <p v-if="error" class="unlock-error">{{ error }}</p>

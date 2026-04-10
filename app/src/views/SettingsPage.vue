@@ -1,11 +1,21 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useVaultStore } from '@/stores/vault'
 import { useModulesStore } from '@/stores/modules'
+import { setLocale, getLocale } from '@/i18n'
 
+const { t } = useI18n()
 const router = useRouter()
 const vault = useVaultStore()
 const modules = useModulesStore()
+
+const currentLocale = computed(() => getLocale())
+
+function toggleLocale() {
+  setLocale(currentLocale.value === 'es' ? 'en' : 'es')
+}
 
 function handleLock() {
   vault.lock()
@@ -15,60 +25,64 @@ function handleLock() {
 
 <template>
   <q-page class="settings-page" padding>
-    <h2 class="page-title">Perfil</h2>
+    <h2 class="page-title">{{ t('settings.profile') }}</h2>
 
     <!-- Identity card -->
     <div class="identity-card">
       <q-icon name="person" size="40px" class="avatar" />
       <div class="identity-body">
-        <div class="identity-name">{{ vault.displayName ?? 'Usuario' }}</div>
+        <div class="identity-name">{{ vault.displayName ?? t('settings.userFallback') }}</div>
         <div class="identity-did">{{ vault.did ?? '—' }}</div>
       </div>
     </div>
 
     <!-- Sections -->
     <section class="settings-section">
-      <h3 class="section-title">Seguridad</h3>
+      <h3 class="section-title">{{ t('settings.security') }}</h3>
       <div class="setting-row">
-        <span>Biometrico</span>
+        <span>{{ t('settings.biometric') }}</span>
         <q-toggle :model-value="true" color="positive" disable />
       </div>
       <div class="setting-row">
-        <span>PIN de respaldo</span>
+        <span>{{ t('settings.backupPin') }}</span>
         <q-toggle :model-value="true" color="positive" disable />
       </div>
     </section>
 
     <section class="settings-section">
-      <h3 class="section-title">Accesibilidad</h3>
+      <h3 class="section-title">{{ t('settings.accessibility') }}</h3>
       <div class="setting-row">
-        <span>Alto contraste</span>
+        <span>{{ t('settings.highContrast') }}</span>
         <q-toggle :model-value="false" color="primary" disable />
       </div>
       <div class="setting-row">
-        <span>Asistente de voz</span>
+        <span>{{ t('settings.voiceAssistant') }}</span>
         <q-toggle :model-value="false" color="primary" disable />
+      </div>
+      <div class="setting-row clickable" @click="toggleLocale">
+        <span>Idioma / Language</span>
+        <span class="setting-value">{{ currentLocale === 'es' ? 'Espanol' : 'English' }}</span>
       </div>
     </section>
 
     <section class="settings-section">
-      <h3 class="section-title">Datos y privacidad</h3>
+      <h3 class="section-title">{{ t('settings.dataPrivacy') }}</h3>
       <div class="setting-row clickable">
-        <span>Exportar vault</span>
+        <span>{{ t('settings.exportVault') }}</span>
         <q-icon name="chevron_right" />
       </div>
       <div class="setting-row clickable">
-        <span>Exportar evidencia</span>
+        <span>{{ t('settings.exportEvidence') }}</span>
         <q-icon name="chevron_right" />
       </div>
       <div class="setting-row clickable danger">
-        <span>Eliminar datos</span>
+        <span>{{ t('settings.deleteData') }}</span>
         <q-icon name="chevron_right" />
       </div>
     </section>
 
     <section class="settings-section">
-      <h3 class="section-title">Modulos instalados</h3>
+      <h3 class="section-title">{{ t('settings.installedModules') }}</h3>
       <div
         v-for="m in modules.installedList"
         :key="m.id"
@@ -78,25 +92,25 @@ function handleLock() {
         <q-icon name="chevron_right" />
       </div>
       <div v-if="!modules.installedList.length" class="empty-hint">
-        Ningun modulo instalado
+        {{ t('settings.noModules') }}
       </div>
     </section>
 
     <section class="settings-section">
-      <h3 class="section-title">Acerca de</h3>
+      <h3 class="section-title">{{ t('settings.about') }}</h3>
       <div class="setting-row">
-        <span>Version</span>
+        <span>{{ t('settings.version') }}</span>
         <span class="setting-value">0.1.0</span>
       </div>
       <div class="setting-row">
-        <span>Licencia</span>
+        <span>{{ t('settings.license') }}</span>
         <span class="setting-value">Apache 2.0</span>
       </div>
     </section>
 
     <button class="lock-btn" @click="handleLock">
       <q-icon name="lock" size="18px" />
-      Bloquear
+      {{ t('settings.lock') }}
     </button>
   </q-page>
 </template>
