@@ -79,4 +79,10 @@ export type ExamResult = {
   weakTopics: string[]
   chainHead: string
   incidents: ExamIncident[]
+  /** Ed25519 signature over the result (base64url) */
+  signature?: string
+  /** DID verification method that signed */
+  verificationMethod?: string
+  /** Solana transaction signature for the anchored hash */
+  anchorTx?: string
 }

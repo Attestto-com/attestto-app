@@ -29,6 +29,14 @@ const anomalyVisible = ref(false)
 const anomalyMessage = ref('')
 const anomalySeverity = ref<'warning' | 'critical' | 'terminal'>('warning')
 
+// Credential issuance state
+const issuedVc = ref<Record<string, unknown> | null>(null)
+const signing = ref(false)
+const signError = ref('')
+const anchoring = ref(false)
+const anchorTx = ref('')
+const anchorError = ref('')
+
 // Timer
 const timeRemaining = ref(0)
 let timerInterval: ReturnType<typeof setInterval> | null = null
@@ -171,6 +179,64 @@ function handleFinish() {
   }
 }
 
+async function handleIssueCredential() {
+  signing.value = true
+  signError.value = ''
+  try {
+    const { issueExamCredential } = await import('@/composables/useVcIssuer')
+    const result = exam.getResult()
+    if (!result) throw new Error('No exam result')
+
+    const categories: Record<string, { correct: number; total: number; percentage: number }> = {}
+    for (const cat of result.categoryBreakdown) {
+      categories[cat.category] = { correct: cat.correct, total: cat.total, percentage: cat.percent }
+    }
+
+    const vc = await issueExamCredential({
+      score: result.score,
+      passed: result.passed,
+      chainHead: result.chainHead,
+      totalQuestions: result.total,
+      correctAnswers: result.correct,
+      durationSeconds: result.durationSeconds,
+      categories,
+      incidentCount: result.incidents.length,
+    })
+
+    issuedVc.value = vc as unknown as Record<string, unknown>
+
+    // Store the signed VC in the vault
+    const { useVaultStore } = await import('@/stores/vault')
+    const vault = useVaultStore()
+    vault.addCredential(vc)
+
+    exam.setPhase('credential')
+  } catch (e: unknown) {
+    signError.value = e instanceof Error ? e.message : 'Error al firmar credencial'
+  } finally {
+    signing.value = false
+  }
+}
+
+async function handleAnchor() {
+  anchoring.value = true
+  anchorError.value = ''
+  try {
+    const { anchorHash } = await import('@/composables/useAnchor')
+    const { useVaultStore } = await import('@/stores/vault')
+    const vault = useVaultStore()
+    const result = exam.getResult()
+    if (!result) throw new Error('No exam result')
+
+    const anchorResult = await anchorHash(result.chainHead, vault.did ?? '')
+    anchorTx.value = anchorResult.txSignature
+  } catch (e: unknown) {
+    anchorError.value = e instanceof Error ? e.message : 'Error de anclaje'
+  } finally {
+    anchoring.value = false
+  }
+}
+
 function handleBackToHome() {
   cleanup()
   exam.reset()
@@ -249,7 +315,7 @@ onUnmounted(() => cleanup())
       :result="exam.getResult()!"
       @finish="handleFinish"
       @home="handleBackToHome"
-      @credential="exam.setPhase('credential')"
+      @credential="handleIssueCredential"
     />
 
     <div v-else-if="exam.phase.value === 'credential'" class="credential-screen">
@@ -262,6 +328,12 @@ onUnmounted(() => cleanup())
           <div class="vc-field"><span>Fecha:</span> {{ new Date().toISOString().slice(0, 10) }}</div>
           <div class="vc-field"><span>Emisor:</span> Attestto</div>
 
+          <!-- Signature status -->
+          <div class="vc-field">
+            <span>Firma:</span>
+            <span class="signed-badge">Ed25519</span>
+          </div>
+
           <div class="qr-placeholder">
             <q-icon name="qr_code_2" size="100px" color="grey-6" />
             <div class="qr-label">verify.attestto.com</div>
@@ -270,6 +342,30 @@ onUnmounted(() => cleanup())
           <div class="proof-hash">
             {{ exam.getResult()?.chainHead.slice(0, 8) }}...{{ exam.getResult()?.chainHead.slice(-8) }}
           </div>
+
+          <!-- Solana anchor section -->
+          <div class="anchor-section">
+            <div v-if="anchorTx" class="anchor-success">
+              <q-icon name="verified" size="16px" color="positive" />
+              <a
+                :href="`https://explorer.solana.com/tx/${anchorTx}?cluster=devnet`"
+                target="_blank"
+                class="anchor-link"
+              >
+                {{ anchorTx.slice(0, 8) }}...{{ anchorTx.slice(-8) }}
+              </a>
+            </div>
+            <button
+              v-else
+              class="anchor-btn"
+              :disabled="anchoring"
+              @click="handleAnchor"
+            >
+              <q-spinner-dots v-if="anchoring" size="14px" />
+              <template v-else>Anclar a Solana</template>
+            </button>
+            <div v-if="anchorError" class="anchor-error">{{ anchorError }}</div>
+          </div>
         </div>
 
         <button class="action-btn primary" @click="handleBackToHome">
@@ -277,6 +373,13 @@ onUnmounted(() => cleanup())
         </button>
       </div>
     </div>
+
+    <!-- Signing loading overlay -->
+    <div v-if="signing" class="signing-overlay">
+      <q-spinner-dots size="32px" color="primary" />
+      <div>Firmando credencial...</div>
+    </div>
+    <div v-if="signError" class="sign-error-banner">{{ signError }}</div>
 
     <AnomalyOverlay
       v-if="anomalyVisible"
@@ -339,6 +442,12 @@ onUnmounted(() => cleanup())
   color: var(--text-muted);
 }
 
+.signed-badge {
+  color: var(--success) !important;
+  font-weight: 600;
+  font-size: 12px;
+}
+
 .qr-placeholder {
   margin: var(--space-lg) 0;
   display: flex;
@@ -358,6 +467,47 @@ onUnmounted(() => cleanup())
   color: var(--text-muted);
 }
 
+.anchor-section {
+  margin-top: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.anchor-btn {
+  padding: 8px 20px;
+  background: transparent;
+  border: 1px solid var(--primary);
+  border-radius: var(--radius-md);
+  color: var(--primary);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.anchor-btn:disabled {
+  opacity: 0.5;
+}
+
+.anchor-success {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: 12px;
+}
+
+.anchor-link {
+  color: var(--primary);
+  font-family: monospace;
+  text-decoration: none;
+}
+
+.anchor-error {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
 .action-btn {
   width: 100%;
   padding: var(--space-md);
@@ -371,5 +521,34 @@ onUnmounted(() => cleanup())
 .action-btn.primary {
   background: var(--primary);
   color: white;
+}
+
+.signing-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  color: var(--text-primary);
+  font-size: 14px;
+  z-index: 9999;
+}
+
+.sign-error-banner {
+  position: fixed;
+  bottom: var(--space-md);
+  left: var(--space-md);
+  right: var(--space-md);
+  padding: var(--space-sm);
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid var(--critical);
+  border-radius: var(--radius-md);
+  color: var(--critical);
+  font-size: 13px;
+  text-align: center;
+  z-index: 9999;
 }
 </style>

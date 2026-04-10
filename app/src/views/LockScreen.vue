@@ -1,13 +1,16 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useVaultStore } from '@/stores/vault'
 import { seedDemoInbox } from '@/composables/useDemoData'
+import { isRegistered } from '@/composables/useCrypto'
 
 const vault = useVaultStore()
 const router = useRouter()
 const unlocking = ref(false)
 const error = ref('')
+
+const isFirstTime = computed(() => !isRegistered())
 
 async function handleUnlock() {
   unlocking.value = true
@@ -20,8 +23,12 @@ async function handleUnlock() {
     } else {
       error.value = 'No se pudo desbloquear'
     }
-  } catch {
-    error.value = 'Error de autenticacion'
+  } catch (e: unknown) {
+    if (e instanceof DOMException && e.name === 'NotAllowedError') {
+      error.value = 'Autenticacion cancelada'
+    } else {
+      error.value = 'Error de autenticacion'
+    }
   } finally {
     unlocking.value = false
   }
@@ -34,11 +41,12 @@ async function handleUnlock() {
       <div class="logo">Attestto</div>
 
       <button class="unlock-btn" :disabled="unlocking" @click="handleUnlock">
-        <q-icon name="fingerprint" size="48px" />
+        <q-icon :name="isFirstTime ? 'person_add' : 'fingerprint'" size="48px" />
+        <q-spinner-dots v-if="unlocking" size="20px" color="primary" class="spinner" />
       </button>
 
       <p class="unlock-hint">
-        Desbloquear con biometrico o PIN
+        {{ isFirstTime ? 'Crear identidad' : 'Desbloquear con biometrico o PIN' }}
       </p>
 
       <p v-if="error" class="unlock-error">{{ error }}</p>
@@ -69,6 +77,7 @@ async function handleUnlock() {
 }
 
 .unlock-btn {
+  position: relative;
   width: 80px;
   height: 80px;
   border-radius: var(--radius-full);
@@ -89,6 +98,11 @@ async function handleUnlock() {
 
 .unlock-btn:disabled {
   opacity: 0.5;
+}
+
+.spinner {
+  position: absolute;
+  bottom: -24px;
 }
 
 .unlock-hint {

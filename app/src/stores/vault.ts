@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import type { VerifiableCredential } from '@attestto/module-sdk'
+import * as crypto from '@/composables/useCrypto'
 
 function seedDemoCredentials(): VerifiableCredential[] {
   return [
@@ -57,6 +58,7 @@ export const useVaultStore = defineStore('vault', () => {
   const unlocked = ref(false)
   const did = ref<string | null>(null)
   const displayName = ref<string | null>(null)
+  const publicKey = ref<string | null>(null)
   const credentials = ref<VerifiableCredential[]>([])
 
   const credentialTypes = computed(() =>
@@ -74,11 +76,17 @@ export const useVaultStore = defineStore('vault', () => {
     return grouped
   })
 
-  async function unlock(pin?: string): Promise<boolean> {
-    // TODO: real passkey/biometric/PIN verification
+  async function unlock(): Promise<boolean> {
+    if (crypto.isRegistered()) {
+      await crypto.authenticate()
+    } else {
+      await crypto.register('Attestto User')
+    }
+
     unlocked.value = true
-    did.value = 'did:sns:eduardo.sol'
-    displayName.value = 'Eduardo Chongkan'
+    did.value = crypto.getDID()
+    displayName.value = crypto.getDisplayName()
+    publicKey.value = crypto.getPublicKeyBase64url()
 
     // Load credentials from storage or seed demo data
     const stored = localStorage.getItem('attestto:vault:credentials')
@@ -97,6 +105,17 @@ export const useVaultStore = defineStore('vault', () => {
 
   function lock() {
     unlocked.value = false
+    crypto.clearSession()
+  }
+
+  async function sign(payload: string): Promise<{ signature: string; verificationMethod: string }> {
+    if (!crypto.isAuthenticated()) throw new Error('Vault locked')
+    const data = new TextEncoder().encode(payload)
+    const sig = crypto.sign(data)
+    return {
+      signature: crypto.toBase64url(sig),
+      verificationMethod: crypto.getVerificationMethod(),
+    }
   }
 
   function addCredential(vc: VerifiableCredential) {
@@ -113,11 +132,13 @@ export const useVaultStore = defineStore('vault', () => {
     unlocked,
     did,
     displayName,
+    publicKey,
     credentials,
     credentialTypes,
     credentialsByCountry,
     unlock,
     lock,
+    sign,
     addCredential,
     removeCredential,
   }

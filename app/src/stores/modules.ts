@@ -37,9 +37,9 @@ export const useModulesStore = defineStore('modules', () => {
         ),
       storeCredential: async (vc) => vault.addCredential(vc),
       pushInboxItem: (item) => inbox.push({ ...item, moduleId }),
-      requestBiometric: async (reason) => {
-        // TODO: real biometric prompt
-        return confirm(reason)
+      requestBiometric: async (_reason) => {
+        // Biometric is handled by WebAuthn during vault.sign()
+        return vault.unlocked
       },
       navigate: (path) => router.push(path),
       storage: {
