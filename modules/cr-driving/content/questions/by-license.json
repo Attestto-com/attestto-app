@@ -1,0 +1,924 @@
+{
+  "title": "COSEVI — Preguntas de Comprensión por Tipo de Licencia",
+  "description": "Questions test WHY rules exist, not law numbers. Each question is tagged with which licenses need to know it. A-license (motorcycle) holders are explicitly tagged when they need car/truck knowledge because they share the road with those vehicles.",
+  "source": "Manual del Conductor Automóvil — COSEVI Costa Rica 2026",
+  "license_legend": {
+    "ALL": "All license types",
+    "A": "Motorcycle / bicimoto licenses (A-1, A-2, A-3)",
+    "B": "Car / light vehicle licenses (B-1, B-2, B-3, B-4)",
+    "C": "Public transport (C-1 taxis, C-2 buses/busetas)",
+    "PRO": "Professional drivers (B-3, B-4, C, D, E — or any with 'P' supplement)",
+    "A+B": "Both motorcycle AND car drivers need this equally",
+    "A[car-knowledge]": "Motorcycle drivers SPECIFICALLY need to understand this about cars/trucks"
+  },
+  "sections": [
+
+    {
+      "section": "1. Conocimiento universal — todo conductor",
+      "applies_to": ["ALL"],
+      "note": "These concepts apply regardless of vehicle type. Every license holder must understand them.",
+      "questions": [
+        {
+          "id": "U-01",
+          "licenses": ["ALL"],
+          "q": "¿Por qué el factor humano se considera el más controlable de la trilogía vial (conductor, vehículo, entorno)?",
+          "options": [
+            "Porque los humanos cometen menos errores que las máquinas",
+            "Porque un conductor atento puede anticipar y compensar fallas del vehículo o del entorno, mientras que vehículo y entorno no pueden compensarse entre sí",
+            "Porque la ley impone mayor responsabilidad legal al conductor",
+            "Porque el vehículo y el entorno son siempre perfectos"
+          ],
+          "answer": 1,
+          "answer_text": "Porque un conductor atento puede anticipar y compensar fallas del vehículo o del entorno",
+          "why": "Un conductor experimentado puede adaptar su velocidad, posición y comportamiento ante una llanta desgastada, un bache o lluvia. El vehículo no puede adaptarse a un conductor distraído, ni la vía puede ajustarse sola."
+        },
+        {
+          "id": "U-02",
+          "licenses": ["ALL"],
+          "q": "¿Por qué duplicar la velocidad cuadruplica la distancia de frenado y no simplemente la duplica?",
+          "options": [
+            "Porque los frenos trabajan más lento a alta velocidad",
+            "Porque la energía cinética aumenta con el cuadrado de la velocidad — duplicar la velocidad multiplica por cuatro la energía que los frenos deben disipar",
+            "Porque el asfalto se vuelve más resbaladizo a alta velocidad",
+            "Es solo una estimación aproximada sin base física exacta"
+          ],
+          "answer": 1,
+          "answer_text": "Porque la energía cinética aumenta con el cuadrado de la velocidad",
+          "why": "Ej.: a 50 km/h se necesitan ~28 m para detenerse; a 100 km/h se necesitan ~84 m — tres veces más, no el doble. La física es clara: E = ½mv². Doblar la velocidad cuadruplica la energía a disipar."
+        },
+        {
+          "id": "U-03",
+          "licenses": ["ALL"],
+          "q": "El alcohol reduce el tiempo de reacción, la visión periférica y el juicio. ¿Por qué esto es especialmente peligroso si la persona 'se siente bien'?",
+          "options": [
+            "Porque sentirse bien indica que el efecto ya pasó",
+            "Porque el alcohol deteriora precisamente la capacidad de juzgar el propio deterioro — la persona cree estar en condiciones mientras su reacción ya está comprometida",
+            "Solo es peligroso si la persona siente mareo",
+            "Porque el alcohol solo afecta de noche"
+          ],
+          "answer": 1,
+          "answer_text": "Porque el alcohol deteriora precisamente la capacidad de juzgar el propio deterioro",
+          "why": "Esta es la trampa central del alcohol: ataca el juicio antes de que la persona lo perciba. Un conductor con 0.4 mg/L puede sentirse perfectamente lúcido mientras sus reflejos ya están a la mitad de su velocidad normal."
+        },
+        {
+          "id": "U-04",
+          "licenses": ["ALL"],
+          "q": "¿Por qué conducir con 17 horas sin dormir es comparable a conducir con 0.50 mg/L de alcohol?",
+          "options": [
+            "Porque ambas condiciones aumentan la velocidad del vehículo",
+            "Porque la privación de sueño deteriora el tiempo de reacción, la percepción del riesgo y la toma de decisiones de la misma forma que el alcohol",
+            "Solo aplica para conductores mayores de 40 años",
+            "Porque la ley los equipara para efectos de sanción"
+          ],
+          "answer": 1,
+          "answer_text": "Porque la privación de sueño deteriora el tiempo de reacción, la percepción del riesgo y la toma de decisiones de la misma forma que el alcohol",
+          "why": "Estudios de la OMS muestran que 17-19 horas sin dormir producen deterioro cognitivo equivalente a 0.50 mg/L de alcohol en sangre. La única solución real es dormir — el café solo enmascara el efecto temporalmente."
+        },
+        {
+          "id": "U-05",
+          "licenses": ["ALL"],
+          "q": "¿Por qué revisar el teléfono celular mientras se conduce a 90 km/h equivale a conducir a ciegas por más de 100 metros?",
+          "options": [
+            "Porque el teléfono emite radiación que afecta la visión",
+            "Porque a 90 km/h se recorren 25 metros por segundo, y leer un mensaje promedio toma 5 segundos — el conductor recorre más de 125 metros sin ver la vía",
+            "Solo aplica si se está enviando mensajes, no leyendo",
+            "Solo es peligroso en autopistas"
+          ],
+          "answer": 1,
+          "answer_text": "Porque a 90 km/h se recorren 25 metros por segundo, y leer un mensaje promedio toma 5 segundos — más de 125 metros sin ver",
+          "why": "El peligro es concreto y calculable. En esos 125 metros puede aparecer un peatón, una frenada brusca, una señal de STOP, o una curva — sin que el conductor lo haya visto."
+        },
+        {
+          "id": "U-06",
+          "licenses": ["ALL"],
+          "q": "A mayor velocidad, el campo visual se reduce (efecto túnel). A 130 km/h puede reducirse a solo 30 grados. ¿Qué consecuencia práctica tiene esto para la seguridad vial?",
+          "options": [
+            "El conductor ve mejor lo que está justo al frente, lo que mejora la seguridad",
+            "Peatones, ciclistas y vehículos laterales quedan fuera del campo visual y no se perciben, aunque el conductor crea estar atento",
+            "Solo afecta a conductores con problemas de visión preexistentes",
+            "El efecto solo ocurre en curvas"
+          ],
+          "answer": 1,
+          "answer_text": "Peatones, ciclistas y vehículos laterales quedan fuera del campo visual y no se perciben",
+          "why": "Con campo visual de 30 grados (de 180 normales), el 83% del entorno visible queda oculto. Un peatón cruzando a 45 grados de la línea de visión es completamente invisible para el conductor — aunque esté perfectamente iluminado."
+        },
+        {
+          "id": "U-07",
+          "licenses": ["ALL"],
+          "q": "¿Por qué la cortesía al conducir es una herramienta de seguridad vial y no solo de educación?",
+          "options": [
+            "Porque la ley obliga a ser cortés en la vía",
+            "Porque ceder el paso y no presionar a otros conductores reduce maniobras bruscas, cambios de carril impulsivos y situaciones de 'road rage' que causan accidentes reales",
+            "Porque la cortesía solo mejora el estado de ánimo, sin efecto en seguridad",
+            "Solo aplica entre conductores profesionales"
+          ],
+          "answer": 1,
+          "answer_text": "Porque ceder el paso y no presionar a otros reduce maniobras bruscas y situaciones de 'road rage' que causan accidentes reales",
+          "why": "La agresividad al volante genera respuestas impulsivas: frenadas bruscas, cortes de carril, aceleradas. Cada una de esas respuestas es un evento de riesgo real. La cortesía no es urbanidad — es ingeniería del comportamiento aplicada a la seguridad."
+        },
+        {
+          "id": "U-08",
+          "licenses": ["ALL"],
+          "q": "¿Por qué la señal de un oficial de tránsito prevalece sobre un semáforo en verde?",
+          "options": [
+            "Porque los oficiales tienen jerarquía legal sobre las máquinas",
+            "Porque el oficial tiene información en tiempo real que el semáforo no tiene — puede haber un accidente, emergencia o situación especial adelante que hace peligroso avanzar",
+            "Solo aplica si el semáforo está averiado",
+            "Solo en zonas escolares"
+          ],
+          "answer": 1,
+          "answer_text": "Porque el oficial tiene información en tiempo real que el semáforo no tiene",
+          "why": "Un semáforo es control automático; el oficial es control inteligente. El oficial puede ver lo que el semáforo no puede: un choque justo después de la intersección, una ambulancia que viene, una procesión. Su señal siempre tiene prioridad."
+        },
+        {
+          "id": "U-09",
+          "licenses": ["ALL"],
+          "q": "¿Por qué el tren tiene prioridad máxima sobre todos los demás vehículos en un paso a nivel?",
+          "options": [
+            "Porque el tren pertenece al Estado y tiene jerarquía legal especial",
+            "Porque un tren no puede detenerse rápidamente — su distancia de frenado puede superar 1 kilómetro, por lo que ceder el paso es la única forma de evitar una colisión",
+            "Solo en pasos sin barreras automáticas",
+            "Porque los trenes viajan más rápido que los vehículos"
+          ],
+          "answer": 1,
+          "answer_text": "Porque un tren no puede detenerse rápidamente — su distancia de frenado puede superar 1 km",
+          "why": "Un conductor puede frenar un auto en 30-80 metros. Un tren de carga puede necesitar más de 1,000 metros para detenerse. Es físicamente imposible que el tren ceda el paso — la única parte que puede evitar la colisión es el vehículo en la vía."
+        },
+        {
+          "id": "U-10",
+          "licenses": ["ALL"],
+          "q": "¿Por qué no se debe mover a un herido en un accidente de tránsito a menos que haya peligro inmediato como un incendio?",
+          "options": [
+            "Porque moverlo puede causarle dolor innecesario",
+            "Porque puede tener lesiones de columna vertebral — moverla incorrectamente puede cortar la médula espinal, causando parálisis permanente o muerte",
+            "Porque la ley prohíbe manipular a los heridos antes de que llegue la policía",
+            "Solo aplica si el herido está inconsciente"
+          ],
+          "answer": 1,
+          "answer_text": "Porque puede tener lesiones de columna vertebral que, al moverlo, pueden causar parálisis o muerte",
+          "why": "Un impacto de tránsito puede fracturar vértebras cervicales sin que sea visible externamente. Mover al herido sin inmovilización correcta puede desplazar esa fractura y seccionar la médula. El 911 tiene personal entrenado para mover heridos de forma segura."
+        },
+        {
+          "id": "U-11",
+          "licenses": ["ALL"],
+          "q": "¿Por qué a pesar de que el semáforo esté en verde, debe verificar que la intersección esté despejada antes de cruzar?",
+          "options": [
+            "Porque el semáforo puede estar averiado",
+            "Porque otro conductor puede haber ignorado su rojo — el verde le da derecho de paso pero no garantiza que la intersección esté físicamente libre de vehículos",
+            "Solo de noche o con lluvia",
+            "Solo en intersecciones sin semáforos peatonales"
+          ],
+          "answer": 1,
+          "answer_text": "Porque otro conductor puede haber ignorado su rojo — el verde da derecho pero no garantiza que la intersección esté libre",
+          "why": "El semáforo es instrucción, no barrera física. Las colisiones más graves ocurren en intersecciones porque alguien pasó en rojo. La verificación visual aunque sea de un segundo puede salvar la vida."
+        },
+        {
+          "id": "U-12",
+          "licenses": ["ALL"],
+          "q": "¿Por qué no debe nunca cruzar una zona inundada sin conocer la profundidad del agua?",
+          "options": [
+            "Porque el agua puede dañar el motor del vehículo",
+            "Porque una corriente de agua de apenas 30 cm puede arrastrar un vehículo, y debajo del agua pueden ocultarse alcantarillas abiertas o huecos que inmovizan o vuelcan el vehículo",
+            "Solo si la lluvia continúa activa",
+            "Solo aplica para vehículos sin tracción en las cuatro ruedas"
+          ],
+          "answer": 1,
+          "answer_text": "Porque 30 cm de agua en movimiento pueden arrastrar un vehículo, y debajo pueden ocultarse huecos o alcantarillas abiertas",
+          "why": "Lo que parece una inundación superficial puede ocultar una alcantarilla abierta que hunde el vehículo. Y la corriente de agua, aunque baja, ejerce una fuerza lateral que puede superar el peso del vehículo. El riesgo invisible es el mayor peligro."
+        },
+        {
+          "id": "U-13",
+          "licenses": ["ALL"],
+          "q": "¿Por qué los cuatro factores de riesgo (exposición, posibilidad de accidente, gravedad de lesiones, atención post-accidente) se multiplican entre sí y no simplemente se suman?",
+          "options": [
+            "Es solo una metáfora, en realidad sí se suman",
+            "Porque cada factor potencia los demás: llanta desgastada + lluvia + velocidad excesiva + no cinturón = pérdida de control, impacto grave y lesiones fatales. Sin uno de ellos el resultado sería radicalmente diferente",
+            "Solo aplica cuando hay más de 3 factores simultáneos",
+            "Porque la ley los trata como acumulables en las sanciones"
+          ],
+          "answer": 1,
+          "answer_text": "Porque cada factor potencia los demás — cada uno que se elimina reduce radicalmente el resultado final",
+          "why": "Llanta desgastada sola: riesgo bajo. Llanta desgastada + lluvia: riesgo moderado. Llanta desgastada + lluvia + velocidad excesiva: riesgo alto. Llanta desgastada + lluvia + velocidad excesiva + sin cinturón: riesgo de muerte. Eliminar cualquier factor rompe la cadena."
+        }
+      ]
+    },
+
+    {
+      "section": "2. Licencia A — Motocicletas y bicimotos (A-1, A-2, A-3)",
+      "applies_to": ["A"],
+      "note": "Questions specific to motorcycle and bicimoto operation. Some also appear in the shared section because they apply to all, but are repeated here with motorcycle-specific framing.",
+      "questions": [
+        {
+          "id": "A-01",
+          "licenses": ["A"],
+          "q": "¿Por qué los motociclistas deben mantener las luces encendidas las 24 horas del día, incluso de día con sol?",
+          "options": [
+            "Porque la ley lo impone sin justificación técnica específica",
+            "Porque una motocicleta es más angosta y difícil de detectar que un automóvil — la luz encendida de día aumenta significativamente su visibilidad para otros conductores en intersecciones y adelantamientos",
+            "Porque las motos consumen menos electricidad",
+            "Solo aplica para motos de alta cilindrada (A-3)"
+          ],
+          "answer": 1,
+          "answer_text": "Porque la moto es más difícil de detectar — la luz de día aumenta su visibilidad para otros conductores",
+          "why": "Estudios muestran que las luces diurnas en motocicletas reducen hasta un 30% los accidentes donde otro conductor 'no vio' la moto. A diferencia de un automóvil de 2 metros de ancho, una moto puede ser confundida con un poste o desaparecer en el punto ciego de un espejo."
+        },
+        {
+          "id": "A-02",
+          "licenses": ["A"],
+          "q": "En una curva, el viento lateral o una irregularidad del asfalto puede desplazar lateralmente a un motociclista. ¿Qué debe hacer un conductor de automóvil al adelantar a una moto y por qué importa que entienda esto?",
+          "options": [
+            "Adelantar rápidamente para reducir el tiempo de exposición al riesgo",
+            "Dejar mínimo 1.5 metros de separación lateral, porque el movimiento lateral de la moto puede ser involuntario e impredecible — si el auto está demasiado cerca, la consecuencia para el motociclista es fatal",
+            "Tocar el claxon para avisar al motociclista que va a pasar",
+            "Solo aplica en autopistas"
+          ],
+          "answer": 1,
+          "answer_text": "Dejar mínimo 1.5 m porque el movimiento lateral de la moto puede ser involuntario",
+          "why": "Esta pregunta es para el motociclista — pero también para los automovilistas. El motociclista necesita entender el riesgo al que lo expone quien adelanta muy cerca; el automovilista necesita entender por qué la distancia lateral mínima de 1.5 m no es exagerada."
+        },
+        {
+          "id": "A-03",
+          "licenses": ["A"],
+          "q": "Como motociclista, ¿por qué debe posicionarse en el tercio izquierdo del carril (no en el borde derecho) cuando circula en una vía de un solo sentido?",
+          "options": [
+            "Para adelantar más fácilmente a otros vehículos",
+            "Para ser más visible en los espejos de los vehículos de adelante y para reducir el riesgo de que abran una puerta de auto sin verificar",
+            "Porque el carril derecho tiene peor asfalto en Costa Rica",
+            "Para no molestar a los ciclistas en el borde"
+          ],
+          "answer": 1,
+          "answer_text": "Para ser más visible en los espejos de adelante y reducir el riesgo del 'efecto puerta'",
+          "why": "Si el motociclista va por el borde derecho, es invisible en el espejo del auto de adelante y está en la trayectoria directa de una puerta que se abre. En el tercio izquierdo está en la línea de visión del espejo interior del vehículo y más lejos de las puertas."
+        },
+        {
+          "id": "A-04",
+          "licenses": ["A"],
+          "q": "¿Por qué el equipo de protección (casco, guantes, chaqueta, botas) es especialmente crítico para un motociclista comparado con un conductor de automóvil?",
+          "options": [
+            "Porque la ley exige equipo de protección solo para motociclistas",
+            "Porque en un accidente el motociclista no tiene estructura metálica, airbags ni cinturón entre su cuerpo y el impacto — el equipo es el único sistema de seguridad pasiva disponible",
+            "Porque las motos viajan a mayor velocidad que los autos",
+            "Porque el equipo reduce el consumo de combustible"
+          ],
+          "answer": 1,
+          "answer_text": "Porque el motociclista no tiene estructura metálica, airbags ni cinturón — el equipo es su único sistema de seguridad pasiva",
+          "why": "El auto tiene zona de deformación programada, airbags, cinturón y estructura de jaula de seguridad. El motociclista tiene exactamente nada de eso. Su casco es su airbag; su chaqueta con protecciones es su zona de deformación. Sin equipo, cualquier caída puede ser fatal."
+        },
+        {
+          "id": "A-05",
+          "licenses": ["A"],
+          "q": "¿Por qué una motocicleta frena más rápido que un automóvil pero es más peligrosa en frenadas de emergencia?",
+          "options": [
+            "Porque las motos tienen frenos más pequeños y menos efectivos",
+            "Porque la moto tiene menor distancia de frenado pero también mucho menor estabilidad — un error en la técnica de frenado (bloquear la rueda trasera o delantera) puede causar una caída en lugar de una parada controlada",
+            "Porque los motociclistas tienen menos experiencia que los automovilistas",
+            "Solo en superficies mojadas"
+          ],
+          "answer": 1,
+          "answer_text": "Porque la moto frena rápido pero un error de técnica (bloquear rueda) provoca caída en lugar de detención",
+          "why": "En un auto, bloquear las ruedas al frenar causa que el vehículo se deslice pero se mantiene en cuatro ruedas. En una moto, bloquear la rueda delantera puede volcar el vehículo instantáneamente; bloquear la trasera puede causar derrape lateral. La técnica de frenado en moto es crítica."
+        },
+        {
+          "id": "A-06",
+          "licenses": ["A"],
+          "q": "Como motociclista, ¿por qué debe prestar especial atención a las marcas de aceite o combustible derramado en el asfalto?",
+          "options": [
+            "Porque pueden ensuciar el motor de la moto",
+            "Porque una llanta de moto tiene mucho menos área de contacto con el asfalto que las cuatro ruedas de un auto — cualquier reducción de fricción tiene un impacto desproporcionado en la estabilidad y el frenado",
+            "Solo aplica en gasolineras",
+            "Porque el olor del combustible distraee al motociclista"
+          ],
+          "answer": 1,
+          "answer_text": "Porque la llanta de moto tiene menos área de contacto — cualquier reducción de fricción tiene impacto desproporcionado en estabilidad y frenado",
+          "why": "Un auto tiene cuatro ruedas con una superficie de contacto total de ~800 cm². Una moto tiene dos ruedas con ~200 cm² de contacto total. Al pasar sobre aceite, el auto puede compensar con las otras ruedas; la moto no tiene esa redundancia — puede deslizarse sin aviso."
+        }
+      ]
+    },
+
+    {
+      "section": "3. Lo que un conductor de moto DEBE saber sobre autos y camiones",
+      "applies_to": ["A"],
+      "tag": "A[car-knowledge]",
+      "note": "Motorcycle riders share the road with cars and trucks. Understanding HOW those vehicles work is essential for predicting their behavior and staying safe around them.",
+      "questions": [
+        {
+          "id": "AC-01",
+          "licenses": ["A"],
+          "tag": "A[car-knowledge]",
+          "q": "Como motociclista, ¿por qué nunca debe circular en el punto ciego lateral de un automóvil?",
+          "options": [
+            "Porque es más ruidoso estar al costado del auto",
+            "Porque los espejos de los autos no cubren la zona lateral trasera — el conductor del auto literalmente no puede verle aunque lo busque, y puede cambiar de carril sobre usted",
+            "Solo aplica en autopistas de varios carriles",
+            "Porque los automovilistas cambian de carril sin señalizar"
+          ],
+          "answer": 1,
+          "answer_text": "Porque los espejos del auto no cubren ese punto — el conductor no puede verle aunque lo intente",
+          "why": "El punto ciego de un automóvil típico está en el costado trasero, más o menos a la altura de la ventana trasera lateral. Si una moto está ahí, no aparece en ningún espejo del auto. El conductor puede verificar los espejos, no verla, y cambiar de carril. La moto es la que pierde."
+        },
+        {
+          "id": "AC-02",
+          "licenses": ["A"],
+          "tag": "A[car-knowledge]",
+          "q": "Un camión pesado frena en una intersección. ¿Por qué como motociclista debe dejar una distancia mucho mayor detrás de un camión que detrás de un auto?",
+          "options": [
+            "Porque los camiones ocupan más espacio en la vía",
+            "Porque un camión cargado necesita hasta 10 veces más distancia de frenado que una moto — si usted frena con la moto al mismo tiempo, el camión de atrás puede aplastarlo aunque él también esté frenando",
+            "Porque los camiones echan gases que afectan al motociclista",
+            "Solo en carreteras interurbanas"
+          ],
+          "answer": 1,
+          "answer_text": "Porque un camión necesita hasta 10 veces más distancia de frenado — si viene detrás, aunque frene, puede no detenerse a tiempo",
+          "why": "Una moto de 200 kg puede frenar en 20-30 metros. Un camión de 30,000 kg puede necesitar 150-200 metros. Si el motociclista frena bruscamente y el camión viene detrás, la diferencia en distancia de frenado significa que el camión puede alcanzar a la moto incluso frenando con toda su fuerza."
+        },
+        {
+          "id": "AC-03",
+          "licenses": ["A"],
+          "tag": "A[car-knowledge]",
+          "q": "Un camión de carga va a girar a la derecha en una intersección y tiene la señal puesta. ¿Por qué como motociclista NO debe aprovechar ese espacio para adelantar por la derecha?",
+          "options": [
+            "Porque está prohibido adelantar a camiones por la derecha en Costa Rica",
+            "Porque los camiones necesitan ampliar su giro hacia la izquierda primero antes de girar a la derecha — ese espacio que parece vacío a la derecha será ocupado por el camión durante el giro, aplastando lo que esté ahí",
+            "Porque los camiones tienen bocinas muy fuertes",
+            "Solo aplica si el camión lleva carga peligrosa"
+          ],
+          "answer": 1,
+          "answer_text": "Porque el camión debe abrir a la izquierda antes de girar a la derecha — ese espacio vacío a la derecha será ocupado por el giro",
+          "why": "Un camión largo no puede girar a la derecha en radio cerrado. Primero se desplaza hacia la izquierda para crear espacio y luego gira ampliamente a la derecha. El espacio que abre hacia la derecha es una trampa — desaparece cuando el camión hace el giro y aplasta lo que esté ahí."
+        },
+        {
+          "id": "AC-04",
+          "licenses": ["A"],
+          "tag": "A[car-knowledge]",
+          "q": "¿Por qué el viento turbulento que genera un camión al pasar a alta velocidad es peligroso para un motociclista?",
+          "options": [
+            "Porque el viento contamina el filtro de aire de la moto",
+            "Porque el viento del camión puede empujar lateralmente la moto — si el motociclista no anticipa esa fuerza y sujeta firmemente el manubrio, puede perder el control",
+            "Solo si el camión va a más de 100 km/h",
+            "No es peligroso si el camión pasa por el carril contrario"
+          ],
+          "answer": 1,
+          "answer_text": "Porque el viento del camión puede empujar lateralmente la moto — el motociclista puede perder control si no anticipa esa fuerza",
+          "why": "Un camión de 20 toneladas desplaza un volumen enorme de aire. Al pasar, primero empuja la moto hacia afuera y luego crea un efecto de succión que la jala hacia adentro. En autopista a 100 km/h ese efecto puede desestabilizar una moto si el piloto no está preparado y con agarre firme."
+        },
+        {
+          "id": "AC-05",
+          "licenses": ["A"],
+          "tag": "A[car-knowledge]",
+          "q": "Un automóvil que viene de frente activa sus luces altas. ¿Qué debe hacer el motociclista y por qué NO debe responder activando también sus luces altas?",
+          "options": [
+            "Activar también las luces altas para que el otro conductor sepa que las tiene",
+            "Mantener la vista en el borde derecho de la calzada para no quedar cegado, reducir velocidad y NO responder con luces altas — porque las altas deslumbran al otro conductor y pueden causar el mismo accidente que se quiere evitar",
+            "Frenar completamente y detenerse al borde",
+            "Parpadear las luces bajas para avisar que le deslumbra"
+          ],
+          "answer": 1,
+          "answer_text": "Mirar al borde derecho, reducir velocidad, NO responder con altas — porque deslumbrar al otro puede causar el accidente",
+          "why": "La 'guerra de luces' es uno de los errores más comunes y peligrosos. Si ambos conductores se deslumbran mutuamente, ambos pierden visión temporalmente en el mismo instante — exactamente cuando más se necesita ver. La solución es mirar al borde derecho, que siempre está iluminado."
+        },
+        {
+          "id": "AC-06",
+          "licenses": ["A"],
+          "tag": "A[car-knowledge]",
+          "q": "¿Por qué un motociclista debe esperar a que el vehículo de adelante haya pasado el obstáculo (bache, charco, animal) antes de maniobrar para esquivarlo él mismo?",
+          "options": [
+            "Por cortesía hacia el conductor de adelante",
+            "Porque el auto de adelante puede frenar bruscamente o maniobrar en ese obstáculo — si el motociclista ya está maniobrando en ese instante, ambas acciones simultáneas pueden causar una colisión",
+            "Solo aplica en carreteras de un solo carril",
+            "Porque los baches afectan más a los autos que a las motos"
+          ],
+          "answer": 1,
+          "answer_text": "Porque el auto de adelante puede frenar o maniobrar al mismo tiempo — dos maniobras simultáneas pueden chocar",
+          "why": "Anticiparse demasiado a un obstáculo sin saber qué va a hacer el vehículo de adelante es un riesgo oculto. Si el auto frena para pasar el bache despacio justo cuando el motociclista ya está maniobrando a su lado para esquivarlo, la colisión es casi inevitable."
+        }
+      ]
+    },
+
+    {
+      "section": "4. Licencia B — Automóviles y vehículos livianos (B-1, B-2, B-3, B-4)",
+      "applies_to": ["B"],
+      "questions": [
+        {
+          "id": "B-01",
+          "licenses": ["B"],
+          "q": "¿Por qué la parte horizontal del cinturón de seguridad debe ir sobre las caderas y NO sobre el abdomen?",
+          "options": [
+            "Por comodidad del pasajero durante viajes largos",
+            "Porque sobre el abdomen, en un impacto, la fuerza de retención se concentra en órganos blandos y puede causar lesiones internas graves, incluyendo ruptura de órganos",
+            "Porque el anclaje del cinturón está diseñado para la posición de la cadera",
+            "Solo aplica para mujeres embarazadas"
+          ],
+          "answer": 1,
+          "answer_text": "Porque sobre el abdomen el cinturón puede causar ruptura de órganos internos en el impacto",
+          "why": "La cadera es la estructura ósea más sólida para absorber la fuerza del cinturón. El abdomen no tiene protección ósea. En un impacto a 60 km/h, la fuerza que retiene a una persona de 70 kg es equivalente a 3,500 kg durante milisegundos — esa fuerza sobre el abdomen puede ser fatal."
+        },
+        {
+          "id": "B-02",
+          "licenses": ["B"],
+          "q": "¿Por qué los menores de 12 años no pueden ir en el asiento delantero si el vehículo tiene airbag frontal?",
+          "options": [
+            "Porque la ley lo prohíbe sin una razón técnica específica",
+            "Porque el airbag se infla con fuerza suficiente para romper el cuello o causar traumatismo craneal a un niño cuyo cuerpo no tiene la masa ni la posición para recibirlo correctamente",
+            "Porque los niños se distraen más en el asiento delantero",
+            "Solo aplica si el niño mide menos de 1.20 metros"
+          ],
+          "answer": 1,
+          "answer_text": "Porque el airbag se infla con una fuerza que puede causar traumatismo craneal o cervical fatal a un niño",
+          "why": "El airbag está diseñado para un adulto de ~70 kg sentado a cierta distancia. Un niño está más cerca del tablero y su cabeza queda exactamente en la trayectoria del airbag al inflarse. La energía de inflado puede ser más peligrosa para el niño que el impacto mismo."
+        },
+        {
+          "id": "B-03",
+          "licenses": ["B"],
+          "q": "¿Por qué con el sistema ABS debe presionar el freno CON TODA LA FUERZA en una emergencia en lugar de bombear suavemente?",
+          "options": [
+            "Porque el ABS necesita alta presión para activarse",
+            "Porque el ABS electrónicamente bombea el freno decenas de veces por segundo — si el conductor bombea manualmente, interfiere con ese ciclo y reduce la efectividad del sistema",
+            "Porque bombear suavemente daña el ABS",
+            "Solo aplica en superficies mojadas"
+          ],
+          "answer": 1,
+          "answer_text": "Porque el ABS ya bombea decenas de veces por segundo — el conductor no debe interferir con ese ciclo",
+          "why": "Un humano puede bombear un freno 2-3 veces por segundo. El ABS puede hacerlo 15-20 veces por segundo, exactamente calibrado para la velocidad y la tracción disponible. Bombear manualmente interrumpe ese ritmo y hace que el sistema trabaje menos eficientemente."
+        },
+        {
+          "id": "B-04",
+          "licenses": ["B"],
+          "q": "La luz de aceite roja se enciende mientras conduce. ¿Por qué debe detenerse INMEDIATAMENTE aunque el motor parezca funcionar bien?",
+          "options": [
+            "Porque la ley obliga a detenerse cuando se enciende cualquier luz del tablero",
+            "Porque la luz de aceite indica presión crítica — sin lubricación adecuada, el motor puede fundirse en menos de 60 segundos aunque suene normal, causando daño irreparable",
+            "Porque indica que el nivel de aceite bajó y debe agregarse antes de continuar",
+            "Solo si la luz parpadea en lugar de quedarse fija"
+          ],
+          "answer": 1,
+          "answer_text": "Porque sin presión de aceite el motor puede fundirse en menos de 60 segundos, aunque suene normal",
+          "why": "El aceite es la película que separa las piezas metálicas en movimiento. Sin ella, el metal raspa metal directamente. La fricción genera calor exponencialmente — el motor puede destruirse en segundos sin que el conductor note nada inusual hasta que ya es tarde."
+        },
+        {
+          "id": "B-05",
+          "licenses": ["B"],
+          "q": "¿Por qué en una pendiente de bajada pronunciada se recomienda usar marchas bajas en lugar de frenar continuamente con el pedal?",
+          "options": [
+            "Para ahorrar las pastillas de freno",
+            "Porque frenar continuamente genera calor acumulado que puede hacer hervir el líquido de frenos o desgastar las pastillas al punto de pérdida total de frenado ('fading') — las marchas bajas distribuyen esa carga al motor",
+            "Porque la transmisión es más eficiente en descenso",
+            "Solo aplica para vehículos de transmisión manual"
+          ],
+          "answer": 1,
+          "answer_text": "Porque el frenado continuo sobrecalienta los frenos hasta 'fading' — las marchas bajas comparten la carga con el freno motor",
+          "why": "'Fading' es cuando el freno deja de responder por sobrecalentamiento. En una bajada larga, el pedal puede hundirse completamente sin que el vehículo desacelere. Usar marcha baja convierte al motor en un freno adicional que disipa calor de forma diferente, protegiendo el sistema de frenos."
+        },
+        {
+          "id": "B-06",
+          "licenses": ["B"],
+          "q": "¿Por qué no abrir la tapa del radiador cuando el motor está caliente, aunque el indicador de temperatura marque en rojo?",
+          "options": [
+            "Porque el motor necesita enfriarse para que el radiador funcione correctamente",
+            "Porque el líquido refrigerante está a presión y temperatura superiores a 100°C — al abrir la tapa, el vapor y el líquido hirviendo salen proyectados violentamente causando quemaduras graves",
+            "Porque al abrir se pierde el refrigerante necesario para enfriarlo",
+            "Solo aplica para motores de más de 2,000 cc"
+          ],
+          "answer": 1,
+          "answer_text": "Porque el refrigerante está a alta presión — al abrir, sale proyectado violentamente causando quemaduras graves",
+          "why": "El sistema de enfriamiento opera a 1.5 bar de presión y el agua hierve a más de 120°C dentro del circuito. Al abrir la tapa en caliente, esa presión se libera instantáneamente en forma de vapor y líquido que puede alcanzar el rostro y manos del conductor."
+        },
+        {
+          "id": "B-07",
+          "licenses": ["B"],
+          "q": "Al estacionar en una pendiente de subida, ¿por qué debe girar las ruedas hacia AFUERA de la acera (hacia la calzada)?",
+          "options": [
+            "Para facilitar salir del estacionamiento cuesta abajo",
+            "Para que si el freno de mano falla y el vehículo rueda hacia atrás, la rueda choque inmediatamente contra el bordillo de la acera y lo detenga antes de que coja velocidad",
+            "Solo si la pendiente supera 15 grados",
+            "Por norma estética de estacionamiento paralelo"
+          ],
+          "answer": 1,
+          "answer_text": "Para que si el freno falla, la rueda choque contra el bordillo y detenga el vehículo antes de que coja velocidad",
+          "why": "Con las ruedas giradas hacia afuera, un movimiento de solo 10-20 cm hacia atrás hace que la rueda se plante contra el bordillo. Con las ruedas recto o giradas hacia adentro, el vehículo puede rodar indefinidamente cuesta abajo. Es un seguro físico de emergencia."
+        },
+        {
+          "id": "B-08",
+          "licenses": ["B"],
+          "q": "¿Por qué en transmisión automática está PROHIBIDO poner en posición N (Neutral) mientras se desciende una pendiente?",
+          "options": [
+            "Porque N daña la caja automática en descenso",
+            "Porque en Neutral el motor se desconecta de las ruedas y se pierde el freno motor — el vehículo acelera libremente sin control, y los frenos de disco solos pueden sobrecalentarse y fallar en descensos largos",
+            "Solo aplica si no hay cruise control",
+            "Porque en Neutral el motor se apaga automáticamente"
+          ],
+          "answer": 1,
+          "answer_text": "Porque en Neutral se pierde el freno motor — el vehículo acelera libre y los frenos pueden sobrecalentarse solos",
+          "why": "El freno motor convierte el impulso descendente en resistencia mecánica del motor. En Neutral esa resistencia desaparece — el vehículo acelera sin control. Los frenos de disco, ahora solos sin el freno motor, pueden sobrecalentarse y perder efectividad ('fading')."
+        },
+        {
+          "id": "B-09",
+          "licenses": ["B"],
+          "q": "¿Por qué las mascotas nunca deben viajar sueltas en el habitáculo del vehículo?",
+          "options": [
+            "Porque pueden ensuciar el tapizado",
+            "Porque en una frenada brusca o colisión, una mascota suelta sale proyectada a la misma velocidad del vehículo y puede impactar a los ocupantes con una fuerza equivalente a su peso multiplicado por la deceleración",
+            "Solo aplica si la mascota pesa más de 10 kg",
+            "Porque puede molestar al conductor"
+          ],
+          "answer": 1,
+          "answer_text": "Porque en una frenada o colisión la mascota sale proyectada con una fuerza que puede lesionar gravemente a los ocupantes",
+          "why": "Un perro de 10 kg en un choque a 50 km/h se convierte en un proyectil de 300 kg de fuerza de impacto. Esto puede matar a un niño o lesionar gravemente a un adulto. Y la mascota misma no tiene ninguna protección."
+        },
+        {
+          "id": "B-10",
+          "licenses": ["B"],
+          "q": "¿Por qué el reposacabezas (headrest) es un elemento de SEGURIDAD y no solo de comodidad, y por qué debe estar a la altura de la cabeza?",
+          "options": [
+            "Para que el conductor pueda apoyar la cabeza en viajes largos",
+            "Porque en un impacto trasero la cabeza se proyecta hacia atrás violentamente ('latigazo cervical') — si el reposacabezas está a la altura correcta, detiene ese movimiento y evita fracturas cervicales o parálisis",
+            "Porque la ley exige reposacabezas en todos los asientos",
+            "Solo importa en asientos delanteros"
+          ],
+          "answer": 1,
+          "answer_text": "Porque detiene el 'latigazo cervical' en impactos traseros — sin él la cabeza puede fracturarse o causar lesión de médula",
+          "why": "En un impacto trasero, el cuerpo es empujado hacia adelante por el asiento pero la cabeza 'se queda atrás' un instante — luego regresa violentamente. Sin reposacabezas bien posicionado, ese movimiento puede exceder la resistencia del cuello. Mal posicionado (muy bajo), el cuello actúa como pivote y el resultado es peor."
+        },
+        {
+          "id": "B-11",
+          "licenses": ["B"],
+          "q": "¿Por qué el carril izquierdo en una autopista es para adelantar y luego regresar al derecho, aunque vaya al límite de velocidad?",
+          "options": [
+            "Porque el asfalto del carril izquierdo se desgasta más rápido",
+            "Porque ocupar permanentemente el carril izquierdo obstruye a conductores que necesitan adelantar, forzándolos a adelantar por la derecha (más peligroso) o a presionar al que va adelante, generando maniobras de riesgo",
+            "Porque el límite del carril izquierdo es siempre mayor",
+            "Solo aplica si hay más de tres carriles"
+          ],
+          "answer": 1,
+          "answer_text": "Porque fuerza a otros a adelantar por la derecha o presionar al de adelante — ambas situaciones generan accidentes",
+          "why": "El sistema de carriles funciona como un protocolo de fluidez. Si el carril izquierdo se usa para circular permanentemente, quien necesite adelantar no tiene dónde ir. El resultado es una acumulación de vehículos frustrados que eventualmente adelantan por donde no deben."
+        },
+        {
+          "id": "B-12",
+          "licenses": ["B"],
+          "q": "Al cambiar una batería descargada con cables, ¿por qué el último cable negro (-) se conecta a una parte metálica del chasis del vehículo averiado y NO a la batería descargada?",
+          "options": [
+            "Porque el metal conduce mejor que los bornes de la batería",
+            "Porque conectar el cable negativo a la batería puede generar una chispa cerca del hidrógeno que emite la batería, lo cual puede causar una explosión",
+            "Solo aplica para baterías de más de 5 años de uso",
+            "Porque dañaría el alternador del vehículo auxiliar"
+          ],
+          "answer": 1,
+          "answer_text": "Porque conectar en el borne puede generar chispa cerca del gas hidrógeno emitido por la batería, causando explosión",
+          "why": "Las baterías de plomo-ácido emiten gas hidrógeno al descargarse. El hidrógeno es altamente inflamable. Una chispa al conectar el cable cerca del borne puede ignitar ese gas. Conectar en el chasis (lejos de la batería) hace la chispa en un lugar sin gas inflamable."
+        }
+      ]
+    },
+
+    {
+      "section": "5. Conductores profesionales (B-3, B-4, C, D, E — incluye agregado P)",
+      "applies_to": ["PRO"],
+      "note": "Professional drivers have zero alcohol tolerance and additional responsibilities. These questions address the WHY of their heightened standards.",
+      "questions": [
+        {
+          "id": "P-01",
+          "licenses": ["PRO"],
+          "q": "¿Por qué el límite de alcohol para un conductor profesional es 0.0 mg/L y no 0.50 mg/L como para el conductor común?",
+          "options": [
+            "Porque la ley impone mayores restricciones a los profesionales",
+            "Porque un conductor profesional transporta personas o mercancías de terceros — cualquier deterioro de sus capacidades pone en riesgo vidas que dependen completamente de él, y su actividad es repetida a diario durante muchas horas",
+            "Porque los vehículos profesionales son más grandes y difíciles de manejar",
+            "Solo aplica para conductores de buses con más de 20 pasajeros"
+          ],
+          "answer": 1,
+          "answer_text": "Porque transporta personas o mercancías ajenas, su actividad es diaria e intensa, y cualquier deterioro pone en riesgo a quienes dependen de él",
+          "why": "El conductor de un bus con 44 pasajeros tiene 44 vidas bajo su responsabilidad directa. El conductor de un camión de combustible puede causar una catástrofe. La exposición repetida (6-10 horas diarias de conducción) también aumenta la acumulación de fatiga. La tolerancia cero no es exageración."
+        },
+        {
+          "id": "P-02",
+          "licenses": ["PRO"],
+          "q": "¿Por qué las pausas obligatorias cada cierta cantidad de horas de conducción existen para conductores profesionales?",
+          "options": [
+            "Para permitir la revisión mecánica del vehículo en ruta",
+            "Porque la fatiga acumulada deteriora el tiempo de reacción y el juicio de forma similar al alcohol — después de 4-5 horas de conducción continua, el deterioro es significativo aunque el conductor crea estar alerta",
+            "Para cumplir con los horarios de las rutas autorizadas",
+            "Solo aplica para conductores de más de 50 años"
+          ],
+          "answer": 1,
+          "answer_text": "Porque la fatiga acumulada deteriora el tiempo de reacción de forma similar al alcohol, aunque el conductor crea estar bien",
+          "why": "La conducción profesional es cognitivamente exigente durante muchas horas. Estudios muestran que después de 4 horas continuas de conducción, el tiempo de reacción aumenta un 20-30% aunque la persona se sienta alerta. Las pausas de 20 minutos restauran parcialmente la capacidad cognitiva."
+        },
+        {
+          "id": "P-03",
+          "licenses": ["PRO", "B"],
+          "q": "¿Por qué nunca debe cortarle el paso a un camión cargado aunque haya suficiente espacio físico para insertarse adelante de él?",
+          "options": [
+            "Por respeto al conductor profesional",
+            "Porque un camión cargado necesita hasta 3 veces más distancia de frenado que un automóvil a la misma velocidad — el espacio que 'parece suficiente' puede ser insuficiente para que el camión frene si usted tiene que detenerse",
+            "Solo en vías secundarias sin separador central",
+            "Porque los camiones tienen prioridad de paso por ley"
+          ],
+          "answer": 1,
+          "answer_text": "Porque el camión necesita hasta 3 veces más distancia de frenado — el espacio que parece suficiente puede no serlo",
+          "why": "A 80 km/h, un camión de 30 toneladas necesita ~120 metros para detenerse. Un auto necesita ~57 metros. Si usted se inserta con 70 metros de distancia y frena de emergencia, el camionero no puede hacer nada: físicamente no puede detenerse a tiempo."
+        },
+        {
+          "id": "P-04",
+          "licenses": ["PRO"],
+          "q": "¿Por qué la carga de un camión debe asegurarse aunque el trayecto sea corto y a baja velocidad?",
+          "options": [
+            "Solo para cumplir con la inspección de tránsito",
+            "Porque en una frenada de emergencia, la inercia puede proyectar objetos hacia adelante con fuerza multiplicada — una carga mal asegurada puede penetrar la cabina o salir volando al tráfico causando accidentes múltiples",
+            "Porque el exceso de movimiento desgasta el vehículo",
+            "Solo si la carga supera las 2 toneladas"
+          ],
+          "answer": 1,
+          "answer_text": "Porque en una frenada brusca, la inercia proyecta la carga con fuerza multiplicada — puede penetrar la cabina o salir al tráfico",
+          "why": "Una paleta de concreto de 500 kg a 60 km/h tiene una fuerza de impacto de miles de kilogramos en una frenada brusca. Si la carga no está asegurada, puede aplastas al conductor desde atrás, o salir disparada al carril donde vienen otros vehículos."
+        }
+      ]
+    },
+
+    {
+      "section": "6. Señales, semáforos y marcas — comprensión aplicada",
+      "applies_to": ["ALL"],
+      "questions": [
+        {
+          "id": "S-01",
+          "licenses": ["ALL"],
+          "q": "¿Por qué las señales preventivas (rombo amarillo) están colocadas ANTES del peligro y no en el peligro mismo?",
+          "options": [
+            "Para dar tiempo al conductor de reducir velocidad o prepararse ANTES de llegar al peligro, no cuando ya está en él",
+            "Porque en el peligro no hay espacio para colocar señales",
+            "Para que los conductores puedan decidir si cambiar de ruta",
+            "Por normativa de ingeniería de tránsito sin impacto en seguridad"
+          ],
+          "answer": 0,
+          "answer_text": "Para dar tiempo al conductor de reducir velocidad o prepararse ANTES de llegar al peligro",
+          "why": "A 80 km/h, el conductor necesita al menos 60-80 metros para reducir velocidad significativamente. La señal se coloca con ese margen adelante del peligro para que la acción correctiva sea posible. Una señal en el peligro mismo sería inútil."
+        },
+        {
+          "id": "S-02",
+          "licenses": ["ALL"],
+          "q": "¿Por qué una línea amarilla doble continua en el centro de la vía prohíbe adelantar en ambos sentidos?",
+          "options": [
+            "Porque el amarillo es el color de mayor restricción en el sistema vial costarricense",
+            "Porque en ese tramo la visibilidad o la geometría de la vía hace objetivamente peligroso el adelantamiento para cualquiera de los dos sentidos de circulación",
+            "Solo porque los estudios de tránsito identificaron esa zona como de alta velocidad",
+            "Porque ambos conductores podrían adelantar simultáneamente"
+          ],
+          "answer": 1,
+          "answer_text": "Porque la visibilidad o geometría de ese tramo hace peligroso el adelantamiento en cualquiera de los dos sentidos",
+          "why": "Las líneas dobles amarillas continuas se trazan en curvas cerradas, cimas de lomas o zonas con visibilidad inferior a la distancia de seguridad necesaria para adelantar. Es una decisión técnica de ingeniería de tránsito, no arbitraria."
+        },
+        {
+          "id": "S-03",
+          "licenses": ["ALL"],
+          "q": "¿Por qué el semáforo en ROJO INTERMITENTE se interpreta igual que una señal de ALTO?",
+          "options": [
+            "Porque el rojo siempre significa parar",
+            "Porque el rojo intermitente indica una intersección con algún tipo de riesgo o funcionamiento irregular — se debe tratar como ALTO: detenerse completamente, verificar en ambas direcciones y avanzar solo cuando sea seguro",
+            "Porque el semáforo puede estar averiado",
+            "Solo de noche"
+          ],
+          "answer": 1,
+          "answer_text": "Porque indica condición de riesgo o semáforo irregular — tratarlo como ALTO: detenerse, verificar, avanzar solo si es seguro",
+          "why": "El rojo intermitente es una señal de que la intersección no está siendo controlada de forma normal. Sin el ciclo semafórico normal, no hay garantía de que el tráfico contrario esté detenido. Tratarlo como ALTO — parada completa y verificación — es la respuesta correcta."
+        },
+        {
+          "id": "S-04",
+          "licenses": ["ALL"],
+          "q": "¿Por qué está prohibido reducir la velocidad innecesariamente para observar un accidente al costado de la vía?",
+          "options": [
+            "Solo por respeto a los afectados en el accidente",
+            "Porque ralentizar para mirar crea una obstrucción del flujo que puede causar colisiones en cadena detrás — la 'curiosidad vial' ha sido causa documentada de accidentes secundarios",
+            "Porque la ley prohíbe distraerse sin razón específica en el manejo",
+            "Solo aplica en autopistas"
+          ],
+          "answer": 1,
+          "answer_text": "Porque ralentizar para mirar crea obstrucción que puede causar colisiones en cadena — la 'curiosidad vial' causa accidentes secundarios",
+          "why": "Cuando todos los conductores reducen velocidad para mirar un accidente, se crea un 'cuello de botella' artificial. El conductor de atrás no espera ese frenado repentino. Estas colisiones en cadena son frecuentes cerca de accidentes previos y a veces causan más víctimas que el accidente original."
+        },
+        {
+          "id": "S-05",
+          "licenses": ["ALL"],
+          "q": "¿Por qué la señal de CEDA EL PASO es un triángulo invertido con borde rojo y NO un octágono rojo como el ALTO?",
+          "options": [
+            "Por razones históricas sin diferencia funcional",
+            "Porque la forma transmite el nivel de obligación: el ALTO exige detención completa independientemente de lo que venga; el CEDA exige prioridad al otro pero sin detención obligatoria si no hay flujo que ceder",
+            "Porque el octágono es más visible de noche",
+            "Porque el triángulo se fabrica con menos material"
+          ],
+          "answer": 1,
+          "answer_text": "Porque el ALTO exige parada absoluta; el CEDA solo exige dar prioridad — la forma diferencia el nivel de obligación",
+          "why": "Esta distinción de forma es intencional a nivel internacional (Convención de Viena). El ALTO siempre exige parada completa. El CEDA exige que el conductor evalúe si hay tráfico al que ceder — puede continuar sin detenerse si no viene nadie. Confundir los dos es una infracción grave."
+        }
+      ]
+    },
+
+    {
+      "section": "7. Convivencia con usuarios vulnerables — énfasis compartido A y B",
+      "applies_to": ["A+B"],
+      "questions": [
+        {
+          "id": "V-01",
+          "licenses": ["A", "B"],
+          "q": "¿Por qué a 50 km/h un peatón atropellado tiene aproximadamente 85% de probabilidad de morir, mientras que a 30 km/h baja a 10%?",
+          "options": [
+            "Porque a 50 km/h el conductor tiene menos tiempo de ver al peatón",
+            "Porque la energía cinética del impacto aumenta cuadráticamente con la velocidad — el impacto a 50 km/h transmite cuatro veces más energía al cuerpo del peatón que a 25 km/h",
+            "Porque a 30 km/h los frenos responden más rápido",
+            "Es solo una estadística aproximada sin base física específica"
+          ],
+          "answer": 1,
+          "answer_text": "Porque la energía del impacto aumenta cuadráticamente — a 50 km/h el peatón recibe cuatro veces más energía que a 25 km/h",
+          "why": "Esta es la razón física detrás de los límites de velocidad en zonas urbanas y escolares. No es una cifra arbitraria: E=½mv². A 30 km/h el cuerpo puede absorber el impacto; a 50 km/h no. Un metro por segundo de diferencia en velocidad puede ser la diferencia entre vida y muerte."
+        },
+        {
+          "id": "V-02",
+          "licenses": ["A", "B"],
+          "q": "¿Por qué en una intersección sin semáforo, cede el paso quien tiene un vehículo viniendo desde su DERECHA?",
+          "options": [
+            "Es un acuerdo histórico sin lógica técnica",
+            "Porque desde la perspectiva del conductor, un vehículo que viene desde la derecha está en el ángulo con menor visibilidad natural del ojo humano — ceder al de la derecha reduce la probabilidad de colisión en el punto más difícil de percibir",
+            "Porque los vehículos de la derecha tienen la vía de mayor jerarquía",
+            "Solo aplica cuando ambos llegan exactamente al mismo tiempo"
+          ],
+          "answer": 1,
+          "answer_text": "Porque el vehículo de la derecha está en el ángulo de menor visibilidad natural — ceder ahí reduce colisiones en el punto más difícil",
+          "why": "Esta regla tiene lógica perceptual. El ojo humano tiene mejor cobertura hacia la izquierda al conducir por la derecha. El vehículo que viene de la derecha está precisamente donde la visión es más limitada. Ceder a la derecha es compensar esa asimetría visual."
+        },
+        {
+          "id": "V-03",
+          "licenses": ["A", "B"],
+          "q": "¿Por qué el 'método de cremallera' es más eficiente que esperar a que se abra un hueco grande en una incorporación a una vía principal?",
+          "options": [
+            "Porque permite que más vehículos ingresen por turnos sin crear esperas largas ni presión sobre ningún conductor",
+            "Porque reduce el tiempo total de espera de todos los conductores involucrados",
+            "Ambas razones anteriores son correctas",
+            "Solo aplica en presas de más de 100 vehículos"
+          ],
+          "answer": 2,
+          "answer_text": "Ambas razones son correctas — reduce esperas, elimina presión y hace el flujo más eficiente para todos",
+          "why": "La cremallera (un vehículo de cada fila, por turno) es matemáticamente más eficiente que la mezcla libre. Cuando todos respetan el turno, el flujo es continuo y predecible. Cuando no, algunos ceden demasiado, otros no ceden nada, y se crean bloqueos y maniobras agresivas."
+        },
+        {
+          "id": "V-04",
+          "licenses": ["A", "B"],
+          "q": "¿Por qué no debe estacionar a menos de 10 metros de una esquina o cruce peatonal aunque haya espacio físico para el vehículo?",
+          "options": [
+            "Para no bloquear la vista del semáforo desde el cruce",
+            "Porque un vehículo estacionado ahí bloquea la visibilidad de conductores y peatones justo en el punto donde más se necesita ver si alguien viene — oculta a peatones y ciclistas a segundos de una colisión",
+            "Solo para no obstruir la señalización horizontal",
+            "Por norma estética de diseño urbano"
+          ],
+          "answer": 1,
+          "answer_text": "Porque bloquea la visibilidad en el punto crítico — oculta peatones y ciclistas a quienes vienen girando",
+          "why": "Un conductor que gira en una esquina tiene visibilidad reducida. Si hay un vehículo estacionado en la esquina, el peatón que cruza queda oculto hasta el último momento. Los 10 metros de distancia son el espacio mínimo para que el girador pueda ver lo que viene antes de que sea demasiado tarde."
+        }
+      ]
+    },
+
+    {
+      "section": "8. Condiciones adversas y peligros en la vía",
+      "applies_to": ["ALL"],
+      "questions": [
+        {
+          "id": "C-01",
+          "licenses": ["ALL"],
+          "q": "¿Por qué el aguaplaning (hidroplaneo) es más probable con llantas desgastadas y a alta velocidad?",
+          "options": [
+            "Porque las llantas desgastadas pisan diferente el asfalto",
+            "Porque el labrado de la llanta es el sistema de drenaje del agua — sin labrado suficiente el agua no puede escapar del área de contacto y la llanta flota sobre ella; a mayor velocidad, mayor volumen de agua que drenar en menos tiempo",
+            "Porque el agua hace que el asfalto se vuelva resbaladizo",
+            "Solo en neumáticos de más de 5 años de antigüedad"
+          ],
+          "answer": 1,
+          "answer_text": "Porque el labrado drena el agua — sin él, la llanta flota; a mayor velocidad hay más agua que drenar en menos tiempo",
+          "why": "El labrado de una llanta puede drenar hasta 30 litros de agua por segundo a 80 km/h. Con labrado desgastado, esa capacidad se reduce dramáticamente. A cierta velocidad, el vehículo literalmente levanta sobre una capa de agua — sin contacto con el asfalto, no hay frenos ni dirección."
+        },
+        {
+          "id": "C-02",
+          "licenses": ["ALL"],
+          "q": "¿Por qué en neblina densa deben usarse las luces de NEBLINA (antiniebla) y NO las luces ALTAS?",
+          "options": [
+            "Porque las luces altas consumen más batería en condiciones de neblina",
+            "Porque las luces altas rebotan contra las micropartículas de agua de la neblina y regresan hacia el conductor creando un muro blanco que reduce aún más la visibilidad — las luces antiniebla van bajas y pasan por debajo de la capa de neblina",
+            "Porque las luces antiniebla tienen mayor potencia que las altas",
+            "Solo aplica cuando la neblina tiene más de 200 metros de visibilidad"
+          ],
+          "answer": 1,
+          "answer_text": "Porque las altas rebotan en la neblina y ciegan al conductor — las antiniebla van por debajo y no crean ese efecto",
+          "why": "La neblina es una suspensión de microgotas de agua. Las luces altas envían un haz de alta intensidad hacia adelante que rebota masivamente en esas gotas y regresa directo a los ojos del conductor. Es contraproducente. Las luces antiniebla, montadas muy bajas, pasan por debajo de la capa de neblina."
+        },
+        {
+          "id": "C-03",
+          "licenses": ["ALL"],
+          "q": "¿Por qué conducir bajo efectos de medicamentos que indican 'no operar maquinaria pesada' es tan peligroso como conducir con alcohol?",
+          "options": [
+            "Porque la ley los equipara para efectos de sanción",
+            "Porque esos medicamentos afectan el sistema nervioso central de forma similar al alcohol — somnolencia, visión borrosa, lentitud de reflejos — pero el conductor puede no percibirlo porque el medicamento también reduce la capacidad de juzgar el propio deterioro",
+            "Solo si se combinan con café o energizantes",
+            "Solo aplica para medicamentos con receta médica"
+          ],
+          "answer": 1,
+          "answer_text": "Porque afectan el sistema nervioso de forma similar al alcohol, y el conductor puede no percibir el deterioro porque el medicamento también nubla el juicio",
+          "why": "Esta es exactamente la misma trampa del alcohol: el medicamento deteriora la capacidad de reconocer que uno está deteriorado. Un antihistamínico común puede reducir el tiempo de reacción un 25% sin que la persona lo note. El prospecto del medicamento advierte esto precisamente."
+        },
+        {
+          "id": "C-04",
+          "licenses": ["ALL"],
+          "q": "Al encontrar animales en la vía, ¿por qué debe frenar suavemente y sin movimientos bruscos en lugar de esquivar de forma brusca?",
+          "options": [
+            "Por respeto hacia los animales",
+            "Porque un esquive brusco a alta velocidad puede causar pérdida de control o una colisión con el carril contrario o con el espaldón — el riesgo del esquive brusco puede ser mayor que el de frenar controladamente",
+            "Solo aplica para animales grandes como ganado",
+            "Porque el animal puede asustarse más con una maniobra brusca"
+          ],
+          "answer": 1,
+          "answer_text": "Porque un esquive brusco puede causar pérdida de control o colisión con otro carril — el riesgo puede ser mayor que frenar controladamente",
+          "why": "A 80 km/h, un viraje brusco puede volcar un vehículo o lanzarlo al carril contrario. Frenar controladamente reduce la velocidad y da más opciones. Si el impacto es inevitable, es preferible golpear un animal a baja velocidad que perder el control del vehículo a alta velocidad."
+        }
+      ]
+    },
+
+    {
+      "section": "9. Comportamiento colectivo y fenómenos de tráfico emergente",
+      "applies_to": ["ALL"],
+      "note": "These questions explain how individual driver decisions combine to create large-scale traffic effects — gridlock, phantom jams, roundabout lockouts. Understanding these helps every driver make choices that benefit the whole system, not just their immediate position.",
+      "questions": [
+        {
+          "id": "CB-01",
+          "licenses": ["ALL"],
+          "q": "Está primero en la fila en un semáforo con un camión o tráiler detrás. ¿Por qué debe detenerse aproximadamente un largo de vehículo ANTES de la línea de alto en lugar de justo sobre ella?",
+          "options": [
+            "Porque la línea de alto tiene sensores de presión que detectan el vehículo a cierta distancia",
+            "Porque al detenerse justo en la línea, el trasero del tráiler queda en medio del carril de cruce — el camión necesita ese espacio libre para que su eje trasero complete el arco del giro sin invadir el carril contrario ni el bordillo",
+            "Solo aplica cuando hay señal específica de 'espacio para vehículos largos'",
+            "Porque los camiones tienen visibilidad reducida hacia adelante y necesitan más distancia de reacción"
+          ],
+          "answer": 1,
+          "answer_text": "El eje trasero del tráiler necesita ese espacio para completar el arco del giro — pegado a la línea, el camión invade el carril contrario o el bordillo",
+          "why": "Un camión con tráiler gira con el frente hacia la derecha, pero la quinta rueda y el eje trasero del tráiler deben trazar un arco por el interior. Si un auto está pegado a la línea de alto, ese arco no tiene espacio: el camión debe invadir el carril contrario o subirse al bordillo. Detenerse un largo de vehículo antes de la línea le da al camión el espacio físico que necesita para completar el giro sin incidente. La distancia de detención correcta también se aplica cuando el propio conductor dobla: no ingresar al cruce hasta tener espacio visible para salir del otro lado."
+        },
+        {
+          "id": "CB-02",
+          "licenses": ["ALL"],
+          "q": "En una rotonda con tráfico fluido, un conductor entra y se detiene dentro porque el tráfico al frente está lento. ¿Qué efecto produce esto en el resto de la rotonda?",
+          "options": [
+            "Solo afecta a los vehículos directamente detrás de ese conductor hasta que el tráfico avanza",
+            "El vehículo detenido bloquea su arco circular; los que vienen atrás se detienen; eso bloquea las entradas que desembocan a esa zona; esas entradas frenan los brazos que las alimentan — en 60–90 segundos toda la rotonda puede quedar paralizada en todas las direcciones",
+            "Solo genera una pequeña demora que se resuelve sola en 2–3 minutos",
+            "El efecto solo es significativo si tres o más vehículos se detienen simultáneamente"
+          ],
+          "answer": 1,
+          "answer_text": "Un solo vehículo detenido dentro puede bloquear en cascada toda la rotonda en menos de 90 segundos",
+          "why": "La rotonda funciona porque el flujo circular nunca para — todos avanzan a paso reducido. En el momento que un vehículo se detiene adentro, los que vienen detrás se detienen. Eso bloquea las entradas que desembocan a esa zona. Esas entradas frenan los brazos que las alimentan. El efecto cascada puede paralizar la rotonda completa. La regla de prioridad a quien ya está dentro existe para mantener el flujo circular; la regla implícita complementaria es no entrar si no hay espacio al otro lado para salir."
+        },
+        {
+          "id": "CB-03",
+          "licenses": ["ALL"],
+          "q": "En una autopista fluida, un conductor frena un poco más de lo necesario. El de atrás frena más para compensar, y el siguiente aún más. ¿Qué fenómeno produce esto y por qué puede generar una parada total un kilómetro atrás sin ninguna causa visible?",
+          "options": [
+            "Es un efecto psicológico — los conductores exageran el frenazo por miedo, pero la física no lo amplifica",
+            "Cada frenazo se amplifica hacia atrás porque cada conductor reacciona con un retardo y frena de más para compensar su margen de error — esa amplificación acumulada convierte una desaceleración leve al frente en una parada total atrás, el llamado 'efecto acordeón'",
+            "Solo ocurre cuando hay más de 50 vehículos en el mismo tramo sin espaldón",
+            "Se produce únicamente en curvas o pendientes donde la visibilidad es reducida"
+          ],
+          "answer": 1,
+          "answer_text": "El 'efecto acordeón': cada frenazo se amplifica hacia atrás hasta convertir una desaceleración leve en una parada total — quien llega al punto de parada no ve ninguna causa porque el origen ocurrió 500 metros adelante hace minutos",
+          "why": "El auto A frena suavemente 10 km/h. El auto B, por tiempo de reacción y margen de seguridad, frena 15 km/h. El C frena 22 km/h. El D para completamente. El E para y espera. La onda viaja hacia atrás más rápido que el tráfico avanza hacia adelante. Quien llega al punto de parada no ve ninguna razón — el conductor original ya aceleró hace 500 metros. Mantener distancia de seguimiento adecuada es la única forma individual de absorber estos frenazos sin amplificarlos al vehículo de atrás."
+        },
+        {
+          "id": "CB-04",
+          "licenses": ["ALL"],
+          "q": "El semáforo está en verde, pero el otro extremo de la intersección está bloqueado por tráfico detenido. ¿Por qué entrar de todos modos causa más daño al flujo general que esperar antes de la línea aunque el verde le favorezca?",
+          "options": [
+            "Porque puede recibir una multa por bloquear el cajón amarillo pintado en la intersección",
+            "Porque quedar varado dentro de la intersección bloquea el paso perpendicular cuando ese semáforo cambia a verde — ahora hay presa en dos direcciones simultáneamente, y ninguna puede avanzar hasta que alguien retroceda o un oficial dirija el tráfico",
+            "El efecto es mínimo si solo uno o dos vehículos quedan varados dentro",
+            "Solo aplica en intersecciones donde hay cajón amarillo pintado explícitamente"
+          ],
+          "answer": 1,
+          "answer_text": "Bloquear la intersección convierte una presa unidireccional en bidireccional — ambas calles quedan bloqueadas mutuamente y el tiempo de resolución se multiplica",
+          "why": "Si solo la calle A está congestionada, la intersección se despeja cuando A avanza. Pero si un conductor de A queda varado en el cruce, cuando el semáforo de B cambia a verde, la calle B también queda bloqueada por ese vehículo. Ahora A y B se bloquean mutuamente: ninguna puede avanzar. El cajón amarillo (cuadrícula pintada en el piso) es un recordatorio visual de exactamente esta consecuencia. La regla es simple: verde no significa 'avance' — significa 'avance si tiene espacio para salir completamente del otro lado'."
+        },
+        {
+          "id": "CB-05",
+          "licenses": ["ALL"],
+          "q": "Un carril de autopista se cierra 500 metros adelante. Algunos conductores se fusionan al carril libre inmediatamente; otros usan el carril que termina hasta el último punto antes de unirse. ¿Quién actúa correctamente desde el punto de vista del flujo de tráfico?",
+          "options": [
+            "Quienes se fusionan temprano, porque es lo más ordenado y evita que el carril que termina sea usado 'injustamente'",
+            "Quienes usan ambos carriles hasta el punto de cierre y se turnan uno a uno ('fusión en cremallera'), porque maximiza el espacio de vía disponible — fusionarse temprano deja el 50% de la vía vacía y duplica innecesariamente la longitud de la cola",
+            "Depende del volumen — con poco tráfico la fusión temprana es más eficiente",
+            "Ambas estrategias son equivalentes en eficiencia; es solo una cuestión de cultura o preferencia"
+          ],
+          "answer": 1,
+          "answer_text": "La fusión en cremallera (usar ambos carriles hasta el final y alternarse uno a uno) es hasta un 40% más eficiente que la fusión temprana",
+          "why": "Cuando todos se fusionan temprano, el carril que termina queda vacío kilómetros antes del cierre — ese espacio de vía se desperdicia completamente y la cola crece el doble de rápido de lo necesario. La fusión en cremallera usa todo el espacio disponible y alterna un vehículo de cada carril al llegar al punto de cierre. El problema es cultural: quien se fusiona tardíamente es percibido como aprovechador, cuando en realidad está usando el sistema correctamente. El conductor que bloquea el carril vacío para 'castigar' a quien lo usa empeora el flujo para todos."
+        }
+      ]
+    }
+
+  ],
+  "usage_notes": {
+    "for_developers": "Each question has a 'licenses' array. Use this to filter questions by license type. 'A[car-knowledge]' tagged questions are in section 3 and should be included in A-license study sets.",
+    "cross_knowledge_design": "Section 3 (AC-01 to AC-06) is specifically designed for A-license candidates but covers car/truck behavior. These are NOT about how to drive cars — they are about understanding how cars and trucks behave so motorcycle riders can predict and avoid dangerous situations.",
+    "for_instructors": "The 'why' field in each question contains the full explanation. This can be used for feedback after a wrong answer, or as the basis for classroom discussion.",
+    "question_philosophy": "Every question either starts with 'why' or describes a real scenario. The correct answer always explains a physical, human, or logical reason — never a law number, article reference, or pure definition."
+  }
+}

@@ -1,0 +1,406 @@
+{
+  "source": "practicatest.cr/examen-teorico-moto-cosevi and general exam pages",
+  "total_questions": 40,
+  "questions": [
+    {
+      "id": 1,
+      "chapter": 1,
+      "topic": "Tipos de vías",
+      "question": "¿Qué tipo de vías en Costa Rica son rutas que conectan ciudades principales y secundarias, con una gran cantidad de viajes internacionales?",
+      "options": ["Carreteras terciarias", "Carreteras secundarias", "Carreteras primarias", "Caminos no clasificados"],
+      "correct": 2,
+      "correct_text": "Carreteras primarias",
+      "explanation": "Las carreteras primarias sirven a corredores viales con volúmenes altos y alta proporción de viajes internacionales e interprovinciales de larga distancia."
+    },
+    {
+      "id": 2,
+      "chapter": 7,
+      "topic": "Licencias",
+      "question": "¿Qué tipo de licencia tiene un conductor profesional?",
+      "options": ["Solo A", "B o C", "B-3, B-4, C o D", "A o B"],
+      "correct": 2,
+      "correct_text": "B-3, B-4, C o D",
+      "explanation": "El conductor profesional tiene licencias B-3, B-4, C, D o E, o bien el agregado 'P' en licencias A-2, A-3, B-1 o B-2."
+    },
+    {
+      "id": 3,
+      "chapter": 16,
+      "topic": "Panel de instrumentos",
+      "question": "El medidor de temperatura brinda información sobre:",
+      "options": ["El sistema de enfriamiento del motor", "La cantidad de kilómetros recorridos", "La intensidad de la luz del tablero", "La velocidad de giro del motor"],
+      "correct": 0,
+      "correct_text": "El sistema de enfriamiento del motor",
+      "explanation": "El medidor de temperatura indica el estado del sistema de enfriamiento. Si sube demasiado, el motor se está sobrecalentando y hay que detenerse inmediatamente."
+    },
+    {
+      "id": 4,
+      "chapter": 18,
+      "topic": "Llantas",
+      "question": "¿Qué posible accidente puede producir una llanta con 'pinchazos' si no se reemplaza?",
+      "options": ["Únicamente aumento de consumo", "Encendido de la luz de aceite", "Solo desgaste visual sin riesgo", "Pérdida de control por un pinchazo que provoque pérdida repentina de control"],
+      "correct": 3,
+      "correct_text": "Pérdida de control por un pinchazo",
+      "explanation": "Una llanta muy desgastada o con daños puede reventar en marcha, causando pérdida repentina de control del vehículo."
+    },
+    {
+      "id": 5,
+      "chapter": 5,
+      "topic": "Tipos de vehículos",
+      "question": "¿Qué otros tipos de vehículos se mencionan junto con las motocicletas como parte del uso personal?",
+      "options": ["Solo automóviles", "Tractores y grúas", "Bicimotos, cuadraciclos y triciclos", "Camiones y autobuses"],
+      "correct": 2,
+      "correct_text": "Bicimotos, cuadraciclos y triciclos",
+      "explanation": "Los vehículos de uso personal de 2 ruedas incluyen motocicletas, bicimotos, scooters, triciclos y cuadriciclos."
+    },
+    {
+      "id": 6,
+      "chapter": 7,
+      "topic": "Sanciones",
+      "question": "¿Qué implica el cumplimiento de sanción?",
+      "options": ["Eliminación total de puntos", "Recuperación automática de la licencia", "Poder iniciar proceso de recuperación de la licencia", "Renovación inmediata"],
+      "correct": 2,
+      "correct_text": "Poder iniciar proceso de recuperación de la licencia",
+      "explanation": "Cumplir la sanción es el requisito para poder iniciar el proceso de reacreditación, pero no implica recuperar automáticamente la licencia."
+    },
+    {
+      "id": 7,
+      "chapter": 6,
+      "topic": "Tipos de vías",
+      "question": "¿Qué caracteriza a las zonas de tránsito en carreteras primarias?",
+      "options": ["Conectan zonas rurales con zonas urbanas", "Son utilizadas solo para vehículos de carga", "Están diseñadas para tránsito local", "Alta cantidad de tránsito internacional y largo recorrido"],
+      "correct": 3,
+      "correct_text": "Alta cantidad de tránsito internacional y largo recorrido",
+      "explanation": "Las carreteras primarias tienen volúmenes de tránsito relativamente altos y alta proporción de viajes internacionales, interprovinciales o de larga distancia."
+    },
+    {
+      "id": 8,
+      "chapter": 30,
+      "topic": "Accidentes",
+      "question": "¿Qué norma se debe conocer sobre mover los vehículos después de un accidente con daños materiales?",
+      "options": ["Trasladarlos a una gasolinera cercana para conversar mejor", "Cambiarlos de posición para tomar mejores fotos", "Moverlos siempre de inmediato para despejar la carretera", "No moverlos hasta que lleguen las autoridades o hasta que se pacte un arreglo"],
+      "correct": 3,
+      "correct_text": "No moverlos hasta que lleguen las autoridades o se pacte un arreglo",
+      "explanation": "Los vehículos no deben moverse para preservar la evidencia del accidente. Solo se moverán cuando lleguen las autoridades o cuando los conductores lleguen a un acuerdo mediante la DAM."
+    },
+    {
+      "id": 9,
+      "chapter": 7,
+      "topic": "Licencias",
+      "question": "¿Qué condición debe cumplirse para ser considerado conductor novato, además del plazo legal?",
+      "options": ["No usar el vehículo para trabajar", "Haber obtenido la licencia por primera vez", "Haber renovado la licencia al menos una vez", "Conducir solo vehículos livianos"],
+      "correct": 1,
+      "correct_text": "Haber obtenido la licencia por primera vez",
+      "explanation": "Conductor novato es quien obtiene su licencia por PRIMERA VEZ y no supera los 3 años de haberla obtenido."
+    },
+    {
+      "id": 10,
+      "chapter": 7,
+      "topic": "Sistema de puntos",
+      "question": "¿Qué implica la restricción por puntos?",
+      "options": ["Suspensión inmediata", "Eliminación de licencia", "Multa automática", "Limitación al renovar licencia"],
+      "correct": 3,
+      "correct_text": "Limitación al renovar licencia",
+      "explanation": "La restricción por puntos limita al conductor al momento de renovar su licencia, además de la suspensión cuando llega a cero puntos."
+    },
+    {
+      "id": 11,
+      "chapter": 14,
+      "topic": "Señales",
+      "question": "¿Qué indica el color blanco en el pavimento de la carretera?",
+      "options": ["Señala parqueo exclusivo", "Señala peligro", "Prohíbe el paso", "Separa carriles del mismo sentido"],
+      "correct": 3,
+      "correct_text": "Separa carriles del mismo sentido",
+      "explanation": "Las líneas blancas se usan para separar corrientes de tránsito en el mismo sentido, y como líneas de borde en carreteras de doble sentido."
+    },
+    {
+      "id": 12,
+      "chapter": 14,
+      "topic": "Señales",
+      "question": "¿Qué interpretación correcta tiene una línea de borde continua?",
+      "options": ["Delimita la calzada y evita salidas", "Permite adelantamiento", "Indica giro obligatorio", "Indica estacionamiento"],
+      "correct": 0,
+      "correct_text": "Delimita la calzada y evita salidas",
+      "explanation": "La línea de borde continua delimita el borde de la calzada, indicando que no se debe salir de esa zona."
+    },
+    {
+      "id": 13,
+      "chapter": 1,
+      "topic": "Sistema vial",
+      "question": "¿Cómo podemos movilizarnos?",
+      "options": ["Solo en bicicleta", "Corriendo", "Solo en moto", "Caminando o en vehículo"],
+      "correct": 3,
+      "correct_text": "Caminando o en vehículo",
+      "explanation": "La movilidad humana incluye todos los medios: a pie (todos somos peatones), en bicicleta, transporte público o vehículo particular."
+    },
+    {
+      "id": 14,
+      "chapter": 14,
+      "topic": "Señales",
+      "question": "Una señal triangular con fondo amarillo indica:",
+      "options": ["Prioridad", "Advertencia de peligro", "Obligación", "Prohibición"],
+      "correct": 1,
+      "correct_text": "Advertencia de peligro",
+      "explanation": "Las señales preventivas son triángulos o rombos de fondo amarillo/naranja. Advierten de condiciones peligrosas próximas."
+    },
+    {
+      "id": 15,
+      "chapter": 18,
+      "topic": "Llantas",
+      "question": "¿Qué relación hay entre las llantas y la maniobrabilidad?",
+      "options": ["Las condiciones de las llantas y el sistema de dirección están directamente conectados", "Solo influye la suspensión", "Las llantas no afectan la dirección", "Solo afecta el tamaño del manubrio"],
+      "correct": 0,
+      "correct_text": "Las condiciones de las llantas y el sistema de dirección están directamente conectados",
+      "explanation": "Las llantas son el único contacto entre el vehículo y la carretera. Su estado afecta directamente la dirección, el frenado y la estabilidad."
+    },
+    {
+      "id": 16,
+      "chapter": 2,
+      "topic": "Movilidad segura",
+      "question": "¿Qué busca la movilidad segura?",
+      "options": ["Adecuar la función de las vías y evitar el fallo humano", "Aumentar velocidad según se pueda en carretera", "Evitar señales confusas", "Eliminar normas innecesarias"],
+      "correct": 0,
+      "correct_text": "Adecuar la función de las vías y evitar el fallo humano",
+      "explanation": "El enfoque de sistema seguro propone adecuar las vías para que el fallo humano no tenga consecuencias fatales."
+    },
+    {
+      "id": 17,
+      "chapter": 30,
+      "topic": "Accidentes",
+      "question": "¿Qué se busca al seguir medidas generales en caso de daños materiales?",
+      "options": ["Evitar cualquier contacto con las autoridades", "Mover los vehículos cuanto antes para liberar la vía", "Atender el percance de forma eficiente y serena, protegiendo el bienestar propio y el de las demás personas involucradas", "Lograr que el seguro pague de inmediato sin aportar información"],
+      "correct": 2,
+      "correct_text": "Atender el percance eficientemente y de forma serena",
+      "explanation": "El objetivo ante un accidente material es mantener la calma, documentar correctamente y proteger el bienestar de todos los involucrados."
+    },
+    {
+      "id": 18,
+      "chapter": 28,
+      "topic": "Seguridad",
+      "question": "¿Cuál es la función de la certificación de un casco?",
+      "options": ["Indica cómo el casco protege la cabeza y el cerebro durante un impacto", "Indica el tamaño del visor", "Indica el color del casco", "Indica el precio del casco"],
+      "correct": 0,
+      "correct_text": "Indica cómo el casco protege la cabeza y el cerebro durante un impacto",
+      "explanation": "La certificación del casco garantiza que cumple estándares de seguridad probados para proteger adecuadamente en un impacto."
+    },
+    {
+      "id": 19,
+      "chapter": 10,
+      "topic": "Convivencia vial",
+      "question": "¿Cuántos metros de separación lateral mínima debés dejar al adelantar a un ciclista?",
+      "options": ["0.5 metros", "1 metro", "1.5 metros", "3 metros"],
+      "correct": 2,
+      "correct_text": "1.5 metros",
+      "explanation": "La ley exige al menos 1.5 metros de separación lateral al adelantar a ciclistas para garantizar su seguridad ante turbulencias del viento y movimientos involuntarios."
+    },
+    {
+      "id": 20,
+      "chapter": 10,
+      "topic": "Convivencia vial",
+      "question": "¿Qué hacés cuando escuchás una sirena de emergencia detrás tuyo?",
+      "options": ["Acelerás para no estorbar", "Te movis a la derecha y te detenés", "Seguís el vehículo de emergencia", "Ponés las luces de emergencia y seguís igual"],
+      "correct": 1,
+      "correct_text": "Te movis a la derecha y te detenés",
+      "explanation": "Al escuchar sirena de emergencia, debes mover el vehículo a la derecha y detenerte para dar paso libre. Los vehículos de emergencia tienen prioridad absoluta."
+    },
+    {
+      "id": 21,
+      "chapter": 10,
+      "topic": "Convivencia vial",
+      "question": "¿Por qué es importante revisar el punto ciego antes de cambiar de carril?",
+      "options": ["Para ver el paisaje", "Los motociclistas suelen estar en esa zona que los espejos no cubren", "Para calcular la velocidad", "Solo importa en autopista"],
+      "correct": 1,
+      "correct_text": "Los motociclistas suelen estar en esa zona que los espejos no cubren",
+      "explanation": "Los espejos no cubren el punto ciego lateral trasero. Los motociclistas frecuentemente circulan ahí. Girar la cabeza antes de cambiar de carril puede salvar una vida."
+    },
+    {
+      "id": 22,
+      "chapter": 15,
+      "topic": "Velocidades",
+      "question": "¿Cuál es la velocidad máxima en zona escolar o residencial?",
+      "options": ["60 km/h", "80 km/h", "25–40 km/h", "50 km/h"],
+      "correct": 2,
+      "correct_text": "25–40 km/h",
+      "explanation": "Las zonas escolares y residenciales tienen límites de velocidad reducidos para proteger a los usuarios más vulnerables, especialmente niños."
+    },
+    {
+      "id": 23,
+      "chapter": 15,
+      "topic": "Velocidades",
+      "question": "¿Cuántos metros recorrés por segundo a 100 km/h?",
+      "options": ["10 metros", "20 metros", "28 metros", "50 metros"],
+      "correct": 2,
+      "correct_text": "28 metros",
+      "explanation": "100 km/h equivalen a aproximadamente 27.8 metros por segundo. Un segundo de distracción puede equivaler a conducir varios metros a ciegas."
+    },
+    {
+      "id": 24,
+      "chapter": 15,
+      "topic": "Distancia de seguimiento",
+      "question": "¿Cómo se aplica la regla de los 3 segundos?",
+      "options": ["Contás 3 segundos desde que arrancás", "Cuando el auto de adelante pasa un punto fijo, debés tardar al menos 3 segundos en llegar a ese mismo punto", "Cada 3 segundos revisás los espejos", "Dejás 3 metros por cada 10 km/h"],
+      "correct": 1,
+      "correct_text": "Cuando el auto de adelante pasa un punto fijo, tardás al menos 3 segundos en llegar ahí",
+      "explanation": "La regla de los 3 segundos es la forma práctica de mantener distancia segura. En lluvia o de noche se duplica a 6 segundos."
+    },
+    {
+      "id": 25,
+      "chapter": 31,
+      "topic": "Leyes",
+      "question": "¿Qué pasa cuando tu licencia llega a cero puntos?",
+      "options": ["Recibís una advertencia", "Se suspende la licencia", "Pagás una multa y seguís", "Se reduce el límite de velocidad"],
+      "correct": 1,
+      "correct_text": "Se suspende la licencia",
+      "explanation": "Al llegar a cero puntos, la licencia queda suspendida automáticamente. Para recuperarla se debe cumplir la sanción e iniciar el proceso de reacreditación."
+    },
+    {
+      "id": 26,
+      "chapter": 8,
+      "topic": "Documentos",
+      "question": "¿Cuál de estos NO es un documento obligatorio para circular?",
+      "options": ["Licencia de conducir", "Tarjeta de circulación (marchamo)", "Seguro INS vigente", "Carnet de un club de automovilismo"],
+      "correct": 3,
+      "correct_text": "Carnet de un club de automovilismo",
+      "explanation": "Los documentos obligatorios son: licencia vigente, tarjeta de circulación, seguro INS y RITEVE aprobada. Un carnet de club no tiene valor legal."
+    },
+    {
+      "id": 27,
+      "chapter": 8,
+      "topic": "DEV",
+      "question": "¿Para qué sirve la Dirección Electrónica Vial (DEV)?",
+      "options": ["Para pagar peajes en línea", "Para recibir notificaciones de infracciones y trámites viales del COSEVI", "Para renovar la licencia automáticamente", "Para reportar accidentes"],
+      "correct": 1,
+      "correct_text": "Para recibir notificaciones de infracciones y trámites del COSEVI",
+      "explanation": "La DEV es la dirección oficial donde el COSEVI envía todas las notificaciones relacionadas con la Ley de Tránsito. Su registro es obligatorio."
+    },
+    {
+      "id": 28,
+      "chapter": 19,
+      "topic": "Frenos",
+      "question": "¿Cómo debés usar el freno si tu vehículo tiene sistema ABS?",
+      "options": ["Bombear el freno suavemente", "Presionar el freno con toda la fuerza y mantenerlo así", "Soltar el freno intermitentemente", "Usar solo el freno de mano"],
+      "correct": 1,
+      "correct_text": "Presionar el freno con toda la fuerza y mantenerlo así",
+      "explanation": "Con ABS el sistema evita automáticamente el bloqueo de las ruedas. Se debe aplicar fuerza máxima y sostenida — no bombear, eso desactiva el ABS."
+    },
+    {
+      "id": 29,
+      "chapter": 26,
+      "topic": "Peligros",
+      "question": "¿Cuál es el límite de alcohol en sangre permitido para un conductor común en Costa Rica?",
+      "options": ["0.0 mg/L", "0.25 mg/L", "0.50 mg/L", "1.0 mg/L"],
+      "correct": 2,
+      "correct_text": "0.50 mg/L",
+      "explanation": "El límite para conductores comunes es 0.50 mg/L. Para conductores novatos y profesionales el límite es 0.0 mg/L (tolerancia cero)."
+    },
+    {
+      "id": 30,
+      "chapter": 28,
+      "topic": "Seguridad pasiva",
+      "question": "¿Dónde debe ir la parte horizontal del cinturón de seguridad?",
+      "options": ["Sobre el abdomen", "Sobre las caderas", "Sobre el pecho", "Bajo el brazo"],
+      "correct": 1,
+      "correct_text": "Sobre las caderas",
+      "explanation": "La parte horizontal del cinturón debe ir sobre las caderas, no sobre el abdomen. En caso de impacto, sobre el abdomen puede causar lesiones internas graves."
+    },
+    {
+      "id": 31,
+      "chapter": 24,
+      "topic": "Conducción en la vía",
+      "question": "¿Qué debés hacer cuando el semáforo está en amarillo?",
+      "options": ["Acelerar para pasar antes del rojo", "Prepararse para detenerse", "Continuar a la misma velocidad", "Encender las luces de emergencia"],
+      "correct": 1,
+      "correct_text": "Prepararse para detenerse",
+      "explanation": "El amarillo indica que el semáforo va a ponerse en rojo. Debes prepararte para detenerte, no acelerar para 'ganarle' al rojo."
+    },
+    {
+      "id": 32,
+      "chapter": 23,
+      "topic": "Maniobras",
+      "question": "¿En cuál de estas situaciones NUNCA se puede adelantar?",
+      "options": ["En recta con línea discontinua", "En curvas, cimas de pendientes e intersecciones", "En autopista con línea discontinua", "En vía de 4 carriles"],
+      "correct": 1,
+      "correct_text": "En curvas, cimas de pendientes e intersecciones",
+      "explanation": "Adelantar en curvas, cimas de pendientes e intersecciones está prohibido porque no hay visibilidad suficiente para hacerlo con seguridad."
+    },
+    {
+      "id": 33,
+      "chapter": 12,
+      "topic": "Atención",
+      "question": "¿Por cuántos metros equivale conducir a ciegas leer un mensaje en el celular mientras se va a 90 km/h?",
+      "options": ["10 metros", "25 metros", "125 metros", "250 metros"],
+      "correct": 2,
+      "correct_text": "125 metros",
+      "explanation": "A 90 km/h se recorren 25 metros por segundo. Leer un mensaje que toma 5 segundos equivale a conducir 125 metros (más de una cancha de fútbol) a ciegas."
+    },
+    {
+      "id": 34,
+      "chapter": 13,
+      "topic": "Preparación del viaje",
+      "question": "¿Con cuánta anticipación se debe señalizar antes de girar o cambiar de carril?",
+      "options": ["5 metros", "10 metros", "30 metros", "100 metros"],
+      "correct": 2,
+      "correct_text": "30 metros",
+      "explanation": "Se debe señalizar con al menos 30 metros de anticipación para dar tiempo suficiente a los demás usuarios de reaccionar."
+    },
+    {
+      "id": 35,
+      "chapter": 25,
+      "topic": "Estacionamiento",
+      "question": "En una pendiente positiva (subida), ¿hacia dónde se giran las ruedas al estacionar?",
+      "options": ["Hacia la acera", "Hacia afuera de la acera", "Recto", "No importa la dirección"],
+      "correct": 1,
+      "correct_text": "Hacia afuera de la acera",
+      "explanation": "En pendiente de subida, las ruedas se giran hacia afuera. Si el vehículo se suelta, la rueda tocará el bordillo y lo detendrá. En bajada, se giran hacia la acera."
+    },
+    {
+      "id": 36,
+      "chapter": 20,
+      "topic": "Transmisión",
+      "question": "¿Qué consecuencia tiene bajar una pendiente pronunciada en neutro (N)?",
+      "options": ["Ahorra combustible sin riesgo", "Puede provocar sobrecalentamiento de frenos y pérdida de control", "Es la forma correcta de bajar pendientes", "Aumenta la vida útil de los frenos"],
+      "correct": 1,
+      "correct_text": "Puede provocar sobrecalentamiento de frenos y pérdida de control",
+      "explanation": "Bajar en neutro o marcha alta sobrecarrega el sistema de frenos. La forma correcta es usar una marcha baja para aprovechar el freno motor."
+    },
+    {
+      "id": 37,
+      "chapter": 4,
+      "topic": "Tipos de accidentes",
+      "question": "¿Cuál es la causa principal del choque de frente?",
+      "options": ["Falla de frenos", "Invasión del carril izquierdo al adelantar", "Exceso de velocidad en curva", "Mal estado del pavimento"],
+      "correct": 1,
+      "correct_text": "Invasión del carril izquierdo al adelantar",
+      "explanation": "El choque de frente ocurre principalmente cuando un conductor invade el carril contrario al realizar un adelantamiento, generalmente en zonas de baja visibilidad."
+    },
+    {
+      "id": 38,
+      "chapter": 10,
+      "topic": "Convivencia vial",
+      "question": "Cuando seguís a un camión grande y no podés ver sus espejos retrovisores, ¿qué significa eso?",
+      "options": ["Que vas a buena distancia de seguimiento", "Que el camionero tampoco puede verte a vos", "Que debés mantener esa posición", "Que debés acelerar para adelantar"],
+      "correct": 1,
+      "correct_text": "Que el camionero tampoco puede verte a vos",
+      "explanation": "Si no ves los espejos del camión, el conductor del camión tampoco te puede ver a vos. Debés aumentar la distancia hasta poder ver sus espejos."
+    },
+    {
+      "id": 39,
+      "chapter": 3,
+      "topic": "Factores de riesgo",
+      "question": "¿Qué factor de riesgo es responsable de más del 90% de los accidentes de tránsito?",
+      "options": ["El estado de la carretera", "Las condiciones climáticas", "El factor humano", "El estado del vehículo"],
+      "correct": 2,
+      "correct_text": "El factor humano",
+      "explanation": "Más del 90% de los accidentes tienen al factor humano como causa principal. Velocidad, distracción, alcohol, fatiga e irrespeto de normas son los factores dominantes."
+    },
+    {
+      "id": 40,
+      "chapter": 26,
+      "topic": "Fatiga",
+      "question": "¿A cuántas horas sin dormir el deterioro del conductor equivale a 0.5 mg/L de alcohol en sangre?",
+      "options": ["8 horas", "12 horas", "17 horas", "24 horas"],
+      "correct": 2,
+      "correct_text": "17 horas",
+      "explanation": "Estudios muestran que después de 17 horas sin dormir, el rendimiento cognitivo y motor equivale a un nivel de alcohol de 0.5 mg/L — el límite legal en Costa Rica."
+    }
+  ]
+}

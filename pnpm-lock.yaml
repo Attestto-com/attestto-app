@@ -62,12 +62,18 @@ importers:
       '@attestto/module-sdk':
         specifier: workspace:*
         version: link:../sdk
+      pinia:
+        specifier: ^2.3.0
+        version: 2.3.1(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3))
       quasar:
         specifier: ^2.17.7
         version: 2.19.3
       vue:
         specifier: ^3.5.13
         version: 3.5.32(typescript@5.9.3)
+      vue-router:
+        specifier: ^4.5.0
+        version: 4.6.4(vue@3.5.32(typescript@5.9.3))
     devDependencies:
       typescript:
         specifier: ^5.8.0

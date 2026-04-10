@@ -1,4 +1,6 @@
 import type { AttesttoModule, ModuleContext } from '@attestto/module-sdk'
+import { markRaw } from 'vue'
+import MasteryWidget from './components/MasteryWidget.vue'
 
 let ctx: ModuleContext | null = null
 
@@ -31,7 +33,6 @@ const crDrivingModule: AttesttoModule = {
   async install(moduleCtx: ModuleContext) {
     ctx = moduleCtx
 
-    // Check mastery state and push inbox items
     const mastery = await ctx.storage.get<{ score: number; weakTopics: string[] }>('mastery')
     if (mastery) {
       ctx.pushInboxItem({
@@ -51,6 +52,10 @@ const crDrivingModule: AttesttoModule = {
 
   uninstall() {
     ctx = null
+  },
+
+  getHomeWidget() {
+    return markRaw(MasteryWidget)
   },
 
   async getInboxItems() {
