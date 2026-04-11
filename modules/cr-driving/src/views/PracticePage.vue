@@ -19,7 +19,6 @@ const selectedOption = ref<number | null>(null)
 const answers = ref<{ category: string; correct: boolean }[]>([])
 const lastCorrect = ref<boolean | null>(null)
 const showConfetti = ref(false)
-const regenerating = ref(false)
 
 const current = computed(() => questions.value[currentIndex.value] ?? null)
 const done = computed(() => currentIndex.value >= questions.value.length && questions.value.length > 0)
@@ -69,30 +68,8 @@ function next() {
   currentIndex.value++
 }
 
-async function regenerateQuestion() {
-  if (!current.value || regenerating.value) return
-  regenerating.value = true
-  try {
-    const category = current.value.category
-    const context = await loadManualContext('B', [category])
-    const newQuestions = await generateQuestions({
-      licenseType: 'B',
-      categories: [category],
-      count: 1,
-      difficulty: 'medium',
-      context: context || undefined,
-    })
-    if (newQuestions.length > 0) {
-      questions.value[currentIndex.value] = newQuestions[0]
-      answered.value = false
-      selectedOption.value = null
-      lastCorrect.value = null
-    }
-  } catch {
-    // LLM unavailable — silently ignore
-  } finally {
-    regenerating.value = false
-  }
+function regenerateQuestion() {
+  location.reload()
 }
 
 function restart() {
@@ -167,9 +144,8 @@ loadQuestions()
       </div>
 
       <div v-if="answered" class="next-bar">
-        <button class="regen-btn" :disabled="regenerating" @click="regenerateQuestion">
-          <q-spinner-dots v-if="regenerating" size="14px" />
-          <template v-else>Otra pregunta sobre este tema</template>
+        <button class="regen-btn" @click="regenerateQuestion">
+          Otra pregunta
         </button>
         <button class="next-btn" @click="next">Siguiente</button>
       </div>
