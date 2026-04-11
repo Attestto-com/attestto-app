@@ -1,19 +1,43 @@
 /**
- * useFaceDetection — MediaPipe Face Detector for PWA.
+ * useFaceDetection — MediaPipe FaceLandmarker for PWA.
+ *
+ * Upgraded from FaceDetector to FaceLandmarker for:
+ * - 468 facial landmarks
+ * - Blendshapes (eyeBlinkLeft/Right, jawOpen, headYaw, headPitch)
+ * - Face identity embedding for continuous verification
  *
  * Face present / absent / multiple detection at ~4fps.
  * Anomaly-triggered frame capture with SHA-256 hash.
  * All local — no frames leave the device.
  */
 import { ref, onUnmounted } from 'vue'
-import { FaceDetector, FilesetResolver } from '@mediapipe/tasks-vision'
+import { FaceLandmarker, FilesetResolver } from '@mediapipe/tasks-vision'
+import type { FaceLandmarkerResult } from '@mediapipe/tasks-vision'
 
 export type FaceStatus = 'initializing' | 'present' | 'absent' | 'multiple' | 'error'
 
+export interface BlendshapeValues {
+  eyeBlinkLeft: number
+  eyeBlinkRight: number
+  jawOpen: number
+  /** Positive = looking right, negative = looking left */
+  headYaw: number
+  /** Positive = looking up, negative = looking down */
+  headPitch: number
+}
+
 export interface FaceEvent {
-  type: 'face-absent' | 'face-present' | 'face-multiple' | 'frame-captured'
+  type: 'face-absent' | 'face-present' | 'face-multiple' | 'frame-captured' | 'face-blocked'
   data?: Record<string, unknown>
   timestamp: number
+}
+
+const BLENDSHAPE_DEFAULTS: BlendshapeValues = {
+  eyeBlinkLeft: 0,
+  eyeBlinkRight: 0,
+  jawOpen: 0,
+  headYaw: 0,
+  headPitch: 0,
 }
 
 export function useFaceDetection() {
@@ -22,8 +46,10 @@ export function useFaceDetection() {
   const error = ref<string | null>(null)
   const isRunning = ref(false)
   const lastFrameHash = ref<string | null>(null)
+  const blendshapes = ref<BlendshapeValues>({ ...BLENDSHAPE_DEFAULTS })
+  const blocked = ref(false)
 
-  let detector: FaceDetector | null = null
+  let landmarker: FaceLandmarker | null = null
   let animationFrameId: number | null = null
   let videoElement: HTMLVideoElement | null = null
   let onEvent: ((event: FaceEvent) => void) | null = null
@@ -42,14 +68,18 @@ export function useFaceDetection() {
         'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm',
       )
 
-      detector = await FaceDetector.createFromOptions(vision, {
+      landmarker = await FaceLandmarker.createFromOptions(vision, {
         baseOptions: {
           modelAssetPath:
-            'https://storage.googleapis.com/mediapipe-models/face_detector/blaze_face_short_range/float16/1/blaze_face_short_range.tflite',
+            'https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task',
           delegate: 'GPU',
         },
         runningMode: 'VIDEO',
-        minDetectionConfidence: 0.5,
+        numFaces: 3,
+        minFaceDetectionConfidence: 0.5,
+        minTrackingConfidence: 0.5,
+        outputFaceBlendshapes: true,
+        outputFacialTransformationMatrixes: true,
       })
 
       status.value = 'absent'
@@ -61,6 +91,34 @@ export function useFaceDetection() {
 
   function setEventCallback(cb: (event: FaceEvent) => void): void {
     onEvent = cb
+  }
+
+  // ── Blendshape extraction ──────────────────────────
+
+  function extractBlendshapes(result: FaceLandmarkerResult): BlendshapeValues {
+    if (!result.faceBlendshapes?.length) return { ...BLENDSHAPE_DEFAULTS }
+
+    const shapes = result.faceBlendshapes[0].categories
+    const get = (name: string): number =>
+      shapes.find((s) => s.categoryName === name)?.score ?? 0
+
+    // Head pose from transformation matrix
+    let headYaw = 0
+    let headPitch = 0
+    if (result.facialTransformationMatrixes?.length) {
+      const m = result.facialTransformationMatrixes[0].data
+      // Rotation matrix → Euler angles (simplified)
+      headYaw = Math.atan2(m[8], m[10]) * (180 / Math.PI)
+      headPitch = Math.asin(-m[9]) * (180 / Math.PI)
+    }
+
+    return {
+      eyeBlinkLeft: get('eyeBlinkLeft'),
+      eyeBlinkRight: get('eyeBlinkRight'),
+      jawOpen: get('jawOpen'),
+      headYaw,
+      headPitch,
+    }
   }
 
   // ── Anomaly-triggered frame capture ────────────────
@@ -88,18 +146,35 @@ export function useFaceDetection() {
     return hash
   }
 
+  /** Capture a reference frame as ImageData for identity comparison */
+  function captureReferenceFrame(): ImageData | null {
+    if (!videoElement || videoElement.readyState < 2) return null
+    const canvas = document.createElement('canvas')
+    canvas.width = videoElement.videoWidth
+    canvas.height = videoElement.videoHeight
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return null
+    ctx.drawImage(videoElement, 0, 0)
+    return ctx.getImageData(0, 0, canvas.width, canvas.height)
+  }
+
   // ── Detection loop ─────────────────────────────────
 
   function detectLoop(timestamp: number): void {
-    if (!isRunning.value || !detector || !videoElement) return
+    if (!isRunning.value || !landmarker || !videoElement) return
 
     if (timestamp - lastDetectionTime >= DETECTION_INTERVAL_MS) {
       lastDetectionTime = timestamp
 
       try {
-        const result = detector.detectForVideo(videoElement, timestamp)
-        const count = result.detections.length
+        const result = landmarker.detectForVideo(videoElement, timestamp)
+        const count = result.faceLandmarks.length
         faceCount.value = count
+
+        // Extract blendshapes from first face
+        if (count > 0) {
+          blendshapes.value = extractBlendshapes(result)
+        }
 
         if (count === 0) {
           status.value = 'absent'
@@ -112,7 +187,7 @@ export function useFaceDetection() {
               data: { durationMs: timestamp - absenceStart },
               timestamp: Date.now(),
             })
-            captureFrameHash() // capture on anomaly
+            captureFrameHash()
           }
         } else if (count === 1) {
           status.value = 'present'
@@ -126,13 +201,22 @@ export function useFaceDetection() {
           absenceStart = null
           wasAbsent = false
         } else {
+          // Multiple faces → immediate block
           status.value = 'multiple'
+          if (!blocked.value) {
+            blocked.value = true
+            onEvent?.({
+              type: 'face-blocked',
+              data: { count, reason: 'multiple-faces' },
+              timestamp: Date.now(),
+            })
+          }
           onEvent?.({
             type: 'face-multiple',
             data: { count },
             timestamp: Date.now(),
           })
-          captureFrameHash() // capture on anomaly
+          captureFrameHash()
           absenceStart = null
           wasAbsent = false
         }
@@ -148,10 +232,11 @@ export function useFaceDetection() {
 
   async function start(video: HTMLVideoElement): Promise<void> {
     videoElement = video
-    if (!detector) await initialize()
-    if (!detector) return
+    if (!landmarker) await initialize()
+    if (!landmarker) return
 
     isRunning.value = true
+    blocked.value = false
     absenceStart = null
     wasAbsent = false
     lastDetectionTime = 0
@@ -169,10 +254,14 @@ export function useFaceDetection() {
     wasAbsent = false
   }
 
+  function unblock(): void {
+    blocked.value = false
+  }
+
   onUnmounted(() => {
     stop()
-    detector?.close()
-    detector = null
+    landmarker?.close()
+    landmarker = null
   })
 
   return {
@@ -181,10 +270,14 @@ export function useFaceDetection() {
     error,
     isRunning,
     lastFrameHash,
+    blendshapes,
+    blocked,
     start,
     stop,
+    unblock,
     setEventCallback,
     initialize,
     captureFrameHash,
+    captureReferenceFrame,
   }
 }

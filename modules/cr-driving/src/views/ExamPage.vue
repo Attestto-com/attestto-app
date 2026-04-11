@@ -5,6 +5,8 @@ import { useExam } from '../composables/useExam'
 import { useMastery } from '../composables/useMastery'
 import { useCamera } from '../composables/useCamera'
 import { useFaceDetection } from '../composables/useFaceDetection'
+import { useLivenessChallenge } from '../composables/useLivenessChallenge'
+import { useFaceIdentity } from '../composables/useFaceIdentity'
 import { useLockdown } from '../composables/useLockdown'
 import { useVoiceDetection } from '../composables/useVoiceDetection'
 import ConsentScreen from '../components/ConsentScreen.vue'
@@ -18,6 +20,8 @@ const exam = useExam()
 const { mastery, updateFromResult } = useMastery()
 const camera = useCamera()
 const face = useFaceDetection()
+const liveness = useLivenessChallenge(face.blendshapes)
+const identity = useFaceIdentity()
 const lockdown = useLockdown()
 const voice = useVoiceDetection()
 
@@ -79,18 +83,17 @@ face.setEventCallback((event) => {
     showAnomaly('No se detecta tu rostro. Asegurate de estar frente a la camara.', 'warning')
   }
 
+  if (event.type === 'face-blocked') {
+    // Multiple faces → immediate block (pliego B7)
+    exam.addIncident('face-multiple', 'terminal')
+    showAnomaly('Se detectaron multiples personas. Examen detenido por seguridad.', 'terminal')
+    return
+  }
+
   if (event.type === 'face-multiple') {
     multipleFaceCount.value++
-    if (multipleFaceCount.value >= 3) {
-      exam.addIncident('face-multiple', 'terminal')
-      showAnomaly('Se detectaron multiples personas por tercera vez. Examen detenido.', 'terminal')
-    } else if (multipleFaceCount.value >= 2) {
-      exam.addIncident('face-multiple', 'critical')
-      showAnomaly('Se detectaron multiples personas en la camara. Segunda advertencia.', 'critical')
-    } else {
-      exam.addIncident('face-multiple', 'warning')
-      showAnomaly('Se detectaron multiples personas en la camara. Asegurate de estar solo.', 'warning')
-    }
+    exam.addIncident('face-multiple', 'critical')
+    showAnomaly(`Se detectaron multiples personas en la camara (${multipleFaceCount.value}x).`, 'critical')
   }
 })
 
@@ -121,7 +124,33 @@ async function handleConsent() {
   exam.setPhase('pre-exam')
   // Start camera for preview after consent
   await camera.start()
+  // Start watching blendshapes for liveness (watcher activates when liveness.start() is called)
+  liveness.startWatching()
 }
+
+function handleStartLiveness() {
+  // Start face detection to get blendshapes
+  if (videoRef.value) {
+    face.start(videoRef.value)
+  }
+  liveness.start()
+}
+
+// Watch liveness result — when passed, capture reference selfie
+watch(
+  () => liveness.result.value,
+  async (result) => {
+    if (result?.passed && videoRef.value) {
+      exam.recordEvent('liveness-passed', {
+        durationMs: result.durationMs,
+        steps: result.steps.length,
+      })
+      // Capture reference selfie for continuous identity verification
+      const hash = await identity.captureReference(() => face.captureReferenceFrame())
+      exam.recordEvent('reference-selfie-captured', { hash })
+    }
+  },
+)
 
 function handleReject() {
   cleanup()
@@ -129,10 +158,17 @@ function handleReject() {
 }
 
 async function handleStartExam() {
-  // Start face detection on the video element
-  if (videoRef.value) {
+  // Face detection should already be running from liveness challenge
+  if (videoRef.value && !face.isRunning.value) {
     await face.start(videoRef.value)
   }
+
+  // Start continuous identity verification (pliego B3, B6, B8)
+  identity.startChecking(() => {
+    exam.addIncident('face-mismatch', 'terminal')
+    exam.recordEvent('identity-mismatch', { timestamp: Date.now() })
+    showAnomaly('Se detecto un cambio de identidad. Examen detenido por seguridad.', 'terminal')
+  })
 
   // Activate lockdown (fullscreen + keyboard blocking)
   await lockdown.activate()
@@ -168,6 +204,7 @@ function finishExam() {
   stopTimer()
   face.stop()
   voice.stop()
+  identity.stopChecking()
   lockdown.deactivate()
   exam.recordEvent('session-end', { timestamp: Date.now() })
   exam.setPhase('result')
@@ -267,6 +304,8 @@ function cleanup() {
   stopTimer()
   face.stop()
   voice.stop()
+  identity.reset()
+  liveness.cleanup()
   camera.stop()
   if (lockdown.active.value) lockdown.deactivate()
 }
@@ -307,9 +346,15 @@ onUnmounted(() => cleanup())
       v-else-if="exam.phase.value === 'pre-exam'"
       :camera-active="camera.isActive.value"
       :face-status="face.status.value"
+      :liveness-active="liveness.active.value"
+      :liveness-step-label="liveness.stepLabel.value"
+      :liveness-step-icon="liveness.stepIcon.value"
+      :liveness-progress="liveness.progress.value"
+      :liveness-passed="liveness.result.value?.passed ?? false"
       @start="handleStartExam"
       @back="handleReject"
       @video-mounted="onVideoMounted"
+      @start-liveness="handleStartLiveness"
     />
 
     <QuestionScreen

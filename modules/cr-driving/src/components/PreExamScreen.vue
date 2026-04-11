@@ -5,12 +5,18 @@ import type { FaceStatus } from '../composables/useFaceDetection'
 const props = defineProps<{
   cameraActive: boolean
   faceStatus: FaceStatus
+  livenessActive?: boolean
+  livenessStepLabel?: string
+  livenessStepIcon?: string
+  livenessProgress?: number
+  livenessPassed?: boolean
 }>()
 
 const emit = defineEmits<{
   start: []
   back: []
   videoMounted: [el: HTMLVideoElement]
+  startLiveness: []
 }>()
 
 const videoEl = ref<HTMLVideoElement | null>(null)
@@ -21,6 +27,7 @@ const checks = computed(() => [
   { label: 'Camara activa', icon: 'videocam', ok: props.cameraActive },
   { label: 'Microfono activo', icon: 'mic', ok: true },
   { label: 'Rostro detectado', icon: 'face', ok: props.faceStatus === 'present' },
+  { label: 'Prueba de vida', icon: 'verified_user', ok: props.livenessPassed ?? false },
   { label: 'Cooldown cumplido', icon: 'schedule', ok: true },
 ])
 
@@ -71,7 +78,25 @@ onMounted(() => {
         <div>Activando camara...</div>
       </div>
       <div :class="['face-status', faceClass]">{{ faceLabel }}</div>
+
+      <!-- Liveness challenge overlay -->
+      <div v-if="livenessActive" class="liveness-overlay">
+        <q-icon :name="livenessStepIcon ?? 'face'" size="48px" color="white" />
+        <div class="liveness-instruction">{{ livenessStepLabel }}</div>
+        <div class="liveness-progress-bar">
+          <div class="liveness-progress-fill" :style="{ width: `${(livenessProgress ?? 0) * 100}%` }" />
+        </div>
+      </div>
     </div>
+
+    <!-- Liveness button (when face detected but liveness not started) -->
+    <button
+      v-if="faceStatus === 'present' && !livenessActive && !livenessPassed"
+      class="liveness-btn"
+      @click="emit('startLiveness')"
+    >
+      Iniciar prueba de vida
+    </button>
 
     <!-- Checklist -->
     <div class="checklist">
@@ -94,6 +119,7 @@ onMounted(() => {
         <div class="rule">80% para aprobar</div>
         <div class="rule">Pantalla completa</div>
         <div class="rule">Captura en anomalias</div>
+        <div class="rule">Verificacion continua</div>
         <div class="rule">Deteccion de voz</div>
       </div>
     </div>
@@ -240,5 +266,52 @@ onMounted(() => {
   font-size: 12px;
   color: var(--text-muted);
   text-align: center;
+}
+
+.liveness-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  border-radius: var(--radius-lg);
+}
+
+.liveness-instruction {
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  text-align: center;
+}
+
+.liveness-progress-bar {
+  width: 60%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.liveness-progress-fill {
+  height: 100%;
+  background: var(--success);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.liveness-btn {
+  width: 100%;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--bg-card);
+  border: 1px solid var(--primary);
+  border-radius: var(--radius-md);
+  color: var(--primary);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
 }
 </style>
