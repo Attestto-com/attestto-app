@@ -116,9 +116,9 @@ export async function decryptBundle(
   )
 
   const plaintext = await crypto.subtle.decrypt(
-    { name: 'AES-GCM', iv: base64ToArray(iv) },
+    { name: 'AES-GCM', iv: base64ToArray(iv) as unknown as BufferSource },
     aesKey,
-    base64ToArray(encrypted),
+    base64ToArray(encrypted) as unknown as BufferSource,
   )
 
   return JSON.parse(new TextDecoder().decode(plaintext))

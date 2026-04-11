@@ -114,7 +114,7 @@ export function useDictamen(ctx: ModuleContext) {
       },
       issuanceDate: new Date().toISOString(),
       expirationDate: new Date(`${draft.expiresAt}T23:59:59Z`).toISOString(),
-      credentialSubject: subject,
+      credentialSubject: subject as unknown as Record<string, unknown>,
     }
   }
 

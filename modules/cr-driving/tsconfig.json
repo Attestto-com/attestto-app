@@ -5,11 +5,13 @@
     "moduleResolution": "bundler",
     "strict": true,
     "jsx": "preserve",
+    "resolveJsonModule": true,
     "skipLibCheck": true,
     "composite": true,
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "rootDir": "."
   },
-  "include": ["src"],
+  "include": ["src", "content/**/*.json"],
   "references": [
     { "path": "../sdk" }
   ]

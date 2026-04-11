@@ -185,7 +185,7 @@ function compareFrames(
 }
 
 async function hashPixels(data: Uint8ClampedArray): Promise<string> {
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data)
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data as unknown as BufferSource)
   return Array.from(new Uint8Array(hashBuffer))
     .map((b) => b.toString(16).padStart(2, '0'))
     .join('')
