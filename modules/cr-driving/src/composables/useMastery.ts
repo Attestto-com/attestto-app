@@ -208,12 +208,11 @@ export function useMastery() {
   }
 
   function getBelowThresholdCategories(): string[] {
-    return Object.entries(mastery.value.categoryScores)
-      .filter(([, { correct, total }]) => {
-        const pct = total > 0 ? Math.round((correct / total) * 100) : 0
-        return pct < GREEN_THRESHOLD
-      })
-      .map(([cat]) => cat)
+    return MACRO_CATEGORIES.filter((cat) => {
+      const s = mastery.value.categoryScores[cat]
+      if (!s || s.total < MIN_QUESTIONS_PER_CATEGORY) return true
+      return Math.round((s.correct / s.total) * 100) < GREEN_THRESHOLD
+    })
   }
 
   function getOverallAccuracy(): number {
