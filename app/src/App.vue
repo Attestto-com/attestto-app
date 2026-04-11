@@ -33,8 +33,8 @@ onMounted(() => {
   background: var(--bg-base);
   min-height: 100dvh;
   padding-top: max(16px, env(safe-area-inset-top, 16px));
-  padding-left: max(12px, env(safe-area-inset-left, 12px));
-  padding-right: max(12px, env(safe-area-inset-right, 12px));
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
 }
 
 .fade-enter-active,
