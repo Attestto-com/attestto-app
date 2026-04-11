@@ -12,7 +12,7 @@
 import { ref, onUnmounted } from 'vue'
 
 export interface LockdownEvent {
-  type: 'focus-lost' | 'focus-regained' | 'blocked-key' | 'fullscreen-exit'
+  type: 'focus-lost' | 'focus-regained' | 'blocked-key' | 'fullscreen-exit' | 'blocked-clipboard' | 'blocked-print'
   data?: Record<string, unknown>
   timestamp: number
 }
@@ -102,7 +102,7 @@ export function useLockdown() {
     }
   }
 
-  // ── Context menu + selection blocking ──────────────
+  // ── Context menu + selection + clipboard blocking ──
 
   function blockContextMenu(e: Event): void {
     if (!active.value) return
@@ -112,6 +112,35 @@ export function useLockdown() {
   function blockSelection(e: Event): void {
     if (!active.value) return
     e.preventDefault()
+  }
+
+  function blockPaste(e: Event): void {
+    if (!active.value) return
+    e.preventDefault()
+    emit('blocked-clipboard', { action: 'paste' })
+  }
+
+  // ── Print blocking ──────────────────────────────────
+
+  function handleBeforePrint(): void {
+    if (!active.value) return
+    emit('blocked-print')
+  }
+
+  /** Inject @media print CSS that hides everything during lockdown */
+  let printStyleEl: HTMLStyleElement | null = null
+
+  function injectPrintBlock(): void {
+    printStyleEl = document.createElement('style')
+    printStyleEl.textContent = '@media print { body * { display: none !important; visibility: hidden !important; } body::after { content: "Impresión bloqueada durante examen"; display: block !important; visibility: visible !important; font-size: 2rem; text-align: center; padding: 4rem; } }'
+    document.head.appendChild(printStyleEl)
+  }
+
+  function removePrintBlock(): void {
+    if (printStyleEl) {
+      printStyleEl.remove()
+      printStyleEl = null
+    }
   }
 
   // ── Public API ─────────────────────────────────────
@@ -130,6 +159,9 @@ export function useLockdown() {
     document.addEventListener('selectstart', blockSelection, true)
     document.addEventListener('copy', blockSelection, true)
     document.addEventListener('cut', blockSelection, true)
+    document.addEventListener('paste', blockPaste, true)
+    window.addEventListener('beforeprint', handleBeforePrint)
+    injectPrintBlock()
 
     await requestFullscreen()
   }
@@ -147,6 +179,9 @@ export function useLockdown() {
     document.removeEventListener('selectstart', blockSelection, true)
     document.removeEventListener('copy', blockSelection, true)
     document.removeEventListener('cut', blockSelection, true)
+    document.removeEventListener('paste', blockPaste, true)
+    window.removeEventListener('beforeprint', handleBeforePrint)
+    removePrintBlock()
 
     if (document.fullscreenElement) {
       document.exitFullscreen().catch(() => {})
