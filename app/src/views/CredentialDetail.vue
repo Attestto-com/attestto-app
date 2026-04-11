@@ -59,6 +59,12 @@ const statusLabel = computed(() => {
     </header>
 
     <template v-if="credential">
+      <!-- Demo indicator -->
+      <div v-if="credential.id?.includes('demo')" class="demo-badge">
+        <q-icon name="science" size="14px" />
+        Datos de ejemplo — no son reales
+      </div>
+
       <!-- Status badge -->
       <div class="status-badge" :style="{ borderColor: statusColor }">
         <q-icon
@@ -228,6 +234,19 @@ const statusLabel = computed(() => {
 .qr-hint {
   font-size: 12px;
   color: var(--text-muted);
+}
+
+.demo-badge {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-md);
+  background: rgba(251, 191, 36, 0.1);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  border-radius: var(--radius-md);
+  font-size: 12px;
+  color: var(--warning);
+  margin-bottom: var(--space-md);
 }
 
 .not-found {

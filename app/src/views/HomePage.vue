@@ -29,11 +29,6 @@ function handleInboxTap(item: InboxItem) {
   if (item.route) router.push(item.route)
 }
 
-const quickActions = [
-  { icon: 'qr_code_scanner', labelKey: 'home.scan', action: () => router.push({ name: 'verify' }) },
-  { icon: 'payment', labelKey: 'home.pay', action: () => {} },
-  { icon: 'verified', labelKey: 'home.verify', action: () => router.push({ name: 'verify' }) },
-]
 </script>
 
 <template>
@@ -85,21 +80,6 @@ const quickActions = [
       </div>
     </section>
 
-    <!-- Quick actions -->
-    <section class="section">
-      <h3 class="section-title">{{ t('home.quickActions') }}</h3>
-      <div class="quick-actions">
-        <button
-          v-for="qa in quickActions"
-          :key="qa.labelKey"
-          class="quick-action"
-          @click="qa.action"
-        >
-          <q-icon :name="qa.icon" size="24px" />
-          <span>{{ t(qa.labelKey) }}</span>
-        </button>
-      </div>
-    </section>
   </q-page>
 </template>
 
@@ -195,28 +175,4 @@ const quickActions = [
   font-size: 11px;
 }
 
-.quick-actions {
-  display: flex;
-  gap: var(--space-sm);
-}
-
-.quick-action {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-xs);
-  padding: var(--space-md);
-  background: var(--bg-card);
-  border: none;
-  border-radius: var(--radius-md);
-  color: var(--text-primary);
-  cursor: pointer;
-  font-size: 12px;
-  transition: background 0.15s;
-}
-
-.quick-action:active {
-  background: var(--bg-elevated);
-}
 </style>
