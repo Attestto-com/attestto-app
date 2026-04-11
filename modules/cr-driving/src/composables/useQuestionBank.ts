@@ -150,8 +150,10 @@ export async function selectQuestions(
 ): Promise<ExamQuestion[]> {
   await loadAllQuestions()
 
-  // Try LLM for a portion of questions
-  const llmQuestions = await tryLlmQuestions(config, weakTopics)
+  // Only use LLM for longer sessions (10+ questions) — skip for quick/micro modes
+  const llmQuestions = config.questionCount >= 10
+    ? await tryLlmQuestions(config, weakTopics)
+    : null
   const llmCount = llmQuestions?.length ?? 0
   const seedCount = config.questionCount - llmCount
 
