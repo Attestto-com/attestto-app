@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useVaultStore } from '@/stores/vault'
@@ -15,6 +15,27 @@ const llm = useLlm()
 
 const currentLocale = computed(() => getLocale())
 const llmSupported = computed(() => llm.supportsWebGpu())
+const storageUsed = ref('')
+const storageQuota = ref('')
+const storagePct = ref(0)
+
+onMounted(async () => {
+  if (navigator.storage?.estimate) {
+    const est = await navigator.storage.estimate()
+    const used = est.usage ?? 0
+    const quota = est.quota ?? 0
+    storageUsed.value = formatBytes(used)
+    storageQuota.value = formatBytes(quota)
+    storagePct.value = quota > 0 ? Math.round((used / quota) * 100) : 0
+  }
+})
+
+function formatBytes(bytes: number): string {
+  if (bytes < 1024) return `${bytes} B`
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(0)} KB`
+  if (bytes < 1024 * 1024 * 1024) return `${(bytes / (1024 * 1024)).toFixed(1)} MB`
+  return `${(bytes / (1024 * 1024 * 1024)).toFixed(2)} GB`
+}
 
 function toggleLlm() {
   if (llm.enabled.value) {
@@ -92,6 +113,10 @@ function handleLock() {
           <div class="setting-hint">Genera preguntas unicas con Gemma 2 ({{ llm.modelSize }})</div>
         </div>
         <q-toggle :model-value="llm.enabled.value" color="primary" @update:model-value="toggleLlm" />
+      </div>
+      <div v-if="llm.enabled.value && storageQuota" class="setting-row">
+        <span>Almacenamiento</span>
+        <span class="setting-value">{{ storageUsed }} / {{ storageQuota }} ({{ storagePct }}%)</span>
       </div>
       <div v-if="llm.enabled.value && llm.status.value === 'downloading'" class="setting-row">
         <span>Descargando modelo...</span>
