@@ -60,6 +60,7 @@ async function handleRecovery() {
 <template>
   <div class="lock-screen">
     <div class="lock-content">
+      <img src="/icon-192.png" alt="Attestto" class="logo-icon">
       <div class="logo">Attestto</div>
 
       <button class="unlock-btn" :disabled="unlocking" @click="handleUnlock">
@@ -94,6 +95,12 @@ async function handleRecovery() {
   flex-direction: column;
   align-items: center;
   gap: var(--space-xl);
+}
+
+.logo-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
 }
 
 .logo {

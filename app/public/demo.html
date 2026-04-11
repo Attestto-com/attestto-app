@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Attestto — Sovereign Citizen Wallet</title>
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+<style>
+:root {
+  --bg-deep: #080e14;
+  --bg-base: #0f1923;
+  --bg-card: #1a1f2e;
+  --bg-card-hover: #222838;
+  --primary: #594FD3;
+  --primary-glow: rgba(89, 79, 211, 0.25);
+  --success: #4ade80;
+  --success-dim: rgba(74, 222, 128, 0.15);
+  --warning: #fbbf24;
+  --warning-dim: rgba(251, 191, 36, 0.15);
+  --build: #60a5fa;
+  --build-dim: rgba(96, 165, 250, 0.15);
+  --text: #e8eaed;
+  --text-muted: #8b95a5;
+  --text-dim: #5a6577;
+  --border: rgba(255, 255, 255, 0.06);
+  --radius: 12px;
+  --font: 'DM Sans', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg-deep);
+  color: var(--text);
+  font-family: var(--font);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Hero ─────────────────────────────────────── */
+
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 80px;
+  padding: 60px 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -200px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-left {
+  max-width: 380px;
+  position: relative;
+  z-index: 1;
+}
+
+.logo-img {
+  width: 64px;
+  height: 64px;
+  border-radius: 14px;
+  margin-bottom: 16px;
+}
+
+.logo {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-bottom: 4px;
+}
+
+.logo-sub {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+}
+
+.version-badge {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--primary);
+  background: var(--primary-glow);
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 24px;
+}
+
+.hero-desc {
+  font-size: 15px;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+
+.hero-features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 32px;
+}
+
+.hero-features li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.hero-features .material-icons-outlined {
+  font-size: 18px;
+  color: var(--success);
+}
+
+.license {
+  font-size: 12px;
+  color: var(--text-dim);
+  font-family: var(--mono);
+}
+
+/* ── Phone mockup ─────────────────────────────── */
+
+.phone-wrap {
+  position: relative;
+  z-index: 1;
+}
+
+.phone {
+  width: 375px;
+  height: 812px;
+  border-radius: 44px;
+  border: 4px solid #2a3040;
+  background: var(--bg-base);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.05),
+    0 25px 80px rgba(0,0,0,0.6),
+    0 0 120px var(--primary-glow);
+  overflow: hidden;
+  position: relative;
+}
+
+.phone::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150px;
+  height: 28px;
+  background: #1a1f2e;
+  border-radius: 0 0 18px 18px;
+  z-index: 10;
+}
+
+.phone iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 40px;
+}
+
+/* ── QR section ───────────────────────────────── */
+
+.hero-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.qr-box {
+  width: 160px;
+  height: 160px;
+  background: white;
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: #333;
+  font-family: var(--mono);
+}
+
+.qr-label {
+  font-size: 13px;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+/* ── Sections ─────────────────────────────────── */
+
+.section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 40px;
+}
+
+.section-title {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+}
+
+.section-sub {
+  font-size: 15px;
+  color: var(--text-muted);
+  margin-bottom: 40px;
+  max-width: 600px;
+}
+
+/* ── Modules grid ─────────────────────────────── */
+
+.modules-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 16px;
+}
+
+.module-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  transition: background 0.2s, border-color 0.2s;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.module-card:hover {
+  background: var(--bg-card-hover);
+  border-color: rgba(255,255,255,0.1);
+}
+
+.module-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.module-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--primary-glow);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.module-icon .material-icons-outlined {
+  font-size: 20px;
+  color: var(--primary);
+}
+
+.module-name {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.module-country {
+  font-size: 12px;
+  color: var(--text-dim);
+  font-family: var(--mono);
+}
+
+.module-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+.module-status {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.status-functional {
+  color: var(--success);
+  background: var(--success-dim);
+}
+
+.status-progress {
+  color: var(--warning);
+  background: var(--warning-dim);
+}
+
+.status-planned {
+  color: var(--build);
+  background: var(--build-dim);
+}
+
+/* ── Country filter ────────────────────────────── */
+
+.country-filter {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.country-btn {
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-dim);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: var(--font);
+}
+
+.country-btn:hover { color: var(--text-muted); border-color: rgba(255,255,255,0.1); }
+.country-btn.active {
+  color: var(--primary);
+  border-color: var(--primary);
+  background: var(--primary-glow);
+}
+
+/* ── Progress bar ─────────────────────────────── */
+
+.progress-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 4px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), #7c6ef0);
+  border-radius: 2px;
+  transition: width 0.6s ease;
+}
+
+.progress-pct {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  min-width: 32px;
+}
+
+.module-card[style*="display: none"] { display: none; }
+
+/* ── Tabs ─────────────────────────────────────── */
+
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.tab {
+  padding: 12px 20px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-dim);
+  background: none;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+  font-family: var(--font);
+}
+
+.tab:hover { color: var(--text-muted); }
+.tab.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ── Compliance table ─────────────────────────── */
+
+.compliance-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.compliance-table th {
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-dim);
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.compliance-table td {
+  padding: 14px 16px;
+  font-size: 13px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.compliance-table tr:hover td {
+  background: rgba(255,255,255,0.02);
+}
+
+.compliance-table .req-id {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+.compliance-table .req-desc {
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.compliance-table .req-impl {
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.badge-cumple { color: var(--success); background: var(--success-dim); }
+.badge-excede { color: #a78bfa; background: rgba(167,139,250,0.15); }
+.badge-construir { color: var(--warning); background: var(--warning-dim); }
+.badge-diferente { color: var(--build); background: var(--build-dim); }
+
+/* ── Summary bar ──────────────────────────────── */
+
+.summary-bar {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+
+.summary-stat {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.summary-num {
+  font-size: 28px;
+  font-weight: 700;
+  font-family: var(--mono);
+}
+
+.summary-label {
+  font-size: 12px;
+  color: var(--text-dim);
+  line-height: 1.3;
+}
+
+/* ── Footer ───────────────────────────────────── */
+
+.footer {
+  text-align: center;
+  padding: 40px;
+  font-size: 13px;
+  color: var(--text-dim);
+  border-top: 1px solid var(--border);
+}
+
+.footer a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+/* ── Responsive ───────────────────────────────── */
+
+@media (max-width: 1100px) {
+  .hero { flex-direction: column; gap: 40px; }
+  .hero-right { display: none; }
+}
+
+@media (max-width: 768px) {
+  .hero { padding: 20px; min-height: auto; }
+  .hero-left { display: none; }
+  .phone-wrap { width: 100%; }
+  .phone {
+    width: 100%;
+    height: 100vh;
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+  }
+  .phone::before { display: none; }
+  .phone iframe { border-radius: 0; }
+  .section { padding: 40px 20px; }
+  .modules-grid { grid-template-columns: 1fr; }
+  .tabs { gap: 0; }
+  .tab { padding: 10px 14px; font-size: 12px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- HERO                                            -->
+<!-- ════════════════════════════════════════════════ -->
+
+<section class="hero">
+  <div class="hero-left">
+    <img src="/icon-192.png" alt="Attestto" class="logo-img">
+    <div class="logo">Attestto</div>
+    <div class="logo-sub">Sovereign Citizen Wallet</div>
+    <div class="version-badge">v0.1.0</div>
+    <p class="hero-desc">
+      Identidad soberana, credenciales verificables y examenes proctorizados
+      en un solo lugar. Tus datos en tu dispositivo. Sin servidores. Sin intermediarios.
+    </p>
+    <ul class="hero-features">
+      <li><span class="material-icons-outlined">fingerprint</span> Identidad soberana (DID + Ed25519)</li>
+      <li><span class="material-icons-outlined">verified_user</span> Credenciales verificables (W3C VC)</li>
+      <li><span class="material-icons-outlined">visibility</span> Examenes proctorizados con IA</li>
+      <li><span class="material-icons-outlined">anchor</span> Anclaje en blockchain</li>
+      <li><span class="material-icons-outlined">lock</span> Passkeys (WebAuthn)</li>
+      <li><span class="material-icons-outlined">wifi_off</span> Offline-first / Local-first</li>
+      <li><span class="material-icons-outlined">dark_mode</span> Tema oscuro</li>
+      <li><span class="material-icons-outlined">install_mobile</span> PWA lista para instalar</li>
+    </ul>
+    <div class="license">Apache 2.0 &middot; attestto.com</div>
+  </div>
+
+  <div class="phone-wrap">
+    <div class="phone">
+      <iframe src="/" title="Attestto App"></iframe>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="qr-box">QR Code</div>
+    <div class="qr-label">Escanea para probar<br>en tu dispositivo</div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- MODULES                                         -->
+<!-- ════════════════════════════════════════════════ -->
+
+<section class="section">
+  <div class="section-title">Modulos</div>
+  <p class="section-sub">Cada modulo es una capacidad independiente, protegida por credenciales. Solo se instala si tienes la credencial requerida en tu boveda.</p>
+
+  <!-- Domain tabs -->
+  <div class="tabs" id="module-tabs">
+    <button class="tab active" data-domain="all">Todos</button>
+    <button class="tab" data-domain="identity">Identidad</button>
+    <button class="tab" data-domain="docs">Documentos</button>
+    <button class="tab" data-domain="exams">Examenes</button>
+    <button class="tab" data-domain="payments">Pagos</button>
+    <button class="tab" data-domain="infra">Infraestructura</button>
+  </div>
+
+  <!-- Country filter -->
+  <div class="country-filter">
+    <button class="country-btn active" data-country="all">Todos</button>
+    <button class="country-btn" data-country="CR">CR</button>
+    <button class="country-btn" data-country="Universal">Universal</button>
+  </div>
+
+  <div class="modules-grid" id="modules-grid">
+
+    <!-- ── Identidad ──────────────────────────────── -->
+
+    <div class="module-card" data-domain="identity" data-country="CR">
+      <div class="module-header">
+        <div class="module-icon"><span class="material-icons-outlined">assignment_ind</span></div>
+        <div>
+          <div class="module-name">Cedula de Identidad</div>
+          <div class="module-country">CR</div>
+        </div>
+      </div>
+      <div class="module-desc">Credencial de identidad nacional vinculada al TSE. Firma digital atada a la cedula. Base para todos los demas modulos.</div>
+      <span class="module-status status-functional">Funcional</span>
+    </div>
+
+    <div class="module-card" data-domain="identity" data-country="Universal">
+      <div class="module-header">
+        <div class="module-icon"><span class="material-icons-outlined">verified</span></div>
+        <div>
+          <div class="module-name">vLEI Issuance</div>
+          <div class="module-country">Universal</div>
+        </div>
+      </div>
+      <div class="module-desc">Emision de credenciales vLEI (verifiable Legal Entity Identifier). Identidad juridica verificable para empresas y organizaciones via GLEIF.</div>
+      <div class="progress-row"><div class="progress-bar"><div class="progress-fill" style="width:25%"></div></div><span class="progress-pct">25%</span></div>
+      <span class="module-status status-progress">En progreso</span>
+    </div>
+
+    <div class="module-card" data-domain="identity" data-country="CR">
+      <div class="module-header">
+        <div class="module-icon"><span class="material-icons-outlined">school</span></div>
+        <div>
+          <div class="module-name">Titulo Profesional</div>
+          <div class="module-country">CR</div>
+        </div>
+      </div>
+      <div class="module-desc">Atestacion profesional emitida por Colegios. Fe publica digital para abogados, ingenieros, medicos. Verificacion de colegiatura activa.</div>
+      <span class="module-status status-planned">Planificado</span>
+    </div>
+
+    <!-- ── Documentos ─────────────────────────────── -->
+
+    <div class="module-card" data-domain="docs" data-country="Universal">
+      <div class="module-header">
+        <div class="module-icon"><span class="material-icons-outlined">picture_as_pdf</span></div>
+        <div>
+          <div class="module-name">PDF Signer &amp; Reader</div>
+          <div class="module-country">Universal</div>
+        </div>
+      </div>
+      <div class="module-desc">Lectura, firma y verificacion de documentos PDF. Firma Ed25519 vinculada al DID del usuario. Verificacion de firmas existentes.</div>
+      <span class="module-status status-functional">Funcional</span>
+    </div>
+
+    <div class="module-card" data-domain="docs" data-country="CR">
+      <div class="module-header">
+        <div class="module-icon"><span class="material-icons-outlined">draw</span></div>
+        <div>
+          <div class="module-name">Firma Digital BCCR</div>
+          <div class="module-country">CR</div>
+        </div>
+      </div>
+      <div class="module-desc">Integracion con la infraestructura de Firma Digital del BCCR. Firma de documentos PDF con tarjeta criptografica y validez legal.</div>
+      <div class="progress-row"><div class="progress-bar"><div class="progress-fill" style="width:40%"></div></div><span class="progress-pct">40%</span></div>
+      <span class="module-status status-progress">En progreso</span>
+    </div>
+
+    <div class="module-card" data-domain="docs" data-country="CR">
+      <div class="module-header">
+        <div class="module-icon"><span class="material-icons-outlined">gavel</span></div>
+        <div>
+          <div class="module-name">Modulo Notarial</div>
+          <div class="module-country">CR</div>
+        </div>
+      </div>
+      <div class="module-desc">Fe publica digital. El notario emite credenciales verificables con su firma profesional. Actos notariales como VCs auditables.</div>
+      <span class="module-status status-planned">Planificado</span>
+    </div>
+
+    <!-- ── Examenes ───────────────────────────────── -->
+
+    <div class="module-card" data-domain="exams" data-country="CR">
+      <div class="module-header">
+        <div class="module-icon"><span class="material-icons-outlined">directions_car</span></div>
+        <div>
+          <div class="module-name">Examen Teorico COSEVI</div>
+          <div class="module-country">CR</div>
+        </div>
+      </div>
+      <div class="module-desc">Examen proctorizado con deteccion facial, liveness, cadena de hash SHA-256, firma Ed25519, anclaje blockchain, y modelo de dominio SM-2.</div>
+      <span class="module-status status-functional">Funcional</span>
+    </div>
+
+    <div class="module-card" data-domain="exams" data-country="CR">
+      <div class="module-header">
+        <div class="module-icon"><span class="material-icons-outlined">medical_services</span></div>
+        <div>
+          <div class="module-name">Dictamen Medico</div>
+          <div class="module-country">CR</div>
+        </div>
+      </div>
+      <div class="module-desc">Emision de dictamen medico como credencial verificable. El profesional de salud firma con su identidad soberana.</div>
+      <div class="progress-row"><div class="progress-bar"><div class="progress-fill" style="width:60%"></div></div><span class="progress-pct">60%</span></div>
+      <span class="module-status status-progress">En progreso</span>
+    </div>
+
+    <div class="module-card" data-domain="exams" data-country="CR">
+      <div class="module-header">
+        <div class="module-icon"><span class="material-icons-outlined">badge</span></div>
+        <div>
+          <div class="module-name">Licencia Digital (mDL)</div>
+          <div class="module-country">CR</div>
+        </div>
+      </div>
+      <div class="module-desc">Presentacion de licencia de conducir digital en formato ISO 18013-5. Verificable sin conexion.</div>
+      <span class="module-status status-planned">Planificado</span>
+    </div>
+
+    <div class="module-card" data-domain="exams" data-country="CR">
+      <div class="module-header">
+        <div class="module-icon"><span class="material-icons-outlined">local_hospital</span></div>
+        <div>
+          <div class="module-name">Modulo COSEVI/SGLC</div>
+          <div class="module-country">CR</div>
+        </div>
+      </div>
+      <div class="module-desc">Presentacion de VCs a COSEVI para tramite de licencia. Verificacion de dictamen, examen, impedimentos en un solo flujo.</div>
+      <span class="module-status status-planned">Planificado</span>
+    </div>
+
+    <!-- ── Pagos ──────────────────────────────────── -->
+
+    <div class="module-card" data-domain="payments" data-country="Universal">
+      <div class="module-header">
+        <div class="module-icon"><span class="material-icons-outlined">payments</span></div>
+        <div>
+          <div class="module-name">Attestto Pay</div>
+          <div class="module-country">Universal</div>
+        </div>
+      </div>
+      <div class="module-desc">Pagos con identidad soberana. El DID firma la intencion, la infraestructura ejecuta. Claves de identidad y financieras nunca en el mismo dispositivo. Pendiente: contratos con Zunify y Circle.</div>
+      <div class="progress-row"><div class="progress-bar"><div class="progress-fill" style="width:80%"></div></div><span class="progress-pct">80%</span></div>
+      <span class="module-status status-progress">En progreso</span>
+    </div>
+
+    <!-- ── Infraestructura ────────────────────────── -->
+
+    <div class="module-card" data-domain="infra" data-country="Universal">
+      <div class="module-header">
+        <div class="module-icon"><span class="material-icons-outlined">hub</span></div>
+        <div>
+          <div class="module-name">Attestto Mesh</div>
+          <div class="module-country">Universal</div>
+        </div>
+      </div>
+      <div class="module-desc">Red peer-to-peer para resolucion de DIDs, distribucion de credenciales y anclaje descentralizado. Cada PWA es un nodo. Nodos dedicados en Fly.io.</div>
+      <span class="module-status status-functional">Funcional</span>
+    </div>
+
+    <div class="module-card" data-domain="infra" data-country="Universal">
+      <div class="module-header">
+        <div class="module-icon"><span class="material-icons-outlined">chat</span></div>
+        <div>
+          <div class="module-name">Mensajeria Verificada</div>
+          <div class="module-country">Universal</div>
+        </div>
+      </div>
+      <div class="module-desc">Mensajes firmados con DID. Comunicacion entre partes verificadas. Sin intermediarios. Cifrado end-to-end con claves de boveda.</div>
+      <span class="module-status status-planned">Planificado</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- COMPLIANCE MATRIX                               -->
+<!-- ════════════════════════════════════════════════ -->
+
+<section class="section">
+  <div class="section-title">Matriz de Cumplimiento</div>
+  <p class="section-sub">Contra el pliego de contratacion MOPT/DGEV 2026 para la prueba teorica virtual. Cada requisito mapeado a nuestra implementacion.</p>
+
+  <div class="summary-bar">
+    <div class="summary-stat">
+      <div class="summary-num" style="color:var(--success)">43</div>
+      <div class="summary-label">Cumple /<br>Excede</div>
+    </div>
+    <div class="summary-stat">
+      <div class="summary-num" style="color:var(--warning)">9</div>
+      <div class="summary-label">Por<br>construir</div>
+    </div>
+    <div class="summary-stat">
+      <div class="summary-num" style="color:var(--build)">12</div>
+      <div class="summary-label">Resuelto<br>diferente</div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="arch">Arquitectura</button>
+    <button class="tab" data-tab="identity">Identidad</button>
+    <button class="tab" data-tab="security">Seguridad</button>
+    <button class="tab" data-tab="integration">Integraciones</button>
+    <button class="tab" data-tab="perf">Rendimiento</button>
+    <button class="tab" data-tab="ops">Operacion</button>
+    <button class="tab" data-tab="poc">PoC/UAT</button>
+  </div>
+
+  <!-- Arquitectura -->
+  <div class="tab-panel active" id="tab-arch">
+    <table class="compliance-table">
+      <thead><tr><th>Ref</th><th>Requisito</th><th>Estado</th><th>Implementacion</th></tr></thead>
+      <tbody>
+        <tr><td class="req-id">A1</td><td class="req-desc">100% web, Chrome/Edge/Firefox, sin plugins</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">Frontend Vue/Quasar. PWA movil, Electron escritorio.</td></tr>
+        <tr><td class="req-id">A2</td><td class="req-desc">Separacion de capas, cifrado TLS 1.2+</td><td><span class="badge badge-excede">Excede</span></td><td class="req-impl">Aislamiento IPC proceso renderer/principal. Sin frontera de red = sin vector MITM.</td></tr>
+        <tr><td class="req-id">A3</td><td class="req-desc">Sesion unica por usuario vinculada a tramite</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">Ed25519 de boveda vinculado a dispositivo + identidad. Una sesion activa por DID.</td></tr>
+        <tr><td class="req-id">A4</td><td class="req-desc">Reanudacion ante cortes de energia</td><td><span class="badge badge-construir">Por construir</span></td><td class="req-impl">Estado de sesion en localStorage. Reanudar desde ultimo indice.</td></tr>
+        <tr><td class="req-id">A5</td><td class="req-desc">WCAG 2.1 AA, alto contraste</td><td><span class="badge badge-construir">Por construir</span></td><td class="req-impl">ARIA labels, navegacion teclado, alto contraste, voz (Web Speech API).</td></tr>
+        <tr><td class="req-id">A6</td><td class="req-desc">Huella de entorno (device fingerprint)</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">DID de boveda = identidad criptografica. Mas fuerte que browser fingerprint.</td></tr>
+        <tr><td class="req-id">A7</td><td class="req-desc">Browser lockdown: navegacion, impresion, clipboard</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">Fullscreen + bloqueo teclado + clipboard + @media print + PrintScreen.</td></tr>
+        <tr><td class="req-id">A8</td><td class="req-desc">App movil nativa con proctoring</td><td><span class="badge badge-construir">Por construir</span></td><td class="req-impl">PWA con mismos composables. Fullscreen + visibilitychange.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Identidad -->
+  <div class="tab-panel" id="tab-identity">
+    <table class="compliance-table">
+      <thead><tr><th>Ref</th><th>Requisito</th><th>Estado</th><th>Implementacion</th></tr></thead>
+      <tbody>
+        <tr><td class="req-id">B1</td><td class="req-desc">Verificacion biometrica facial pre-examen</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">Verificacion de identidad en boveda antes del modulo de examen.</td></tr>
+        <tr><td class="req-id">B2</td><td class="req-desc">Prueba de vida (liveness) pre y durante examen</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">FaceLandmarker blendshapes: parpadeo + giro de cabeza. Selfie de referencia + comparacion continua.</td></tr>
+        <tr><td class="req-id">B3</td><td class="req-desc">Revalidaciones biometricas periodicas o por riesgo</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">Comparacion facial continua pixel-diff. Deteccion de voz (Web Audio API).</td></tr>
+        <tr><td class="req-id">B4</td><td class="req-desc">Captura continua/intermitente del rostro</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">Captura solo por anomalia (privacidad). Hash en cadena, cifrado local.</td></tr>
+        <tr><td class="req-id">B5</td><td class="req-desc">Telemetria: blur/focus, atajos, impresion</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">useLockdown captura blur/focus, teclas bloqueadas, timestamps, paste, print.</td></tr>
+        <tr><td class="req-id">B6</td><td class="req-desc">Prevencion de suplantacion</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">Comparacion facial contra biometrico almacenado + alerta audible/visual.</td></tr>
+        <tr><td class="req-id">B7</td><td class="req-desc">Bloqueo ante multiples personas</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">Deteccion multi-rostro con respuesta graduada. Terminal en 3ra ocurrencia.</td></tr>
+        <tr><td class="req-id">B8</td><td class="req-desc">Bloqueo ante cambio de rostro</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">Bloqueo inmediato. Tolerancia cero. Sesion anulada.</td></tr>
+        <tr><td class="req-id">B9</td><td class="req-desc">Aleatorizacion de preguntas y opciones</td><td><span class="badge badge-excede">Excede</span></td><td class="req-impl">LLM en dispositivo genera preguntas frescas. Banco infinito. Sin filtracion posible.</td></tr>
+        <tr><td class="req-id">B10</td><td class="req-desc">Evidencias cifradas con hash + sello de tiempo</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">SHA-256 hash chain + AES-256-GCM + firma estacion + anclaje blockchain.</td></tr>
+        <tr><td class="req-id">B11</td><td class="req-desc">Analisis de comportamiento: labios, voz, mouse</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">Deteccion de voz (Web Audio), rastreo de focus/blur. Reglas explicables.</td></tr>
+        <tr><td class="req-id">B12</td><td class="req-desc">Marca de agua en pantalla</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">Esteganografia zero-width Unicode. Sesion + DID codificados invisiblemente.</td></tr>
+        <tr><td class="req-id">B13</td><td class="req-desc">Modo degradado si falla camara</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">Camara falla = examen bloqueado. Sesion anulada. Nuevo intento tras cooldown.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Seguridad -->
+  <div class="tab-panel" id="tab-security">
+    <table class="compliance-table">
+      <thead><tr><th>Ref</th><th>Requisito</th><th>Estado</th><th>Implementacion</th></tr></thead>
+      <tbody>
+        <tr><td class="req-id">C1</td><td class="req-desc">Cifrado en transito TLS 1.2/1.3</td><td><span class="badge badge-excede">Excede</span></td><td class="req-impl">Sin trafico de red durante examen. Vector de ataque eliminado por completo.</td></tr>
+        <tr><td class="req-id">C2</td><td class="req-desc">Cifrado en reposo AES-256</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">Boveda cifrada con AES-256-GCM. Clave derivada de Ed25519 via HKDF.</td></tr>
+        <tr><td class="req-id">C3</td><td class="req-desc">MFA, RBAC, minimo privilegio, Zero Trust</td><td><span class="badge badge-excede">Excede</span></td><td class="req-impl">WebAuthn (biometrico + dispositivo) = MFA inherente. Boveda soberana = Zero Trust.</td></tr>
+        <tr><td class="req-id">C4</td><td class="req-desc">Logs inmutables, WORM, exportables</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">VC de sesion = log inmutable. Firmada, verificable, exportable JSON-LD.</td></tr>
+        <tr><td class="req-id">C5</td><td class="req-desc">Integridad: firmas, hashing, blockchain</td><td><span class="badge badge-excede">Excede</span></td><td class="req-impl">Ed25519 + SHA-256 chain + proofChain (user + station) + anclaje blockchain.</td></tr>
+        <tr><td class="req-id">C6</td><td class="req-desc">Privacidad y minimizacion de datos</td><td><span class="badge badge-excede">Excede</span></td><td class="req-impl">Sin grabacion video/audio. Sin servidor. Captura solo por anomalia. Ley 8968.</td></tr>
+        <tr><td class="req-id">C7</td><td class="req-desc">Deteccion de anomalias con reglas/ML</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">Reglas deterministicas explicables. Sin ML de caja negra. Cada bandera tiene regla clara.</td></tr>
+        <tr><td class="req-id">C8-11</td><td class="req-desc">PIA, registro tratamientos, RBAC entornos, gobernanza biometria</td><td><span class="badge badge-excede">Excede</span></td><td class="req-impl">Privacidad arquitectonica. Sin PII en servidor. Biometricos procesados en memoria, nunca persistidos.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Integraciones -->
+  <div class="tab-panel" id="tab-integration">
+    <table class="compliance-table">
+      <thead><tr><th>Ref</th><th>Requisito</th><th>Estado</th><th>Implementacion</th></tr></thead>
+      <tbody>
+        <tr><td class="req-id">D1</td><td class="req-desc">Crear intento en SGLC al inicio</td><td><span class="badge badge-diferente">Diferente</span></td><td class="req-impl">Sesion vinculada a DID con SHA-256 chain. Verificable post-facto sin SGLC en tiempo real.</td></tr>
+        <tr><td class="req-id">D2</td><td class="req-desc">Registrar calificacion en SGLC</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">VC firmada con puntaje + timestamp. Ciudadano presenta a COSEVI.</td></tr>
+        <tr><td class="req-id">D3</td><td class="req-desc">Sincronizacion en tiempo real</td><td><span class="badge badge-diferente">Diferente</span></td><td class="req-impl">VC atomica: se emite o no. Sin estado intermedio. Sin fallas de sincronizacion.</td></tr>
+        <tr><td class="req-id">D4</td><td class="req-desc">Pasarela de pago SOCKET</td><td><span class="badge badge-diferente">Diferente</span></td><td class="req-impl">Pago desacoplado. Examen = evaluacion libre. Pago al solicitar licencia via SINPE.</td></tr>
+        <tr><td class="req-id">D5</td><td class="req-desc">Banco de preguntas sin almacenar</td><td><span class="badge badge-excede">Excede</span></td><td class="req-impl">LLM en dispositivo genera preguntas dinamicas. No hay banco que filtrar.</td></tr>
+        <tr><td class="req-id">D6</td><td class="req-desc">Integracion TSE biometrica</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">Biometrico capturado en onboarding. Comparacion contra almacenado.</td></tr>
+        <tr><td class="req-id">D7</td><td class="req-desc">Dictamen medico: validar vigencia</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">VC de dictamen en boveda. Verificacion pre-examen automatica.</td></tr>
+        <tr><td class="req-id">D8</td><td class="req-desc">Control de impedimentos</td><td><span class="badge badge-diferente">Diferente</span></td><td class="req-impl">Verificacion en capa de presentacion. COSEVI valida impedimentos al emitir licencia.</td></tr>
+        <tr><td class="req-id">D9</td><td class="req-desc">Notificaciones email/SMS</td><td><span class="badge badge-diferente">Diferente</span></td><td class="req-impl">Autoservicio inmediato. Push notifications via PWA service worker.</td></tr>
+        <tr><td class="req-id">D10</td><td class="req-desc">Integracion MEP para centros educativos</td><td><span class="badge badge-diferente">Diferente</span></td><td class="req-impl">Acceso universal. Estudiantes usan misma app. Verificacion via verify.attestto.com.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Rendimiento -->
+  <div class="tab-panel" id="tab-perf">
+    <table class="compliance-table">
+      <thead><tr><th>Ref</th><th>Requisito</th><th>Estado</th><th>Implementacion</th></tr></thead>
+      <tbody>
+        <tr><td class="req-id">E1</td><td class="req-desc">Concurrencia >= 5,000 usuarios</td><td><span class="badge badge-excede">Excede</span></td><td class="req-impl">Concurrencia infinita. Cada dispositivo es su propia instancia aislada.</td></tr>
+        <tr><td class="req-id">E2</td><td class="req-desc">Latencia <= 1.5s</td><td><span class="badge badge-excede">Excede</span></td><td class="req-impl">Latencia cero. Sin viaje de ida y vuelta por red.</td></tr>
+        <tr><td class="req-id">E3</td><td class="req-desc">API <= 300ms</td><td><span class="badge badge-excede">Excede</span></td><td class="req-impl">Sin API. Todo local.</td></tr>
+        <tr><td class="req-id">E4</td><td class="req-desc">Disponibilidad >= 99.5%</td><td><span class="badge badge-excede">Excede</span></td><td class="req-impl">100%. Cada dispositivo ES el sistema. No puede caerse.</td></tr>
+        <tr><td class="req-id">F1-3</td><td class="req-desc">RPO/RTO, monitoreo, auto-scaling</td><td><span class="badge badge-excede">Excede</span></td><td class="req-impl">RPO cero. RTO = 2 min reinstalar. Sin servidor = sin scaling.</td></tr>
+        <tr><td class="req-id">G1-6</td><td class="req-desc">Backup, gestion de incidentes, restauracion</td><td><span class="badge badge-excede">Excede</span></td><td class="req-impl">Datos en dispositivo del ciudadano. VCs re-emitibles. Anclaje on-chain = respaldo permanente.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Operacion -->
+  <div class="tab-panel" id="tab-ops">
+    <table class="compliance-table">
+      <thead><tr><th>Ref</th><th>Requisito</th><th>Estado</th><th>Implementacion</th></tr></thead>
+      <tbody>
+        <tr><td class="req-id">H1</td><td class="req-desc">Catalogo de reglas por categoria</td><td><span class="badge badge-construir">Por construir</span></td><td class="req-impl">exam-rules.json por tipo de vehiculo. DGEV ajusta sin tocar codigo.</td></tr>
+        <tr><td class="req-id">H2</td><td class="req-desc">Gestion centralizada con versionamiento</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">Configuracion en git. Cambios via PR = historial completo + flujo de aprobacion.</td></tr>
+        <tr><td class="req-id">H3</td><td class="req-desc">Panel de control en tiempo real</td><td><span class="badge badge-diferente">Diferente</span></td><td class="req-impl">Dashboard de dominio personal. Analytics anonimizados de VCs verificadas.</td></tr>
+        <tr><td class="req-id">H4</td><td class="req-desc">Expulsion/bloqueo por fraude</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">Fraude = examen anulado, sin VC. Cooldown aplicado en boveda vinculado a DID.</td></tr>
+        <tr><td class="req-id">H5</td><td class="req-desc">Alertas automaticas al supervisor</td><td><span class="badge badge-diferente">Diferente</span></td><td class="req-impl">Aplicacion automatica. Reglas deterministicas. Sin juicio humano necesario.</td></tr>
+        <tr><td class="req-id">H6</td><td class="req-desc">Reportes exportables PDF/CSV</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">PDF con hashes incrustados + VC JSON-LD + evidencia cifrada.</td></tr>
+        <tr><td class="req-id">H7</td><td class="req-desc">Help desk 24x7 en espanol</td><td><span class="badge badge-construir">Por construir</span></td><td class="req-impl">Boton "Reportar problema" en app. Auto-reparacion via reintentos.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- PoC/UAT -->
+  <div class="tab-panel" id="tab-poc">
+    <table class="compliance-table">
+      <thead><tr><th>Ref</th><th>Requisito</th><th>Estado</th><th>Implementacion</th></tr></thead>
+      <tbody>
+        <tr><td class="req-id">I1</td><td class="req-desc">10+ usuarios reales flujo completo</td><td><span class="badge badge-construir">Por construir</span></td><td class="req-impl">Hito de prueba. Identidad -> consentimiento -> examen -> VC.</td></tr>
+        <tr><td class="req-id">I2</td><td class="req-desc">Verificacion facial con liveness</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">FaceLandmarker + blendshapes. Parpadeo + giro de cabeza.</td></tr>
+        <tr><td class="req-id">I3</td><td class="req-desc">Bloqueo ante cambio de rostro</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">Comparacion continua contra selfie de referencia. Pixel-diff + umbral.</td></tr>
+        <tr><td class="req-id">I4</td><td class="req-desc">Ausencia/multiples -> bloqueo</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">Respuesta graduada (B7) + bloqueo inmediato por falla camara (B13).</td></tr>
+        <tr><td class="req-id">I5</td><td class="req-desc">Cambio de pestana -> expulsion</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">Rastreo focus/blur + cooldown. Fullscreen re-request automatico.</td></tr>
+        <tr><td class="req-id">I6</td><td class="req-desc">Bloqueo impresion/captura pantalla</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">Clipboard + @media print + beforeprint + PrintScreen bloqueados.</td></tr>
+        <tr><td class="req-id">I7</td><td class="req-desc">Logs firmados con hash + timestamp</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">SHA-256 chain + proofChain (user Ed25519 + station Ed25519).</td></tr>
+        <tr><td class="req-id">I8</td><td class="req-desc">Exportacion evidencias PDF/CSV</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">PDF con hashes + JSON cifrado AES-256-GCM. Doble formato.</td></tr>
+        <tr><td class="req-id">I9</td><td class="req-desc">Integracion SGLC resultado en tiempo real</td><td><span class="badge badge-diferente">Diferente</span></td><td class="req-impl">Presentacion iniciada por ciudadano. VC atomica. Sin fallas de sync.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- FOOTER                                          -->
+<!-- ════════════════════════════════════════════════ -->
+
+<footer class="footer">
+  Apache 2.0 &middot;
+  <a href="https://attestto.com">attestto.com</a> &middot;
+  <a href="https://attestto.org/ark/">attestto.org/ark</a> &middot;
+  <a href="https://github.com/Attestto-com/attestto-app">GitHub</a>
+</footer>
+
+<script>
+// ── Compliance tab switching ──────────────────
+document.querySelectorAll('.tabs:not(#module-tabs) .tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    const parent = tab.closest('.section');
+    const target = tab.dataset.tab;
+    parent.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    parent.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('tab-' + target).classList.add('active');
+  });
+});
+
+// ── Module filtering ──────────────────────────
+let activeDomain = 'all';
+let activeCountry = 'all';
+
+function filterModules() {
+  document.querySelectorAll('#modules-grid .module-card').forEach(card => {
+    const domain = card.dataset.domain;
+    const country = card.dataset.country;
+    const domainMatch = activeDomain === 'all' || domain === activeDomain;
+    const countryMatch = activeCountry === 'all' || country === activeCountry;
+    card.style.display = domainMatch && countryMatch ? '' : 'none';
+  });
+}
+
+document.querySelectorAll('#module-tabs .tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('#module-tabs .tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    activeDomain = tab.dataset.domain;
+    filterModules();
+  });
+});
+
+// Module card click → detail page
+const moduleIdMap = {
+  'Examen Teorico COSEVI': 'cr-driving',
+  'Dictamen Medico': 'dictamen',
+  'Licencia Digital (mDL)': 'mdl',
+  'PDF Signer & Reader': 'pdf',
+  'Cedula de Identidad': 'cedula',
+  'Firma Digital BCCR': 'firma-digital',
+  'Attestto Pay': 'attestto-pay',
+  'vLEI Issuance': 'vlei',
+  'Modulo Notarial': 'notarial',
+  'Titulo Profesional': 'titulo',
+  'Mensajeria Verificada': 'mensajeria',
+  'Attestto Mesh': 'mesh',
+  'Modulo COSEVI/SGLC': 'cosevi-sglc',
+};
+
+document.querySelectorAll('#modules-grid .module-card').forEach(card => {
+  const name = card.querySelector('.module-name')?.textContent;
+  const id = moduleIdMap[name];
+  if (id) {
+    card.addEventListener('click', () => window.location.href = '/demo-module.html?id=' + id);
+  }
+});
+
+document.querySelectorAll('.country-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.country-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeCountry = btn.dataset.country;
+    filterModules();
+  });
+});
+</script>
+
+</body>
+</html>

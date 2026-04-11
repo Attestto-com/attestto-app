@@ -29,8 +29,9 @@ export async function bootstrapModules() {
         if (modules.installed.has(mod.manifest.id)) continue
         try {
           await modules.installModule(mod)
-        } catch {
-          // Gate not satisfied — skip silently
+          console.log(`[module] ${mod.manifest.id} installed`)
+        } catch (e) {
+          console.warn(`[module] ${mod.manifest.id} skipped:`, e)
         }
       }
     },

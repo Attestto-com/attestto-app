@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Attestto — Modulo</title>
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+<style>
+:root {
+  --bg-deep: #080e14;
+  --bg-base: #0f1923;
+  --bg-card: #1a1f2e;
+  --bg-card-hover: #222838;
+  --primary: #594FD3;
+  --primary-glow: rgba(89, 79, 211, 0.25);
+  --success: #4ade80;
+  --success-dim: rgba(74, 222, 128, 0.15);
+  --warning: #fbbf24;
+  --warning-dim: rgba(251, 191, 36, 0.15);
+  --build: #60a5fa;
+  --build-dim: rgba(96, 165, 250, 0.15);
+  --text: #e8eaed;
+  --text-muted: #8b95a5;
+  --text-dim: #5a6577;
+  --border: rgba(255, 255, 255, 0.06);
+  --radius: 12px;
+  --font: 'DM Sans', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg-deep);
+  color: var(--text);
+  font-family: var(--font);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+/* ── Back link ─────────────────────────────────── */
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-dim);
+  text-decoration: none;
+  margin-bottom: 32px;
+  transition: color 0.2s;
+}
+.back-link:hover { color: var(--text-muted); }
+
+/* ── Header ────────────────────────────────────── */
+
+.mod-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.mod-icon-wrap {
+  width: 64px;
+  height: 64px;
+  background: var(--primary-glow);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.mod-icon-wrap .material-icons-outlined { font-size: 28px; color: var(--primary); }
+
+.mod-title { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; }
+.mod-country { font-family: var(--mono); font-size: 12px; color: var(--text-dim); margin-top: 2px; }
+
+.mod-status {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  margin-top: 8px;
+}
+
+.status-functional { color: var(--success); background: var(--success-dim); }
+.status-progress { color: var(--warning); background: var(--warning-dim); }
+.status-planned { color: var(--build); background: var(--build-dim); }
+
+.progress-row {
+  display: flex; align-items: center; gap: 10px; margin-top: 8px; max-width: 200px;
+}
+.progress-bar { flex: 1; height: 4px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, var(--primary), #7c6ef0); border-radius: 2px; }
+.progress-pct { font-family: var(--mono); font-size: 11px; color: var(--text-dim); }
+
+/* ── Sections ──────────────────────────────────── */
+
+.mod-section {
+  margin-bottom: 40px;
+}
+
+.mod-section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.mod-desc {
+  font-size: 15px;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+/* ── Flow steps ────────────────────────────────── */
+
+.flow-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.flow-step {
+  display: flex;
+  gap: 16px;
+  padding: 16px 0;
+}
+
+.flow-num {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--primary-glow);
+  color: var(--primary);
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.flow-content { flex: 1; }
+.flow-title { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+.flow-desc { font-size: 13px; color: var(--text-muted); }
+
+.flow-connector {
+  width: 2px;
+  height: 16px;
+  background: var(--border);
+  margin-left: 15px;
+}
+
+/* ── Specs grid ────────────────────────────────── */
+
+.specs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.spec-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+
+.spec-label { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+.spec-value { font-size: 14px; font-weight: 500; }
+
+/* ── Compliance list ───────────────────────────── */
+
+.compliance-list {
+  list-style: none;
+}
+
+.compliance-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+
+.compliance-ref {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  min-width: 36px;
+}
+
+.compliance-check {
+  color: var(--success);
+  font-size: 16px;
+}
+
+/* ── Screenshots ───────────────────────────────── */
+
+.screenshots-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.screenshot-slot {
+  aspect-ratio: 9/16;
+  background: var(--bg-card);
+  border: 1px dashed rgba(255,255,255,0.1);
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-dim);
+  font-size: 13px;
+}
+
+/* ── CTA ───────────────────────────────────────── */
+
+.mod-cta {
+  text-align: center;
+  padding: 40px 0;
+}
+
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 15px;
+  font-weight: 600;
+  font-family: var(--font);
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.cta-btn:hover { opacity: 0.9; }
+
+.cta-secondary {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  margin-left: 12px;
+}
+
+/* ── Coming soon ───────────────────────────────── */
+
+.coming-soon {
+  text-align: center;
+  padding: 60px 0;
+  color: var(--text-dim);
+}
+
+.coming-soon .material-icons-outlined { font-size: 48px; margin-bottom: 16px; display: block; }
+
+/* ── Footer ────────────────────────────────────── */
+
+.footer {
+  text-align: center;
+  padding: 40px 0;
+  font-size: 13px;
+  color: var(--text-dim);
+  border-top: 1px solid var(--border);
+}
+.footer a { color: var(--primary); text-decoration: none; }
+
+@media (max-width: 768px) {
+  .container { padding: 20px 16px; }
+  .mod-header { flex-direction: column; }
+  .specs-grid { grid-template-columns: 1fr 1fr; }
+  .screenshots-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="container" id="app">
+  <!-- Rendered by JS -->
+</div>
+
+<script>
+const MODULES = {
+  'cr-driving': {
+    id: 'cr-driving',
+    name: 'Examen Teorico COSEVI',
+    icon: 'directions_car',
+    country: 'CR',
+    status: 'live',
+    progress: null,
+    desc: 'Examen proctorizado para la prueba teorica de conducir en Costa Rica. Deteccion facial con IA, verificacion de identidad continua, cadena de hash SHA-256 para auditoria, firma criptografica Ed25519, anclaje en blockchain, y modelo de dominio SM-2 para aprendizaje espaciado.',
+    problem: 'El sistema actual de examenes teoricos de COSEVI depende de centros fisicos, es vulnerable a fraude (suplantacion, filtrado de bancos de preguntas, uso de auriculares), y no genera evidencia criptografica verificable. Los ciudadanos deben desplazarse, hacer fila, y el resultado queda en una base de datos centralizada sin control del ciudadano.',
+    flow: [
+      { title: 'Verificacion de identidad', desc: 'Liveness challenge (parpadeo + giro de cabeza) + selfie de referencia contra credencial de identidad en boveda.' },
+      { title: 'Examen proctorizado', desc: '40 preguntas generadas por LLM, cronometro, lockdown completo. Deteccion facial, de voz, y de enfoque en tiempo real.' },
+      { title: 'Cadena de evidencia', desc: 'Cada respuesta firmada individualmente. SHA-256 hash chain. Firma de estacion proctora. Exportacion PDF + JSON cifrado.' },
+      { title: 'Credencial verificable', desc: 'VC firmada con proofChain (usuario + estacion). Anclaje opcional en blockchain. Presentable a COSEVI para tramite de licencia.' },
+    ],
+    specs: [
+      { label: 'Firma', value: 'Ed25519 (noble/curves)' },
+      { label: 'Hash chain', value: 'SHA-256 (Web Crypto)' },
+      { label: 'Cifrado', value: 'AES-256-GCM' },
+      { label: 'Biometria', value: 'FaceLandmarker (MediaPipe)' },
+      { label: 'Liveness', value: 'Blendshapes (parpadeo + giro)' },
+      { label: 'Preguntas', value: 'LLM en dispositivo' },
+      { label: 'Repeticion', value: 'SM-2 (SuperMemo)' },
+      { label: 'Lockdown', value: 'Fullscreen + clipboard + print' },
+      { label: 'Watermark', value: 'Zero-width Unicode' },
+      { label: 'Notificaciones', value: 'Notification API (local)' },
+      { label: 'Estandar VC', value: 'W3C VC Data Model 1.1' },
+      { label: 'Licencia', value: 'Apache 2.0' },
+    ],
+    compliance: [
+      { ref: 'A1', desc: '100% web, sin plugins' },
+      { ref: 'A3', desc: 'Sesion unica por usuario' },
+      { ref: 'A7', desc: 'Browser lockdown completo' },
+      { ref: 'B1', desc: 'Verificacion biometrica pre-examen' },
+      { ref: 'B2', desc: 'Liveness pre y durante examen' },
+      { ref: 'B7', desc: 'Bloqueo ante multiples personas' },
+      { ref: 'B8', desc: 'Bloqueo ante cambio de rostro' },
+      { ref: 'B9', desc: 'Aleatorizacion de preguntas' },
+      { ref: 'B10', desc: 'Evidencias cifradas con hash' },
+      { ref: 'B12', desc: 'Marca de agua esteganografica' },
+      { ref: 'C3', desc: 'Zero Trust + WebAuthn MFA' },
+      { ref: 'C5', desc: 'Firmas + hashing + blockchain' },
+      { ref: 'C6', desc: 'Minimizacion de datos' },
+      { ref: 'I6', desc: 'Bloqueo impresion/captura' },
+      { ref: 'I7', desc: 'Logs firmados con hash + timestamp' },
+    ],
+    screenshots: 4,
+  },
+  'cedula': {
+    id: 'cedula',
+    name: 'Cedula de Identidad',
+    icon: 'assignment_ind',
+    country: 'CR',
+    status: 'live',
+    progress: null,
+    desc: 'Credencial de identidad nacional vinculada al TSE. Firma digital atada a la cedula. Base para todos los demas modulos. Verificacion biometrica via WebAuthn.',
+    problem: 'La identidad digital en Costa Rica depende de sistemas centralizados (TSE, BCCR). El ciudadano no controla su propia identidad digital ni puede demostrar quien es sin depender de un tercero en tiempo real.',
+    flow: [
+      { title: 'Registro', desc: 'WebAuthn crea passkey vinculada al dispositivo. Ed25519 keypair generado.' },
+      { title: 'Captura', desc: 'Datos de cedula capturados. DID generado (did:sns).' },
+      { title: 'Verificacion', desc: 'Biometrico facial comparado contra documento.' },
+      { title: 'Boveda', desc: 'Credencial almacenada cifrada (AES-256-GCM). Solo accesible con biometrico del dispositivo.' },
+    ],
+    specs: [
+      { label: 'DID', value: 'did:sns (Solana Name Service)' },
+      { label: 'Firma', value: 'Ed25519' },
+      { label: 'Autenticacion', value: 'WebAuthn (passkey)' },
+      { label: 'Almacenamiento', value: 'IndexedDB cifrado' },
+      { label: 'Estandar', value: 'W3C DID Core 1.0' },
+    ],
+    compliance: [],
+    screenshots: 3,
+  },
+  'pdf': {
+    id: 'pdf',
+    name: 'PDF Signer & Reader',
+    icon: 'picture_as_pdf',
+    country: 'Universal',
+    status: 'live',
+    progress: null,
+    desc: 'Lectura, firma y verificacion de documentos PDF. Firma Ed25519 vinculada al DID del usuario. Verificacion de firmas existentes. Privado — todo ocurre en tu dispositivo.',
+    problem: 'Firmar PDFs requiere software costoso (Adobe Acrobat), servidores de terceros, o la infraestructura de Firma Digital del BCCR que solo funciona con tarjeta criptografica y software propietario (GAUDI).',
+    flow: [
+      { title: 'Abrir documento', desc: 'PDF renderizado localmente via pdfjs-dist. Sin subir a ningun servidor.' },
+      { title: 'Firmar', desc: 'Ed25519 firma el hash del documento. Firma vinculada al DID del usuario.' },
+      { title: 'Verificar', desc: 'Cualquier firma existente verificable. Muestra estado: valida, invalida, o desconocida.' },
+      { title: 'Exportar', desc: 'PDF firmado descargable. Firma incrustada en metadata.' },
+    ],
+    specs: [
+      { label: 'Renderizado', value: 'pdfjs-dist 4.x' },
+      { label: 'Firma', value: 'Ed25519 (@noble/curves)' },
+      { label: 'Paquete', value: '@attestto/pdf (privado)' },
+    ],
+    compliance: [],
+    screenshots: 2,
+  },
+  'attestto-pay': {
+    id: 'attestto-pay',
+    name: 'Attestto Pay',
+    icon: 'payments',
+    country: 'Universal',
+    status: 'progress',
+    progress: 80,
+    desc: 'Pagos con identidad soberana. El DID firma la intencion de pago, la infraestructura ejecuta. Claves de identidad y financieras nunca en el mismo dispositivo. Arquitectura de separacion absoluta.',
+    problem: 'Los sistemas de pago actuales vinculan la identidad del usuario a sus transacciones financieras. No existe separacion entre quien eres y que pagas. Un compromiso de credenciales expone todo.',
+    flow: [
+      { title: 'Intencion', desc: 'El usuario firma con su DID una intencion de pago (monto, destinatario, concepto).' },
+      { title: 'Ejecucion', desc: 'La infraestructura (Circle, Zunify) ejecuta el pago en la red correspondiente.' },
+      { title: 'Confirmacion', desc: 'VC de recibo firmada, anclada en blockchain. Verificable por ambas partes.' },
+    ],
+    specs: [
+      { label: 'Infraestructura', value: 'Circle + Zunify' },
+      { label: 'Separacion', value: 'ID key != financial key' },
+      { label: 'On/off ramp', value: 'Zunify (CR)' },
+      { label: 'Stablecoin', value: 'USDC (Circle)' },
+    ],
+    compliance: [],
+    screenshots: 0,
+  },
+  'vlei': {
+    id: 'vlei',
+    name: 'vLEI Issuance',
+    icon: 'verified',
+    country: 'Universal',
+    status: 'progress',
+    progress: 25,
+    desc: 'Emision de credenciales vLEI (verifiable Legal Entity Identifier). Identidad juridica verificable para empresas y organizaciones via GLEIF. Attestto como QVI (Qualified vLEI Issuer).',
+    problem: 'Las empresas no tienen una forma estandarizada de demostrar su identidad juridica digitalmente. El LEI existe pero no es verificable criptograficamente sin intermediarios.',
+    flow: [
+      { title: 'Registro LEI', desc: 'Empresa obtiene LEI via GLEIF/LOU.' },
+      { title: 'Verificacion KYC', desc: 'QVI (Attestto) verifica identidad juridica.' },
+      { title: 'Emision vLEI', desc: 'Credencial vLEI emitida, firmada, y anclada.' },
+      { title: 'Presentacion', desc: 'Empresa presenta vLEI a contrapartes. Verificable sin intermediarios.' },
+    ],
+    specs: [
+      { label: 'Estandar', value: 'GLEIF vLEI' },
+      { label: 'Rol', value: 'QVI (Qualified vLEI Issuer)' },
+      { label: 'Protocolo', value: 'KERI / ACDC' },
+    ],
+    compliance: [],
+    screenshots: 0,
+  },
+  'dictamen': {
+    id: 'dictamen',
+    name: 'Dictamen Medico',
+    icon: 'medical_services',
+    country: 'CR',
+    status: 'progress',
+    progress: 60,
+    desc: 'Emision de dictamen medico como credencial verificable. El profesional de salud firma con su identidad soberana. Verificable por COSEVI, escuelas de manejo, o cualquier parte.',
+    problem: 'El dictamen medico actual es un papel fisico facil de falsificar. No hay forma de verificar su autenticidad sin llamar al consultorio. Vence sin aviso.',
+    flow: [
+      { title: 'Examen medico', desc: 'El profesional evalua al paciente segun criterios COSEVI.' },
+      { title: 'Emision', desc: 'Dictamen emitido como VC firmada con el DID del medico.' },
+      { title: 'Boveda', desc: 'Ciudadano recibe la VC en su boveda. Control total.' },
+      { title: 'Verificacion', desc: 'Cualquier parte verifica autenticidad, vigencia, y firma del profesional.' },
+    ],
+    specs: [
+      { label: 'Emisor', value: 'Medico colegiado (DID)' },
+      { label: 'Vigencia', value: 'Configurable (default 6 meses)' },
+      { label: 'Verificacion', value: 'verify.attestto.com' },
+    ],
+    compliance: [
+      { ref: 'D7', desc: 'Dictamen medico: consulta de vigencia' },
+    ],
+    screenshots: 0,
+  },
+  'firma-digital': {
+    id: 'firma-digital',
+    name: 'Firma Digital BCCR',
+    icon: 'draw',
+    country: 'CR',
+    status: 'progress',
+    progress: 40,
+    desc: 'Integracion con la infraestructura de Firma Digital del BCCR. Firma de documentos PDF con tarjeta criptografica PKCS#11 y validez legal.',
+    problem: 'GAUDI (firmador oficial del BCCR) no tiene representacion grafica, la pagina de descarga redirige a sitios no oficiales, y el soporte es deficiente. No hay alternativa moderna.',
+    flow: [
+      { title: 'Insertar tarjeta', desc: 'Tarjeta criptografica Firma Digital insertada en lector.' },
+      { title: 'Enumerar certificados', desc: 'PKCS#11 enumera certificados disponibles en la tarjeta.' },
+      { title: 'Firmar', desc: 'Documento firmado con clave privada de la tarjeta. PAdES compatible.' },
+      { title: 'Verificar', desc: 'Firma verificable contra cadena de confianza del BCCR.' },
+    ],
+    specs: [
+      { label: 'Interfaz', value: 'PKCS#11 (pkcs11js)' },
+      { label: 'Formato', value: 'PAdES-B' },
+      { label: 'CA', value: 'BCCR CA Raiz v2' },
+    ],
+    compliance: [],
+    screenshots: 0,
+  },
+  'mesh': {
+    id: 'mesh',
+    name: 'Attestto Mesh',
+    icon: 'hub',
+    country: 'Universal',
+    status: 'live',
+    progress: null,
+    desc: 'Red peer-to-peer para resolucion de DIDs, distribucion de credenciales y anclaje descentralizado. Cada PWA es un nodo. Nodos dedicados en Fly.io.',
+    problem: 'Los sistemas de identidad centralizados dependen de servidores que pueden caer, ser censurados, o comprometidos. No hay forma de resolver identidades sin un punto central de falla.',
+    flow: [
+      { title: 'Bootstrap', desc: 'App se conecta a nodos semilla (attestto-anchor-cr en Fly.io).' },
+      { title: 'Descubrimiento', desc: 'DHT para resolucion de DIDs. Cada nodo contribuye al directorio.' },
+      { title: 'Anclaje', desc: 'Hash de credenciales anclado en blockchain via relayers.' },
+      { title: 'Verificacion', desc: 'Cualquier nodo puede verificar una credencial contra el ancla.' },
+    ],
+    specs: [
+      { label: 'Transporte', value: 'WebSocket / HTTP' },
+      { label: 'Almacenamiento', value: 'better-sqlite3' },
+      { label: 'Nodos', value: 'Fly.io (dfw, gru)' },
+      { label: 'CI', value: 'SonarCloud + GitHub Actions' },
+    ],
+    compliance: [],
+    screenshots: 0,
+  },
+  'notarial': {
+    id: 'notarial',
+    name: 'Modulo Notarial',
+    icon: 'gavel',
+    country: 'CR',
+    status: 'planned',
+    progress: null,
+    desc: 'Fe publica digital. El notario emite credenciales verificables con su firma profesional. Actos notariales como VCs auditables.',
+    problem: null, flow: [], specs: [], compliance: [], screenshots: 0,
+  },
+  'titulo': {
+    id: 'titulo',
+    name: 'Titulo Profesional',
+    icon: 'school',
+    country: 'CR',
+    status: 'planned',
+    progress: null,
+    desc: 'Atestacion profesional emitida por Colegios. Fe publica digital para abogados, ingenieros, medicos. Verificacion de colegiatura activa.',
+    problem: null, flow: [], specs: [], compliance: [], screenshots: 0,
+  },
+  'mdl': {
+    id: 'mdl',
+    name: 'Licencia Digital (mDL)',
+    icon: 'badge',
+    country: 'CR',
+    status: 'planned',
+    progress: null,
+    desc: 'Presentacion de licencia de conducir digital en formato ISO 18013-5. Verificable sin conexion.',
+    problem: null, flow: [], specs: [], compliance: [], screenshots: 0,
+  },
+  'mensajeria': {
+    id: 'mensajeria',
+    name: 'Mensajeria Verificada',
+    icon: 'chat',
+    country: 'Universal',
+    status: 'planned',
+    progress: null,
+    desc: 'Mensajes firmados con DID. Comunicacion entre partes verificadas. Sin intermediarios. Cifrado end-to-end con claves de boveda.',
+    problem: null, flow: [], specs: [], compliance: [], screenshots: 0,
+  },
+  'cosevi-sglc': {
+    id: 'cosevi-sglc',
+    name: 'Modulo COSEVI/SGLC',
+    icon: 'local_hospital',
+    country: 'CR',
+    status: 'planned',
+    progress: null,
+    desc: 'Presentacion de VCs a COSEVI para tramite de licencia. Verificacion de dictamen, examen, impedimentos en un solo flujo.',
+    problem: null, flow: [], specs: [], compliance: [], screenshots: 0,
+  },
+};
+
+// ── Render ─────────────────────────────────────
+const params = new URLSearchParams(window.location.search);
+const modId = params.get('id');
+const mod = MODULES[modId];
+const container = document.getElementById('app');
+
+if (!mod) {
+  container.innerHTML = '<div class="coming-soon"><span class="material-icons-outlined">error_outline</span><h2>Modulo no encontrado</h2><br><a href="/demo.html" class="back-link">Volver</a></div>';
+} else {
+  document.title = `Attestto — ${mod.name}`;
+
+  const statusClass = mod.status === 'live' ? 'status-functional' : mod.status === 'progress' ? 'status-progress' : 'status-planned';
+  const statusLabel = mod.status === 'live' ? 'Funcional' : mod.status === 'progress' ? 'En progreso' : 'Planificado';
+
+
+  let html = `
+    <a href="/demo.html" class="back-link"><span class="material-icons-outlined" style="font-size:16px">arrow_back</span> Volver a modulos</a>
+
+    <div class="mod-header">
+      <div class="mod-icon-wrap"><span class="material-icons-outlined">${mod.icon}</span></div>
+      <div>
+        <div class="mod-title">${mod.name}</div>
+        <div class="mod-country">${mod.country}</div>
+        <span class="mod-status ${statusClass}">${statusLabel}</span>
+        ${mod.progress ? `<div class="progress-row"><div class="progress-bar"><div class="progress-fill" style="width:${mod.progress}%"></div></div><span class="progress-pct">${mod.progress}%</span></div>` : ''}
+      </div>
+    </div>
+
+    <p class="mod-desc">${mod.desc}</p>
+  `;
+
+  if (mod.status === 'planned' && !mod.problem) {
+    html += `
+      <div class="coming-soon">
+        <span class="material-icons-outlined">construction</span>
+        <h3>Proximamente</h3>
+        <p style="margin-top:8px;color:var(--text-dim)">Este modulo esta en fase de diseno. Contactenos para mas informacion.</p>
+        <br>
+        <a href="mailto:eduardo@attestto.com" class="cta-btn cta-secondary">Contactar</a>
+      </div>
+    `;
+  } else {
+    // Problem
+    if (mod.problem) {
+      html += `
+        <div class="mod-section">
+          <div class="mod-section-title">El problema</div>
+          <p class="mod-desc">${mod.problem}</p>
+        </div>
+      `;
+    }
+
+    // Flow
+    if (mod.flow.length) {
+      html += `<div class="mod-section"><div class="mod-section-title">Como funciona</div><div class="flow-steps">`;
+      mod.flow.forEach((step, i) => {
+        html += `
+          <div class="flow-step">
+            <div class="flow-num">${i + 1}</div>
+            <div class="flow-content">
+              <div class="flow-title">${step.title}</div>
+              <div class="flow-desc">${step.desc}</div>
+            </div>
+          </div>
+        `;
+        if (i < mod.flow.length - 1) html += '<div class="flow-connector"></div>';
+      });
+      html += `</div></div>`;
+    }
+
+    // Specs
+    if (mod.specs.length) {
+      html += `<div class="mod-section"><div class="mod-section-title">Especificaciones tecnicas</div><div class="specs-grid">`;
+      mod.specs.forEach(s => {
+        html += `<div class="spec-card"><div class="spec-label">${s.label}</div><div class="spec-value">${s.value}</div></div>`;
+      });
+      html += `</div></div>`;
+    }
+
+    // Compliance
+    if (mod.compliance.length) {
+      html += `<div class="mod-section"><div class="mod-section-title">Cumplimiento (Pliego MOPT/DGEV)</div><ul class="compliance-list">`;
+      mod.compliance.forEach(c => {
+        html += `<li class="compliance-item"><span class="compliance-ref">${c.ref}</span><span class="material-icons-outlined compliance-check">check_circle</span>${c.desc}</li>`;
+      });
+      html += `</ul></div>`;
+    }
+
+    // Screenshots
+    if (mod.screenshots > 0) {
+      html += `<div class="mod-section"><div class="mod-section-title">Capturas</div><div class="screenshots-grid">`;
+      for (let i = 0; i < mod.screenshots; i++) {
+        html += `<div class="screenshot-slot">Captura ${i + 1}</div>`;
+      }
+      html += `</div></div>`;
+    }
+  }
+
+  // Footer
+  html += `
+    <footer class="footer">
+      Apache 2.0 &middot;
+      <a href="https://attestto.com">attestto.com</a> &middot;
+      <a href="https://attestto.org/ark/">attestto.org/ark</a>
+    </footer>
+  `;
+
+  container.innerHTML = html;
+}
+</script>
+
+</body>
+</html>

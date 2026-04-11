@@ -1,6 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useVaultStore } from '@/stores/vault'
 
+// Desktop users see the marketing/demo page; mobile users get the app
+const isDesktop = window.innerWidth > 768 && !/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)
+const isIframe = window.self !== window.top
+if (isDesktop && !isIframe && !window.location.pathname.startsWith('/demo')) {
+  window.location.replace('/demo.html')
+}
+
 const router = createRouter({
   history: createWebHistory(),
   routes: [
