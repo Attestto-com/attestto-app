@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { selectQuestions, getDefaultConfig } from '../composables/useQuestionBank'
 import { useMastery } from '../composables/useMastery'
-import type { ExamQuestion, ExamResult } from '../types'
+import type { ExamQuestion } from '../types'
 
 const router = useRouter()
 const { mastery, updateFromResult, getAllCategories } = useMastery()
@@ -15,51 +15,12 @@ const score = ref(0)
 const answered = ref(false)
 const selectedOption = ref<number | null>(null)
 const answers = ref<{ category: string; correct: boolean }[]>([])
-const masteryUpdated = ref(false)
+const lastCorrect = ref<boolean | null>(null)
+const showConfetti = ref(false)
 
 const current = computed(() => questions.value[currentIndex.value] ?? null)
 const done = computed(() => currentIndex.value >= questions.value.length && questions.value.length > 0)
 const updatedCategories = computed(() => getAllCategories())
-
-watch(done, (isDone) => {
-  if (isDone && !masteryUpdated.value) {
-    masteryUpdated.value = true
-    const result = buildResult()
-    if (result) updateFromResult(result)
-  }
-})
-
-function buildResult(): ExamResult | null {
-  if (!answers.value.length) return null
-
-  const cats = new Map<string, { correct: number; total: number }>()
-  for (const a of answers.value) {
-    const existing = cats.get(a.category) ?? { correct: 0, total: 0 }
-    existing.total++
-    if (a.correct) existing.correct++
-    cats.set(a.category, existing)
-  }
-
-  const categoryBreakdown = Array.from(cats.entries()).map(([category, { correct, total }]) => ({
-    category,
-    correct,
-    total,
-    percent: Math.round((correct / total) * 100),
-  }))
-
-  return {
-    passed: score.value / questions.value.length >= 0.9,
-    score: Math.round((score.value / questions.value.length) * 100),
-    correct: score.value,
-    wrong: questions.value.length - score.value,
-    total: questions.value.length,
-    durationSeconds: 0,
-    categoryBreakdown,
-    weakTopics: categoryBreakdown.filter((c) => c.percent < 70).map((c) => c.category),
-    chainHead: '',
-    incidents: [],
-  }
-}
 
 async function loadQuestions() {
   loading.value = true
@@ -74,12 +35,32 @@ function selectAnswer(index: number) {
   answered.value = true
   const isCorrect = index === current.value.correct
   if (isCorrect) score.value++
+  lastCorrect.value = isCorrect
+  if (isCorrect) {
+    showConfetti.value = true
+    setTimeout(() => { showConfetti.value = false }, 1500)
+  }
   answers.value.push({ category: current.value.category, correct: isCorrect })
+
+  // Update mastery immediately per question
+  updateFromResult({
+    passed: false,
+    score: isCorrect ? 100 : 0,
+    correct: isCorrect ? 1 : 0,
+    wrong: isCorrect ? 0 : 1,
+    total: 1,
+    durationSeconds: 0,
+    categoryBreakdown: [{ category: current.value.category, correct: isCorrect ? 1 : 0, total: 1, percent: isCorrect ? 100 : 0 }],
+    weakTopics: [],
+    chainHead: '',
+    incidents: [],
+  })
 }
 
 function next() {
   answered.value = false
   selectedOption.value = null
+  lastCorrect.value = null
   currentIndex.value++
 }
 
@@ -132,6 +113,16 @@ loadQuestions()
         >
           {{ opt }}
         </button>
+      </div>
+
+      <!-- Feedback -->
+      <div v-if="answered" :class="['feedback-banner', lastCorrect ? 'fb-correct' : 'fb-wrong']">
+        <span class="fb-icon">{{ lastCorrect ? '🎉' : '❌' }}</span>
+        <span class="fb-text">{{ lastCorrect ? 'Correcto!' : 'Incorrecto' }}</span>
+      </div>
+
+      <div v-if="showConfetti" class="confetti-container">
+        <span v-for="i in 20" :key="i" class="confetti-piece" :style="{ '--i': i }" />
       </div>
 
       <div v-if="answered" class="why-card">
@@ -220,7 +211,7 @@ loadQuestions()
 .category-tag {
   font-size: 12px;
   font-weight: 600;
-  color: var(--primary);
+  color: #a5b4fc;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -406,5 +397,63 @@ loadQuestions()
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
+}
+
+.feedback-banner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-md);
+  font-weight: 700;
+  font-size: 15px;
+  animation: fb-pop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.fb-correct {
+  background: rgba(74, 222, 128, 0.15);
+  color: var(--success);
+  border: 1px solid rgba(74, 222, 128, 0.3);
+}
+
+.fb-wrong {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--critical);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.fb-icon { font-size: 20px; }
+
+@keyframes fb-pop {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.confetti-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  overflow: hidden;
+}
+
+.confetti-piece {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  top: 40%;
+  left: 50%;
+  border-radius: 2px;
+  animation: confetti-burst 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  --angle: calc(var(--i) * 18deg);
+  --dist: calc(80px + var(--i) * 15px);
+  --color-h: calc(var(--i) * 25);
+  background: hsl(var(--color-h), 80%, 60%);
+}
+
+@keyframes confetti-burst {
+  0% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; }
+  100% { transform: translate(calc(cos(var(--angle)) * var(--dist)), calc(sin(var(--angle)) * var(--dist) + 120px)) rotate(720deg) scale(0); opacity: 0; }
 }
 </style>

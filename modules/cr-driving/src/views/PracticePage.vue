@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { selectQuestions, getDefaultConfig } from '../composables/useQuestionBank'
 import { generateQuestions, loadManualContext } from '../composables/useQuestionGenerator'
 import { useMastery } from '../composables/useMastery'
 import type { ExamQuestion } from '../types'
 
-import type { ExamResult } from '../types'
 
 const router = useRouter()
 const { mastery, updateFromResult } = useMastery()
@@ -18,7 +17,6 @@ const score = ref(0)
 const answered = ref(false)
 const selectedOption = ref<number | null>(null)
 const answers = ref<{ category: string; correct: boolean }[]>([])
-const masteryUpdated = ref(false)
 const lastCorrect = ref<boolean | null>(null)
 const showConfetti = ref(false)
 const regenerating = ref(false)
@@ -26,51 +24,7 @@ const regenerating = ref(false)
 const current = computed(() => questions.value[currentIndex.value] ?? null)
 const done = computed(() => currentIndex.value >= questions.value.length && questions.value.length > 0)
 
-// Update mastery when practice is complete
-watch(done, (isDone) => {
-  if (isDone && !masteryUpdated.value) {
-    masteryUpdated.value = true
-    const result = buildResult()
-    if (result) updateFromResult(result)
-  }
-})
-
-function buildResult(): ExamResult | null {
-  if (!answers.value.length) return null
-
-  // Group by category
-  const cats = new Map<string, { correct: number; total: number }>()
-  for (const a of answers.value) {
-    const existing = cats.get(a.category) ?? { correct: 0, total: 0 }
-    existing.total++
-    if (a.correct) existing.correct++
-    cats.set(a.category, existing)
-  }
-
-  const categoryBreakdown = Array.from(cats.entries()).map(([category, { correct, total }]) => ({
-    category,
-    correct,
-    total,
-    percent: Math.round((correct / total) * 100),
-  }))
-
-  const weakTopics = categoryBreakdown
-    .filter((c) => c.percent < 70)
-    .map((c) => c.category)
-
-  return {
-    passed: score.value / questions.value.length >= 0.9,
-    score: Math.round((score.value / questions.value.length) * 100),
-    correct: score.value,
-    wrong: questions.value.length - score.value,
-    total: questions.value.length,
-    durationSeconds: 0,
-    categoryBreakdown,
-    weakTopics,
-    chainHead: '',
-    incidents: [],
-  }
-}
+// Mastery is updated per-question in selectAnswer() — no batch needed
 
 async function loadQuestions() {
   loading.value = true
@@ -92,6 +46,20 @@ function selectAnswer(index: number) {
     setTimeout(() => { showConfetti.value = false }, 1500)
   }
   answers.value.push({ category: current.value.category, correct: isCorrect })
+
+  // Update mastery immediately per question
+  updateFromResult({
+    passed: false,
+    score: isCorrect ? 100 : 0,
+    correct: isCorrect ? 1 : 0,
+    wrong: isCorrect ? 0 : 1,
+    total: 1,
+    durationSeconds: 0,
+    categoryBreakdown: [{ category: current.value.category, correct: isCorrect ? 1 : 0, total: 1, percent: isCorrect ? 100 : 0 }],
+    weakTopics: [],
+    chainHead: '',
+    incidents: [],
+  })
 }
 
 function next() {
@@ -133,7 +101,6 @@ function restart() {
   answered.value = false
   selectedOption.value = null
   answers.value = []
-  masteryUpdated.value = false
   loadQuestions()
 }
 
