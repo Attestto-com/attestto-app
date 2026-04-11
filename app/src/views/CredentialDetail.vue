@@ -62,7 +62,10 @@ const statusLabel = computed(() => {
       <!-- Demo indicator -->
       <div v-if="credential.id?.includes('demo')" class="demo-badge">
         <q-icon name="science" size="14px" />
-        Datos de ejemplo — no son reales
+        <div>
+          <div>Datos de ejemplo — no son reales</div>
+          <div class="demo-install">Instala la app como PWA para crear tu identidad real</div>
+        </div>
       </div>
 
       <!-- Status badge -->
@@ -238,15 +241,21 @@ const statusLabel = computed(() => {
 
 .demo-badge {
   display: flex;
-  align-items: center;
-  gap: var(--space-xs);
-  padding: var(--space-xs) var(--space-md);
+  align-items: flex-start;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
   background: rgba(251, 191, 36, 0.1);
   border: 1px solid rgba(251, 191, 36, 0.3);
   border-radius: var(--radius-md);
   font-size: 12px;
   color: var(--warning);
   margin-bottom: var(--space-md);
+}
+
+.demo-install {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
 }
 
 .not-found {
