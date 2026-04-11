@@ -5,8 +5,9 @@
 
 import { ref, computed } from 'vue'
 
-// Gemma 2 2B int4 — publicly available, ~1.3 GB
-const MODEL_URL = 'https://huggingface.co/nicegrill/gemma-2-2b-it-int4-Web/resolve/main/gemma-2b-it-gpu-int4.bin'
+// Gemma 2B IT int4 — ~1.35 GB. Community mirror (public, no auth).
+// TODO: Host on own CDN (R2/S3) for production to lock version and avoid third-party dependency.
+const MODEL_URL = 'https://huggingface.co/alexdlov/gemma-2b-it-gpu-int4.bin/resolve/main/gemma-2b-it-gpu-int4.bin'
 const MODEL_CACHE_KEY = 'attestto-llm-model-v1'
 const OPT_IN_KEY = 'attestto-llm-enabled'
 
@@ -24,7 +25,7 @@ caches.open(MODEL_CACHE_KEY).then(async (cache) => {
   modelCached.value = !!cached
 }).catch(() => {})
 
-const modelSize = '~1.3 GB'
+const modelSize = '~1.35 GB'
 
 let worker: Worker | null = null
 let messageId = 0
