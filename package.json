@@ -9,8 +9,8 @@
     "preview": "pnpm --filter @attestto/app preview",
     "lint": "eslint . --ext .vue,.ts,.tsx",
     "typecheck": "pnpm -r typecheck",
-    "test": "npx vitest run",
-    "test:watch": "npx vitest"
+    "test": "cd app && npx vitest run",
+    "test:watch": "cd app && npx vitest"
   },
   "engines": {
     "node": ">=20",
