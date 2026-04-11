@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Attestto</title>
+  <script>
+    // SPA redirect for GitHub Pages
+    // Converts /path to /?p=/path so index.html can restore it via Vue Router
+    var seg = location.pathname.split('/').filter(Boolean);
+    if (seg.length > 0) {
+      location.replace(
+        location.origin + '/?p=' + encodeURIComponent(location.pathname) +
+        (location.search ? '&' + location.search.slice(1) : '') +
+        location.hash
+      );
+    }
+  </script>
+</head>
+<body></body>
+</html>

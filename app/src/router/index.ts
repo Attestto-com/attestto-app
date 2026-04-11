@@ -1,6 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useVaultStore } from '@/stores/vault'
 
+// GitHub Pages SPA redirect: 404.html redirects /path → /?p=/path
+const ghPagesRedirect = new URLSearchParams(window.location.search).get('p')
+if (ghPagesRedirect) {
+  window.history.replaceState(null, '', ghPagesRedirect + window.location.hash)
+}
+
 // Desktop users see the marketing/demo page; mobile users get the app
 const isDesktop = window.innerWidth > 768 && !/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)
 const isIframe = window.self !== window.top
