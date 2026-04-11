@@ -169,6 +169,8 @@ export default {
     cyberSecBody: 'Never share your screen during authentication. Nobody from Attestto will ask for your PIN. If you lose your phone, your vault stays protected by your passkey.',
     readyTitle: 'All set',
     readyBody: 'Your digital identity is active. You can receive credentials, sign documents, and verify information from your wallet.',
+    whyBtn: 'Why?',
+    llmError: 'Could not generate a response.',
   },
   install: {
     title: 'Install Attestto',

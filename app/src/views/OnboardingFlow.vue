@@ -3,11 +3,16 @@ import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useVaultStore } from '@/stores/vault'
+import { useLlm } from '@/composables/useLlm'
 
 const { t } = useI18n()
 const router = useRouter()
 const vault = useVaultStore()
+const llm = useLlm()
 const current = ref(0)
+const llmResponse = ref('')
+const llmLoading = ref(false)
+const llmVisible = ref(false)
 
 const screens = computed(() => [
   {
@@ -37,10 +42,42 @@ const screens = computed(() => [
   },
 ])
 
+const llmAvailable = computed(() => llm.status.value === 'ready')
+
+// Contextual prompts for the LLM — one per screen
+const llmPrompts = [
+  'Explica en 2 oraciones simples por que es importante que las llaves criptograficas vivan solo en el dispositivo del usuario y no en un servidor.',
+  'Explica en 2 oraciones simples por que una app debe pedir consentimiento antes de guardar datos personales y que significa credencial verificable.',
+  'Explica en 2 oraciones simples como la identidad digital elimina filas y fotocopias comparado con el proceso tradicional.',
+  'Explica en 2 oraciones simples los riesgos de compartir pantalla durante autenticacion y por que nadie legitimo pide tu PIN.',
+  'Felicita al usuario en 1 oracion por completar su educacion digital basica.',
+]
+
+async function askLlm() {
+  if (!llmAvailable.value || llmLoading.value) return
+  llmLoading.value = true
+  llmResponse.value = ''
+  llmVisible.value = true
+  try {
+    const prompt = llmPrompts[current.value] ?? llmPrompts[0]
+    llmResponse.value = await llm.generate(prompt)
+  } catch {
+    llmResponse.value = t('onboarding.llmError')
+  } finally {
+    llmLoading.value = false
+  }
+}
+
+function clearLlm() {
+  llmResponse.value = ''
+  llmVisible.value = false
+}
+
 const isLast = computed(() => current.value === screens.value.length - 1)
 const progress = computed(() => ((current.value + 1) / screens.value.length) * 100)
 
 function next() {
+  clearLlm()
   if (isLast.value) {
     complete()
   } else {
@@ -94,6 +131,23 @@ async function complete() {
 
       <h2 class="screen-title">{{ screens[current].title }}</h2>
       <p class="screen-body">{{ screens[current].body }}</p>
+
+      <!-- LLM contextual help -->
+      <button
+        v-if="llmAvailable && !llmVisible"
+        class="why-btn"
+        @click="askLlm"
+      >
+        <q-icon name="psychology" size="16px" />
+        {{ t('onboarding.whyBtn') }}
+      </button>
+
+      <div v-if="llmVisible" class="llm-bubble">
+        <div v-if="llmLoading" class="llm-loading">
+          <q-spinner-dots size="20px" color="primary" />
+        </div>
+        <p v-else class="llm-text">{{ llmResponse }}</p>
+      </div>
     </div>
 
     <!-- Dots -->
@@ -225,5 +279,46 @@ async function complete() {
 
 .action-btn:active {
   background: var(--primary-hover);
+}
+
+.why-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  color: var(--primary);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.why-btn:active {
+  background: var(--bg-elevated);
+}
+
+.llm-bubble {
+  width: 100%;
+  padding: var(--space-md);
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  min-height: 48px;
+}
+
+.llm-loading {
+  display: flex;
+  justify-content: center;
+  padding: var(--space-sm);
+}
+
+.llm-text {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  margin: 0;
 }
 </style>

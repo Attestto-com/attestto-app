@@ -1,4 +1,4 @@
-import type { AttesttoModule, ModuleContext } from '@attestto/module-sdk'
+import type { AttesttoModule, ModuleContext, OnboardingFlow } from '@attestto/module-sdk'
 import { markRaw } from 'vue'
 import MasteryWidget from './components/MasteryWidget.vue'
 import { checkDueOnOpen, scheduleReviewReminder } from './composables/useNotifications'
@@ -96,6 +96,30 @@ const crDrivingModule: AttesttoModule = {
 
   getHomeWidget() {
     return markRaw(MasteryWidget)
+  },
+
+  getOnboarding(): OnboardingFlow {
+    return {
+      id: 'cr-driving-onboarding',
+      screens: [
+        {
+          icon: 'directions_car',
+          title: 'Examen Teorico COSEVI',
+          body: 'Este modulo te prepara para el examen teorico de conducir. Practicas con preguntas reales y la IA genera variantes para reforzar tus puntos debiles.',
+        },
+        {
+          icon: 'storage',
+          title: 'Que datos guardamos',
+          body: 'Tu progreso (categorias, puntajes, historial de respuestas) se guarda solo en tu dispositivo. Nada se envia a un servidor. Si borras la app, pierdes tu progreso.',
+        },
+        {
+          icon: 'verified',
+          title: 'Credencial de competencia',
+          body: 'Al dominar todas las categorias, se emite una credencial verificable (DrivingCompetencyCR) en tu wallet. Un verificador puede confirmarla sin ver tus datos personales.',
+        },
+      ],
+      completionCredential: 'DrivingModuleOnboardingCR',
+    }
   },
 
   async getInboxItems() {
