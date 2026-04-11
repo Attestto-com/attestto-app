@@ -71,6 +71,19 @@ function optionClass(index: number): string {
   return 'dimmed'
 }
 
+async function practiceCategory(category: string) {
+  loading.value = true
+  currentIndex.value = 0
+  score.value = 0
+  answered.value = false
+  selectedOption.value = null
+  lastCorrect.value = null
+  answers.value = []
+  const config = { ...getDefaultConfig(), questionCount: 5 }
+  questions.value = await selectQuestions(config, [category], true)
+  loading.value = false
+}
+
 function barColor(pct: number): string {
   if (pct >= 90) return 'var(--success)'
   if (pct >= 70) return 'var(--warning)'
@@ -142,16 +155,25 @@ loadQuestions()
       <div class="done-percent">{{ Math.round((score / questions.length) * 100) }}%</div>
 
       <div class="mastery-update">
-        <h3>Tu dominio actualizado</h3>
-        <div v-for="cat in updatedCategories" :key="cat.category" class="cat-row">
-          <span class="cat-label">{{ cat.category }}</span>
+        <h3>Tu dominio — meta: 90% en todas</h3>
+        <div v-for="cat in updatedCategories" :key="cat.category" class="cat-row-full">
+          <div class="cat-top">
+            <span class="cat-name">{{ cat.category }}</span>
+            <span class="cat-pct-full" :style="{ color: cat.isGreen ? 'var(--success)' : cat.percent >= 70 ? 'var(--warning)' : 'var(--critical)' }">
+              {{ cat.percent }}%
+            </span>
+          </div>
           <div class="cat-bar-bg">
             <div class="cat-bar-fill" :style="{ width: `${cat.percent}%`, background: barColor(cat.percent) }" />
             <div class="threshold-marker" />
           </div>
-          <span class="cat-pct" :style="{ color: cat.isGreen ? 'var(--success)' : 'var(--text-muted)' }">
-            {{ cat.percent }}%
-          </span>
+          <div class="cat-bottom">
+            <span v-if="!cat.isGreen" class="cat-gap-text">Faltan {{ 90 - cat.percent }}% para la meta</span>
+            <span v-else class="cat-green-text">Dominio alcanzado</span>
+            <button v-if="!cat.isGreen" class="cat-practice-btn" @click="practiceCategory(cat.category)">
+              Practicar
+            </button>
+          </div>
         </div>
       </div>
 
@@ -307,9 +329,13 @@ loadQuestions()
 .done-state {
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: var(--space-md);
   padding: var(--space-lg) 0;
+}
+
+.done-state h2,
+.done-state .done-score,
+.done-state .done-percent {
   text-align: center;
 }
 
@@ -339,29 +365,40 @@ loadQuestions()
   margin-bottom: var(--space-sm);
 }
 
-.cat-row {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-  font-size: 12px;
-  padding: 3px 0;
+.cat-row-full {
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid var(--border-subtle);
 }
 
-.cat-label {
-  width: 100px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  color: var(--text-muted);
+.cat-row-full:last-child {
+  border-bottom: none;
+}
+
+.cat-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.cat-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.cat-pct-full {
+  font-size: 14px;
+  font-weight: 700;
 }
 
 .cat-bar-bg {
-  flex: 1;
+  width: 100%;
   height: 6px;
   background: var(--bg-elevated);
   border-radius: 3px;
-  overflow: hidden;
   position: relative;
+  margin-bottom: 4px;
 }
 
 .cat-bar-fill {
@@ -372,17 +409,39 @@ loadQuestions()
 .threshold-marker {
   position: absolute;
   left: 90%;
-  top: -1px;
-  bottom: -1px;
+  top: -2px;
+  bottom: -2px;
   width: 2px;
   background: var(--text-muted);
-  opacity: 0.4;
+  opacity: 0.3;
+  border-radius: 1px;
 }
 
-.cat-pct {
-  width: 36px;
-  text-align: right;
+.cat-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cat-gap-text {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.cat-green-text {
+  font-size: 11px;
+  color: var(--success);
+}
+
+.cat-practice-btn {
+  font-size: 11px;
   font-weight: 600;
+  color: var(--primary);
+  background: none;
+  border: 1px solid var(--primary);
+  border-radius: var(--radius-sm);
+  padding: 2px 10px;
+  cursor: pointer;
 }
 
 .home-btn {
