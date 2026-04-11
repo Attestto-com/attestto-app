@@ -6,6 +6,7 @@ import { mapToMacroCategory } from './useCategoryMap'
 let seedQuestions: ExamQuestion[] | null = null
 let understandingQuestions: ExamQuestion[] | null = null
 let byLicenseQuestions: ExamQuestion[] | null = null
+let expansionQuestions: ExamQuestion[] | null = null
 
 function mapSeedQuestion(raw: {
   id: number
@@ -74,12 +75,13 @@ function mapByLicenseQuestion(
 }
 
 async function loadAllQuestions(): Promise<void> {
-  if (seedQuestions && understandingQuestions && byLicenseQuestions) return
+  if (seedQuestions && understandingQuestions && byLicenseQuestions && expansionQuestions) return
 
-  const [seedMod, undMod, byLicMod] = await Promise.all([
+  const [seedMod, undMod, byLicMod, expMod] = await Promise.all([
     import('../../content/questions/seed-automovil-40.json'),
     import('../../content/questions/understanding-78.json'),
     import('../../content/questions/by-license.json'),
+    import('../../content/questions/expansion-165.json'),
   ])
 
   const seedData = seedMod.default ?? seedMod
@@ -101,6 +103,17 @@ async function loadAllQuestions(): Promise<void> {
       byLicenseQuestions.push(mapByLicenseQuestion(q, section.section))
     }
   }
+
+  const expData = expMod.default ?? expMod
+  expansionQuestions = []
+  let expIdx = 0
+  for (const topic of expData.topics) {
+    for (const q of topic.questions) {
+      expansionQuestions.push(mapUnderstandingQuestion(q, topic.topic, expIdx++))
+    }
+  }
+  // Re-prefix IDs to avoid collisions with understanding bank
+  expansionQuestions = expansionQuestions.map((q, i) => ({ ...q, id: `exp-${i}` }))
 }
 
 /** Fisher-Yates shuffle */
@@ -162,6 +175,7 @@ export async function selectQuestions(
     ...(seedQuestions ?? []),
     ...(understandingQuestions ?? []),
     ...(byLicenseQuestions ?? []),
+    ...(expansionQuestions ?? []),
   ]
 
   // Filter by license type

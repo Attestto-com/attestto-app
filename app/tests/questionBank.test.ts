@@ -1,6 +1,77 @@
 import { describe, it, expect } from 'vitest'
+import { mapToMacroCategory, MACRO_CATEGORIES } from '../../modules/cr-driving/src/composables/useCategoryMap'
 
 describe('Question Bank Logic', () => {
+  describe('expansion questions', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let expansionData: any
+
+    it('expansion JSON loads and has 159 questions', async () => {
+      expansionData = (await import('../../modules/cr-driving/content/questions/expansion-165.json')).default
+      let total = 0
+      for (const topic of expansionData.topics) {
+        total += topic.questions.length
+      }
+      expect(total).toBe(159)
+    })
+
+    it('all expansion topics map to one of 9 macro-categories', async () => {
+      if (!expansionData) {
+        expansionData = (await import('../../modules/cr-driving/content/questions/expansion-165.json')).default
+      }
+      const macroSet = new Set(MACRO_CATEGORIES)
+      for (const topic of expansionData.topics) {
+        const macro = mapToMacroCategory(topic.topic)
+        expect(macroSet.has(macro)).toBe(true)
+      }
+    })
+
+    it('all 9 macro-categories are covered by expansion questions', async () => {
+      if (!expansionData) {
+        expansionData = (await import('../../modules/cr-driving/content/questions/expansion-165.json')).default
+      }
+      const covered = new Set<string>()
+      for (const topic of expansionData.topics) {
+        covered.add(mapToMacroCategory(topic.topic))
+      }
+      for (const cat of MACRO_CATEGORIES) {
+        expect(covered.has(cat), `Missing macro-category: ${cat}`).toBe(true)
+      }
+    })
+
+    it('every expansion question has 4 options and correct index 0-3', async () => {
+      if (!expansionData) {
+        expansionData = (await import('../../modules/cr-driving/content/questions/expansion-165.json')).default
+      }
+      for (const topic of expansionData.topics) {
+        for (const q of topic.questions) {
+          expect(q.options).toHaveLength(4)
+          expect(q.answer).toBeGreaterThanOrEqual(0)
+          expect(q.answer).toBeLessThanOrEqual(3)
+          expect(q.q.length).toBeGreaterThan(10)
+          expect(q.why.length).toBeGreaterThan(10)
+        }
+      }
+    })
+
+    it('grand total across all banks is 300', async () => {
+      const seed = (await import('../../modules/cr-driving/content/questions/seed-automovil-40.json')).default
+      const und = (await import('../../modules/cr-driving/content/questions/understanding-78.json')).default
+      const lic = (await import('../../modules/cr-driving/content/questions/by-license.json')).default
+      if (!expansionData) {
+        expansionData = (await import('../../modules/cr-driving/content/questions/expansion-165.json')).default
+      }
+
+      let total = seed.questions.length
+      for (const t of und.topics) total += t.questions.length
+      for (const s of lic.sections) total += s.questions.length
+      for (const t of expansionData.topics) total += t.questions.length
+
+      expect(total).toBe(300)
+    })
+  })
+
+
   describe('option shuffling', () => {
     function shuffle<T>(arr: T[]): T[] {
       const a = [...arr]
