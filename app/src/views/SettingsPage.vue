@@ -4,14 +4,30 @@ import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useVaultStore } from '@/stores/vault'
 import { useModulesStore } from '@/stores/modules'
+import { useLlm } from '@/composables/useLlm'
 import { setLocale, getLocale } from '@/i18n'
 
 const { t } = useI18n()
 const router = useRouter()
 const vault = useVaultStore()
 const modules = useModulesStore()
+const llm = useLlm()
 
 const currentLocale = computed(() => getLocale())
+const llmSupported = computed(() => llm.supportsWebGpu())
+
+function toggleLlm() {
+  if (llm.enabled.value) {
+    llm.disable()
+  } else {
+    llm.enable()
+    llm.init()
+  }
+}
+
+async function deleteLlmCache() {
+  await llm.deleteCache()
+}
 
 function toggleLocale() {
   setLocale(currentLocale.value === 'es' ? 'en' : 'es')
@@ -62,6 +78,35 @@ function handleLock() {
       <div class="setting-row clickable" @click="toggleLocale">
         <span>Idioma / Language</span>
         <span class="setting-value">{{ currentLocale === 'es' ? 'Espanol' : 'English' }}</span>
+      </div>
+    </section>
+
+    <section v-if="llmSupported" class="settings-section">
+      <h3 class="section-title">IA EN DISPOSITIVO</h3>
+      <div class="setting-row">
+        <div>
+          <span>Preguntas con IA</span>
+          <div class="setting-hint">Genera preguntas unicas con Gemma 2 ({{ llm.modelSize }})</div>
+        </div>
+        <q-toggle :model-value="llm.enabled.value" color="primary" @update:model-value="toggleLlm" />
+      </div>
+      <div v-if="llm.enabled.value" class="setting-row">
+        <span>Estado</span>
+        <span class="setting-value">
+          <template v-if="llm.status.value === 'downloading'">Descargando... {{ llm.downloadProgress.value }}%</template>
+          <template v-else-if="llm.status.value === 'loading'">Inicializando...</template>
+          <template v-else-if="llm.status.value === 'ready'">Listo</template>
+          <template v-else-if="llm.status.value === 'error'">Error</template>
+          <template v-else-if="llm.modelCached.value">En cache (offline)</template>
+          <template v-else>Pendiente descarga</template>
+        </span>
+      </div>
+      <div v-if="llm.modelCached.value" class="setting-row clickable danger" @click="deleteLlmCache">
+        <span>Eliminar modelo descargado</span>
+        <q-icon name="chevron_right" />
+      </div>
+      <div v-if="llm.errorMessage.value" class="setting-row">
+        <span class="setting-error">{{ llm.errorMessage.value }}</span>
       </div>
     </section>
 
@@ -200,6 +245,17 @@ function handleLock() {
 .setting-value {
   color: var(--text-muted);
   font-size: 13px;
+}
+
+.setting-hint {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.setting-error {
+  font-size: 12px;
+  color: var(--critical);
 }
 
 .empty-hint {

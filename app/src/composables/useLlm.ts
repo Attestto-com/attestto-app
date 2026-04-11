@@ -1,19 +1,30 @@
 /**
  * Composable for on-device LLM inference via MediaPipe Web Worker.
- * Downloads Gemma-3 1B on first use, caches via Cache API for offline access.
+ * Downloads Gemma on first use (user must opt in via Settings), caches via Cache API.
  */
 
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
-// Model hosted on your CDN or served from /public — update URL when deploying
-const MODEL_URL = '/models/gemma-3-1b-it-int4.bin'
+// Gemma 2 2B int4 — publicly available, ~1.3 GB
+const MODEL_URL = 'https://huggingface.co/nicegrill/gemma-2-2b-it-int4-Web/resolve/main/gemma-2b-it-gpu-int4.bin'
 const MODEL_CACHE_KEY = 'attestto-llm-model-v1'
+const OPT_IN_KEY = 'attestto-llm-enabled'
 
 export type LlmStatus = 'idle' | 'downloading' | 'loading' | 'ready' | 'generating' | 'error' | 'unsupported'
 
 const status = ref<LlmStatus>('idle')
 const downloadProgress = ref(0) // 0-100
 const errorMessage = ref('')
+const enabled = ref(localStorage.getItem(OPT_IN_KEY) === 'true')
+const modelCached = ref(false)
+
+// Check if model is already cached on load
+caches.open(MODEL_CACHE_KEY).then(async (cache) => {
+  const cached = await cache.match(MODEL_URL)
+  modelCached.value = !!cached
+}).catch(() => {})
+
+const modelSize = '~1.3 GB'
 
 let worker: Worker | null = null
 let messageId = 0
@@ -66,11 +77,39 @@ async function ensureModelCached(): Promise<string> {
 }
 
 /**
+ * User opts in to on-device AI. Triggers download + caching.
+ */
+function enable(): void {
+  enabled.value = true
+  localStorage.setItem(OPT_IN_KEY, 'true')
+}
+
+/**
+ * User opts out. Stops worker, frees GPU, but keeps cached model.
+ */
+function disable(): void {
+  enabled.value = false
+  localStorage.removeItem(OPT_IN_KEY)
+  destroy()
+}
+
+/**
+ * Delete the cached model to free storage.
+ */
+async function deleteCache(): Promise<void> {
+  await caches.delete(MODEL_CACHE_KEY)
+  modelCached.value = false
+  disable()
+}
+
+/**
  * Initialize the LLM worker and load the model.
- * Call once — subsequent calls are no-ops if already ready.
+ * Requires user opt-in via enable().
  */
 async function init(): Promise<void> {
   if (status.value === 'ready' || status.value === 'loading') return
+
+  if (!enabled.value) return
 
   if (!supportsWebGpu()) {
     status.value = 'unsupported'
@@ -161,9 +200,15 @@ export function useLlm() {
     status,
     downloadProgress,
     errorMessage,
+    enabled,
+    modelCached,
+    modelSize,
     init,
     generate,
     destroy,
+    enable,
+    disable,
+    deleteCache,
     supportsWebGpu,
   }
 }
