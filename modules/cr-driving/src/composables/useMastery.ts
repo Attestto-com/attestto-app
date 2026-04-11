@@ -1,5 +1,6 @@
 import { ref, computed } from 'vue'
 import type { MasteryState, CategoryScore, ExamResult } from '../types'
+import { mapToMacroCategory, MACRO_CATEGORIES, MIN_QUESTIONS_PER_CATEGORY } from './useCategoryMap'
 
 const STORAGE_KEY = 'cr-driving:mastery'
 const GREEN_THRESHOLD = 90 // percent — all categories must reach this for VC issuance
@@ -81,18 +82,23 @@ function loadAndDecay(): MasteryState {
 }
 
 function recalculate(m: MasteryState): void {
-  const entries = Object.entries(m.categoryScores)
-  const categorized = entries.map(([cat, s]) => ({
-    cat,
-    pct: s.total > 0 ? Math.round((s.correct / s.total) * 100) : 0,
-  }))
+  // Build status for all 9 macro-categories
+  const categorized = MACRO_CATEGORIES.map((cat) => {
+    const s = m.categoryScores[cat]
+    const total = s?.total ?? 0
+    const correct = s?.correct ?? 0
+    const pct = total > 0 ? Math.round((correct / total) * 100) : 0
+    const minReached = total >= MIN_QUESTIONS_PER_CATEGORY
+    return { cat, pct, total, minReached }
+  })
 
   m.weakTopics = categorized
-    .filter((c) => c.pct < GREEN_THRESHOLD)
+    .filter((c) => !c.minReached || c.pct < GREEN_THRESHOLD)
     .sort((a, b) => a.pct - b.pct)
     .map((c) => c.cat)
 
-  m.allGreen = entries.length > 0 && categorized.every((c) => c.pct >= GREEN_THRESHOLD)
+  // allGreen requires ALL 9 macro-categories with min questions AND >= 90%
+  m.allGreen = categorized.every((c) => c.minReached && c.pct >= GREEN_THRESHOLD)
 }
 
 function saveMastery(m?: MasteryState): void {
@@ -120,9 +126,10 @@ export function useMastery() {
     }
     m.lastAttemptDate = today
 
-    // Update category scores
+    // Update category scores (mapped to macro-categories)
     for (const cat of result.categoryBreakdown) {
-      const existing = m.categoryScores[cat.category] ?? {
+      const macroName = mapToMacroCategory(cat.category)
+      const existing = m.categoryScores[macroName] ?? {
         correct: 0,
         total: 0,
         lastPracticed: '',
@@ -132,10 +139,10 @@ export function useMastery() {
       existing.total += cat.total
       existing.lastPracticed = new Date().toISOString()
       existing.contentVersion = CONTENT_VERSION
-      m.categoryScores[cat.category] = existing
+      m.categoryScores[macroName] = existing
 
       // Clear pending law change if user practiced this category
-      const idx = m.pendingLawChanges.indexOf(cat.category)
+      const idx = m.pendingLawChanges.indexOf(macroName)
       if (idx >= 0) m.pendingLawChanges.splice(idx, 1)
     }
 
@@ -161,13 +168,34 @@ export function useMastery() {
   }
 
   function getAllCategories(): { category: string; percent: number; isGreen: boolean; total: number; correct: number }[] {
-    return Object.entries(mastery.value.categoryScores)
-      .map(([category, { correct, total }]) => {
-        const percent = total > 0 ? Math.round((correct / total) * 100) : 0
-        return { category, percent, isGreen: percent >= GREEN_THRESHOLD, total, correct }
-      })
-      .sort((a, b) => a.percent - b.percent)
+    return MACRO_CATEGORIES.map((category) => {
+      const s = mastery.value.categoryScores[category]
+      const correct = s?.correct ?? 0
+      const total = s?.total ?? 0
+      const percent = total > 0 ? Math.round((correct / total) * 100) : 0
+      const minReached = total >= MIN_QUESTIONS_PER_CATEGORY
+      return { category, percent, isGreen: minReached && percent >= GREEN_THRESHOLD, total, correct }
+    }).sort((a, b) => a.percent - b.percent)
   }
+
+  function getCategoryProgress(): { category: string; correct: number; total: number; percent: number; minReached: boolean; unlocked: boolean }[] {
+    return MACRO_CATEGORIES.map((category) => {
+      const s = mastery.value.categoryScores[category]
+      const correct = s?.correct ?? 0
+      const total = s?.total ?? 0
+      const percent = total > 0 ? Math.round((correct / total) * 100) : 0
+      const minReached = total >= MIN_QUESTIONS_PER_CATEGORY
+      return { category, correct, total, percent, minReached, unlocked: minReached && percent >= GREEN_THRESHOLD }
+    })
+  }
+
+  const unlockedCount = computed(() =>
+    MACRO_CATEGORIES.filter((cat) => {
+      const s = mastery.value.categoryScores[cat]
+      if (!s || s.total < MIN_QUESTIONS_PER_CATEGORY) return false
+      return Math.round((s.correct / s.total) * 100) >= GREEN_THRESHOLD
+    }).length,
+  )
 
   function getCategoryGap(): { category: string; percent: number; gap: number; isGreen: boolean }[] {
     return Object.entries(mastery.value.categoryScores)
@@ -216,9 +244,11 @@ export function useMastery() {
     canRetry,
     getTopCategories,
     getAllCategories,
+    getCategoryProgress,
     getCategoryGap,
     getBelowThresholdCategories,
     getOverallAccuracy,
+    unlockedCount,
     getDecayRate,
     acknowledgeLawChange,
   }

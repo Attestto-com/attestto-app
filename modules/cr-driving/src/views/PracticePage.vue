@@ -4,10 +4,12 @@ import { useRouter } from 'vue-router'
 import { selectQuestions, getDefaultConfig } from '../composables/useQuestionBank'
 import { getLlmStatus } from '../composables/useQuestionGenerator'
 import { useMastery } from '../composables/useMastery'
+import { MACRO_CATEGORIES, MIN_QUESTIONS_PER_CATEGORY } from '../composables/useCategoryMap'
 import type { ExamQuestion } from '../types'
 
 const router = useRouter()
-const { mastery, updateFromResult } = useMastery()
+const { mastery, updateFromResult, getCategoryProgress, unlockedCount } = useMastery()
+const activeTab = ref<'attestto' | 'cosevi'>('attestto')
 
 const phase = ref<'pick' | 'quiz' | 'done'>('pick')
 const loading = ref(false)
@@ -24,6 +26,7 @@ const showConfetti = ref(false)
 const current = computed(() => questions.value[currentIndex.value] ?? null)
 const done = computed(() => currentIndex.value >= questions.value.length && questions.value.length > 0)
 const llm = computed(() => getLlmStatus())
+const catProgress = computed(() => getCategoryProgress())
 
 async function startWithCount(count: number) {
   questionCount.value = count
@@ -109,16 +112,44 @@ function optionClass(index: number): string {
 
 <template>
   <q-page class="practice-page" padding>
-    <!-- Phase: Pick question count -->
+    <!-- Phase: Pick mode -->
     <template v-if="phase === 'pick'">
       <header class="practice-header">
         <q-btn flat round icon="arrow_back" color="white" @click="router.back()" />
-        <span>Modo Practica</span>
+        <span>Examen Teorico</span>
       </header>
 
-      <div class="pick-screen">
-        <h2 class="pick-title">¿Cuantas preguntas?</h2>
-        <p class="pick-hint">Cada respuesta actualiza tu dominio al instante</p>
+      <!-- Mode tabs -->
+      <div class="mode-tabs">
+        <button :class="['mode-tab', activeTab === 'attestto' && 'active']" @click="activeTab = 'attestto'">
+          Attestto
+        </button>
+        <button :class="['mode-tab', activeTab === 'cosevi' && 'active']" @click="activeTab = 'cosevi'">
+          COSEVI
+        </button>
+      </div>
+
+      <!-- Attestto: perpetual competency -->
+      <div v-if="activeTab === 'attestto'" class="pick-screen">
+        <div class="mode-desc">
+          <h3>Competencia perpetua</h3>
+          <p>90% en las 9 categorias con minimo {{ MIN_QUESTIONS_PER_CATEGORY }} preguntas cada una para generar tu credencial.</p>
+        </div>
+
+        <div class="cat-progress-grid">
+          <div class="cat-unlock-count">{{ unlockedCount }} de {{ MACRO_CATEGORIES.length }} categorias desbloqueadas</div>
+          <div v-for="cat in catProgress" :key="cat.category" class="cat-prog-row">
+            <span class="cat-prog-name">{{ cat.category }}</span>
+            <div class="cat-prog-bar-bg">
+              <div class="cat-prog-bar-fill" :style="{ width: `${cat.minReached ? cat.percent : (cat.total / MIN_QUESTIONS_PER_CATEGORY) * 100}%`, background: cat.unlocked ? 'var(--success)' : cat.total > 0 ? 'var(--primary)' : 'var(--bg-elevated)' }" />
+              <div v-if="cat.minReached" class="cat-prog-marker" />
+            </div>
+            <span class="cat-prog-stat">
+              <template v-if="!cat.minReached">{{ cat.total }}/{{ MIN_QUESTIONS_PER_CATEGORY }}</template>
+              <template v-else>{{ cat.percent }}%</template>
+            </span>
+          </div>
+        </div>
 
         <div class="pick-options">
           <button class="pick-btn" @click="startWithCount(1)">
@@ -131,29 +162,44 @@ function optionClass(index: number): string {
           </button>
           <button class="pick-btn pick-btn-accent" @click="startWithCount(10)">
             <span class="pick-count">10</span>
-            <span class="pick-label">Practica</span>
+            <span class="pick-label">Sesion</span>
             <span v-if="llm.available" class="pick-ai">IA</span>
           </button>
         </div>
 
         <div class="llm-status">
           <div v-if="llm.available" class="llm-ready">
-            <span class="llm-dot green" />
-            IA local activa — preguntas unicas con Gemma
+            <span class="llm-dot green" /> IA local activa
           </div>
           <div v-else-if="llm.status === 'loading' || llm.status === 'downloading'" class="llm-loading">
-            <q-spinner-dots size="12px" color="primary" />
-            Cargando modelo IA...
-          </div>
-          <div v-else-if="!llm.supported" class="llm-off">
-            <span class="llm-dot gray" />
-            IA no disponible (requiere WebGPU)
+            <q-spinner-dots size="12px" color="primary" /> Cargando IA...
           </div>
           <div v-else class="llm-off">
-            <span class="llm-dot gray" />
-            Banco de preguntas (141) — activa IA en Ajustes para preguntas unicas
+            <span class="llm-dot gray" /> Banco estatico (141 preguntas)
           </div>
         </div>
+      </div>
+
+      <!-- COSEVI: legacy 40-question exam -->
+      <div v-else class="pick-screen">
+        <div class="mode-desc">
+          <h3>Examen COSEVI</h3>
+          <p>40 preguntas, 40 minutos, proctorizado. Resultado pasa/no pasa al 80%.</p>
+        </div>
+
+        <div class="cosevi-info">
+          <div class="cosevi-row"><span>Preguntas</span><span>40</span></div>
+          <div class="cosevi-row"><span>Tiempo</span><span>40 min</span></div>
+          <div class="cosevi-row"><span>Aprobacion</span><span>80%</span></div>
+          <div class="cosevi-row"><span>Proctorizado</span><span>Si</span></div>
+          <div class="cosevi-row"><span>Resultado</span><span>Pasa / No pasa</span></div>
+        </div>
+
+        <button class="cosevi-start-btn" @click="router.push('/module/cr-driving/exam')">
+          Iniciar examen COSEVI
+        </button>
+
+        <p class="cosevi-hint">Este es el formato oficial que usa COSEVI actualmente. El modelo Attestto (pestaña izquierda) es nuestra propuesta de mejora.</p>
       </div>
     </template>
 
@@ -251,30 +297,116 @@ function optionClass(index: number): string {
   color: var(--text-muted);
 }
 
+.mode-tabs {
+  display: flex;
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  padding: 3px;
+  margin-bottom: var(--space-md);
+}
+
+.mode-tab {
+  flex: 1;
+  padding: var(--space-sm);
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.mode-tab.active {
+  background: var(--primary);
+  color: white;
+}
+
 .pick-screen {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: var(--space-xl) 0;
+  gap: var(--space-md);
 }
 
-.pick-title {
-  font-size: 22px;
+.mode-desc h3 {
+  font-size: 18px;
   font-weight: 700;
-  margin-bottom: var(--space-xs);
+  margin-bottom: 4px;
 }
 
-.pick-hint {
+.mode-desc p {
   font-size: 13px;
   color: var(--text-muted);
-  margin-bottom: var(--space-xl);
+  line-height: 1.5;
+}
+
+.cat-progress-grid {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+}
+
+.cat-unlock-count {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--space-sm);
+}
+
+.cat-prog-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 4px 0;
+}
+
+.cat-prog-name {
+  width: 110px;
+  font-size: 11px;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cat-prog-bar-bg {
+  flex: 1;
+  height: 5px;
+  background: var(--bg-elevated);
+  border-radius: 3px;
+  position: relative;
+}
+
+.cat-prog-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.3s;
+}
+
+.cat-prog-marker {
+  position: absolute;
+  left: 90%;
+  top: -2px;
+  bottom: -2px;
+  width: 2px;
+  background: var(--text-muted);
+  opacity: 0.3;
+}
+
+.cat-prog-stat {
+  width: 36px;
+  text-align: right;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
 }
 
 .pick-options {
   display: flex;
   gap: var(--space-md);
-  width: 100%;
-  justify-content: center;
 }
 
 .pick-btn {
@@ -288,28 +420,57 @@ function optionClass(index: number): string {
   border-radius: var(--radius-lg);
   color: var(--text-primary);
   cursor: pointer;
-  transition: border-color 0.2s, background 0.2s;
   flex: 1;
-  max-width: 120px;
+  position: relative;
 }
 
-.pick-btn:active {
-  background: var(--bg-elevated);
-}
-
-.pick-btn-accent {
-  border-color: var(--primary);
-}
+.pick-btn:active { background: var(--bg-elevated); }
+.pick-btn-accent { border-color: var(--primary); }
 
 .pick-count {
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 700;
 }
 
 .pick-label {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text-muted);
-  font-weight: 500;
+}
+
+.cosevi-info {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+}
+
+.cosevi-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-size: 14px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.cosevi-row:last-child { border-bottom: none; }
+.cosevi-row span:first-child { color: var(--text-muted); }
+
+.cosevi-start-btn {
+  width: 100%;
+  padding: var(--space-md);
+  background: var(--primary);
+  border: none;
+  border-radius: var(--radius-md);
+  color: white;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.cosevi-hint {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+  opacity: 0.7;
 }
 
 .pick-ai {

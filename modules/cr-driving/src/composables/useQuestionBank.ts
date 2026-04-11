@@ -1,5 +1,6 @@
 import type { ExamQuestion, ExamConfig } from '../types'
 import { generateQuestions, loadManualContext } from './useQuestionGenerator'
+import { mapToMacroCategory } from './useCategoryMap'
 
 // Lazy-loaded question banks
 let seedQuestions: ExamQuestion[] | null = null
@@ -230,7 +231,12 @@ export async function selectQuestions(
     }
   })
 
-  return shuffle(withShuffledOptions).slice(0, config.questionCount)
+  // Map raw categories to macro-categories for mastery tracking
+  const withMacroCategories = shuffle(withShuffledOptions)
+    .slice(0, config.questionCount)
+    .map((q) => ({ ...q, category: mapToMacroCategory(q.category) }))
+
+  return withMacroCategories
 }
 
 export function getDefaultConfig(): ExamConfig {
