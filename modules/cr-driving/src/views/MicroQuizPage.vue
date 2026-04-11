@@ -108,6 +108,7 @@ loadQuestions()
         <button
           v-for="(opt, i) in current.options"
           :key="i"
+          v-show="!answered || i === current.correct || i === selectedOption"
           :class="['option-card', optionClass(i)]"
           @click="selectAnswer(i)"
         >
@@ -243,7 +244,7 @@ loadQuestions()
   background: var(--bg-card);
   border: 2px solid transparent;
   border-radius: var(--radius-md);
-  color: var(--text-primary);
+  color: #fff;
   font-size: 14px;
   text-align: left;
   cursor: pointer;
@@ -251,17 +252,15 @@ loadQuestions()
 
 .option-card.correct {
   border-color: var(--success);
-  background: rgba(74, 222, 128, 0.1);
-  color: var(--success);
+  background: rgba(74, 222, 128, 0.12);
+  color: #a7f3d0;
 }
 
 .option-card.wrong {
-  border-color: var(--warning);
-  background: rgba(249, 115, 22, 0.1);
-  color: var(--warning);
+  border-color: #f87171;
+  background: rgba(248, 113, 113, 0.12);
+  color: #fca5a5;
 }
-
-.option-card.dimmed { opacity: 0.4; }
 
 .why-card {
   background: var(--bg-card);
