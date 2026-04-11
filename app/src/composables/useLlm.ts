@@ -38,6 +38,11 @@ async function cleanupLegacyCache(): Promise<void> {
   // Remove old Cache API data that may be consuming quota
   await caches.delete('attestto-llm-model-v1').catch(() => {})
   await checkModelCached()
+
+  // Auto-init if user opted in and model is cached (survives page refresh)
+  if (enabled.value && modelCached.value) {
+    init().catch(() => {})
+  }
 }
 
 const modelSize = '~1.35 GB'
