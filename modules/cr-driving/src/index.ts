@@ -1,6 +1,7 @@
 import type { AttesttoModule, ModuleContext } from '@attestto/module-sdk'
 import { markRaw } from 'vue'
 import MasteryWidget from './components/MasteryWidget.vue'
+import { checkDueOnOpen, scheduleReviewReminder } from './composables/useNotifications'
 
 let ctx: ModuleContext | null = null
 
@@ -32,6 +33,10 @@ const crDrivingModule: AttesttoModule = {
 
   async install(moduleCtx: ModuleContext) {
     ctx = moduleCtx
+
+    // Check for due review questions and notify
+    checkDueOnOpen()
+    scheduleReviewReminder()
 
     const mastery = await ctx.storage.get<{ score: number; weakTopics: string[] }>('mastery')
     if (mastery) {

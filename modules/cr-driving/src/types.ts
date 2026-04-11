@@ -13,6 +13,8 @@ export interface ExamAnswer {
   selected: number
   correct: boolean
   timestamp: number
+  /** Ed25519 signature over this answer (base64url) */
+  signature?: string
 }
 
 export interface CategoryScore {

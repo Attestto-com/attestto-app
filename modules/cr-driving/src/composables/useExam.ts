@@ -1,6 +1,7 @@
 import { ref, computed } from 'vue'
 import type { ExamSession, ExamAnswer, ExamConfig, ExamResult, ExamIncident } from '../types'
 import { selectQuestions, getDefaultConfig } from './useQuestionBank'
+import { recordAnswer as sm2RecordAnswer } from './useSpacedRepetition'
 
 const session = ref<ExamSession | null>(null)
 const feedbackVisible = ref(false)
@@ -44,6 +45,13 @@ export function useExam() {
     if (session.value) session.value.phase = p
   }
 
+  let signFn: ((payload: Uint8Array) => string) | null = null
+
+  /** Set the signing function for per-answer signatures */
+  function setSignFunction(fn: (payload: Uint8Array) => string): void {
+    signFn = fn
+  }
+
   function submitAnswer(selected: number): void {
     if (!session.value || !currentQuestion.value) return
 
@@ -57,8 +65,22 @@ export function useExam() {
       timestamp: Date.now(),
     }
 
+    // Per-answer Ed25519 signature
+    if (signFn) {
+      const payload = JSON.stringify({
+        questionId: answer.questionId,
+        selected: answer.selected,
+        timestamp: answer.timestamp,
+        sessionId: session.value.id,
+      })
+      answer.signature = signFn(new TextEncoder().encode(payload))
+    }
+
     session.value.answers.push(answer)
     if (isCorrect) session.value.score++
+
+    // Update SM-2 spaced repetition state
+    sm2RecordAnswer(q.id, isCorrect)
 
     // Update chain head with SHA-256
     chainAppend(JSON.stringify(answer))
@@ -164,6 +186,7 @@ export function useExam() {
     lastAnswer,
     startSession,
     setPhase,
+    setSignFunction,
     submitAnswer,
     nextQuestion,
     addIncident,

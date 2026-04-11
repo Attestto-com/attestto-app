@@ -10,6 +10,7 @@ import { useFaceIdentity } from '../composables/useFaceIdentity'
 import { useLockdown } from '../composables/useLockdown'
 import { useVoiceDetection } from '../composables/useVoiceDetection'
 import { initStation, stationSign, getStationVerificationMethod, getStationPublicKey, destroyStation } from '../composables/useStationKey'
+import { scheduleReviewReminder, requestPermission } from '../composables/useNotifications'
 import ConsentScreen from '../components/ConsentScreen.vue'
 import PreExamScreen from '../components/PreExamScreen.vue'
 import QuestionScreen from '../components/QuestionScreen.vue'
@@ -186,6 +187,9 @@ async function handleStartExam() {
   stationDid.value = stationInfo.stationDid
   exam.recordEvent('station-initialized', { stationDid: stationInfo.stationDid })
 
+  // Wire per-answer signing with station key
+  exam.setSignFunction(stationSign)
+
   // Record session start in hash chain
   exam.recordEvent('session-start', { timestamp: Date.now() })
   startTimer()
@@ -217,10 +221,13 @@ function finishExam() {
   exam.setPhase('result')
 }
 
-function handleFinish() {
+async function handleFinish() {
   const result = exam.getResult()
   if (result) {
     updateFromResult(result)
+    // Request notification permission + schedule review reminders
+    await requestPermission()
+    scheduleReviewReminder()
   }
 }
 
