@@ -2,11 +2,13 @@
 import { ref, onMounted, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQrScanner } from '@/composables/useQrScanner'
-import { verify as ed25519Verify } from '@/composables/useCrypto'
+import { verify as ed25519Verify, fromBase64url } from '@/composables/useCrypto'
 
 const router = useRouter()
 const qr = useQrScanner()
 const videoEl = ref<HTMLVideoElement | null>(null)
+
+type SignatureStatus = 'valid' | 'invalid' | 'unverifiable' | 'none'
 
 interface VerifyResult {
   valid: boolean
@@ -14,7 +16,7 @@ interface VerifyResult {
   holder: string
   issuer: string
   active: boolean
-  signatureValid: boolean
+  signatureStatus: SignatureStatus
   anchored: boolean
   anchorTx?: string
   raw?: Record<string, unknown>
@@ -78,11 +80,11 @@ async function processQrData(data: string) {
     const notRevoked = !revStatus || revStatus === 'valid'
 
     // Verify Ed25519 signature if proof present
-    let signatureValid = false
+    let signatureStatus: SignatureStatus = 'none'
     const proof = vc.proof as Record<string, unknown> | undefined
     if (proof?.type === 'Ed25519Signature2020' && proof.proofValue) {
       try {
-        // Reconstruct signed payload
+        // Reconstruct the exact signed payload
         const payload = JSON.stringify({
           '@context': vc['@context'],
           type: vc.type,
@@ -92,11 +94,22 @@ async function processQrData(data: string) {
         })
         const payloadBytes = new TextEncoder().encode(payload)
 
-        // For self-issued VCs, we'd need the issuer's public key
-        // For now, mark as valid if proof structure is complete
-        signatureValid = !!(proof.proofValue && proof.verificationMethod && proof.created)
+        // Extract public key from verificationMethod (did:sns:X#key-1 → resolve)
+        const vm = proof.verificationMethod as string | undefined
+        const proofValue = proof.proofValue as string
+        const pubKeyB64 = proof.publicKey as string | undefined
+
+        if (pubKeyB64) {
+          // Public key embedded in proof (self-issued VCs)
+          const pubKey = fromBase64url(pubKeyB64)
+          const sig = fromBase64url(proofValue)
+          signatureStatus = ed25519Verify(payloadBytes, sig, pubKey) ? 'valid' : 'invalid'
+        } else if (vm && proofValue) {
+          // No embedded key — can't resolve DID yet
+          signatureStatus = 'unverifiable'
+        }
       } catch {
-        signatureValid = false
+        signatureStatus = 'invalid'
       }
     }
 
@@ -104,12 +117,12 @@ async function processQrData(data: string) {
     const anchorTx = (vc as Record<string, unknown>).anchorTx as string | undefined
 
     verifyResult.value = {
-      valid: active && notRevoked && signatureValid,
+      valid: active && notRevoked && signatureStatus === 'valid',
       type: mainType,
       holder,
       issuer: typeof issuer === 'string' ? issuer : 'Desconocido',
       active: active && notRevoked,
-      signatureValid,
+      signatureStatus,
       anchored: !!anchorTx,
       anchorTx,
       raw: vc,
@@ -200,8 +213,20 @@ async function scanAgain() {
         </div>
         <div class="field">
           <span class="field-label">Firma</span>
-          <span class="field-value" :style="{ color: verifyResult.signatureValid ? 'var(--success)' : 'var(--critical)' }">
-            {{ verifyResult.signatureValid ? 'Ed25519 valida' : 'Sin verificar' }}
+          <span
+            class="field-value"
+            :style="{
+              color: verifyResult.signatureStatus === 'valid' ? 'var(--success)'
+                : verifyResult.signatureStatus === 'invalid' ? 'var(--critical)'
+                : 'var(--text-muted)'
+            }"
+          >
+            {{
+              verifyResult.signatureStatus === 'valid' ? 'Ed25519 valida'
+              : verifyResult.signatureStatus === 'invalid' ? 'Firma invalida'
+              : verifyResult.signatureStatus === 'unverifiable' ? 'Firma no verificable'
+              : 'Sin firma'
+            }}
           </span>
         </div>
         <div class="field">

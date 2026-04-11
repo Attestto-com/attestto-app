@@ -10,6 +10,7 @@ const IDB_SIGNING_KEY = 'attestto:signing-key'
 
 // In-memory only — cleared on lock
 let sessionPrivateKey: Uint8Array | null = null
+let sessionKeySeed: Uint8Array | null = null
 
 // ── Base64url helpers ──────────────────────────────────────────
 
@@ -89,11 +90,15 @@ export async function register(displayName: string): Promise<void> {
 
   // Request persistent storage to prevent Safari eviction
   if (navigator.storage?.persist) {
-    await navigator.storage.persist()
+    const persisted = await navigator.storage.persist()
+    if (!persisted) {
+      console.warn('Storage persistence denied — vault data may be evicted by browser')
+    }
   }
 
   // Load into session
   sessionPrivateKey = privateKey
+  sessionKeySeed = privateKey.slice()
 }
 
 export async function authenticate(): Promise<void> {
@@ -115,9 +120,12 @@ export async function authenticate(): Promise<void> {
 
   // Load private key into session
   const privateKey = await idbGet<Uint8Array>(IDB_SIGNING_KEY)
-  if (!privateKey) throw new Error('Signing key not found — vault may need recovery')
+  if (!privateKey) {
+    throw new Error('KEY_MISSING')
+  }
 
   sessionPrivateKey = privateKey
+  sessionKeySeed = privateKey.slice()
 }
 
 export function getPublicKeyBytes(): Uint8Array {
@@ -157,10 +165,19 @@ export function verify(payload: Uint8Array, signature: Uint8Array, publicKey: Ui
   return ed25519.verify(signature, payload, publicKey)
 }
 
+export function getKeySeed(): Uint8Array {
+  if (!sessionKeySeed) throw new Error('Vault locked — authenticate first')
+  return sessionKeySeed
+}
+
 export function clearSession(): void {
   if (sessionPrivateKey) {
     sessionPrivateKey.fill(0)
     sessionPrivateKey = null
+  }
+  if (sessionKeySeed) {
+    sessionKeySeed.fill(0)
+    sessionKeySeed = null
   }
 }
 

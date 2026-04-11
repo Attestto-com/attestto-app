@@ -16,6 +16,10 @@ export default {
     unlockFailed: 'Could not unlock',
     authCancelled: 'Authentication cancelled',
     authError: 'Authentication error',
+    securityError: 'Secure connection (HTTPS) required for biometric authentication',
+    alreadyRegistered: 'Credential already registered on this device',
+    keyMissing: 'Signing key not found. Browser data may have been cleared.',
+    resetIdentity: 'Reset identity',
   },
   home: {
     greeting: 'Hello, {name}',

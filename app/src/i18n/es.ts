@@ -16,6 +16,10 @@ export default {
     unlockFailed: 'No se pudo desbloquear',
     authCancelled: 'Autenticacion cancelada',
     authError: 'Error de autenticacion',
+    securityError: 'Se requiere conexion segura (HTTPS) para autenticacion biometrica',
+    alreadyRegistered: 'La credencial ya esta registrada en este dispositivo',
+    keyMissing: 'Llave de firma no encontrada. Los datos del navegador pueden haber sido borrados.',
+    resetIdentity: 'Reiniciar identidad',
   },
   home: {
     greeting: 'Hola, {name}',

@@ -5,22 +5,22 @@ Hardening tasks required before production deployment. Composables and infrastru
 ## Critical (must-have for production)
 
 ### Encrypted vault storage
-- [ ] Wire `useEncryptedVault` into `vault.ts` — replace `localStorage.getItem('attestto:vault:credentials')` with `loadEncryptedVault()` / `saveEncryptedVault()`
-- [ ] Run migration on first unlock after upgrade (`migrateFromLocalStorage()`)
+- [x] Wire `useEncryptedVault` into `vault.ts` — replace `localStorage.getItem('attestto:vault:credentials')` with `loadEncryptedVault()` / `saveEncryptedVault()`
+- [x] Run migration on first unlock after upgrade (`migrateFromLocalStorage()`)
 - [ ] Test: lock → unlock → credentials still present after encryption round-trip
 - **Files:** `app/src/stores/vault.ts`, `app/src/composables/useEncryptedVault.ts`
 
 ### Full Ed25519 signature verification
-- [ ] VerifyPage currently checks proof structure only — wire actual `ed25519.verify()` from `@noble/curves`
-- [ ] Resolve issuer's public key from DID document (or from proof.verificationMethod)
-- [ ] Handle verification failure gracefully (show "Firma no verificable" vs "Firma invalida")
-- **Files:** `app/src/views/VerifyPage.vue`, `app/src/composables/useCrypto.ts`
+- [x] VerifyPage wires actual `ed25519.verify()` from `@noble/curves`
+- [x] Embedded public key in proof (self-issued VCs); DID resolution deferred to DID resolver work
+- [x] Handle verification failure gracefully — 4 states: valid / invalid / unverifiable / none
+- **Files:** `app/src/views/VerifyPage.vue`, `app/src/composables/useCrypto.ts`, `app/src/composables/useVcIssuer.ts`
 
 ### WebAuthn error handling
-- [ ] Handle `SecurityError` (non-secure context, e.g. HTTP instead of HTTPS)
-- [ ] Handle `InvalidStateError` (credential already registered on this authenticator)
-- [ ] Show recovery flow if IndexedDB signing key is missing but WebAuthn credential exists
-- [ ] Call `navigator.storage.persist()` and warn user if denied
+- [x] Handle `SecurityError` (non-secure context, e.g. HTTP instead of HTTPS)
+- [x] Handle `InvalidStateError` (credential already registered on this authenticator)
+- [x] Show recovery flow if IndexedDB signing key is missing but WebAuthn credential exists
+- [x] Call `navigator.storage.persist()` and warn user if denied
 - **Files:** `app/src/composables/useCrypto.ts`, `app/src/views/LockScreen.vue`
 
 ### Attestto-anchor service

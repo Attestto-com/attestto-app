@@ -2,6 +2,11 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import type { VerifiableCredential } from '@attestto/module-sdk'
 import * as crypto from '@/composables/useCrypto'
+import {
+  saveEncryptedVault,
+  loadEncryptedVault,
+  migrateFromLocalStorage,
+} from '@/composables/useEncryptedVault'
 
 function seedDemoCredentials(): VerifiableCredential[] {
   return [
@@ -88,19 +93,25 @@ export const useVaultStore = defineStore('vault', () => {
     displayName.value = crypto.getDisplayName()
     publicKey.value = crypto.getPublicKeyBase64url()
 
-    // Load credentials from storage or seed demo data
-    const stored = localStorage.getItem('attestto:vault:credentials')
+    const seed = crypto.getKeySeed()
+
+    // Migrate from localStorage to encrypted vault (one-time upgrade)
+    await migrateFromLocalStorage(seed)
+
+    // Load credentials from encrypted vault or seed demo data
+    const stored = await loadEncryptedVault<VerifiableCredential[]>(seed)
     if (stored) {
-      credentials.value = JSON.parse(stored)
+      credentials.value = stored
     } else {
       credentials.value = seedDemoCredentials()
-      persistCredentials()
+      await persistCredentials()
     }
     return true
   }
 
-  function persistCredentials() {
-    localStorage.setItem('attestto:vault:credentials', JSON.stringify(credentials.value))
+  async function persistCredentials() {
+    const seed = crypto.getKeySeed()
+    await saveEncryptedVault(credentials.value, seed)
   }
 
   function lock() {
@@ -118,14 +129,14 @@ export const useVaultStore = defineStore('vault', () => {
     }
   }
 
-  function addCredential(vc: VerifiableCredential) {
+  async function addCredential(vc: VerifiableCredential) {
     credentials.value.push(vc)
-    persistCredentials()
+    await persistCredentials()
   }
 
-  function removeCredential(id: string) {
+  async function removeCredential(id: string) {
     credentials.value = credentials.value.filter((vc) => vc.id !== id)
-    persistCredentials()
+    await persistCredentials()
   }
 
   return {

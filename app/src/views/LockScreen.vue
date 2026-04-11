@@ -11,12 +11,14 @@ const vault = useVaultStore()
 const router = useRouter()
 const unlocking = ref(false)
 const error = ref('')
+const showRecovery = ref(false)
 
 const isFirstTime = computed(() => !isRegistered())
 
 async function handleUnlock() {
   unlocking.value = true
   error.value = ''
+  showRecovery.value = false
   try {
     const ok = await vault.unlock()
     if (ok) {
@@ -26,14 +28,32 @@ async function handleUnlock() {
       error.value = t('lock.unlockFailed')
     }
   } catch (e: unknown) {
-    if (e instanceof DOMException && e.name === 'NotAllowedError') {
-      error.value = t('lock.authCancelled')
+    if (e instanceof DOMException) {
+      if (e.name === 'NotAllowedError') {
+        error.value = t('lock.authCancelled')
+      } else if (e.name === 'SecurityError') {
+        error.value = t('lock.securityError')
+      } else if (e.name === 'InvalidStateError') {
+        error.value = t('lock.alreadyRegistered')
+      } else {
+        error.value = t('lock.authError')
+      }
+    } else if (e instanceof Error && e.message === 'KEY_MISSING') {
+      error.value = t('lock.keyMissing')
+      showRecovery.value = true
     } else {
       error.value = t('lock.authError')
     }
   } finally {
     unlocking.value = false
   }
+}
+
+async function handleRecovery() {
+  const { destroyIdentity } = await import('@/composables/useCrypto')
+  await destroyIdentity()
+  showRecovery.value = false
+  error.value = ''
 }
 </script>
 
@@ -52,6 +72,10 @@ async function handleUnlock() {
       </p>
 
       <p v-if="error" class="unlock-error">{{ error }}</p>
+
+      <button v-if="showRecovery" class="recovery-btn" @click="handleRecovery">
+        {{ t('lock.resetIdentity') }}
+      </button>
     </div>
   </div>
 </template>
@@ -115,5 +139,17 @@ async function handleUnlock() {
 .unlock-error {
   font-size: 13px;
   color: var(--critical);
+  text-align: center;
+  max-width: 280px;
+}
+
+.recovery-btn {
+  padding: var(--space-sm) var(--space-lg);
+  background: transparent;
+  border: 1px solid var(--critical);
+  border-radius: var(--radius-md);
+  color: var(--critical);
+  font-size: 13px;
+  cursor: pointer;
 }
 </style>

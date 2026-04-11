@@ -66,6 +66,7 @@ export async function issueExamCredential(
     verificationMethod,
     proofPurpose: 'assertionMethod',
     proofValue: signature,
+    publicKey: crypto.getPublicKeyBase64url(),
   }
 
   return vc
