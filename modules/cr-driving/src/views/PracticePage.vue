@@ -18,6 +18,8 @@ const answered = ref(false)
 const selectedOption = ref<number | null>(null)
 const answers = ref<{ category: string; correct: boolean }[]>([])
 const masteryUpdated = ref(false)
+const lastCorrect = ref<boolean | null>(null)
+const showConfetti = ref(false)
 
 const current = computed(() => questions.value[currentIndex.value] ?? null)
 const done = computed(() => currentIndex.value >= questions.value.length && questions.value.length > 0)
@@ -82,12 +84,18 @@ function selectAnswer(index: number) {
   answered.value = true
   const isCorrect = index === current.value.correct
   if (isCorrect) score.value++
+  lastCorrect.value = isCorrect
+  if (isCorrect) {
+    showConfetti.value = true
+    setTimeout(() => { showConfetti.value = false }, 1500)
+  }
   answers.value.push({ category: current.value.category, correct: isCorrect })
 }
 
 function next() {
   answered.value = false
   selectedOption.value = null
+  lastCorrect.value = null
   currentIndex.value++
 }
 
@@ -145,6 +153,17 @@ loadQuestions()
         >
           {{ opt }}
         </button>
+      </div>
+
+      <!-- Feedback banner -->
+      <div v-if="answered" :class="['feedback-banner', lastCorrect ? 'fb-correct' : 'fb-wrong']">
+        <span class="fb-icon">{{ lastCorrect ? '🎉' : '❌' }}</span>
+        <span class="fb-text">{{ lastCorrect ? 'Correcto!' : 'Incorrecto' }}</span>
+      </div>
+
+      <!-- Confetti -->
+      <div v-if="showConfetti" class="confetti-container">
+        <span v-for="i in 20" :key="i" class="confetti-piece" :style="{ '--i': i }" />
       </div>
 
       <div v-if="answered" class="why-card">
@@ -224,7 +243,7 @@ loadQuestions()
 .category-tag {
   font-size: 12px;
   font-weight: 600;
-  color: var(--primary);
+  color: #a5b4fc;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -358,5 +377,84 @@ loadQuestions()
 .home-btn {
   background: transparent;
   color: var(--text-muted);
+}
+
+/* ── Feedback banner ──────────────────────────── */
+
+.feedback-banner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-md);
+  font-weight: 700;
+  font-size: 15px;
+  animation: fb-pop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.fb-correct {
+  background: rgba(74, 222, 128, 0.15);
+  color: var(--success);
+  border: 1px solid rgba(74, 222, 128, 0.3);
+}
+
+.fb-wrong {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--critical);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.fb-icon {
+  font-size: 20px;
+}
+
+@keyframes fb-pop {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ── Confetti ─────────────────────────────────── */
+
+.confetti-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 100;
+  overflow: hidden;
+}
+
+.confetti-piece {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  top: 40%;
+  left: 50%;
+  border-radius: 2px;
+  animation: confetti-burst 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  --angle: calc(var(--i) * 18deg);
+  --dist: calc(80px + var(--i) * 15px);
+  --color-h: calc(var(--i) * 25);
+  background: hsl(var(--color-h), 80%, 60%);
+}
+
+@keyframes confetti-burst {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform:
+      translate(
+        calc(cos(var(--angle)) * var(--dist)),
+        calc(sin(var(--angle)) * var(--dist) + 120px)
+      )
+      rotate(720deg)
+      scale(0);
+    opacity: 0;
+  }
 }
 </style>
