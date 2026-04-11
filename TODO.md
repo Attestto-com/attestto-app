@@ -53,8 +53,8 @@ Hardening tasks required before production deployment. Composables and infrastru
 - [x] Add vault store tests (unlock → credentials loaded, lock → session cleared, sign → returns signature)
 - [x] Add useExam tests (hash chain integrity, answer recording, incident tracking)
 - [x] Add useMastery tests (decay calculation, law change reset, renewal gate)
-- [ ] Add Vue component tests for LockScreen (registration vs auth flow)
-- **Current:** 232 tests passing across 16 test files
+- [x] Add Vue component tests for LockScreen (registration vs auth flow)
+- **Current:** 250 tests passing across 17 test files
 
 ## Nice-to-have (post-launch)
 

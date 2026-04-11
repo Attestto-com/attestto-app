@@ -31,6 +31,7 @@
     "@quasar/vite-plugin": "^1.9.0",
     "@vitejs/plugin-vue": "^5.2.3",
     "@vitest/coverage-v8": "^3.2.4",
+    "@vue/test-utils": "^2.4.6",
     "jsdom": "^26.1.0",
     "sass": "^1.86.0",
     "typescript": "^5.8.0",

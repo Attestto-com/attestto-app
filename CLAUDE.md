@@ -61,7 +61,7 @@ Colors, spacing, radii defined in `app/src/styles/tokens.css`. Dark theme only.
 ```bash
 pnpm dev          # Start dev server (app/)
 pnpm build        # Build PWA (app/)
-pnpm test         # Run tests (vitest, 232 tests)
+pnpm test         # Run tests (vitest, 250 tests)
 pnpm typecheck    # Typecheck all packages
 ```
 
