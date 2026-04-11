@@ -270,6 +270,21 @@ function optionClass(index: number): string {
         <h2>Practica terminada</h2>
         <div class="done-score">{{ score }}/{{ questions.length }}</div>
         <div class="done-percent">{{ Math.round((score / questions.length) * 100) }}%</div>
+
+        <div class="done-categories">
+          <div class="done-cat-header">{{ unlockedCount }} de {{ MACRO_CATEGORIES.length }} categorias desbloqueadas</div>
+          <div v-for="cat in catProgress" :key="cat.category" class="done-cat-row">
+            <span class="done-cat-name">{{ cat.category }}</span>
+            <div class="done-cat-bar-bg">
+              <div class="done-cat-bar-fill" :style="{ width: `${cat.minReached ? cat.percent : (cat.total / MIN_QUESTIONS_PER_CATEGORY) * 100}%`, background: cat.unlocked ? 'var(--success)' : cat.total > 0 ? 'var(--primary)' : 'var(--bg-elevated)' }" />
+            </div>
+            <span class="done-cat-stat" :style="{ color: cat.unlocked ? 'var(--success)' : 'var(--text-muted)' }">
+              <template v-if="!cat.minReached">{{ cat.total }}/{{ MIN_QUESTIONS_PER_CATEGORY }}</template>
+              <template v-else>{{ cat.percent }}%</template>
+            </span>
+          </div>
+        </div>
+
         <button class="restart-btn" @click="phase = 'pick'">Practicar otra vez</button>
         <button class="home-btn" @click="router.push('/home')">Volver al inicio</button>
       </div>
@@ -753,6 +768,59 @@ function optionClass(index: number): string {
 .home-btn {
   background: transparent;
   color: var(--text-muted);
+}
+
+.done-categories {
+  width: 100%;
+  max-width: 300px;
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+}
+
+.done-cat-header {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--space-sm);
+}
+
+.done-cat-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 3px 0;
+}
+
+.done-cat-name {
+  width: 100px;
+  font-size: 10px;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.done-cat-bar-bg {
+  flex: 1;
+  height: 4px;
+  background: var(--bg-elevated);
+  border-radius: 2px;
+}
+
+.done-cat-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.3s;
+}
+
+.done-cat-stat {
+  width: 32px;
+  text-align: right;
+  font-size: 10px;
+  font-weight: 600;
 }
 
 /* ── Feedback banner ──────────────────────────── */

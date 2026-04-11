@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useMastery } from '../composables/useMastery'
+import { MACRO_CATEGORIES, MIN_QUESTIONS_PER_CATEGORY } from '../composables/useCategoryMap'
 
-const { mastery, getAllCategories, getOverallAccuracy, canRetry, canIssueVC } = useMastery()
+const { mastery, getAllCategories, getCategoryProgress, getOverallAccuracy, canRetry, canIssueVC, unlockedCount } = useMastery()
 const emit = defineEmits<{ start: []; practice: []; 'micro-quiz': []; 'issue-vc': [] }>()
 
 const accuracy = computed(() => getOverallAccuracy())
-const categories = computed(() => getAllCategories())
+const categories = computed(() => getCategoryProgress())
 const retryAvailable = computed(() => canRetry())
 const hasWeakTopics = computed(() => mastery.value.weakTopics.length > 0)
 
@@ -38,24 +39,30 @@ function barColor(pct: number): string {
     </div>
 
     <!-- VC Ready Banner -->
-    <div v-if="canIssueVC.value" class="vc-ready">
+    <div v-if="canIssueVC" class="vc-ready">
       <q-icon name="verified" size="18px" color="positive" />
       <span>Todas las categorias en 90%+</span>
       <button class="vc-btn" @click="emit('issue-vc')">Generar Credencial</button>
     </div>
 
-    <!-- Category bars (all) -->
+    <!-- Unlocked count -->
+    <div class="unlock-count">
+      {{ unlockedCount }} de {{ MACRO_CATEGORIES.length }} categorias desbloqueadas
+    </div>
+
+    <!-- Category bars (all 9 macro-categories) -->
     <div v-if="categories.length" class="category-bars">
       <div v-for="cat in categories" :key="cat.category" class="cat-row">
         <span class="cat-label">{{ cat.category }}</span>
         <div class="cat-bar-bg">
-          <div class="cat-bar-fill" :style="{ width: `${cat.percent}%`, background: barColor(cat.percent) }" />
-          <div class="threshold-marker" />
+          <div class="cat-bar-fill" :style="{ width: `${cat.minReached ? cat.percent : (cat.total / MIN_QUESTIONS_PER_CATEGORY) * 100}%`, background: cat.unlocked ? 'var(--success)' : cat.total > 0 ? 'var(--primary)' : 'var(--bg-elevated)' }" />
+          <div v-if="cat.minReached" class="threshold-marker" />
         </div>
-        <span class="cat-pct" :style="{ color: cat.isGreen ? 'var(--success)' : 'var(--text-muted)' }">
-          {{ cat.percent }}%
+        <span class="cat-pct" :style="{ color: cat.unlocked ? 'var(--success)' : 'var(--text-muted)' }">
+          <template v-if="!cat.minReached">{{ cat.total }}/{{ MIN_QUESTIONS_PER_CATEGORY }}</template>
+          <template v-else>{{ cat.percent }}%</template>
         </span>
-        <span v-if="!cat.isGreen" class="cat-gap">+{{ 90 - cat.percent }}%</span>
+        <span v-if="cat.minReached && !cat.unlocked" class="cat-gap">+{{ 90 - cat.percent }}%</span>
       </div>
     </div>
 
@@ -156,6 +163,15 @@ function barColor(pct: number): string {
   font-weight: 700;
   cursor: pointer;
   white-space: nowrap;
+}
+
+.unlock-count {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--space-sm);
 }
 
 .category-bars {

@@ -3,10 +3,11 @@ import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { selectQuestions, getDefaultConfig } from '../composables/useQuestionBank'
 import { useMastery } from '../composables/useMastery'
+import { MIN_QUESTIONS_PER_CATEGORY } from '../composables/useCategoryMap'
 import type { ExamQuestion } from '../types'
 
 const router = useRouter()
-const { mastery, updateFromResult, getAllCategories } = useMastery()
+const { mastery, updateFromResult, getCategoryProgress } = useMastery()
 
 const loading = ref(true)
 const questions = ref<ExamQuestion[]>([])
@@ -20,7 +21,7 @@ const showConfetti = ref(false)
 
 const current = computed(() => questions.value[currentIndex.value] ?? null)
 const done = computed(() => currentIndex.value >= questions.value.length && questions.value.length > 0)
-const updatedCategories = computed(() => getAllCategories())
+const updatedCategories = computed(() => getCategoryProgress())
 
 async function loadQuestions() {
   loading.value = true
@@ -185,18 +186,20 @@ loadQuestions()
         <div v-for="cat in updatedCategories" :key="cat.category" class="cat-row-full">
           <div class="cat-top">
             <span class="cat-name">{{ cat.category }}</span>
-            <span class="cat-pct-full" :style="{ color: cat.isGreen ? 'var(--success)' : cat.percent >= 70 ? 'var(--warning)' : 'var(--critical)' }">
-              {{ cat.percent }}%
+            <span class="cat-pct-full" :style="{ color: cat.unlocked ? 'var(--success)' : cat.percent >= 70 ? 'var(--warning)' : 'var(--critical)' }">
+              <template v-if="!cat.minReached">{{ cat.total }}/{{ MIN_QUESTIONS_PER_CATEGORY }}</template>
+              <template v-else>{{ cat.percent }}%</template>
             </span>
           </div>
           <div class="cat-bar-bg">
-            <div class="cat-bar-fill" :style="{ width: `${cat.percent}%`, background: barColor(cat.percent) }" />
-            <div class="threshold-marker" />
+            <div class="cat-bar-fill" :style="{ width: `${cat.minReached ? cat.percent : (cat.total / MIN_QUESTIONS_PER_CATEGORY) * 100}%`, background: cat.unlocked ? 'var(--success)' : cat.total > 0 ? 'var(--primary)' : 'var(--bg-elevated)' }" />
+            <div v-if="cat.minReached" class="threshold-marker" />
           </div>
           <div class="cat-bottom">
-            <span v-if="!cat.isGreen" class="cat-gap-text">Faltan {{ 90 - cat.percent }}% · {{ cat.correct }}/{{ cat.total }} preguntas</span>
-            <span v-else class="cat-green-text">Dominio alcanzado · {{ cat.correct }}/{{ cat.total }}</span>
-            <button v-if="!cat.isGreen" class="cat-practice-btn" @click="practiceCategory(cat.category)">
+            <span v-if="cat.unlocked" class="cat-green-text">Dominio alcanzado · {{ cat.correct }}/{{ cat.total }}</span>
+            <span v-else-if="!cat.minReached" class="cat-gap-text">{{ MIN_QUESTIONS_PER_CATEGORY - cat.total }} preguntas mas para evaluar</span>
+            <span v-else class="cat-gap-text">Faltan {{ 90 - cat.percent }}% · {{ cat.correct }}/{{ cat.total }} preguntas</span>
+            <button v-if="!cat.unlocked" class="cat-practice-btn" @click="practiceCategory(cat.category)">
               Practicar
             </button>
           </div>

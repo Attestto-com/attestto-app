@@ -4,6 +4,7 @@ import MasteryWidget from './components/MasteryWidget.vue'
 import { checkDueOnOpen, scheduleReviewReminder } from './composables/useNotifications'
 import { setLlmHandle } from './composables/useQuestionGenerator'
 import { useMastery } from './composables/useMastery'
+import { MACRO_CATEGORIES } from './composables/useCategoryMap'
 
 let ctx: ModuleContext | null = null
 
@@ -48,7 +49,10 @@ const crDrivingModule: AttesttoModule = {
     checkDueOnOpen()
     scheduleReviewReminder()
 
-    const { getBelowThresholdCategories, mastery: masteryState } = useMastery()
+    const { getBelowThresholdCategories, unlockedCount, mastery: masteryState } = useMastery()
+
+    const unlocked = unlockedCount.value
+    const total = MACRO_CATEGORIES.length
 
     ctx.pushInboxItem({
       id: 'cr-driving-practice',
@@ -59,7 +63,7 @@ const crDrivingModule: AttesttoModule = {
         ? `Examen COSEVI — ${masteryState.value.lastScore}%`
         : 'Examen Teorico COSEVI',
       subtitle: masteryState.value.totalAttempts > 0
-        ? `Temas debiles: ${masteryState.value.weakTopics.length} — Repasa para mantener dominio`
+        ? `${unlocked} de ${total} categorias desbloqueadas`
         : 'Practica el examen teorico de conducir',
       action: masteryState.value.totalAttempts > 0 ? 'Repasar' : 'Iniciar',
       route: '/module/cr-driving/practice',
@@ -70,13 +74,14 @@ const crDrivingModule: AttesttoModule = {
     // Pregunta del día: when categories are below 90%
     const belowThreshold = getBelowThresholdCategories()
     if (belowThreshold.length > 0) {
+      const topWeak = belowThreshold.slice(0, 2).join(', ')
       ctx.pushInboxItem({
         id: 'cr-driving-pregunta-dia',
         moduleId: 'cr-driving',
         type: 'action',
         icon: 'quiz',
         title: 'Pregunta del dia',
-        subtitle: `${belowThreshold.length} tema${belowThreshold.length > 1 ? 's' : ''} por debajo del 90%`,
+        subtitle: belowThreshold.length <= 2 ? topWeak : `${topWeak} +${belowThreshold.length - 2} mas`,
         action: 'Responder',
         route: '/module/cr-driving/micro-quiz',
         timestamp: Date.now(),
@@ -95,7 +100,9 @@ const crDrivingModule: AttesttoModule = {
 
   async getInboxItems() {
     if (!ctx) return []
-    const { getBelowThresholdCategories, mastery: masteryState } = useMastery()
+    const { getBelowThresholdCategories, unlockedCount: uc, mastery: masteryState } = useMastery()
+    const unlocked = uc.value
+    const total = MACRO_CATEGORIES.length
     const items = [
       {
         id: 'cr-driving-practice',
@@ -106,7 +113,7 @@ const crDrivingModule: AttesttoModule = {
           ? `Examen COSEVI — ${masteryState.value.lastScore}%`
           : 'Examen Teorico COSEVI',
         subtitle: masteryState.value.totalAttempts > 0
-          ? `Temas debiles: ${masteryState.value.weakTopics.length} — Repasa para mantener dominio`
+          ? `${unlocked} de ${total} categorias desbloqueadas`
           : 'Practica el examen teorico de conducir',
         action: masteryState.value.totalAttempts > 0 ? 'Repasar' : 'Iniciar',
         route: '/module/cr-driving/practice',
@@ -117,13 +124,14 @@ const crDrivingModule: AttesttoModule = {
 
     const belowThreshold = getBelowThresholdCategories()
     if (belowThreshold.length > 0) {
+      const topWeak = belowThreshold.slice(0, 2).join(', ')
       items.push({
         id: 'cr-driving-pregunta-dia',
         moduleId: 'cr-driving',
         type: 'action' as const,
         icon: 'quiz',
         title: 'Pregunta del dia',
-        subtitle: `${belowThreshold.length} tema${belowThreshold.length > 1 ? 's' : ''} por debajo del 90%`,
+        subtitle: belowThreshold.length <= 2 ? topWeak : `${topWeak} +${belowThreshold.length - 2} mas`,
         action: 'Responder',
         route: '/module/cr-driving/micro-quiz',
         timestamp: Date.now(),
