@@ -150,8 +150,8 @@ export async function selectQuestions(
 ): Promise<ExamQuestion[]> {
   await loadAllQuestions()
 
-  // Only use LLM for longer sessions (10+ questions) — skip for quick/micro modes
-  const llmQuestions = config.questionCount >= 10
+  // Try LLM for any session with 5+ questions when available
+  const llmQuestions = config.questionCount >= 5
     ? await tryLlmQuestions(config, weakTopics)
     : null
   const llmCount = llmQuestions?.length ?? 0
