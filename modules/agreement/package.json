@@ -1,0 +1,22 @@
+{
+  "name": "app-module-agreement",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@attestto/module-sdk": "workspace:*",
+    "@noble/hashes": "^1.8.0",
+    "jspdf": "^4.2.1",
+    "pinia": "^2.3.0",
+    "quasar": "^2.17.7",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.0"
+  }
+}

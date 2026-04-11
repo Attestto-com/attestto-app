@@ -63,5 +63,12 @@ async function loadBundledModules(): Promise<AttesttoModule[]> {
     // Module not available
   }
 
+  try {
+    const agreement = await import('app-module-agreement')
+    mods.push(agreement.default)
+  } catch {
+    // Module not available
+  }
+
   return mods
 }

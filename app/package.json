@@ -19,6 +19,7 @@
     "app-module-cr-driving": "workspace:*",
     "app-module-cr-medical": "workspace:*",
     "app-module-doc-signing": "workspace:*",
+    "app-module-agreement": "workspace:*",
     "idb-keyval": "^6.2.0",
     "pdfjs-dist": "^4.10.38",
     "pinia": "^2.3.0",
