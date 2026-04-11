@@ -2,15 +2,15 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { selectQuestions, getDefaultConfig } from '../composables/useQuestionBank'
-import { generateQuestions, loadManualContext } from '../composables/useQuestionGenerator'
 import { useMastery } from '../composables/useMastery'
 import type { ExamQuestion } from '../types'
-
 
 const router = useRouter()
 const { mastery, updateFromResult } = useMastery()
 
-const loading = ref(true)
+const phase = ref<'pick' | 'quiz' | 'done'>('pick')
+const loading = ref(false)
+const questionCount = ref(0)
 const questions = ref<ExamQuestion[]>([])
 const currentIndex = ref(0)
 const score = ref(0)
@@ -23,12 +23,11 @@ const showConfetti = ref(false)
 const current = computed(() => questions.value[currentIndex.value] ?? null)
 const done = computed(() => currentIndex.value >= questions.value.length && questions.value.length > 0)
 
-// Mastery is updated per-question in selectAnswer() — no batch needed
-
-async function loadQuestions() {
+async function startWithCount(count: number) {
+  questionCount.value = count
   loading.value = true
-
-  const config = { ...getDefaultConfig(), questionCount: 10 }
+  phase.value = 'quiz'
+  const config = { ...getDefaultConfig(), questionCount: count }
   questions.value = await selectQuestions(config, mastery.value.weakTopics)
   loading.value = false
 }
@@ -78,7 +77,8 @@ function restart() {
   answered.value = false
   selectedOption.value = null
   answers.value = []
-  loadQuestions()
+  lastCorrect.value = null
+  phase.value = 'pick'
 }
 
 function optionClass(index: number): string {
@@ -93,71 +93,102 @@ loadQuestions()
 
 <template>
   <q-page class="practice-page" padding>
-    <header class="practice-header">
-      <q-btn flat round icon="arrow_back" color="white" @click="router.back()" />
-      <span>Modo Practica</span>
-      <span class="practice-score">{{ score }}/{{ currentIndex }}</span>
-    </header>
+    <!-- Phase: Pick question count -->
+    <template v-if="phase === 'pick'">
+      <header class="practice-header">
+        <q-btn flat round icon="arrow_back" color="white" @click="router.back()" />
+        <span>Modo Practica</span>
+      </header>
 
-    <div v-if="loading" class="loading-state">
-      <q-spinner size="48px" color="primary" />
-      <p>Generando preguntas...</p>
-      <p class="loading-hint">Las preguntas se generan con IA local cuando esta disponible</p>
-    </div>
+      <div class="pick-screen">
+        <h2 class="pick-title">¿Cuantas preguntas?</h2>
+        <p class="pick-hint">Cada respuesta actualiza tu dominio al instante</p>
 
-    <template v-else-if="!done && current">
-      <div class="progress-info">{{ currentIndex + 1 }} / {{ questions.length }}</div>
-
-      <div class="question-card">
-        <div class="category-row">
-          <div class="category-tag">{{ current.category }}</div>
-          <span v-if="current.id.startsWith('llm-')" class="ai-badge">IA</span>
+        <div class="pick-options">
+          <button class="pick-btn" @click="startWithCount(1)">
+            <span class="pick-count">1</span>
+            <span class="pick-label">Rapida</span>
+          </button>
+          <button class="pick-btn" @click="startWithCount(5)">
+            <span class="pick-count">5</span>
+            <span class="pick-label">Repaso</span>
+          </button>
+          <button class="pick-btn pick-btn-accent" @click="startWithCount(10)">
+            <span class="pick-count">10</span>
+            <span class="pick-label">Practica</span>
+          </button>
         </div>
-        <p class="question-text">{{ current.question }}</p>
-      </div>
-
-      <div class="options">
-        <button
-          v-for="(opt, i) in current.options"
-          :key="i"
-          :class="['option-card', optionClass(i)]"
-          @click="selectAnswer(i)"
-        >
-          {{ opt }}
-        </button>
-      </div>
-
-      <!-- Feedback banner -->
-      <div v-if="answered" :class="['feedback-banner', lastCorrect ? 'fb-correct' : 'fb-wrong']">
-        <span class="fb-icon">{{ lastCorrect ? '🎉' : '❌' }}</span>
-        <span class="fb-text">{{ lastCorrect ? 'Correcto!' : 'Incorrecto' }}</span>
-      </div>
-
-      <!-- Confetti -->
-      <div v-if="showConfetti" class="confetti-container">
-        <span v-for="i in 20" :key="i" class="confetti-piece" :style="{ '--i': i }" />
-      </div>
-
-      <div v-if="answered" class="why-card">
-        <div class="why-header">&#128161; ¿Por que?</div>
-        <p class="why-text">{{ current.why }}</p>
-      </div>
-
-      <div v-if="answered" class="next-bar">
-        <button class="regen-btn" @click="regenerateQuestion">
-          Otra pregunta
-        </button>
-        <button class="next-btn" @click="next">Siguiente</button>
       </div>
     </template>
 
-    <div v-else-if="done" class="done-state">
-      <h2>Practica terminada</h2>
-      <div class="done-score">{{ score }}/{{ questions.length }}</div>
-      <div class="done-percent">{{ Math.round((score / questions.length) * 100) }}%</div>
-      <button class="restart-btn" @click="restart">Practicar otra vez</button>
-      <button class="home-btn" @click="router.push('/home')">Volver al inicio</button>
-    </div>
+    <!-- Phase: Quiz -->
+    <template v-else-if="phase === 'quiz'">
+      <header class="practice-header">
+        <q-btn flat round icon="arrow_back" color="white" @click="router.back()" />
+        <span>Modo Practica</span>
+        <span class="practice-score">{{ score }}/{{ currentIndex }}</span>
+      </header>
+
+      <div v-if="loading" class="loading-state">
+        <q-spinner size="48px" color="primary" />
+        <p>Generando preguntas...</p>
+      </div>
+
+      <template v-else-if="!done && current">
+        <div class="progress-info">{{ currentIndex + 1 }} / {{ questions.length }}</div>
+
+        <div class="question-card">
+          <div class="category-row">
+            <div class="category-tag">{{ current.category }}</div>
+            <span v-if="current.id.startsWith('llm-')" class="ai-badge">IA</span>
+          </div>
+          <p class="question-text">{{ current.question }}</p>
+        </div>
+
+        <div class="options">
+          <button
+            v-for="(opt, i) in current.options"
+            :key="i"
+            v-show="!answered || i === current.correct || i === selectedOption"
+            :class="['option-card', optionClass(i)]"
+            @click="selectAnswer(i)"
+          >
+            {{ opt }}
+          </button>
+        </div>
+
+        <!-- Feedback banner -->
+        <div v-if="answered" :class="['feedback-banner', lastCorrect ? 'fb-correct' : 'fb-wrong']">
+          <span class="fb-icon">{{ lastCorrect ? '🎉' : '❌' }}</span>
+          <span class="fb-text">{{ lastCorrect ? 'Correcto!' : 'Incorrecto' }}</span>
+        </div>
+
+        <!-- Confetti -->
+        <div v-if="showConfetti" class="confetti-container">
+          <span v-for="i in 20" :key="i" class="confetti-piece" :style="{ '--i': i }" />
+        </div>
+
+        <div v-if="answered" class="why-card">
+          <div class="why-header">&#128161; ¿Por que?</div>
+          <p class="why-text">{{ current.why }}</p>
+        </div>
+
+        <div v-if="answered" class="next-bar">
+          <button class="regen-btn" @click="regenerateQuestion">
+            Otra pregunta
+          </button>
+          <button class="next-btn" @click="next">Siguiente</button>
+        </div>
+      </template>
+
+      <div v-else-if="done" class="done-state">
+        <h2>Practica terminada</h2>
+        <div class="done-score">{{ score }}/{{ questions.length }}</div>
+        <div class="done-percent">{{ Math.round((score / questions.length) * 100) }}%</div>
+        <button class="restart-btn" @click="phase = 'pick'">Practicar otra vez</button>
+        <button class="home-btn" @click="router.push('/home')">Volver al inicio</button>
+      </div>
+    </template>
   </q-page>
 </template>
 
@@ -179,6 +210,67 @@ loadQuestions()
   margin-left: auto;
   font-size: 14px;
   color: var(--text-muted);
+}
+
+.pick-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-xl) 0;
+}
+
+.pick-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: var(--space-xs);
+}
+
+.pick-hint {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: var(--space-xl);
+}
+
+.pick-options {
+  display: flex;
+  gap: var(--space-md);
+  width: 100%;
+  justify-content: center;
+}
+
+.pick-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-lg) var(--space-xl);
+  background: var(--bg-card);
+  border: 2px solid transparent;
+  border-radius: var(--radius-lg);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  flex: 1;
+  max-width: 120px;
+}
+
+.pick-btn:active {
+  background: var(--bg-elevated);
+}
+
+.pick-btn-accent {
+  border-color: var(--primary);
+}
+
+.pick-count {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.pick-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 500;
 }
 
 .loading-state {
