@@ -13,9 +13,16 @@ interface ExamResultInput {
   incidentCount: number
 }
 
+interface StationEndorsement {
+  sign: (payload: Uint8Array) => string
+  getVerificationMethod: () => string
+  getPublicKey: () => string
+}
+
 export async function issueExamCredential(
   result: ExamResultInput,
   licenseType: string = 'B1',
+  station?: StationEndorsement,
 ): Promise<VerifiableCredential> {
   const vault = useVaultStore()
   if (!vault.did) throw new Error('Vault not unlocked')
@@ -49,8 +56,8 @@ export async function issueExamCredential(
     revocationStatus: result.passed ? 'valid' : 'unknown',
   }
 
-  // Sign the VC
-  const payload = JSON.stringify({
+  // Sign the VC with user's key
+  const canonicalPayload = JSON.stringify({
     '@context': vc['@context'],
     type: vc.type,
     issuer: vc.issuer,
@@ -58,15 +65,40 @@ export async function issueExamCredential(
     credentialSubject: vc.credentialSubject,
   })
 
-  const { signature, verificationMethod } = await vault.sign(payload)
+  const { signature, verificationMethod } = await vault.sign(canonicalPayload)
 
-  vc.proof = {
+  const userProof = {
     type: 'Ed25519Signature2020',
     created: now,
     verificationMethod,
     proofPurpose: 'assertionMethod',
     proofValue: signature,
     publicKey: crypto.getPublicKeyBase64url(),
+  }
+
+  if (station) {
+    // Station endorsement: proctor attests to the chain head it witnessed
+    const stationPayload = JSON.stringify({
+      chainHead: result.chainHead,
+      sessionVcId: vcId,
+      witnessedAt: now,
+      incidentCount: result.incidentCount,
+    })
+    const stationSig = station.sign(new TextEncoder().encode(stationPayload))
+
+    const stationProof = {
+      type: 'Ed25519Signature2020',
+      created: now,
+      verificationMethod: station.getVerificationMethod(),
+      proofPurpose: 'authentication',
+      proofValue: stationSig,
+      publicKey: station.getPublicKey(),
+    }
+
+    // proofChain: user assertion + station endorsement
+    vc.proof = [userProof, stationProof]
+  } else {
+    vc.proof = userProof
   }
 
   return vc

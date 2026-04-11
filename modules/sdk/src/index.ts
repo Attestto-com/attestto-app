@@ -80,7 +80,7 @@ export interface VerifiableCredential {
   issuanceDate: string
   expirationDate?: string
   credentialSubject: Record<string, unknown>
-  proof?: Record<string, unknown>
+  proof?: Record<string, unknown> | Record<string, unknown>[]
   /** Country code of the issuer's jurisdiction */
   jurisdiction?: string
   /** Revocation status if checked */

@@ -9,6 +9,7 @@ import { useLivenessChallenge } from '../composables/useLivenessChallenge'
 import { useFaceIdentity } from '../composables/useFaceIdentity'
 import { useLockdown } from '../composables/useLockdown'
 import { useVoiceDetection } from '../composables/useVoiceDetection'
+import { initStation, stationSign, getStationVerificationMethod, getStationPublicKey, destroyStation } from '../composables/useStationKey'
 import ConsentScreen from '../components/ConsentScreen.vue'
 import PreExamScreen from '../components/PreExamScreen.vue'
 import QuestionScreen from '../components/QuestionScreen.vue'
@@ -41,6 +42,7 @@ const anchoring = ref(false)
 const exporting = ref(false)
 const anchorTx = ref('')
 const anchorError = ref('')
+const stationDid = ref('')
 
 // Timer
 const timeRemaining = ref(0)
@@ -176,11 +178,16 @@ async function handleStartExam() {
   // Start voice detection
   await voice.start()
 
-  // Record session start in hash chain
-  exam.recordEvent('session-start', { timestamp: Date.now() })
-
   // Start the exam session
   await exam.startSession(mastery.value.weakTopics)
+
+  // Initialize station key for this session (after session exists)
+  const stationInfo = initStation(exam.session.value!.id)
+  stationDid.value = stationInfo.stationDid
+  exam.recordEvent('station-initialized', { stationDid: stationInfo.stationDid })
+
+  // Record session start in hash chain
+  exam.recordEvent('session-start', { timestamp: Date.now() })
   startTimer()
 }
 
@@ -230,16 +237,24 @@ async function handleIssueCredential() {
       categories[cat.category] = { correct: cat.correct, total: cat.total, percentage: cat.percent }
     }
 
-    const vc = await issueExamCredential({
-      score: result.score,
-      passed: result.passed,
-      chainHead: result.chainHead,
-      totalQuestions: result.total,
-      correctAnswers: result.correct,
-      durationSeconds: result.durationSeconds,
-      categories,
-      incidentCount: result.incidents.length,
-    })
+    const vc = await issueExamCredential(
+      {
+        score: result.score,
+        passed: result.passed,
+        chainHead: result.chainHead,
+        totalQuestions: result.total,
+        correctAnswers: result.correct,
+        durationSeconds: result.durationSeconds,
+        categories,
+        incidentCount: result.incidents.length,
+      },
+      'B1',
+      {
+        sign: stationSign,
+        getVerificationMethod: getStationVerificationMethod,
+        getPublicKey: getStationPublicKey,
+      },
+    )
 
     issuedVc.value = vc as unknown as Record<string, unknown>
 
@@ -294,6 +309,32 @@ async function handleExportEvidence() {
   }
 }
 
+const exportingPdf = ref(false)
+
+async function handleExportPdf() {
+  exportingPdf.value = true
+  try {
+    const { generateEvidencePdf } = await import('../composables/useEvidencePdf')
+    const result = exam.getResult()
+    if (!result) throw new Error('No exam result')
+
+    const { useVaultStore } = await import('@/stores/vault')
+    const vault = useVaultStore()
+
+    generateEvidencePdf(result, {
+      sessionId: exam.session.value?.id ?? 'unknown',
+      userDid: vault.did ?? 'unknown',
+      stationDid: stationDid.value || undefined,
+      anchorTx: anchorTx.value || undefined,
+      vcId: (issuedVc.value as Record<string, unknown>)?.id as string | undefined,
+    })
+  } catch {
+    // Silent fail — PDF export is best-effort
+  } finally {
+    exportingPdf.value = false
+  }
+}
+
 function handleBackToHome() {
   cleanup()
   exam.reset()
@@ -308,6 +349,7 @@ function cleanup() {
   liveness.cleanup()
   camera.stop()
   if (lockdown.active.value) lockdown.deactivate()
+  destroyStation()
 }
 
 // Bind video element when it appears
@@ -437,7 +479,12 @@ onUnmounted(() => cleanup())
 
         <button class="action-btn secondary" :disabled="exporting" @click="handleExportEvidence">
           <q-spinner-dots v-if="exporting" size="14px" />
-          <template v-else>Exportar evidencia</template>
+          <template v-else>Exportar evidencia (JSON)</template>
+        </button>
+
+        <button class="action-btn secondary" :disabled="exportingPdf" @click="handleExportPdf">
+          <q-spinner-dots v-if="exportingPdf" size="14px" />
+          <template v-else>Exportar evidencia (PDF)</template>
         </button>
 
         <button class="action-btn primary" @click="handleBackToHome">
