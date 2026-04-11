@@ -84,6 +84,17 @@ async function practiceCategory(category: string) {
   loading.value = false
 }
 
+async function reloadQuestion() {
+  answered.value = false
+  selectedOption.value = null
+  lastCorrect.value = null
+  const config = { ...getDefaultConfig(), questionCount: 1 }
+  const fresh = await selectQuestions(config, mastery.value.weakTopics)
+  if (fresh.length > 0) {
+    questions.value[currentIndex.value] = fresh[0]
+  }
+}
+
 function barColor(pct: number): string {
   if (pct >= 90) return 'var(--success)'
   if (pct >= 70) return 'var(--warning)'
@@ -98,7 +109,6 @@ loadQuestions()
     <header class="quiz-header">
       <q-btn flat round icon="arrow_back" color="white" size="sm" @click="router.back()" />
       <span>Repaso rapido</span>
-      <span v-if="!loading" class="quiz-score">{{ score }}/{{ currentIndex }}</span>
     </header>
 
     <div v-if="loading" class="loading-state">
@@ -146,6 +156,7 @@ loadQuestions()
       </div>
 
       <div v-if="answered" class="next-bar">
+        <button class="regen-btn" @click="reloadQuestion">Otra pregunta</button>
         <button class="next-btn" @click="next">Siguiente</button>
       </div>
     </template>
@@ -309,10 +320,25 @@ loadQuestions()
   bottom: 0;
   left: 0;
   right: 0;
-  padding: var(--space-md);
-  padding-bottom: calc(var(--space-md) + env(safe-area-inset-bottom, 0px));
-  background: linear-gradient(transparent, var(--bg-base) 30%);
+  padding: var(--space-sm) var(--space-md);
+  padding-bottom: calc(var(--space-sm) + env(safe-area-inset-bottom, 0px));
+  background: linear-gradient(transparent, var(--bg-base) 20%);
   z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.regen-btn {
+  width: 100%;
+  padding: var(--space-sm);
+  background: transparent;
+  border: 1px solid rgba(165, 180, 252, 0.3);
+  border-radius: var(--radius-md);
+  color: #a5b4fc;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
 }
 
 .next-btn {
