@@ -160,11 +160,11 @@ export function useMastery() {
       .slice(0, limit)
   }
 
-  function getAllCategories(): { category: string; percent: number; isGreen: boolean }[] {
+  function getAllCategories(): { category: string; percent: number; isGreen: boolean; total: number; correct: number }[] {
     return Object.entries(mastery.value.categoryScores)
       .map(([category, { correct, total }]) => {
         const percent = total > 0 ? Math.round((correct / total) * 100) : 0
-        return { category, percent, isGreen: percent >= GREEN_THRESHOLD }
+        return { category, percent, isGreen: percent >= GREEN_THRESHOLD, total, correct }
       })
       .sort((a, b) => a.percent - b.percent)
   }

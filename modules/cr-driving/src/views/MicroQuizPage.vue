@@ -168,8 +168,8 @@ loadQuestions()
             <div class="threshold-marker" />
           </div>
           <div class="cat-bottom">
-            <span v-if="!cat.isGreen" class="cat-gap-text">Faltan {{ 90 - cat.percent }}% para la meta</span>
-            <span v-else class="cat-green-text">Dominio alcanzado</span>
+            <span v-if="!cat.isGreen" class="cat-gap-text">Faltan {{ 90 - cat.percent }}% · {{ cat.correct }}/{{ cat.total }} preguntas</span>
+            <span v-else class="cat-green-text">Dominio alcanzado · {{ cat.correct }}/{{ cat.total }}</span>
             <button v-if="!cat.isGreen" class="cat-practice-btn" @click="practiceCategory(cat.category)">
               Practicar
             </button>
@@ -446,7 +446,6 @@ loadQuestions()
 
 .home-btn {
   width: 100%;
-  max-width: 300px;
   padding: var(--space-md);
   background: var(--primary);
   border: none;
