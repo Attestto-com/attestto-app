@@ -98,12 +98,13 @@ loadQuestions()
     <header class="quiz-header">
       <q-btn flat round icon="arrow_back" color="white" size="sm" @click="router.back()" />
       <span>Repaso rapido</span>
-      <span class="quiz-score">{{ score }}/{{ currentIndex }}</span>
+      <span v-if="!loading" class="quiz-score">{{ score }}/{{ currentIndex }}</span>
     </header>
 
     <div v-if="loading" class="loading-state">
       <q-spinner size="40px" color="primary" />
-      <p>Cargando...</p>
+      <p>Generando preguntas con IA...</p>
+      <p class="loading-hint">Gemma esta creando preguntas unicas sobre tus temas debiles</p>
     </div>
 
     <template v-else-if="!done && current">
