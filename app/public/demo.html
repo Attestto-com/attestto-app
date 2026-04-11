@@ -584,8 +584,14 @@ body {
   </div>
 
   <div class="hero-right">
-    <div class="qr-box">QR Code</div>
-    <div class="qr-label">Escanea para probar<br>en tu dispositivo</div>
+    <div class="qr-box"><img id="qr-img" alt="QR app.attestto.com" width="150" height="150"></div>
+    <div class="qr-label"><a href="https://app.attestto.com" style="color:var(--text-muted);text-decoration:none;">app.attestto.com</a></div>
+    <script>
+      // Generate QR code via public API — no npm dependency needed
+      document.getElementById('qr-img').src =
+        'https://api.qrserver.com/v1/create-qr-code/?size=150x150&color=594FD3&bgcolor=FFFFFF&data=' +
+        encodeURIComponent('https://app.attestto.com');
+    </script>
   </div>
 </section>
 
