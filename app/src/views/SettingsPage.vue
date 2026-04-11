@@ -21,8 +21,11 @@ function toggleLlm() {
     llm.disable()
   } else {
     llm.enable()
-    llm.init()
   }
+}
+
+function startDownload() {
+  llm.init().catch(() => { /* error shown via llm.errorMessage */ })
 }
 
 async function deleteLlmCache() {
@@ -90,23 +93,36 @@ function handleLock() {
         </div>
         <q-toggle :model-value="llm.enabled.value" color="primary" @update:model-value="toggleLlm" />
       </div>
-      <div v-if="llm.enabled.value" class="setting-row">
+      <div v-if="llm.enabled.value && llm.status.value === 'downloading'" class="setting-row">
+        <span>Descargando modelo...</span>
+        <div class="download-progress">
+          <div class="download-bar" :style="{ width: `${llm.downloadProgress.value}%` }" />
+        </div>
+        <span class="setting-value">{{ llm.downloadProgress.value }}%</span>
+      </div>
+      <div v-else-if="llm.enabled.value && llm.status.value === 'loading'" class="setting-row">
+        <span>Inicializando IA...</span>
+        <q-spinner-dots size="16px" color="primary" />
+      </div>
+      <div v-else-if="llm.enabled.value && llm.status.value === 'ready'" class="setting-row">
         <span>Estado</span>
-        <span class="setting-value">
-          <template v-if="llm.status.value === 'downloading'">Descargando... {{ llm.downloadProgress.value }}%</template>
-          <template v-else-if="llm.status.value === 'loading'">Inicializando...</template>
-          <template v-else-if="llm.status.value === 'ready'">Listo</template>
-          <template v-else-if="llm.status.value === 'error'">Error</template>
-          <template v-else-if="llm.modelCached.value">En cache (offline)</template>
-          <template v-else>Pendiente descarga</template>
-        </span>
+        <span class="setting-value setting-success">Listo</span>
+      </div>
+      <div v-else-if="llm.enabled.value && llm.modelCached.value && llm.status.value === 'idle'" class="setting-row clickable" @click="startDownload">
+        <span>Modelo en cache — toca para iniciar</span>
+        <q-icon name="play_arrow" />
+      </div>
+      <div v-else-if="llm.enabled.value && !llm.modelCached.value" class="setting-row clickable" @click="startDownload">
+        <span>Descargar modelo ({{ llm.modelSize }})</span>
+        <q-icon name="download" />
+      </div>
+      <div v-if="llm.enabled.value && llm.status.value === 'error'" class="setting-row clickable" @click="startDownload">
+        <span class="setting-error">{{ llm.errorMessage.value }}</span>
+        <span class="setting-retry">Reintentar</span>
       </div>
       <div v-if="llm.modelCached.value" class="setting-row clickable danger" @click="deleteLlmCache">
         <span>Eliminar modelo descargado</span>
         <q-icon name="chevron_right" />
-      </div>
-      <div v-if="llm.errorMessage.value" class="setting-row">
-        <span class="setting-error">{{ llm.errorMessage.value }}</span>
       </div>
     </section>
 
@@ -256,6 +272,34 @@ function handleLock() {
 .setting-error {
   font-size: 12px;
   color: var(--critical);
+}
+
+.setting-success {
+  color: var(--success) !important;
+  font-weight: 600;
+}
+
+.setting-retry {
+  font-size: 12px;
+  color: var(--primary);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.download-progress {
+  flex: 1;
+  height: 4px;
+  background: var(--bg-elevated);
+  border-radius: 2px;
+  margin: 0 var(--space-sm);
+  overflow: hidden;
+}
+
+.download-bar {
+  height: 100%;
+  background: var(--primary);
+  border-radius: 2px;
+  transition: width 0.3s;
 }
 
 .empty-hint {
