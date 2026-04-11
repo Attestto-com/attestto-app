@@ -83,15 +83,12 @@ function handleInboxTap(item: InboxItem) {
     <!-- AI feature card (hidden when active — green badge in header is enough) -->
     <section v-if="llm.status.value !== 'ready'" class="section ai-card" @click="router.push({ name: 'settings' })">
       <div class="ai-card-header">
-        <q-icon name="psychology" size="20px" :style="{ color: llm.status.value === 'ready' ? 'var(--success)' : 'var(--warning)' }" />
+        <q-icon name="psychology" size="20px" style="color: var(--warning)" />
         <span class="ai-card-title">IA en tu dispositivo</span>
-        <span :class="['ai-status-dot', llm.status.value === 'ready' ? 'dot-green' : 'dot-yellow']" />
+        <span class="ai-status-dot dot-yellow" />
       </div>
       <p class="ai-card-desc">
-        <template v-if="llm.status.value === 'ready'">
-          Gemma 2B activa — genera preguntas unicas con inteligencia artificial, 100% offline. Tus datos nunca salen de tu dispositivo.
-        </template>
-        <template v-else-if="llm.status.value === 'downloading'">
+        <template v-if="llm.status.value === 'downloading'">
           Descargando modelo Gemma 2B (1.3 GB)... Una vez descargado, funciona sin internet.
         </template>
         <template v-else-if="llm.status.value === 'loading'">
@@ -102,8 +99,7 @@ function handleInboxTap(item: InboxItem) {
         </template>
       </p>
       <div class="ai-card-footer">
-        <span v-if="llm.status.value === 'ready'" class="ai-tag ai-tag-green">Activa</span>
-        <span v-else class="ai-tag ai-tag-yellow">Configurar</span>
+        <span class="ai-tag ai-tag-yellow">Configurar</span>
         <q-icon name="chevron_right" size="16px" color="grey-6" />
       </div>
     </section>

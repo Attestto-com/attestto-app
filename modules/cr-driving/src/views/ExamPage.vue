@@ -261,7 +261,7 @@ async function handleExportPdf() {
       userDid: vault.did ?? 'unknown',
       stationDid: stationDid.value || undefined,
       anchorTx: anchorTx.value || undefined,
-      vcId: (issuedVc.value as Record<string, unknown>)?.id as string | undefined,
+      vcId: undefined,
     })
   } catch {
     // Silent fail — PDF export is best-effort

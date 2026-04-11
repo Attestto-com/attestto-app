@@ -17,6 +17,9 @@
     "pnpm": ">=9"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["@parcel/watcher", "esbuild", "vue-demi"]
+    "onlyBuiltDependencies": ["@parcel/watcher", "esbuild", "vue-demi"],
+    "overrides": {
+      "serialize-javascript": ">=7.0.5"
+    }
   }
 }

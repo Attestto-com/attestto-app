@@ -27,7 +27,7 @@ interface EncryptedVaultData {
 async function deriveVaultKey(signingKeySeed: Uint8Array): Promise<CryptoKey> {
   const keyMaterial = await crypto.subtle.importKey(
     'raw',
-    signingKeySeed,
+    signingKeySeed as unknown as BufferSource,
     'HKDF',
     false,
     ['deriveKey'],
@@ -86,9 +86,9 @@ export async function loadEncryptedVault<T = unknown>(
   const aesKey = await deriveVaultKey(signingKeySeed)
 
   const plaintext = await crypto.subtle.decrypt(
-    { name: 'AES-GCM', iv: base64ToArray(vaultData.iv) },
+    { name: 'AES-GCM', iv: base64ToArray(vaultData.iv) as unknown as BufferSource },
     aesKey,
-    base64ToArray(vaultData.ciphertext),
+    base64ToArray(vaultData.ciphertext) as unknown as BufferSource,
   )
 
   return JSON.parse(new TextDecoder().decode(plaintext)) as T
