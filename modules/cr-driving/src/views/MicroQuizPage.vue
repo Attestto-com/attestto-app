@@ -2,12 +2,14 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { selectQuestions, getDefaultConfig } from '../composables/useQuestionBank'
+import { getLlmStatus } from '../composables/useQuestionGenerator'
 import { useMastery } from '../composables/useMastery'
 import { MIN_QUESTIONS_PER_CATEGORY } from '../composables/useCategoryMap'
 import type { ExamQuestion } from '../types'
 
 const router = useRouter()
 const { mastery, updateFromResult, getCategoryProgress } = useMastery()
+const llm = computed(() => getLlmStatus())
 
 const loading = ref(true)
 const questions = ref<ExamQuestion[]>([])
@@ -123,8 +125,18 @@ loadQuestions()
 
     <div v-if="loading" class="loading-state">
       <q-spinner size="40px" color="primary" />
-      <p>Generando preguntas con IA...</p>
-      <p class="loading-hint">Gemma esta creando preguntas unicas sobre tus temas debiles</p>
+      <p v-if="llm.status === 'downloading'">Descargando modelo IA...</p>
+      <p v-else-if="llm.status === 'loading'">Cargando modelo en GPU...</p>
+      <p v-else-if="llm.status === 'generating'">Generando preguntas con IA...</p>
+      <p v-else-if="!llm.supported">Cargando preguntas del banco estatico...</p>
+      <p v-else>Preparando preguntas...</p>
+      <p class="loading-hint">
+        <template v-if="llm.status === 'downloading'">Primera vez: descargando Gemma 2B (1.3 GB). Solo se hace una vez.</template>
+        <template v-else-if="llm.status === 'loading'">Inicializando el modelo en tu dispositivo. Esto puede tomar unos segundos.</template>
+        <template v-else-if="llm.status === 'generating'">Gemma esta creando preguntas unicas sobre tus temas debiles.</template>
+        <template v-else-if="!llm.supported">Tu dispositivo no soporta WebGPU. Usando banco de 141 preguntas.</template>
+        <template v-else>Seleccionando preguntas para tu nivel.</template>
+      </p>
     </div>
 
     <template v-else-if="!done && current">

@@ -213,7 +213,12 @@ function optionClass(index: number): string {
 
       <div v-if="loading" class="loading-state">
         <q-spinner size="48px" color="primary" />
-        <p>Generando preguntas...</p>
+        <p v-if="llm.status === 'downloading'">Descargando modelo IA...</p>
+        <p v-else-if="llm.status === 'loading'">Cargando modelo en GPU...</p>
+        <p v-else-if="llm.status === 'generating'">Generando preguntas con IA...</p>
+        <p v-else>Preparando preguntas...</p>
+        <p class="loading-hint" v-if="llm.status === 'downloading'">Primera vez: descargando Gemma 2B (1.3 GB)</p>
+        <p class="loading-hint" v-else-if="llm.status === 'loading'">Inicializando modelo en tu dispositivo...</p>
       </div>
 
       <template v-else-if="!done && current">
