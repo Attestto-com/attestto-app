@@ -168,12 +168,26 @@ async function init(): Promise<void> {
   }
 
   try {
-    // Try OPFS cache first, fall back to direct URL
+    // Check available storage before attempting download
+    if (navigator.storage?.estimate) {
+      const est = await navigator.storage.estimate()
+      const free = (est.quota ?? 0) - (est.usage ?? 0)
+      const MIN_BYTES = 1.5 * 1024 * 1024 * 1024 // 1.5 GB headroom
+      if (free < MIN_BYTES) {
+        status.value = 'error'
+        errorMessage.value = `Almacenamiento insuficiente. Necesitas ~1.5 GB libres (disponible: ${Math.round(free / (1024 * 1024))} MB)`
+        return
+      }
+    }
+
+    // Try OPFS cache first, fall back to download
     let modelUrl: string
     try {
       modelUrl = await ensureModelReady()
-    } catch {
-      modelUrl = MODEL_URL
+    } catch (dlErr) {
+      status.value = 'error'
+      errorMessage.value = dlErr instanceof Error ? dlErr.message : 'Error descargando modelo'
+      return
     }
 
     status.value = 'loading'

@@ -32,6 +32,16 @@ app.use(Quasar, {
 
 app.mount('#app')
 
+// PWA update detection
+import { registerSW } from 'virtual:pwa-register'
+
+const updateSW = registerSW({
+  onNeedRefresh() {
+    // Expose to App.vue via custom event
+    window.dispatchEvent(new CustomEvent('sw-update-available', { detail: { updateSW } }))
+  },
+})
+
 // Track PWA install
 window.addEventListener('appinstalled', () => {
   window.plausible?.('PWA Install')

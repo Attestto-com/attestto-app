@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useVaultStore } from '@/stores/vault'
 import { isRegistered } from '@/composables/useCrypto'
+import PwaInstallBanner from '@/components/PwaInstallBanner.vue'
 
 const { t } = useI18n()
 const vault = useVaultStore()
@@ -78,6 +79,8 @@ async function handleRecovery() {
         {{ t('lock.resetIdentity') }}
       </button>
     </div>
+
+    <PwaInstallBanner />
   </div>
 </template>
 

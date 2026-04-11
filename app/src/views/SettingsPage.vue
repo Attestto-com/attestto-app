@@ -116,7 +116,10 @@ function handleLock() {
       </div>
       <div v-if="llm.enabled.value && storageQuota" class="setting-row">
         <span>Almacenamiento</span>
-        <span class="setting-value">{{ storageUsed }} / {{ storageQuota }} ({{ storagePct }}%)</span>
+        <span :class="['setting-value', storagePct > 90 ? 'setting-error' : '']">{{ storageUsed }} / {{ storageQuota }} ({{ storagePct }}%)</span>
+      </div>
+      <div v-if="llm.enabled.value && storagePct > 90 && llm.status.value !== 'ready'" class="setting-row">
+        <span class="setting-hint" style="color: var(--critical)">Almacenamiento casi lleno. Libera espacio para usar la IA.</span>
       </div>
       <div v-if="llm.enabled.value && llm.status.value === 'downloading'" class="setting-row">
         <span>Descargando modelo...</span>

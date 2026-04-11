@@ -92,7 +92,7 @@ const i18n = createI18n({
     es: {
       lock: {
         createIdentity: 'Crear identidad',
-        unlockHint: 'Desbloquear con biometrico o PIN',
+        unlockHint: 'Desbloquear con passkey',
         unlockFailed: 'No se pudo desbloquear',
         authCancelled: 'Autenticacion cancelada',
         authError: 'Error de autenticacion',
@@ -112,6 +112,7 @@ function mountLockScreen() {
       stubs: {
         'q-icon': { template: '<i />', props: ['name', 'size'] },
         'q-spinner-dots': { template: '<span />', props: ['size', 'color'] },
+        PwaInstallBanner: { template: '<div />' },
       },
     },
   })
@@ -140,7 +141,7 @@ describe('LockScreen', () => {
     it('shows unlock hint for returning user', () => {
       registered = true
       const wrapper = mountLockScreen()
-      expect(wrapper.find('.unlock-hint').text()).toBe('Desbloquear con biometrico o PIN')
+      expect(wrapper.find('.unlock-hint').text()).toBe('Desbloquear con passkey')
     })
 
     it('renders icon inside unlock button for first-time user', () => {

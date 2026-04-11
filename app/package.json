@@ -38,6 +38,7 @@
     "vite": "^6.3.0",
     "vite-plugin-pwa": "^1.2.0",
     "vitest": "^3.1.0",
-    "vue-tsc": "^2.2.8"
+    "vue-tsc": "^2.2.8",
+    "workbox-window": "^7.4.0"
   }
 }

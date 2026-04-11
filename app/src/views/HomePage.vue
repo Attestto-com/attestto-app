@@ -61,7 +61,7 @@ function handleAiCardTap() {
 <template>
   <q-page class="home-page" padding>
     <header class="home-header">
-      <div class="greeting">{{ t('home.greeting', { name: vault.displayName?.split(' ')[0] ?? t('home.userFallback') }) }}</div>
+      <div class="greeting">{{ t('home.greeting', { name: vault.displayName?.split(' ')[0] || t('home.userFallback') }) }}</div>
       <div class="header-actions">
         <span
           v-if="llmLabel"

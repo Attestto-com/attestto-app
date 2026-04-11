@@ -92,6 +92,9 @@ importers:
       vue-tsc:
         specifier: ^2.2.8
         version: 2.2.12(typescript@5.9.3)
+      workbox-window:
+        specifier: ^7.4.0
+        version: 7.4.0
 
   modules/cr-driving:
     dependencies:

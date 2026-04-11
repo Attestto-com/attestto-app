@@ -9,7 +9,7 @@ export default defineConfig({
     vue({ template: { transformAssetUrls } }),
     quasar({ sassVariables: false }),
     VitePWA({
-      registerType: 'autoUpdate',
+      registerType: 'prompt',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png'],
       manifest: {
         name: 'Attestto',

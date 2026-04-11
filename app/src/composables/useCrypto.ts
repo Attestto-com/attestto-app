@@ -149,7 +149,7 @@ export function setDID(did: string): void {
 }
 
 export function getDisplayName(): string {
-  return localStorage.getItem(DISPLAY_NAME_KEY) ?? 'Attestto User'
+  return localStorage.getItem(DISPLAY_NAME_KEY) ?? ''
 }
 
 export function getVerificationMethod(): string {
