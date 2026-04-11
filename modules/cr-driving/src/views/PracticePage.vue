@@ -98,8 +98,6 @@ function optionClass(index: number): string {
   if (index === selectedOption.value) return 'wrong'
   return 'dimmed'
 }
-
-loadQuestions()
 </script>
 
 <template>
