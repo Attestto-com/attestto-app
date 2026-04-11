@@ -122,18 +122,18 @@ function optionClass(index: number): string {
       <!-- Mode tabs -->
       <div class="mode-tabs">
         <button :class="['mode-tab', activeTab === 'attestto' && 'active']" @click="activeTab = 'attestto'">
-          Attestto
+          Perpetuo
         </button>
         <button :class="['mode-tab', activeTab === 'cosevi' && 'active']" @click="activeTab = 'cosevi'">
-          COSEVI
+          Tradicional
         </button>
       </div>
 
-      <!-- Attestto: perpetual competency -->
+      <!-- Perpetual competency mode -->
       <div v-if="activeTab === 'attestto'" class="pick-screen">
         <div class="mode-desc">
           <h3>Competencia perpetua</h3>
-          <p>90% en las 9 categorias con minimo {{ MIN_QUESTIONS_PER_CATEGORY }} preguntas cada una para generar tu credencial.</p>
+          <p>Domina las 9 categorias al 90% con minimo {{ MIN_QUESTIONS_PER_CATEGORY }} preguntas cada una. Tu credencial se mantiene viva mientras demuestres dominio.</p>
         </div>
 
         <div class="cat-progress-grid">
@@ -180,11 +180,11 @@ function optionClass(index: number): string {
         </div>
       </div>
 
-      <!-- COSEVI: legacy 40-question exam -->
+      <!-- Traditional exam mode -->
       <div v-else class="pick-screen">
         <div class="mode-desc">
-          <h3>Examen COSEVI</h3>
-          <p>40 preguntas, 40 minutos, proctorizado. Resultado pasa/no pasa al 80%.</p>
+          <h3>Examen tradicional</h3>
+          <p>40 preguntas, 40 minutos, proctorizado. Resultado pasa/no pasa al 80%. Formato actual utilizado para obtener licencia.</p>
         </div>
 
         <div class="cosevi-info">
@@ -196,10 +196,10 @@ function optionClass(index: number): string {
         </div>
 
         <button class="cosevi-start-btn" @click="router.push('/module/cr-driving/exam')">
-          Iniciar examen COSEVI
+          Iniciar examen tradicional
         </button>
 
-        <p class="cosevi-hint">Este es el formato oficial que usa COSEVI actualmente. El modelo Attestto (pestaña izquierda) es nuestra propuesta de mejora.</p>
+        <p class="cosevi-hint">Formato de examen unico. El modo perpetuo (pestaña izquierda) evalua competencia continua por categorias.</p>
       </div>
     </template>
 
