@@ -29,6 +29,16 @@ function handleInboxTap(item: InboxItem) {
   if (item.route) router.push(item.route)
 }
 
+function handleAiCardTap() {
+  const s = llm.status.value
+  if (s === 'downloading' || s === 'loading') return // already in progress
+  if (s === 'unsupported') return // nothing to do
+  if (s === 'idle' || s === 'error') {
+    llm.enable()
+    llm.init()
+  }
+}
+
 </script>
 
 <template>
@@ -81,26 +91,35 @@ function handleInboxTap(item: InboxItem) {
     </section>
 
     <!-- AI feature card (hidden when active — green badge in header is enough) -->
-    <section v-if="llm.status.value !== 'ready'" class="section ai-card" @click="router.push({ name: 'settings' })">
+    <section v-if="llm.status.value !== 'ready'" class="section ai-card" @click="handleAiCardTap">
       <div class="ai-card-header">
-        <q-icon name="psychology" size="20px" style="color: var(--warning)" />
+        <q-icon name="psychology" size="20px" :style="{ color: llm.status.value === 'downloading' || llm.status.value === 'loading' ? 'var(--primary)' : 'var(--warning)' }" />
         <span class="ai-card-title">IA en tu dispositivo</span>
-        <span class="ai-status-dot dot-yellow" />
+        <span :class="['ai-status-dot', llm.status.value === 'downloading' || llm.status.value === 'loading' ? 'dot-purple' : 'dot-yellow']" />
       </div>
       <p class="ai-card-desc">
         <template v-if="llm.status.value === 'downloading'">
-          Descargando modelo Gemma 2B (1.3 GB)... Una vez descargado, funciona sin internet.
+          Descargando modelo Gemma 2B ({{ llm.downloadProgress.value }}%)... Una vez descargado, funciona sin internet.
         </template>
         <template v-else-if="llm.status.value === 'loading'">
           Cargando modelo en GPU... Unos segundos mas.
         </template>
+        <template v-else-if="llm.status.value === 'error'">
+          Error: {{ llm.errorMessage.value }}. Toca para reintentar.
+        </template>
+        <template v-else-if="llm.status.value === 'unsupported'">
+          Tu navegador no soporta WebGPU. Usa Chrome 113+ para IA local.
+        </template>
         <template v-else>
-          Activa la IA local en Configuracion para generar preguntas personalizadas con Gemma 2B. Sin servidores, sin conexion, 100% privado.
+          Genera preguntas unicas con Gemma 2B, 100% offline. Toca para activar ({{ llm.modelSize }}).
         </template>
       </p>
       <div class="ai-card-footer">
-        <span class="ai-tag ai-tag-yellow">Configurar</span>
-        <q-icon name="chevron_right" size="16px" color="grey-6" />
+        <span v-if="llm.status.value === 'downloading' || llm.status.value === 'loading'" class="ai-tag ai-tag-purple">Activando...</span>
+        <span v-else-if="llm.status.value === 'error'" class="ai-tag ai-tag-red">Reintentar</span>
+        <span v-else class="ai-tag ai-tag-yellow">Activar IA</span>
+        <q-icon v-if="llm.status.value === 'idle'" name="download" size="16px" color="grey-6" />
+        <q-spinner-dots v-else-if="llm.status.value === 'downloading' || llm.status.value === 'loading'" size="16px" color="primary" />
       </div>
     </section>
 
@@ -274,6 +293,22 @@ function handleInboxTap(item: InboxItem) {
 .ai-tag-yellow {
   background: rgba(251, 191, 36, 0.15);
   color: var(--warning);
+}
+
+.ai-tag-purple {
+  background: rgba(89, 79, 211, 0.15);
+  color: var(--primary);
+}
+
+.ai-tag-red {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--critical);
+}
+
+.dot-purple {
+  background: var(--primary);
+  box-shadow: 0 0 6px var(--primary);
+  animation: dot-pulse 2s ease-in-out infinite;
 }
 
 </style>
