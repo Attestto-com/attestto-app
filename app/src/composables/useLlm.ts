@@ -19,6 +19,7 @@ const downloadProgress = ref(0) // 0-100
 const errorMessage = ref('')
 const enabled = ref(localStorage.getItem(OPT_IN_KEY) === 'true')
 const modelCached = ref(false)
+const cacheChecked = ref(false)
 
 // Clean up any leftover data from previous caching attempts
 cleanupLegacyCache()
@@ -32,6 +33,7 @@ async function checkModelCached(): Promise<void> {
   } catch {
     modelCached.value = false
   }
+  cacheChecked.value = true
 }
 
 async function cleanupLegacyCache(): Promise<void> {
@@ -238,6 +240,7 @@ export function useLlm() {
     errorMessage,
     enabled,
     modelCached,
+    cacheChecked,
     modelSize,
     init,
     generate,

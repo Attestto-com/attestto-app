@@ -137,7 +137,7 @@ function handleLock() {
         <span>Modelo en cache — toca para iniciar</span>
         <q-icon name="play_arrow" />
       </div>
-      <div v-else-if="llm.enabled.value && !llm.modelCached.value" class="setting-row clickable" @click="startDownload">
+      <div v-else-if="llm.enabled.value && llm.cacheChecked.value && !llm.modelCached.value" class="setting-row clickable" @click="startDownload">
         <span>Descargar modelo ({{ llm.modelSize }})</span>
         <q-icon name="download" />
       </div>
