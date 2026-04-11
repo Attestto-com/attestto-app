@@ -84,7 +84,16 @@ async function practiceCategory(category: string) {
   loading.value = false
 }
 
-async function reloadQuestion() {
+async function skipQuestion(reason: 'new' | 'mastered') {
+  if (current.value) {
+    const key = 'cr-driving:skips'
+    const skips: Record<string, { new: number; mastered: number }> = JSON.parse(localStorage.getItem(key) ?? '{}')
+    const cat = current.value.category
+    if (!skips[cat]) skips[cat] = { new: 0, mastered: 0 }
+    skips[cat][reason]++
+    localStorage.setItem(key, JSON.stringify(skips))
+  }
+
   answered.value = false
   selectedOption.value = null
   lastCorrect.value = null
@@ -141,9 +150,10 @@ loadQuestions()
         </button>
       </div>
 
-      <button v-if="!answered" class="skip-btn" @click="reloadQuestion">
-        Otra pregunta
-      </button>
+      <div v-if="!answered" class="skip-row">
+        <button class="skip-btn" @click="skipQuestion('new')">Otra pregunta</button>
+        <button class="skip-btn mastered" @click="skipQuestion('mastered')">Ya domino este tema</button>
+      </div>
 
       <!-- Feedback -->
       <div v-if="answered" :class="['feedback-banner', lastCorrect ? 'fb-correct' : 'fb-wrong']">
@@ -313,20 +323,29 @@ loadQuestions()
   box-shadow: inset 0 0 0 3px var(--bg-card);
 }
 
+.skip-row {
+  display: flex;
+  gap: var(--space-sm);
+  margin-top: var(--space-xs);
+}
+
 .skip-btn {
-  width: 100%;
-  padding: var(--space-sm);
-  margin-top: var(--space-sm);
+  flex: 1;
+  padding: 6px;
   background: transparent;
   border: none;
-  color: #a5b4fc;
-  font-size: 13px;
+  color: var(--text-muted);
+  font-size: 11px;
   cursor: pointer;
-  opacity: 0.7;
+  opacity: 0.5;
 }
 
 .skip-btn:active {
-  opacity: 1;
+  opacity: 0.8;
+}
+
+.skip-btn.mastered {
+  color: var(--text-muted);
 }
 
 .option-card.correct {
