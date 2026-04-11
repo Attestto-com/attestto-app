@@ -1,0 +1,902 @@
+{
+  "source": "practicatest.cr/manual-del-conductor-automovil/libro-completo",
+  "manual": "Manual del Conductor Automóvil - COSEVI Costa Rica 2026",
+  "scraped": "2026-04-06",
+  "total_chapters": 31,
+  "chapters": [
+    {
+      "id": 1,
+      "title": "Qué es conducir",
+      "sections": [
+        {
+          "title": "¿Qué es conducir?",
+          "content": "La conducción es manejar un vehículo por la vía pública, reconociendo el valor de la seguridad vial como lo primero. Las vías son espacios compartidos por conductores, ciclistas, peatones, motociclistas, buses, vehículos de carga y emergencias. Todos tienen derechos y deberes en un marco de tolerancia, convivencia y respeto."
+        },
+        {
+          "title": "Tipos de conductor (4 tipos legales)",
+          "content": "1) NOVATO: obtiene licencia por primera vez, primeros 3 años (aplica A, B1, D). 2) PROFESIONAL: actividad laboral principal es conducir vehículos de mercancías o personas; licencias B-3, B-4, C, D, E o con agregado 'P' en A-2/A-3/B-1/B-2. 3) COMÚN (No tipificado): renueva licencia (más de 3 años), no profesional; licencias A, B1, B2. 4) NO ACREDITADO: sin licencia o con tipo incorrecto para el vehículo."
+        },
+        {
+          "title": "Glosario oficial (138 definiciones clave)",
+          "content": "Accidente de tránsito: acción culposa de conductores, pasajeros o peatones; debe involucrar al menos un vehículo y producir muerte, lesiones o daños. | Acera: vía para peatones. | Alcoholimetría: análisis para determinar alcohol en sangre o aire. | Alcoholemia: resultado de la alcoholimetría. | Autobús: >44 pasajeros sentados. | Automóvil: hasta 8 pasajeros. | Autopista: acceso restringido, 4+ carriles. | Bahía de parada: espacio para subida/bajada de pasajeros de transporte público. | Bicicleta: 2 ruedas tracción humana y pedales. | Bicimoto: 2 ruedas, motor térmico ≤50 cc o eléctrico ≤5 kW. | Boleta de citación: notifica infracción y cita ante autoridad. | Buseta: 26–44 pasajeros sentados. | Calcomanía: etiqueta adhesiva de control para circulación. | Calzada: superficie donde transitan vehículos (uno o varios carriles). | Caminos no clasificados: herradura, sendas, trillos, acceso a muy pocos usuarios. | Caminos vecinales: acceso a fincas y caseríos, bajos volúmenes, viajes cortos. | Carretera de acceso restringido: entradas/salidas solo en intersecciones autorizadas. | Carreteras primarias: volúmenes altos, viajes internacionales/interprovinciales. | Carreteras secundarias: conectan cabeceras cantonales, viajes interregionales. | Carreteras terciarias: dentro de una región o entre distritos. | Carril de circulación: parte de calzada para tránsito en una dirección. | Carril central de giro izquierda: franja central de vías 4+ carriles, zona de refugio para girar; línea externa continua, líneas internas discontinuas; prohibido adelantar o girar en U. | Cilindrada: capacidad volumétrica del motor en cc o litros. | CIVE: ente que hace inspección técnico-mecánica. | Ciclista: persona que conduce bicicleta o su pasajero. | Ciclovía: vía para bicicletas, triciclos y peatones (cuando no hay acera). | Conductor: persona con control operativo del vehículo, responsable de infracciones. | Contaminantes ambientales: gases, partículas o ruidos del vehículo. | COSEVI: Consejo de Seguridad Vial. | CTP: Consejo de Transporte Público. | Croquis: documento descriptivo de un accidente levantado en el sitio. | Cuña: pieza para calzar vehículos e impedir movimiento. | Curva horizontal: curva circular en plano horizontal. | Curva vertical: curva parabólica en perfil de pendientes. | DEV (Dirección Electrónica Vial): correo obligatorio al COSEVI para notificaciones; si no se puede entregar tras 3 intentos, se publica en La Gaceta y diario nacional. | Derecho de circulación: se obtiene pagando el marchamo. | Derecho de vía: franja de terreno para obras viales. | Espaldón u hombro: área adyacente a la calzada para peatones y emergencias; prohibido estacionar. | Estacionamiento/parqueo/aparcamiento: lugar para estacionar. | Estacionómetro/parquímetro: cobra tarifa de estacionamiento temporal. | Factor lambda (λ): relación aire/combustible real vs teórica para combustión completa. | GAM: Gran Área Metropolitana (San José, Alajuela, Cartago, Heredia). | Grúa: vehículo para trasladar y remolcar otros vehículos. | Infractor: quien incumple la Ley de Tránsito. | Inmovilización: acto que impide circulación del vehículo (retiro del vehículo o placas). | IVE (Inspección Técnica Vehicular): verifica condiciones técnico-mecánicas y emisiones. | Intersección: punto donde convergen dos o más vías. | Licencia de conducir: permiso estatal para conducir por un período. | Línea amarilla: separa sentidos contrarios; en borde del caño = prohibición de estacionamiento. | Línea blanca: separa corrientes del mismo sentido; puede ser fragmentada o continua. | Línea de barrera: línea continua que divide calzada; puede ser blanca, amarilla o doble amarilla. | Luces de freno: se emiten al oprimir el pedal de freno. | Luces direccionales: intermitentes adelante y atrás, indican dirección. | Luces para neblina: aumentan iluminación en neblina, lluvia fuerte o polvo. | Luz alta: largo alcance hacia adelante. | Luz baja: corta distancia sin deslumbrar. | Microbús: 9–25 pasajeros sentados. | Motocicleta: 2+ ruedas, motor >50 cc o potencia >5 kW. | Multa fija: sanción administrativa expresada en suma determinada. | Oficial de tránsito: funcionario de la Dirección General de la Policía de Tránsito. | Paisaje natural/urbano/interurbano/rural: tipos de entorno. | Parabrisas: vidrio transparente al frente del vehículo. | Parte oficial: informe formal de la autoridad sobre un accidente. | Pasajero: toda persona distinta del conductor dentro del vehículo. | Peatón: toda persona que transite a pie. | Peaje: importe por transitar en tramo determinado. | Pérdida total: daño que impide circulación por seguridad. | Permiso temporal de aprendizaje: documento temporal para aprender a conducir. | Peso bruto: peso vacío + carga útil. | PMA: peso máximo autorizado. | Pick up: carga liviana, motor delantero, cajón abierto trasero. | Placa de matrícula: documento público del Registro Nacional que identifica el vehículo. | Plaqueta de pesos y dimensiones: identifica remolques <750 kg. | Polarizado tipo espejo: reduce visibilidad al interior. | Polarizado tipo limusina: opacidad absoluta, no permite ver al interior. | Reacreditación: proceso para recuperar licencia perdida por puntos. | Red vial cantonal: administrada por municipalidades. | Red vial nacional: administrada por MOPT. | Reinspección técnica vehicular: para vehículos que no aprobaron IVE. | Remolque liviano: sin tracción propia, PMA ≤750 kg. | Remolque/semirremolque pesado: sin tracción propia, PMA >750 kg. | Rodamiento: desplazamiento de vehículos por vías públicas. | Seguridad activa: mecanismos para EVITAR el accidente. | Seguridad pasiva: mecanismos para MINIMIZAR lesiones cuando ocurre el accidente. | Semáforo: asigna derecho de paso mediante luces. | Semirremolque: acoplado a tractocamión, parte del peso reposa sobre este. | Señal horizontal: pintura amarilla o blanca sobre el asfalto. | Señal vertical: dispositivo adherido al suelo para informar, regular o prevenir. | Sistema de retención infantil (SRI): dispositivos de seguridad para menores. | Sistema de tránsito: conjunto de carreteras, calles y zonas de paso. | Testigo de llanta: elevación en canal de agua de la llanta para visualizar desgaste (1.6 mm). | Taxi: vehículo para transporte remunerado. | Taxímetro: determina el precio del servicio en taxis. | Transitar: traslado de personas, vehículos, mercancías o semovientes en vías. | UTV: vehículo utilitario todo terreno 'side by side', 4+ ruedas, conocido como 'mula'. | Vehículo: medio de transporte en vía pública. | Vehículo abandonado: dejado en vía pública por más de 24 horas. | Vehículo articulado: cabezal + 1 o 2 semirremolques. | Vehículo automotor: propulsión propia, 2+ ruedas, sin rieles. | Vehículo de carga liviana: PMA <8 toneladas. | Vehículo de carga pesada: PMA >8 toneladas. | Vehículo de tránsito lento: avanza a velocidad inferior a la corriente normal. | Vehículos de emergencia: bomberos, policía, ambulancias. | Vehículo rústico: diseñado para zonas rurales, tracción 4x4, PMA mínimo 500 kg. | Velocidad de arrastre: velocidad constante en pendiente ascendente al agotar aceleración. | Vía: calle, camino o carretera. | Vía exclusiva: solo para vehículos de actividad determinada. | Vía pública: toda vía de libre circulación. | Virar: cambiar dirección del vehículo. | Visera: franja superior interna del parabrisas contra el sol. | Zona de paso: demarcada para cruce de peatones. | Zona de seguridad: zona de paso regulada por semáforos."
+        },
+        {
+          "title": "Trilogía vial",
+          "content": "El tránsito integra tres componentes: el ser humano (factor más importante y controlable), el vehículo, y la vía/entorno. Cualquier falla en uno repercute en los otros. El conductor es el elemento más influyente."
+        },
+        {
+          "title": "8 objetivos de la seguridad vial",
+          "content": "1) Disminuir daños a personas y bienes (prevención de accidentes). 2) Dar fluidez al tránsito. 3) Disminuir contaminación ambiental. 4) Proteger y preservar infraestructura vial. 5) Conservar el parque automotor. 6) Disminuir consumo de energía y costos operativos. 7) Educar al ciudadano en el uso correcto de vías y automotores. 8) Capacitar al funcionario público en materia de tránsito."
+        },
+        {
+          "title": "Tránsito vs transporte",
+          "content": "Tránsito: acción de desplazarse de un lugar a otro. Transporte: acción de trasladar una persona o cosa de un lugar a otro. El concepto de transitar es más amplio: comprende el transporte y la circulación."
+        },
+        {
+          "title": "Antecedentes históricos",
+          "content": "1912: primer vehículo en San José. 1920: primer Código de Circulación (Costa Rica líder en LATAM). 1976: Ley 5930 Ley de Tránsito. 1979: Ley 6324 de Administración Vial. 1993: Ley 7331. 2012: Ley 9078 (vigente) y su reforma 9064."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Movilidad segura y sostenible",
+      "sections": [
+        {
+          "title": "La necesidad humana de moverse",
+          "content": "Moverse es fundamental desde la infancia hasta la vejez: trabajo, estudio, recreación, bienes y servicios. La forma principal de traslado es caminando — todas las personas somos peatones. También se usa bicicleta, transporte público o vehículo particular."
+        },
+        {
+          "title": "El riesgo inherente",
+          "content": "Sin importar cómo nos traslademos, existen situaciones que nos ponen en riesgo de sufrir un accidente."
+        },
+        {
+          "title": "El enfoque de sistema seguro",
+          "content": "Reconoce que la seguridad vial es una interacción dinámica entre muchos componentes. El principio fundamental: el ser humano es vulnerable y comete errores. Propone adecuar la función de las vías, diseño, trazado y velocidad, para evitar el fallo humano y que no tenga consecuencias fatales. Las 5 acciones: 1) Infraestructura vial segura. 2) Vehículos más seguros. 3) Usuarios más seguros. 4) Mejores políticas en seguridad vial. 5) Mejor asistencia a víctimas."
+        },
+        {
+          "title": "Compromiso personal",
+          "content": "Cada acción al conducir — respetar velocidades, mantener distancia segura — afecta a todos los que nos rodean. La movilidad segura requiere conducción más respetuosa, atenta y tolerante."
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Factores de riesgo",
+      "sections": [
+        {
+          "title": "Definición y grupos OMS",
+          "content": "Factores de riesgo: circunstancias, condiciones o acciones que aumentan la posibilidad de accidente con lesiones graves o fatales. La OMS los divide en 4 grupos principales."
+        },
+        {
+          "title": "Grupo 1: Exposición al riesgo",
+          "content": "Condiciones del entorno y del viaje: falta de aceras o ciclovías, distancias de traslado, tipo de vehículo, volumen de tránsito."
+        },
+        {
+          "title": "Factores asociados a la vía",
+          "content": "Vía urbana: acera (peatones), calzada (vehículos), caño (aguas pluviales), bordillo (prohibición de estacionamiento). Vía rural: calzada, espaldón (peatones y emergencias), cuneta (desagüe). Cuando estos elementos no existen o están en mal estado, el riesgo aumenta. En intersecciones y rotondas debe haber señalamiento claro. Visibilidad nocturna: iluminación deficiente o encandilamiento obligan a reducir la velocidad a la mitad de la usada de día y cambiar a luces cortas con anticipación."
+        },
+        {
+          "title": "Factores asociados al vehículo",
+          "content": "El círculo de seguridad es la revisión diaria: presión y estado de llantas, funcionamiento de luces, estado del silenciador, nivel de líquidos, estado de las escobillas. Frenos desgastados, neumáticos lisos o dirección/suspensión en mal estado aumentan la distancia de frenado. Vehículos de carga: la carga debe estar bien distribuida y asegurada (carga mal asegurada aumenta riesgo de vuelco)."
+        },
+        {
+          "title": "Factores asociados al conductor",
+          "content": "Buena conducción comienza con postura adecuada: asiento ajustado, espalda apoyada. Antes del viaje: revisar llantas, luces y líquidos. El estado físico y mental influye directamente. Fatiga, somnolencia, alcohol/drogas o medicamentos reducen la atención y aumentan el tiempo de reacción. Algunas enfermedades crónicas o discapacidades deben ser valoradas por médico antes de conducir. Las emociones (ira, temeridad, aburrimiento) pueden causar conductas agresivas o descuidadas."
+        },
+        {
+          "title": "Grupo 2: Posibilidad de que ocurra un accidente",
+          "content": "Factores: mal estado de carreteras, mal funcionamiento del vehículo por falta de mantenimiento, alcohol/drogas, velocidad excesiva, distracción, irrespeto al señalamiento, fatiga."
+        },
+        {
+          "title": "Grupo 3: Gravedad de las lesiones",
+          "content": "No uso de dispositivos de seguridad (SRI, casco, cinturón) y el diseño de la vía determinan la gravedad de las consecuencias físicas."
+        },
+        {
+          "title": "Grupo 4: Evaluación después del accidente",
+          "content": "Retrasos en detección y atención, falta de servicios de urgencias, traslado a centro médico, atención postraumática y rehabilitación."
+        },
+        {
+          "title": "La suma de los riesgos",
+          "content": "Varios factores simultáneos aumentan exponencialmente la probabilidad de accidente grave. Circular bajo lluvia con visibilidad limitada, carretera con baches, velocidad excesiva y neumáticos desgastados = riesgo muy alto. Un choque frontal a alta velocidad multiplica las fuerzas del impacto. Tomar una curva muy rápido con carga puede provocar vuelco por fuerza centrífuga. Adaptar siempre la velocidad al estado de la vía y el clima."
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Accidentes de tránsito",
+      "sections": [
+        {
+          "title": "Definición legal",
+          "content": "Acción culposa de conductores, pasajeros o peatones al transitar por vías públicas. Debe involucrar al menos un vehículo y producir muerte, lesiones o daños materiales. Croquis: documento descriptivo elaborado en el lugar por las autoridades. Parte oficial: informe formal que redacta la autoridad competente."
+        },
+        {
+          "title": "Tipos de accidentes",
+          "content": "Colisión: choque entre 2+ vehículos o vehículo con objeto fijo. Vuelco: el vehículo deja de ir sobre sus llantas y se voltea. Atropello: golpear a una persona o animal con un vehículo."
+        },
+        {
+          "title": "Tipos de colisiones más comunes",
+          "content": "Choque de frente: causa principal = invasión del carril izquierdo al adelantar. Colisión trasera: no guardar distancia, distracción o exceso de velocidad. Colisión lateral: vehículo golpea por el costado izquierdo o derecho durante una maniobra."
+        },
+        {
+          "title": "Declaración de Accidente Menor (DAM)",
+          "content": "Procedimiento simplificado para accidentes con SOLO daños materiales y SIN personas heridas. Permite resolver la situación ágilmente y evitar congestionamientos. El formulario DAM se descarga del sitio web del INS."
+        },
+        {
+          "title": "Información que recolectar tras un siniestro",
+          "content": "Daños materiales: fotografías de posición de vehículos, vía y daños; datos de testigos. Si no hay acuerdo: no mover los vehículos y llamar al 911 y aseguradora. Con víctimas: llamar al 911 de inmediato. Información para emergencias: tipo de siniestro (vuelco, colisión frontal, etc.), dirección con puntos de referencia, cantidad de heridos, si hay menores (sexo y edad aproximada), si están conscientes o atrapados."
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Medios de transporte en las vías públicas",
+      "sections": [
+        {
+          "title": "Vehículos motorizados",
+          "content": "Tracción mecánica, 2+ ruedas, sin rieles (salvo trenes). Impulsados por gasolina, diésel, eléctrico o híbrido. Categorías: 1) Uso personal: automóviles (hasta 8 personas), motocicletas, bicimotos, scooters, triciclos, cuadriciclos (máx 2 personas). 2) Transporte público: autobuses, microbuses, busetas, taxis (con tarifa). 3) Transporte de carga: camiones, articulados, grúas, plataformas, furgonetas, cisternas. 4) Emergencia: bomberos, ambulancias, patrullas, motos policiales. 5) Especiales: tractores, cosechadoras, retroexcavadoras, niveladoras. 6) Ferroviarios: rieles, transporte masivo."
+        },
+        {
+          "title": "Vehículos no motorizados",
+          "content": "Sin motor; dependen de tracción humana o animal. Bicicletas: 2+ ruedas, pedales. Bicicletas eléctricas de pedaleo asistido hasta 25 km/h se clasifican aquí. Tracción animal: carretas."
+        },
+        {
+          "title": "Otros tipos de vehículos (capacidades específicas)",
+          "content": "Autobús: >44 pasajeros sentados. Buseta: 26–44 pasajeros sentados. Microbús: 9–25 pasajeros sentados. Pick-up: motor delantero, cajón abierto trasero, carga liviana. Remolque liviano: sin motor, PMA ≤750 kg; debe ser arrastrado. Vehículo articulado: cabezal + 1 o 2 semirremolques. UTV (mula): 'side by side', 4+ ruedas, todo terreno."
+        },
+        {
+          "title": "Diferencias legales y requisitos de licencia",
+          "content": "Autobuses/busetas/microbuses (transporte público): requieren licencia C-2; haber tenido licencia B durante al menos 3 años + curso de formación; no requieren examen práctico. Pick-up: licencia B-1 (hasta 4,000 kg PMA; puede remolcar remolque liviano si total no excede ese límite). Remolque liviano: PMA ≤750 kg, sin motor; se clasifica como carga remolcada. Vehículo articulado: requiere licencia B-4, formación específica y 22 años de edad. UTV: con licencia B-1 puede circular en vías no primarias; debe circular siempre con luces encendidas."
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Entorno Vial",
+      "sections": [
+        {
+          "title": "Partes de la vía pública",
+          "content": "Calzada: donde circulan los vehículos (uno o varios carriles). Carril de circulación: parte de la calzada para una dirección. Carril central de giro a la izquierda: franja central de vías 4+ carriles; zona de espera exclusiva para girar izquierda; línea externa continua + líneas internas discontinuas; prohibido adelantar ni girar en U. Espaldón: contiguo a la calzada; soporte lateral, tránsito peatonal y emergencias; líneas blancas; PROHIBIDO estacionar. Aceras: exclusivo para peatones. Pasos peatonales: a nivel o desnivel para cruce seguro. Puentes peatonales: estructuras elevadas para peatones. Ciclovías: exclusivo para bicicletas, triciclos no motorizados y peatones (solo cuando no hay acera). Vías compartidas: ciclistas en igual derecho que otros vehículos con las mismas reglas. Bahías de autobuses: espacios para subida/bajada sin obstruir el tránsito. Medianeras: separan carriles de sentidos contrarios. Zonas verdes: separan carriles con vegetación. Cuneta/sistema de drenaje: a los lados de la carretera para flujo de aguas lluvias. Sistemas de contención: barreras metálicas que reducen la gravedad en salidas de la vía. Puentes vehiculares: para paso de vehículos sobre agua u otras carreteras. Camellón: espacio en medio de carriles contrarios."
+        },
+        {
+          "title": "Tipos de vías en Costa Rica",
+          "content": "3 grandes grupos: CARRETERAS (principales, conectan regiones): Primarias (volumen alto, viajes internacionales/interprovinciales), Secundarias (cabeceras cantonales, viajes interregionales), Terciarias (dentro de una región o entre distritos). CALLES: Locales (dentro del cuadrante urbano). CAMINOS: Vecinales (acceso a fincas y caseríos, bajos volúmenes), No clasificados (herradura, sendas, trillos, acceso a muy pocos usuarios)."
+        },
+        {
+          "title": "Autopistas y carreteras de acceso restringido",
+          "content": "Autopistas: 4+ carriles, acceso solo por rampas e intercambios autorizados; prohíben peatones y ciclistas; velocidad mínima en ausencia de señalización. Carreteras de acceso restringido: pueden tener menos carriles que autopista, pero el MOPT limita entradas/salidas a intersecciones concretas; no se permite circulación peatonal."
+        },
+        {
+          "title": "Derecho de vía y red vial",
+          "content": "Derecho de vía: franja de terreno para obras viales; incluye calzada, espaldones, medianeras, cunetas, señales, puentes y drenajes; garantiza que el Estado pueda construir y mantener sin interferencias. Red vial nacional: rutas administradas por MOPT (primarias, secundarias, terciarias; conectan regiones estratégicas). Red vial cantonal: caminos administrados por municipalidades; atienden movilidad dentro de los cantones."
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "title": "Licencia de conducir",
+      "sections": [
+        {
+          "title": "Requisitos para licencia Clase B",
+          "content": "1) Tener 18 años cumplidos. 2) Saber leer y escribir (o cursos especiales). 3) Aprobar el Curso Básico de Educación Vial (teórico). 4) Aprobar el examen práctico de manejo. 5) No haber cometido delitos del artículo 254 bis del Código Penal, ni infracciones categoría A o B en los últimos 12 meses. 6) Presentar dictamen médico oficial."
+        },
+        {
+          "title": "Permiso temporal de aprendizaje",
+          "content": "Vigencia: 3 meses. Requisitos: saber leer y escribir, aprobar Curso Básico de Educación Vial, ser mayor de 18 años (excepto A-1 desde 16), dictamen médico, póliza de seguro de responsabilidad civil, no haber cometido infracciones tipo A en los últimos 12 meses. OBLIGATORIO: el aprendiz debe conducir acompañado de una persona con licencia del mismo tipo o superior, vigente y obtenida con al menos 5 AÑOS de antelación."
+        },
+        {
+          "title": "Prueba práctica de manejo — documentos necesarios",
+          "content": "Identificación vigente, título de propiedad original o digital, placa metálica correctamente ubicada, derecho de circulación (marchamo), IVE vigente, dictamen médico digital. Fase 1: entrega de documentos y revisión del vehículo (luces, bocina, implementos de seguridad). Fase 2: ejercicios en espacio de simulación para evaluar pericia y maniobrabilidad."
+        },
+        {
+          "title": "Clase B — 4 modalidades",
+          "content": "B-1: hasta 4,000 kg PMA. B-2: hasta 8,000 kg PMA; requiere 20 años y 2 años de experiencia con B o C. B-3: todo peso excepto articulados; requiere 22 años y 3 años con B o C. B-4: todo peso incluidos articulados; requiere 22 años, 3 años con B o C, y curso especial de la Dirección General de Educación Vial."
+        },
+        {
+          "title": "Clase A — Motocicletas",
+          "content": "A-1: bicimotos y motos hasta 125 cc o 11 kW; triciclos/cuatriciclos hasta 250 cc; desde 16 años con permiso de padres/tutores; póliza de seguro obligatoria. A-2: hasta 500 cc o 35 kW. A-3: sin restricciones de cilindrada ni potencia; incluye todas las anteriores. A-2 y A-3: 18 años, requisitos básicos."
+        },
+        {
+          "title": "Clase C — Transporte público",
+          "content": "C-1: taxis. C-2: autobuses, busetas, microbuses. Requisitos: haber tenido licencia B al menos 3 años + Curso Básico de Educación Vial para transporte público. No requieren examen práctico."
+        },
+        {
+          "title": "Clase D — Maquinaria especial",
+          "content": "D-1: tractores de llantas. D-2: tractores de oruga. D-3: otros equipos especiales. Requisitos: 18 años, dictamen médico, curso teórico."
+        },
+        {
+          "title": "Clase E — Vehículos de múltiples ejes",
+          "content": "E-1: vehículos de 2, 3 o más ejes (no transporte público). E-2: los anteriores más tractores de llanta/oruga y maquinaria D-1/D-2/D-3. No requieren examen práctico."
+        },
+        {
+          "title": "Sistema de puntos y suspensión",
+          "content": "Sistema de Evaluación Permanente de Conductores. El conductor ACUMULA puntos por infracciones. Máximo según vigencia de licencia: 6 años = 12 puntos máximo, 4 años = 8 puntos máximo, 3 años = 6 puntos máximo. Al llegar al máximo: SUSPENSIÓN. 1ª suspensión = 1 año. 2ª suspensión = 2 años. 3ª y subsiguientes = 3 años. Acumulación PARCIAL de 5+ puntos (sin llegar al máximo): restricción al renovar; debe realizar trabajo comunal o curso de sensibilización para reacreditarse."
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "title": "Documentos necesarios para circular",
+      "sections": [
+        {
+          "title": "Documentos obligatorios",
+          "content": "1) Licencia de conducir vigente y del tipo correspondiente. 2) Título de propiedad (contiene: nombre e identificación del propietario, marca/año/modelo/carrocería, número de motor y matrícula, color, capacidad, número de chasis/VIN). 3) IVE (Inspección Técnica Vehicular) vigente. 4) Marchamo (derecho de circulación vigente). Sin alguno de estos, el vehículo puede ser retenido."
+        },
+        {
+          "title": "VIN (Vehicle Identification Number)",
+          "content": "Código de 17 caracteres, único para cada vehículo en el mundo. Indica fabricante, modelo, año y número de serie. Obligatorio para inscribir, comprar, vender, inspeccionar y rastrear el vehículo a nivel internacional."
+        },
+        {
+          "title": "IVE — alcance de la inspección",
+          "content": "Verifica: mecánica general, sistema eléctrico y electrónico, control de emisiones contaminantes, funcionamiento de todos los dispositivos de seguridad activa y pasiva."
+        },
+        {
+          "title": "Marchamo y derecho de circulación",
+          "content": "Pago obligatorio anual ante el INS. Incluye la prima del seguro obligatorio. Al pagar se obtiene el 'derecho de circulación' por un año. Sin marchamo vigente el vehículo no puede circular legalmente."
+        },
+        {
+          "title": "Placas reglamentarias",
+          "content": "Dos placas metálicas: una delantera (a la altura del parachoques) y una trasera (espacio de fábrica). Placa adhesiva (tercer placa): en el parabrisas delantero, extremo superior derecho. PROHIBIDO: colocar placas en lugar distinto al diseñado, en posición no horizontal, poner pantallas o obstáculos sobre ellas, instalar dispositivos para cambiar posición u ocultarlas."
+        },
+        {
+          "title": "Distintivos en el parabrisas",
+          "content": "En el parabrisas delantero, extremo superior derecho, deben ir juntos: la placa adhesiva (tercer placa), la calcomanía de aprobación de la IVE, y la calcomanía del marchamo (derecho de circulación del año en curso)."
+        },
+        {
+          "title": "DEV — Dirección Electrónica Vial",
+          "content": "Ley 9078 obliga a registrar correo electrónico ante COSEVI. Es el domicilio digital para avisos de infracciones, resoluciones y comunicaciones oficiales. Si no se puede entregar tras 3 intentos: se publica en La Gaceta y en un diario nacional. Si no se registra: COSEVI asigna una de oficio. Debe mantenerse actualizada."
+        },
+        {
+          "title": "Relación entre los documentos",
+          "content": "Título de propiedad: acredita al dueño legal, permite matricular. IVE: certifica buen estado mecánico y ambiental. Marchamo: pago del seguro obligatorio, habilita la circulación. Sin propiedad no se matricula; sin IVE no se renueva marchamo; sin marchamo no se puede circular legalmente."
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "title": "Tipos de placas y tipos de distintivos",
+      "sections": [
+        {
+          "title": "Tipos de placas",
+          "content": "Placas metálicas: dos por vehículo (delantera en parachoques, trasera en espacio de fábrica). Placas con fondo VERDE = vehículo eléctrico. Motocicletas: una sola placa. Placa adhesiva (calcomanía): en parabrisas delantero, extremo superior derecho."
+        },
+        {
+          "title": "Normativas y prohibiciones",
+          "content": "Siempre visibles, legibles, sin deterioro ni obstrucciones. PROHIBIDO: colocarlas en lugar distinto al de fábrica, en posición no horizontal, poner pantallas (incluso transparentes) u obstáculos sobre ellas (crítico para cámaras de vigilancia), instalar dispositivos para cambiar posición u ocultarlas."
+        },
+        {
+          "title": "Distintivos en el parabrisas",
+          "content": "Placa adhesiva (número de matrícula y bandera del país), adhesivo de IVE (aprobación de inspección técnica vigente), calcomanía del marchamo (derecho de circulación del año). Todos deben ir juntos en el extremo superior derecho del parabrisas delantero."
+        },
+        {
+          "title": "VIN/Chasis",
+          "content": "Código de 17 caracteres único por vehículo. Obligatorio para inscripción, compra, venta, inspecciones y rastreo internacional."
+        },
+        {
+          "title": "Infracciones relacionadas con placas",
+          "content": "Placas alteradas o falsas: multa; transporte público no puede circular con ellas. Placas ajenas o prestadas: multa categoría B; en transporte remunerado puede causar cancelación de concesión. Placas mal colocadas: falta categoría D. Placas ocultas o no visibles (también por carga): se sanciona como placa alterada. Circulación con una placa cuando se requieren dos: infracción."
+        },
+        {
+          "title": "Mantenimiento y visibilidad",
+          "content": "El Registro Nacional regula mantenimiento y autenticidad; puede ordenar sustitución. El conductor debe mantener las placas sin óxido ni desprendimiento de pintura. Los sistemas de iluminación de la placa deben estar operativos para legibilidad nocturna. La carga de vehículos de carga no puede ocultar las luces ni la placa."
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "title": "Conducir y la convivencia con los demás usuarios",
+      "sections": [
+        {
+          "title": "El espacio compartido y las obligaciones al conducir",
+          "content": "Las vías son espacio compartido; todos tienen los mismos derechos de circular. Obligaciones: respetar las reglas de tránsito, mantener el vehículo en condiciones óptimas, estar en estado físico/mental/emocional adecuado, respetar el espacio de los demás."
+        },
+        {
+          "title": "Cortesía y colaboración",
+          "content": "La cortesía es la herramienta más eficaz contra el estrés vial. Ceder el paso, no cambiar de carril bruscamente, respetar espacios: ambiente más amigable, menos estrés, menos violencia."
+        },
+        {
+          "title": "Usuarios más vulnerables",
+          "content": "PEATONES: más expuestos; a >40 km/h la probabilidad de sobrevivir un atropello baja de 90%; máxima precaución cerca de escuelas, residencias y centros de salud. CICLISTAS: misma exposición que peatones; distancia mínima lateral de 1.5 m al rebasarlos; no adelantar en zonas de poca visibilidad. MOTOCICLISTAS: difíciles de ver (puntos ciegos); una caída a baja velocidad puede causar heridas graves. MENORES DE EDAD: campo de visión periférica reducido, no calculan bien velocidades, reacciones inesperadas (persiguiendo juguetes o mascotas). ADULTOS MAYORES: reducción natural de capacidades visuales/auditivas y velocidad de caminata; prioridad de paso y paciencia en cruces. PERSONAS CON DISCAPACIDAD: limitaciones físicas, sensoriales o cognitivas; adaptar conducción y brindar espacio necesario sin apresurarlos."
+        },
+        {
+          "title": "Animales en la vía",
+          "content": "Comunes en zonas rurales, agrícolas y parques nacionales: domésticos, ganado y fauna silvestre. Cruce imprevisto causa muchos accidentes. Estar alerta a señalización preventiva de cruce de fauna; reducir velocidad preventivamente."
+        },
+        {
+          "title": "Prioridad de paso (jerarquía de 7 niveles)",
+          "content": "1. Vehículos sobre rieles (tren): máxima prioridad siempre, con o sin señales. 2. Inspectores/oficiales de tránsito: sus indicaciones prevalecen sobre cualquier señal. 3. Vehículos de emergencia con sirenas/luces activas (ambulancias=luces rojas, bomberos=amarillas/ámbar, policía=azules): reducir velocidad, apartarse a la derecha, detenerse si es necesario. 4. Jerarquía de vías: carretera primaria > secundaria > terciaria. 5. Ley de la mano derecha (sin señales): ceder al vehículo que viene por la derecha. 6. Semáforo > señal de Alto. 7. Señal de Ceda > señal de Alto."
+        },
+        {
+          "title": "Obligaciones hacia peatones",
+          "content": "Ceder el paso en cruces y semáforos (incluso al girar a la derecha en rojo). En un Alto: detenerse completamente y ceder. Prohibido detenerse o estacionar en aceras, bulevares, pasos peatonales, zonas verdes, ni a menos de 10 m de una intersección o cruce peatonal. Reducir velocidad en áreas escolares o de hospitales. No obligar a un peatón a correr o desviarse."
+        },
+        {
+          "title": "Obligaciones hacia ciclistas",
+          "content": "Mínimo 1.5 m de separación lateral al adelantar; reducir velocidad; si es necesario, invadir temporalmente el carril contrario. No circular por aceras (salvo excepciones para policías). No invadir ciclovías para circular, estacionar, reparar o cargar/descargar. Al girar o abrir una puerta: revisar espejos y girar la cabeza para verificar que no haya ciclistas. No tocar bocina de forma intimidatoria."
+        },
+        {
+          "title": "Obligaciones hacia vehículos de emergencia",
+          "content": "Ceder el paso incondicionalmente: reducir velocidad, desplazarse a la derecha, detenerse si es necesario. No invadir carriles exclusivos ni ciclovías al ceder. Los vehículos de emergencia pueden circular por vía contraria, superar límites de velocidad y cruzar semáforos en rojo (verificando que no haya circulación). NUNCA adelantarlos ni 'pegarse' detrás de ellos. Si se escuchan sirenas aunque el semáforo esté verde: no avanzar."
+        },
+        {
+          "title": "Normas de convivencia general",
+          "content": "Bocina solo para advertir peligros; prohibido a menos de 100 m de hospitales, clínicas, iglesias y centros educativos. Regla de los 2 segundos ('mil ciento uno, mil ciento dos'). Si va a detenerse: avisar al de atrás con ligeras pisadas sucesivas de frenos. Con vehículos pesados: mayor distancia. 'Método de cremallera' en incorporaciones. Usar direccionales con suficiente antelación. No frenar para observar accidentes (genera congestionamiento). Cajón amarillo: cuadrícula pintada en intersecciones = prohibido bloquear el cruce en caso de presa."
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "title": "Conducción inteligente",
+      "sections": [
+        {
+          "title": "Ubicación y sentido de circulación",
+          "content": "Costa Rica: volante al lado IZQUIERDO; se transita por el lado DERECHO de la vía. Circular siempre en el centro del carril, sin pisar líneas divisorias. Reversa: permitida solo para maniobras de acomodo y no más de 50 metros de desplazamiento."
+        },
+        {
+          "title": "Tipos de carriles y su uso",
+          "content": "Carril derecho: tránsito regular, siempre circular aquí. Carril izquierdo: para adelantamiento (sentido único) o tráfico contrario (doble sentido). Carril de tránsito lento: para vehículos lentos (camiones, buses). Carril de ascenso: en carreteras de montaña, para vehículos lentos que se apartan. Carril exclusivo para buses: solo transporte público; particulares pueden invadir en zona mixta demarcada a no más de 50 m del giro. Carril reversible: invierte su sentido según horas de mayor tráfico; regulado por semáforos especiales. Carril compartido: automóviles, bicicletas y peatones; velocidad máxima 30 km/h."
+        },
+        {
+          "title": "Velocidad y uso del espaldón",
+          "content": "En autopistas/carreteras de varios carriles: carril izquierdo puede tener límite mayor (ej. 80 km/h) que el derecho (ej. 60 km/h). Más de 100 km/h: altas multas y pérdida de puntos. Espaldón: TERMINANTEMENTE PROHIBIDO circular o adelantar por él, salvo indicación directa de un oficial de tránsito. En intersecciones: si el semáforo está en verde pero no hay espacio al otro lado por una presa, detener el vehículo antes de ingresar (no bloquear la intersección ni los pasos peatonales)."
+        },
+        {
+          "title": "Circulación en presas (vías congestionadas)",
+          "content": "EVITAR: bocina innecesaria, aceleración agresiva, frenadas bruscas, cambios bruscos de carril. HACER: avanzar a baja velocidad (1ª o 2ª marcha), no acelerar si se va a frenar de inmediato, usar direccionales en cualquier movimiento, estar muy alerta a motociclistas y ciclistas que pasan entre vehículos."
+        },
+        {
+          "title": "Regla de los 3 segundos (distancia segura)",
+          "content": "Paso 1: elegir un punto de referencia fijo (árbol, señal, poste). Paso 2: cuando la parte trasera del vehículo de adelante pase por ese punto, contar 'mil ciento uno, mil ciento dos, mil ciento tres'. Paso 3: si la delantera del propio vehículo llega ANTES de terminar el conteo = demasiado cerca, reducir velocidad. Si llega después = distancia correcta."
+        },
+        {
+          "title": "Adherencia y factores ambientales",
+          "content": "Adherencia: capacidad de las llantas de mantenerse en contacto firme con la calzada. Disminuye con: lluvia, barro, arena, derrames de combustible/aceite. En asfalto resbaladizo: aumentar distancia de seguridad, encender luces, reducir velocidad."
+        },
+        {
+          "title": "Estado del conductor y visión proyectada",
+          "content": "Conductor: fatiga, estrés o somnolencia = reacción muy lenta. Vehículo: frenos desgastados o amortiguadores malos = detención deficiente. Visión proyectada: mirar al menos 100 metros hacia adelante para anticipar huecos, rocas, animales, charcos y maniobras de otros conductores."
+        },
+        {
+          "title": "Ergonomía y postura al conducir",
+          "content": "Asiento: piernas ligeramente flexionadas al pisar pedales a fondo; ojos a mitad del parabrisas. Respaldo: ~90°, espalda completamente apoyada, vértebras alineadas. Volante: brazos ligeramente flexionados; posición 9 y 15 (o 10 y 10); piernas sin tocar el aro. Reposacabezas: parte central alineada con la parte posterior de la cabeza (seguridad, no comodidad). Espejos: ajustar interior y laterales para máximo campo visual antes de arrancar."
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "title": "Atención y percepción del entorno",
+      "sections": [
+        {
+          "title": "Visión proyectada y conducción preventiva",
+          "content": "Proyectar la vista al menos 100 metros hacia adelante; abarca todo el entorno panorámico, no solo el carril propio. No limitarse a reaccionar: anticipar y prever."
+        },
+        {
+          "title": "Anticipación de maniobras de otros conductores",
+          "content": "Observar constantemente los otros carriles: conductores del mismo sentido (cambios de carril o frenadas inesperadas), vehículos de frente (posibles invasiones de carril), automóviles que ingresan desde calles secundarias."
+        },
+        {
+          "title": "Precaución ante usuarios vulnerables",
+          "content": "En zonas urbanas/residenciales con peatones y ciclistas: estado de alerta continuo, preparado para accionar el freno o realizar maniobra de evasión segura ante acciones inesperadas."
+        },
+        {
+          "title": "Identificación de obstáculos en carretera",
+          "content": "Animales en la vía, objetos (ramas, rocas, huecos profundos). No circular por carreteras inundadas. Con charcos de agua: reducir velocidad para evitar aquaplaning (pérdida de adherencia)."
+        },
+        {
+          "title": "Sustancias peligrosas en el asfalto",
+          "content": "Combustibles (gasolina, diésel) o aceites derramados = las llantas pierden fricción natural = pérdida repentina de control. Escanear la superficie de la vía en busca de alteraciones de textura o color."
+        },
+        {
+          "title": "Tiempo de reacción y distancias",
+          "content": "Tiempo de reacción normal: 0.75 a 1 segundo. Factores que lo aumentan: cansancio, sueño, edad, alcohol, medicamentos, estrés. A 80 km/h: el vehículo recorre ~22 metros POR SEGUNDO. En 1 segundo de reacción = más de 20 metros recorridos ANTES de empezar a frenar. Distancia de detención = distancia de reacción + distancia de frenado. La distancia de frenado depende de velocidad, estado de frenos, llantas y calzada."
+        },
+        {
+          "title": "Revisión de puntos ciegos y orden de maniobra",
+          "content": "Los espejos NO eliminan totalmente los puntos ciegos. Orden correcto de maniobra: 1) Indicar con la direccional. 2) Revisar los retrovisores. 3) Mirar sobre el hombro (girar ligeramente la cabeza hacia el movimiento). 4) Solo entonces ejecutar el cambio de carril."
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "title": "Preparación y desarrollo de un viaje",
+      "sections": [
+        {
+          "title": "Estado del vehículo antes de partir",
+          "content": "Revisar: manchas de líquidos en el suelo (posible fuga), estado general de llantas, luces de advertencia en el tablero, nivel de aceite del motor, líquido de frenos, refrigerante, agua del limpiaparabrisas. Todas las luces deben funcionar; llevar bombillos de repuesto."
+        },
+        {
+          "title": "Estado del conductor",
+          "content": "Pleno control de capacidades físicas, emocionales y psicológicas. Si tiene padecimiento médico: no conducir sin medicamentos según indicación médica. No consumir sustancias o medicamentos que afecten percepción/atención/reacción. Revisar prospectos de medicamentos antes de manejar."
+        },
+        {
+          "title": "Planificación de la ruta",
+          "content": "Conocer la ruta con antelación: ¿montaña o costa? ¿estado del clima? ¿vehículos pesados o tramos difíciles? Principiantes: evitar viajar de noche o elegir rutas complicadas. Planificar hora de salida para evitar presas."
+        },
+        {
+          "title": "Pasajeros y su seguridad",
+          "content": "La seguridad de todos los ocupantes es responsabilidad del conductor. Cinturón obligatorio para TODOS incluyendo asientos traseros. Menores de 12 años: deben usar SRI (sistema de retención infantil) según peso y talla. El buen comportamiento de los pasajeros es clave para no distraer al conductor."
+        },
+        {
+          "title": "Mascotas",
+          "content": "NUNCA sueltas ni en el regazo del conductor. Gatos: dentro de jaulas transportadoras. Perros: cinturones especiales en asientos traseros. Una mascota suelta puede salir proyectada o causar un accidente mayor en frenadas bruscas."
+        },
+        {
+          "title": "Distribución de equipaje",
+          "content": "Siempre en el maletero (cajuela). EVITAR objetos sueltos en el habitáculo: en una colisión o frenazo brusco pueden salir volando y ser riesgo mortal."
+        },
+        {
+          "title": "Documentación",
+          "content": "Documentos personales: cédula y licencia de conducir vigentes. Documentos del vehículo: marchamo, IVE aprobada, título de propiedad. Todos deben ser legibles, en buen estado físico o digital."
+        },
+        {
+          "title": "Actitudes y pausas activas",
+          "content": "Actitud positiva: reduce el estrés y previene conflictos en la vía. Pausas activas: cada 2 horas de viaje continuo; estacionar en lugar seguro y visible, bajarse, caminar, estirarse, hidratarse y respirar aire fresco."
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "title": "Señales de Tránsito",
+      "sections": [
+        {
+          "title": "Los 5 grupos de señales",
+          "content": "1) Verticales. 2) Horizontales. 3) Luminosas. 4) Sonoras. 5) Manuales. Son el sistema de comunicación que transmite prioridades, riesgos, distribución del espacio y lugares de interés."
+        },
+        {
+          "title": "Señales verticales — Reglamentación",
+          "content": "Material retrorreflectivo (visibles de noche). Indican obligaciones, prohibiciones o normativas. Forma: rectangular, fondo blanco, símbolos negros, círculo rojo (con barra diagonal = prohibición). Excepciones: ALTO (octagonal roja), CEDA EL PASO (triangular con borde rojo), discapacidad (fondo azul)."
+        },
+        {
+          "title": "Señales verticales — Prevención",
+          "content": "Advierten riesgo, peligro u obstáculo. Forma: cuadrado en posición de rombo, fondo AMARILLO, símbolos negros. En obras o reparaciones temporales: fondo NARANJA."
+        },
+        {
+          "title": "Señales verticales — Información",
+          "content": "Verde: carreteras importantes o de alta velocidad. Blanco con bordes negros: rutas secundarias. Azul: servicios o turismo. Café/marrón: parques nacionales o áreas silvestres. Subtipos: Identificación (número de ruta: 1-99 primaria, 100-299 secundaria/regional, 300+ terciaria), Destino (dirección y distancia), Información general (lugar e información turística), Recomendación (manejo prudente en situación específica), Servicios y turismo (gasolineras, alojamientos)."
+        },
+        {
+          "title": "Señales horizontales — colores",
+          "content": "AMARILLA: separa carriles de sentidos opuestos; en bordillo/caño/borde izquierdo = prohibición de estacionamiento; en paradas de bus. BLANCA: tránsito en un mismo sentido; también ALTO, CEDA, velocidad máxima, línea de borde, flechas, paso de peatones, zonas escolares. AZUL + BLANCO: espacios reservados para personas con discapacidad."
+        },
+        {
+          "title": "Tipos de líneas en el asfalto",
+          "content": "LÍNEA DE CENTRO (amarilla): divide calzada en dos sentidos; discontinua = se puede adelantar; continua = prohibido adelantar; captaluces amarillos. LÍNEA DE BARRERA (amarilla continua): en lugares donde no se permite adelantar. LÍNEA DE BORDE (blanca continua): separa calzada del espaldón o caño; captaluces ROJOS en zonas de alto riesgo, BLANCOS en zonas normales. LÍNEA DE VÍA (blanca): organiza carriles en misma dirección; discontinua = puede cambiar de carril; continua = no puede cambiar; captaluces blancos. LÍNEA DE CANALIZACIÓN (blanca continua): guía giro izquierdo. LÍNEA DE PARADA (blanca): indica dónde detenerse en ALTO o CEDA."
+        },
+        {
+          "title": "Otras demarcaciones en el asfalto",
+          "content": "CARRIL REVERSIBLE: vértices blancos + líneas discontinuas amarillas; regulado por semáforos y horarios. CARRIL GIRO IZQUIERDO: dos líneas externas continuas amarillas + dos internas discontinuas amarillas + flechas + 'Solo'; NO usar para circular, adelantar ni girar en U. CARRIL SERVICIO PÚBLICO: exclusivo para autobuses (y a veces taxis). ZONA DE ESTACIONAMIENTO: líneas blancas continuas (perpendiculares a la acera). ZONAS DE SEGURIDAD: franjas anchas paralelas para cruce peatonal en alta afluencia, con semáforos. ZONAS DE PASO: dos líneas blancas transversales, para cruces de menor afluencia. ISLAS DE CANALIZACIÓN: guían flujos específicos, ordenan zonas conflictivas; prohibido circular o detenerse sobre ellas. CICLOVÍAS: símbolo de bicicleta en blanco. REDUCTORES DE VELOCIDAD (muertos/topes): cerca de zonas educativas y residenciales; tipos: lomos, bandas alertadoras, dientes de dragón, pasos peatonales elevados; en vías rápidas: trepidadores/lomos/domos cerca de puentes y túneles. CAJÓN O CAJA AMARILLA: cuadrícula amarilla en intersecciones = prohibido bloquear el cruce. PALABRAS Y SÍMBOLOS: blanco (flechas, velocidad, zonas escolares, cruces de ferrocarril), amarillo (paradas de bus, prohibición de estacionamiento, carril central de giro). CAPTALUCES: mismo color que la línea; excepción en línea de borde: ROJOS = mayor riesgo, BLANCOS = menor riesgo. CAMELLÓN: espacio en medio de carriles contrarios."
+        },
+        {
+          "title": "Semáforos vehiculares",
+          "content": "3 luces (roja, amarilla, verde); manual, mecánico o electrónico. Algunos tienen 4ª luz con cuenta regresiva. ROJO: detenerse antes de línea de parada. VERDE: continuar con precaución. AMARILLO: prepararse para detenerse (si no hay opción: se puede pasar). ROJO INTERMITENTE: equivale a ALTO (detenerse + verificar antes de continuar). AMARILLO INTERMITENTE: equivale a CEDA (reducir velocidad)."
+        },
+        {
+          "title": "Semáforo peatonal y señal luminosa informativa",
+          "content": "Peatonal: verde = puede cruzar; rojo = debe esperar. Se ubican en ambos lados de zonas de seguridad. Señal luminosa informativa: mensajes variables (derrumbes, desvíos, clima, cierre de carriles); pueden ser reglamentarias, informativas o preventivas. En obras: señales luminosas transitorias con flechas parpadeantes."
+        },
+        {
+          "title": "Señalamiento sonoro",
+          "content": "Sirenas de ambulancias, policías y bomberos; pito del tren. Alertas sonoras de semáforos peatonales especiales para personas no videntes."
+        },
+        {
+          "title": "Señalamiento manual y velocidades sin señalización",
+          "content": "Señalamiento manual: oficiales de tránsito con manos/brazos; PRIORIDAD MÁXIMA, anulan cualquier señal o semáforo. Velocidades sin señalización: autopista = mínimo 50 km/h. Sin demarcación alguna = máximo 60 km/h. Zona urbana de alta densidad = máximo 50 km/h. Pasos peatonales en escuelas/colegios/centros de salud = máximo 25 km/h."
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "title": "Las velocidades",
+      "sections": [
+        {
+          "title": "Establecimiento de límites",
+          "content": "Los límites son fijados por la Dirección General de Ingeniería de Tránsito previo estudio técnico. Cada tramo debe tener señalizada su velocidad máxima."
+        },
+        {
+          "title": "Límites sin señalización",
+          "content": "Autopista: mínimo 50 km/h (evitar que vehículos lentos entorpezcan o provoquen accidentes). Sin demarcación alguna: máximo 60 km/h. Zona urbana de alta densidad: máximo 50 km/h."
+        },
+        {
+          "title": "Zonas de máxima precaución",
+          "content": "Pasos peatonales en planteles educativos CON ESTUDIANTES PRESENTES: máximo 25 km/h. Frente a centros de salud (hospitales/clínicas): máximo 25 km/h. En actividades o concentraciones masivas de personas: máximo 25 km/h."
+        },
+        {
+          "title": "Prohibición de reducir injustificadamente la velocidad",
+          "content": "Está PROHIBIDO reducir la velocidad para observar un accidente u otro evento llamativo. Causar obstrucción del flujo vehicular por curiosidad = multa categoría E."
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "title": "Mandos y controles del automóvil",
+      "sections": [
+        {
+          "title": "Panel de control — colores de indicadores",
+          "content": "ROJO: situación grave, detenerse de inmediato (puerta abierta, recalentamiento, falla grave). AMARILLO/ÁMBAR: advertencia preventiva, atender al detenerse (check engine, combustible bajo). VERDE/AZUL: informativo, sistema activado correctamente (direccionales, luces altas)."
+        },
+        {
+          "title": "Instrumentos esenciales del panel",
+          "content": "TACÓMETRO: RPM del motor; indica cuándo cambiar de marcha o si el motor está forzado. TEMPERATURA DEL MOTOR: aguja debe estar estable en el centro; si sube hacia la H (rojo) = detenerse de inmediato (riesgo de fundir el motor). NUNCA abrir la tapa del radiador con el motor caliente (agua a presión causa quemaduras graves). BATERÍA: rectángulo con + y -; si se enciende con el motor en marcha = el alternador no está cargando (el auto se apagará eventualmente). COMBUSTIBLE: si llega a la zona E = luz ámbar de advertencia, recargar urgente."
+        },
+        {
+          "title": "Indicadores de desplazamiento",
+          "content": "VELOCÍMETRO: velocidad en km/h para cumplir límites. ODÓMETRO/CUENTAKILÓMETROS: distancia total o parcial recorrida; sirve para programar mantenimientos preventivos y calcular rendimiento de combustible."
+        },
+        {
+          "title": "Alertas de seguridad",
+          "content": "FRENO DE MANO ACTIVADO: símbolo rojo (P, BRAKE o !) - si el vehículo se mueve con el freno aplicado puede quemar fricciones. PUERTAS ABIERTAS: incluye capó y cajuela; evita accidentes en movimiento. CINTURÓN DE SEGURIDAD: señala si alguien no lo tiene abrochado. AIRBAG: indica si alguna bolsa de aire está averiada y requiere revisión."
+        },
+        {
+          "title": "Alarmas críticas del motor",
+          "content": "LUZ DE ACEITE ('lámpara de Aladino' roja): nivel muy bajo o presión crítica del aceite = DETENERSE DE INMEDIATO. CHECK ENGINE: permanente = afecta rendimiento. Intermitente = fallo solucionado, borrar con escáner. PARPADEANTE = falla grave, atender inmediatamente. ABS (amarillo): sensores de antibloqueo fallan; el vehículo sigue frenando pero las llantas PUEDEN patinar y bloquearse en emergencia."
+        },
+        {
+          "title": "Palanca de cambios",
+          "content": "Manual: 5 o 6 marchas + neutral; requiere embrague (clutch) constante. Automática: P (Parking - inmovilizar y apagar), R (Reversa), N (Neutral), D (Drive). L1/L2 (Low): máxima fuerza en pendientes empinadas o para frenar con motor en descensos. S (Sport): marchas cortas para mayor potencia en curvas."
+        },
+        {
+          "title": "Luces altas (largas)",
+          "content": "Haz de largo alcance. Solo cuando NO se sigue a otro vehículo NI hay tránsito en sentido contrario. Cambiar a bajas 150 metros antes de cruzarse con otro vehículo o entrar a una curva. No responder con luces altas a otro que venga con ellas ('guerra de luces'). Faros visibles a 250 metros. Mantener limpios y alineados."
+        },
+        {
+          "title": "Luces bajas (cortas)",
+          "content": "Modo predeterminado de los faros. Encender de 6 p.m. a 6 a.m., en ciudad, al seguir a otro vehículo, cuando viene un vehículo de frente, en lluvia, neblina o túneles."
+        },
+        {
+          "title": "Luces direccionales",
+          "content": "Antes de cambiar de carril, adelantar, girar en intersecciones o salir de rotondas. Al estacionar en emergencia: primero direccional, luego luces de emergencia. Error común: no usarlas o mantenerlas activadas innecesariamente."
+        },
+        {
+          "title": "Luces de emergencia (4 intermitentes)",
+          "content": "Para: avería, estacionar en el espaldón, remolcar otro vehículo, circular a velocidad muy reducida por obstáculo. La ley obliga a activarlas ANTES de iniciar maniobra de reversa; mantener velocidad inferior a 20 km/h al hacerlo. PROHIBIDO usarlas para saltarse semáforos o como 'permiso' para estacionar en lugares prohibidos. Prohibido retroceder en curvas, autopistas o túneles, ni más de 50 metros en reversa."
+        },
+        {
+          "title": "Luces de neblina (antiniebla)",
+          "content": "Faros halógenos bajos en el parachoques; haz ancho y plano. Solo en baja visibilidad (neblina o lluvia intensa). PROHIBIDO usarlas con luz alta o en condiciones normales (deslumbran)."
+        },
+        {
+          "title": "Luces DRL (circulación diurna)",
+          "content": "Aumentan la percepción del vehículo durante el día. No sustituyen el uso de luz baja de noche."
+        },
+        {
+          "title": "Reglas especiales de iluminación",
+          "content": "Motocicletas, cuadraciclos y UTV: luces encendidas las 24 horas del día (menor visibilidad). Bicicletas: no obligadas de día, sí de noche + material reflectante recomendado. En la noche se ve un 50% menos que de día = reducir velocidad a la mitad. Modificaciones de luces no reglamentarias = sanción."
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "title": "Elementos que permiten la visibilidad al conductor",
+      "sections": [
+        {
+          "title": "Vidrios del vehículo",
+          "content": "Parabrisas delantero y ventana trasera: protegen del viento/polvo y permiten observar el entorno. Ventanas laterales: amplían el campo de visión y ventilan la cabina. Los vidrios no deben tener obstrucciones. Sobre el parabrisas solo se permiten los adhesivos obligatorios (marchamo, IVE, tercer placa)."
+        },
+        {
+          "title": "Limpiaparabrisas y visera",
+          "content": "Limpiaparabrisas: barren agua, polvo y sustancias del cristal; mejoran visibilidad inmediatamente. Visera: franja móvil superior interna; evita el deslumbramiento del sol, que puede cegar temporalmente al conductor."
+        },
+        {
+          "title": "Espejos retrovisores",
+          "content": "Espejo central: visión trasera directa sin apartar la mirada del frente. Espejos laterales: ajustar para ver solo la manija de la puerta trasera (máximo ángulo de visión). Espejos de ojo de pescado: pequeños convexos secundarios que amplían la visión panorámica. Todos deben ajustarse ANTES de iniciar el viaje; solo manipularlos por conveniencia del conductor."
+        },
+        {
+          "title": "Puntos ciegos (ángulos muertos)",
+          "content": "Áreas alrededor del vehículo NO visibles de forma directa ni por espejos. Ubicación principal: parte delantera (vehículos altos o con capó grande), laterales (fuera del campo de los espejos), parte trasera (tapada por el baúl o espejo central). Los usuarios vulnerables (peatones, ciclistas, motociclistas, autos pequeños) son los más afectados."
+        },
+        {
+          "title": "Reducción de puntos ciegos",
+          "content": "Técnica física: mover el cuello y el tronco para ver directamente por ventanas laterales antes de cualquier maniobra. Tecnología: cámaras de retroceso (con asistencia sonora al poner reversa), cámaras laterales HD, tecnologías ADAS (sensores con alertas luminosas). Los puntos ciegos SE PUEDEN REDUCIR pero NO ELIMINAR completamente. No excederse en la confianza en la tecnología."
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "title": "Las llantas",
+      "sections": [
+        {
+          "title": "Función y composición",
+          "content": "Único punto de contacto del vehículo con la calzada. Funciones: soportar la carga total, mantener la trayectoria, garantizar agarre y tracción en cualquier condición, absorber impactos de irregularidades. Composición: cubierta exterior de caucho vulcanizado + estructura interna de metal o nailon; anillo hueco que contiene aire a presión."
+        },
+        {
+          "title": "Nomenclatura, aros y presión",
+          "content": "Nomenclatura en la pared lateral (ej: 195/55R 16 87 V): ancho, diámetro del aro, índice de carga y límite de velocidad. Aro: pieza metálica; verificar que no tenga abolladuras, grietas o reventaduras. Presión recomendada: 30-35 PSI (verificar manual del fabricante). REGLA DE ORO: medir la presión en frío (antes del recorrido o mínimo 3 horas después)."
+        },
+        {
+          "title": "Testigo de desgaste y tipos de desgaste",
+          "content": "Testigo de desgaste (TWI): pequeño taco de goma de ~1.6 mm en el fondo de las ranuras. Si la superficie llega al nivel del testigo = reemplazar de inmediato (riesgo altísimo de derrape). Desgaste NORMAL: uniforme en toda la superficie. Desgaste en el CENTRO: presión de inflado SUPERIOR a la recomendada (muy inflada). Desgaste en los LADOS/HOMBROS: presión INFERIOR a la recomendada (desinflada). Desgaste en UN SOLO EXTREMO: problema de alineación o daños en la suspensión."
+        },
+        {
+          "title": "Tipos de llantas",
+          "content": "Por construcción: RADIALES (cables paralelos, resisten calor a alta velocidad, estándar actual). Por banda de rodadura: HT (Highway Terrain = carretera, asfalto seco o mojado, largas distancias), AT (All Terrain = todo terreno, asfalto y tierra/lastre), MT (Mud Terrain = barro y tierra, tacos grandes, menor rendimiento en asfalto). UNIDIRECCIONALES: tienen flecha que indica sentido de giro; si se instalan al revés = desgaste acelerado y no evacuan bien el agua."
+        },
+        {
+          "title": "Cuidados y mitos",
+          "content": "Evitar: sustancias abrasivas, solventes, aceites o abrillantadores inadecuados (resecan y agrietan el caucho). Mito: las llantas 'caducan' exactamente a los 5 años; en realidad depende del uso, clima y almacenamiento, aunque sí sufren envejecimiento natural. Al cambiar llantas: reemplazar AMBAS del mismo eje simultáneamente + alineación inmediata."
+        },
+        {
+          "title": "Cambio de llanta de repuesto",
+          "content": "1) Estacionar en lugar plano y seguro. 2) Activar luces de emergencia. 3) Colocar triángulos de emergencia y usar chaleco reflectivo. 4) Aplicar freno de mano. 5) AFLOJAR las tuercas ANTES de levantar el vehículo con la gata hidráulica. 6) Levantar el vehículo en el punto de elevación correcto. 7) Cambiar la llanta. 8) Apretar las tuercas en ORDEN DE CRUZ (parejo). La llanta de repuesto ('galleta') es de USO TEMPORAL; más delgada y con velocidad máxima limitada (generalmente 80 km/h)."
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "title": "Los frenos y su importancia",
+      "sections": [
+        {
+          "title": "Sistema de frenos",
+          "content": "Convierten energía cinética en calor para detener el vehículo. Tipos: frenos de disco (mayor eficiencia y disipación de calor), frenos de tambor (menos eficientes a alta temperatura, más en ruedas traseras), freno de mano/estacionamiento (mecánico, mantiene el vehículo detenido en parqueo)."
+        },
+        {
+          "title": "Sistema ABS",
+          "content": "Anti-lock Braking System: evita el bloqueo de las ruedas en frenado de emergencia, manteniendo la capacidad de dirección. CON ABS: presionar el freno con TODA LA FUERZA y MANTENERLO (no bombear — bombear desactiva el ABS). SIN ABS: bombear suavemente para evitar el bloqueo. El ABS NO reduce la distancia de frenado — mantiene la maniobrabilidad."
+        },
+        {
+          "title": "Señales de problemas en los frenos",
+          "content": "Chirridos o ruidos al frenar = desgaste de pastillas. Vibración al frenar = discos deformados. El vehículo se jala a un lado = frenos desigualados. Pedal blando o que llega al suelo = posible fuga de líquido de frenos. Luz de frenos en el tablero = nivel bajo de líquido o freno de mano activado."
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "title": "Tipos de transmisión y su uso correcto",
+      "sections": [
+        {
+          "title": "Transmisión manual",
+          "content": "El conductor controla el cambio de marchas mediante el embrague y la palanca. Mayor control del motor. Marchas bajas = mayor tracción (pendientes, arranque). Marchas altas = velocidad de crucero y eficiencia."
+        },
+        {
+          "title": "Transmisión automática",
+          "content": "El sistema selecciona la marcha automáticamente. P (Parking): inmovilizar y apagar. R (Reversa). N (Neutral). D (Drive/adelante). L1/L2: máxima fuerza en pendientes empinadas o para freno motor en descensos. S (Sport): marchas cortas para mayor potencia en curvas. NO poner en N mientras se desciende una pendiente (reduce el control del freno motor)."
+        },
+        {
+          "title": "Uso en pendientes",
+          "content": "Usar marchas bajas en pendientes pronunciadas para aprovechar el freno motor y no sobrecargar el sistema de frenos. Bajar en marcha alta o en neutro = sobrecalentamiento de frenos + pérdida de control (fading)."
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "title": "Mantenimiento preventivo",
+      "sections": [
+        {
+          "title": "Definición",
+          "content": "Acciones periódicas para mantener el vehículo en condiciones óptimas ANTES de que ocurran fallas."
+        },
+        {
+          "title": "Círculo de seguridad (revisión diaria)",
+          "content": "Presión y estado de llantas, funcionamiento de luces, estado del silenciador, nivel de líquidos (aceite, líquido de frenos, refrigerante, limpiaparabrisas), estado de las escobillas."
+        },
+        {
+          "title": "Revisiones periódicas en taller",
+          "content": "Cambio de aceite y filtro (cada 5,000-10,000 km según fabricante), pastillas y discos de freno, alineación y balanceo, batería, filtro de aire, suspensión y dirección, correas y mangueras."
+        },
+        {
+          "title": "IVE (RITEVE)",
+          "content": "Obligatoria en Costa Rica. Verifica condiciones técnico-mecánicas del vehículo y control de emisiones. Los vehículos que no la aprueban no pueden circular. La frecuencia depende del año del vehículo."
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "title": "Mantenimiento correctivo",
+      "sections": [
+        {
+          "title": "Definición",
+          "content": "Reparaciones cuando ya se ha producido una falla o daño. Reactivo (a diferencia del preventivo)."
+        },
+        {
+          "title": "Cambio de llanta pinchada",
+          "content": "Ver sección 'Las llantas' para pasos completos: lugar seguro + triángulos + chaleco + freno de mano + cuña + aflojar tuercas ANTES de levantar + gata en punto correcto + apretar en orden de cruz."
+        },
+        {
+          "title": "Batería descargada — puente de arranque",
+          "content": "Orden: 1) Cable ROJO (+) a batería descargada. 2) Cable ROJO (+) a batería buena. 3) Cable NEGRO (-) a batería buena. 4) Cable NEGRO (-) a parte metálica del vehículo averiado (NO a la batería). 5) Arrancar el vehículo auxiliar primero, luego el averiado."
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "title": "Maniobras al conducir",
+      "sections": [
+        {
+          "title": "Adelantamiento",
+          "content": "Solo permitido cuando: línea discontinua en el centro, suficiente espacio y visibilidad, sin vehículo oncoming. Pasos: verificar espejos y punto ciego, señalizar, acelerar, pasar, señalizar al regresar. PROHIBIDO adelantar en: curvas, cimas de pendientes, intersecciones, pasos peatonales, con línea amarilla continua."
+        },
+        {
+          "title": "Giros",
+          "content": "Señalizar con al menos 30 metros de anticipación. Derecha: acercarse al borde derecho, reducir velocidad, verificar punto ciego, girar pegado al bordillo. Izquierda: acercarse al centro o carril de giro, verificar tráfico contrario, esperar oportunidad segura. Giro en U: solo donde esté permitido, verificar visibilidad en ambas direcciones."
+        },
+        {
+          "title": "Marcha atrás",
+          "content": "Solo cuando sea estrictamente necesario. Verificar por espejos Y girar la cabeza. Velocidad muy baja. Máximo 50 metros. PROHIBIDO en curvas, autopistas y túneles. Activar luces de emergencia antes de iniciar la maniobra."
+        },
+        {
+          "title": "Cambio de carril",
+          "content": "Orden: direccional → espejos → giro de cabeza para punto ciego → ejecutar. Nunca en intersecciones, cruces ni sobre línea continua."
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "title": "La conducción en la vía",
+      "sections": [
+        {
+          "title": "Uso correcto de carriles",
+          "content": "Circular por el carril DERECHO excepto para adelantar. El carril izquierdo es para adelantamiento, no para circulación permanente a baja velocidad. En autopistas: no circular por el espaldón excepto en averías."
+        },
+        {
+          "title": "Conducción en condiciones adversas",
+          "content": "LLUVIA: reducir velocidad, aumentar distancia, luces bajas, evitar frenadas bruscas. NEBLINA: luces de neblina delanteras y traseras, reducir velocidad drásticamente, NO usar luces altas. NOCHE: luces bajas en zonas urbanas, altas en carretera sin tráfico contrario, reducir velocidad. VIENTO LATERAL: sujetar bien el volante, reducir velocidad especialmente en puentes y zonas abiertas."
+        },
+        {
+          "title": "Prioridad de paso en intersecciones",
+          "content": "Semáforo prevalece. Señal de STOP/CEDA: detenerse o ceder. Sin señal: cede quien tiene vehículo a su derecha. Rotonda: prioridad a quien ya está dentro. Emergencias: prioridad absoluta siempre."
+        },
+        {
+          "title": "Zonas especiales",
+          "content": "Zona escolar: velocidad reducida, máxima atención a niños. Zona de obras: señalización especial, obreros en la vía, superficie irregular. Paso a nivel: detenerse, verificar en ambos sentidos, cruzar solo cuando no haya tren."
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "title": "Detención o finalización del viaje",
+      "sections": [
+        {
+          "title": "Estacionamiento correcto",
+          "content": "Señalizar antes de detenerse. Estacionar paralelo al bordillo (máximo 30 cm de distancia). Aplicar freno de mano. Pendiente de SUBIDA: ruedas giradas hacia AFUERA de la acera. Pendiente de BAJADA: ruedas giradas hacia la ACERA. Poner en primera marcha (manual) o P (automático)."
+        },
+        {
+          "title": "Prohibiciones de estacionamiento",
+          "content": "Pasos peatonales, intersecciones, entradas de garajes, frente a hidrantes, bahías de parada de buses, doble fila, zonas amarillas, a menos de 10 metros de una esquina o cruce peatonal, en vías con línea amarilla continua en el borde, aceras, bulevares, zonas verdes."
+        },
+        {
+          "title": "Al finalizar el viaje",
+          "content": "Apagar motor, quitar la llave, subir las ventanas, asegurar el vehículo. En zonas con pendiente: usar cuñas adicionales si es necesario. No dejar pertenencias valiosas visibles."
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "title": "Los peligros en la vía",
+      "sections": [
+        {
+          "title": "Peligros del entorno",
+          "content": "Baches: reducir velocidad, pasar con precaución. Animales en la vía: frenar suavemente, sin movimientos bruscos. Objetos en la calzada: verificar por espejos antes de esquivar. Derrumbes e inundaciones: NUNCA cruzar zonas inundadas sin conocer la profundidad."
+        },
+        {
+          "title": "Peligros climáticos",
+          "content": "AGUAPLANING (hidroplaneo): el vehículo pierde contacto con el asfalto por una capa de agua. Para evitar: buen estado de llantas, velocidad moderada, no hacer cambios bruscos de dirección. Neblina: reducir velocidad drásticamente, luces de neblina. Viento: peligroso en puentes y zonas abiertas."
+        },
+        {
+          "title": "Alcohol y drogas al conducir",
+          "content": "El alcohol reduce: tiempo de reacción, visión periférica, coordinación motriz, capacidad de juicio. Límite legal Costa Rica: 0.50 mg/L en sangre para conductores comunes; 0.0 mg/L para novatos y profesionales. Drogas y medicamentos también deterioran las capacidades. Conducir bajo efectos = infracción grave con retención de vehículo y licencia."
+        },
+        {
+          "title": "Fatiga y somnolencia",
+          "content": "17 horas sin dormir = deterioro equivalente a 0.5 mg/L de alcohol. La única solución real es dormir. Pausas de 20 minutos cada 2 horas reducen significativamente el riesgo. No confiar en café o energizantes para somnolencia grave."
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "title": "La conducción de un vehículo implica grandes exigencias",
+      "sections": [
+        {
+          "title": "Exigencias físicas",
+          "content": "Coordinación motriz simultánea de manos, pies y ojos. Visión: campo visual amplio, adaptación rápida a cambios de luz. Tiempo de reacción: promedio 0.75-1.5 segundos en conductor alerta; peor con cansancio, alcohol o medicamentos."
+        },
+        {
+          "title": "Exigencias psicológicas",
+          "content": "Atención sostenida durante todo el viaje. Control emocional: no conducir bajo ira intensa, tristeza profunda o estrés elevado (road rage es causa frecuente de accidentes). Toma de decisiones rápida ante situaciones imprevistas."
+        },
+        {
+          "title": "Salud y conducción",
+          "content": "Enfermedades que pueden impedir conducir: epilepsia no controlada, problemas de visión no corregidos, diabetes descompensada. Medicamentos: revisar prospectos (pueden causar somnolencia, visión borrosa o lentitud de reflejos)."
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "title": "Sistemas de protección y seguridad",
+      "sections": [
+        {
+          "title": "Seguridad activa vs pasiva",
+          "content": "ACTIVA: sistemas para EVITAR el accidente. PASIVA: sistemas para MINIMIZAR lesiones CUANDO ya ocurrió."
+        },
+        {
+          "title": "Sistemas de seguridad activa",
+          "content": "ABS: evita bloqueo de ruedas, mantiene la dirección. ESP/ESC (Control de Estabilidad): detecta y corrige pérdida de control. Control de tracción: evita patinamiento de ruedas motrices. Dirección asistida: reduce esfuerzo al girar. Sistemas de alerta de punto ciego, cambio de carril y fatiga (vehículos modernos)."
+        },
+        {
+          "title": "Cinturón de seguridad",
+          "content": "Sistema más efectivo. Reduce en 45% el riesgo de muerte en accidente frontal. OBLIGATORIO para todos los ocupantes. Parte DIAGONAL: sobre el hombro (NO bajo el brazo NI sobre el cuello). Parte HORIZONTAL: sobre las CADERAS (NO sobre el abdomen — en impacto puede causar lesiones internas graves)."
+        },
+        {
+          "title": "Airbags",
+          "content": "Bolsas de aire que se inflan en milisegundos al detectar impacto. COMPLEMENTAN el cinturón, no lo reemplazan. Sin cinturón, el airbag puede causar lesiones propias."
+        },
+        {
+          "title": "Reposacabezas (headrest)",
+          "content": "Evita el latigazo cervical en impactos traseros. Debe estar a la altura de la cabeza (parte central alineada con la parte posterior de la cabeza). Función de SEGURIDAD, no de comodidad."
+        },
+        {
+          "title": "Sistemas de retención infantil (SRI)",
+          "content": "Obligatorios para menores hasta que su peso y talla permitan usar el cinturón adulto de forma segura (generalmente hasta los 12 años). Menores de 12 años NO pueden ir en el asiento delantero si hay airbag."
+        },
+        {
+          "title": "Zona de deformación programada",
+          "content": "La carrocería absorbe la energía del impacto, protegiendo el habitáculo de los ocupantes."
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "title": "Factores de riesgo que intervienen en los accidentes de tránsito",
+      "sections": [
+        {
+          "title": "Factor humano (>90% de los accidentes)",
+          "content": "Velocidad excesiva (causa #1 de accidentes mortales en Costa Rica), distracción (teléfono celular, causa en aumento), alcohol y drogas, fatiga y somnolencia, irrespeto de señales y normas, falta de experiencia (conductores novatos), comportamiento agresivo."
+        },
+        {
+          "title": "Factor vehículo",
+          "content": "Falla de frenos, llantas en mal estado, luces defectuosas, dirección con juego excesivo, carga mal asegurada o exceso de carga."
+        },
+        {
+          "title": "Factor vía y entorno",
+          "content": "Mal estado del pavimento (baches, grietas), señalización deficiente o ausente, diseño inadecuado de curvas o intersecciones, condiciones climáticas adversas, objetos o animales en la vía."
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "title": "Comportamiento en caso de un accidente de tránsito",
+      "sections": [
+        {
+          "title": "Primeros 60 segundos",
+          "content": "1) Mantener la calma. 2) Asegurar la escena: luces de emergencia, triángulos. 3) Verificar si hay heridos. 4) Llamar al 911 (emergencias), 1000 (Tránsito) o 800-800-3000 (INS). 5) NO mover los vehículos si hay heridos o daños graves. 6) Si solo hay daños materiales y se puede usar la DAM: documentar con fotos ANTES de mover los vehículos."
+        },
+        {
+          "title": "Con heridos",
+          "content": "Llamar al 911 inmediatamente. NO mover a los heridos a menos que haya riesgo inminente de incendio u otro peligro (moverlos puede agravar lesiones de columna). Mantenerlos abrigados y tranquilos. No dar líquidos a inconscientes. Primeros auxilios básicos solo si está capacitado."
+        },
+        {
+          "title": "Información para dar al 911",
+          "content": "Tipo de siniestro (vuelco, colisión frontal, etc.), dirección exacta con puntos de referencia, cantidad de heridos, si hay menores (sexo y edad aproximada), si están conscientes o atrapados."
+        },
+        {
+          "title": "DAM — Daños materiales únicamente",
+          "content": "Solo cuando NO hay heridos. Documentar con fotos la posición de los vehículos ANTES de moverlos. Intercambiar: nombre, cédula, número de placa, compañía de seguros, teléfono. Reportar al INS dentro de 8 días hábiles. Si no hay acuerdo: no mover los vehículos y llamar al 911."
+        },
+        {
+          "title": "Obligaciones legales",
+          "content": "Identificarse y dar información al otro involucrado. No abandonar la escena si hay heridos. Reportar al INS. Cooperar con las autoridades."
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "title": "Generalidades de las leyes vigentes en materia de Movilidad",
+      "sections": [
+        {
+          "title": "Ley de Tránsito por Vías Públicas Terrestres y Seguridad Vial (Ley 9078)",
+          "content": "Ley principal que regula la conducción en Costa Rica. Establece infracciones, sanciones, tipos de licencias, obligaciones de conductores y peatones, y el sistema de puntos."
+        },
+        {
+          "title": "Sistema de puntos (detalle)",
+          "content": "Licencia de 6 años = máximo 12 puntos. Licencia de 4 años = máximo 8 puntos. Licencia de 3 años = máximo 6 puntos. Al llegar al máximo: suspensión (1ª vez = 1 año, 2ª vez = 2 años, 3ª y subsiguientes = 3 años). Acumulación parcial de 5+ puntos (sin llegar al máximo): restricción al renovar; debe realizar trabajo comunal o curso de sensibilización."
+        },
+        {
+          "title": "Infracciones graves",
+          "content": "Conducir bajo alcohol o drogas, exceso de velocidad >50% del límite, no respetar STOP o semáforo en rojo, conducir sin licencia o con licencia suspendida, uso del teléfono celular mientras conduce, no usar cinturón de seguridad, no usar SRI, adelantar en zona prohibida."
+        },
+        {
+          "title": "Derechos del conductor",
+          "content": "Recibir notificación formal de cualquier infracción. Apelar ante la autoridad competente. Conocer los motivos de cualquier retención del vehículo."
+        }
+      ]
+    }
+  ]
+}

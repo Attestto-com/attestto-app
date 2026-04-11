@@ -1,0 +1,265 @@
+{
+  "source": "practicatest.cr/manual-de-transporte-publico-cosevi/libro-completo",
+  "manual": "Manual de Transporte Público - COSEVI Costa Rica 2026",
+  "license_type": "Clase C (C-1 Taxi, C-2 Autobús/Buseta/Microbús)",
+  "scraped": "2026-04-06",
+  "total_chapters": 6,
+  "chapters": [
+    {
+      "id": 1,
+      "title": "Definiciones, tipos del transporte público",
+      "sections": [
+        {
+          "title": "El transporte público como industria básica",
+          "content": "El transporte público (también llamado transporte de masas) se refiere a los vehículos de servicio público que transportan pasajeros. Aún en países con la mayor cantidad de automóviles y el más alto nivel de vida, el volumen de pasajeros en servicios públicos constituye un factor de primera magnitud. Representa una industria básica para el desarrollo del país. La proporción de la población que depende de él para ir al trabajo, centros educativos, recreación y actividades económicas y sociales es muy alta."
+        },
+        {
+          "title": "Sistemas de transporte automotor",
+          "content": "En el transporte de larga distancia, el autobús ha evolucionado extraordinariamente y en los últimos 40 años se convirtió en un medio popular de viaje, conectando centros vitales de los países con mucha más flexibilidad que el ferrocarril. En muchos países el autobús relegó al ferrocarril al segundo lugar en transporte de pasajeros. No se concibe la terminación de una ruta vial sin incluir la concesión del servicio público de pasajeros. En el servicio urbano los principales sistemas son: 1) Tren urbano (desde tranvía hasta metro), 2) Trolebús o electrobús, 3) Autobús. Las capitales del mundo suelen tener varios sistemas combinados; las ciudades menores generalmente solo tienen servicio de autobuses."
+        },
+        {
+          "title": "Seguridad y eficiencia del transporte público",
+          "content": "La seguridad es primordial. La primera base para operar un servicio de transporte público es que llene los requisitos de seguridad para garantía de la vida humana y de la propiedad. En segundo lugar: la eficiencia. Un servicio eficiente debe ser: CONTINUO (autoridad competente concede permisos de ruta a empresas responsables que garanticen el servicio todo el año), SUFICIENTE (número adecuado de unidades para satisfacer la demanda de la ruta), y CÓMODO (las empresas que invierten en comodidad aumentan el volumen de pasajeros y logran preferencia de los usuarios sobre otras líneas)."
+        },
+        {
+          "title": "Organización administrativa — tres modelos",
+          "content": "EMPRESA PRIVADA: el menos común en el mundo actualmente; opera bajo patrón industrial; sujeta al control del gobierno en tarifas y calidad. EMPRESA DE GOBIERNO: administrada por el Estado, municipio u organismo descentralizado; ventajas: exención de impuestos, menos conflictos obrero-patronales, financiamiento mediante bonos con aval de fondos públicos; desventajas: mayores costos de operación y mayores primas de seguros. UNIONES O COOPERATIVAS: propietarios que son los mismos conductores, agrupados en líneas, uniones, cooperativas o sindicatos; intento del gobierno por favorecer grupos sociales necesitados; desventajas: falta de coordinación, dirección no unificada, baja eficiencia y alto índice de accidentes."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Relaciones humanas con el usuario",
+      "sections": [
+        {
+          "title": "Concepto e importancia de las relaciones humanas",
+          "content": "Las relaciones humanas son la disciplina que estudia las actividades, actitudes e interrelaciones resultantes del trato entre dos o más personas. La clave del éxito en el trabajo la constituye la relación con el cliente. Con comportamientos de cortesía, honestidad y trato justo se beneficia tanto el conductor como la empresa."
+        },
+        {
+          "title": "Elementos del servicio de atención al cliente",
+          "content": "CORTESÍA: trato amable y cordial; facilita el entendimiento y hace la estadía en el vehículo un momento agradable. CONSIDERACIÓN: ser considerado con la clientela en general y especialmente con personas ancianas o discapacitadas. CORDIALIDAD: actuar como si cada cosa que se hace por el cliente fuera un placer. PRESENTACIÓN PERSONAL: adecuadas normas de higiene y presentación acordes con el servicio. RESPETO: poner al cliente antes que cualquier cosa; no mostrar aburrimiento o malestar al brindar el servicio; respetar formas de ser, puntos de vista. VOCABULARIO: adecuado a quien se brinda el servicio. COOPERACIÓN: ser cooperador demuestra calidad humana y preocupación por el servicio."
+        },
+        {
+          "title": "El cliente y sus expectativas",
+          "content": "El cliente es un ser fundamentalmente afectivo, que necesita ir de un lugar a otro y desea un buen servicio en relación con la tarifa pagada. Tres niveles de servicio: 1) Servicio deficiente: no nos interesa saber cuáles son las expectativas del cliente. 2) Servicio apenas bueno/aceptable: se cumple exactamente lo justo. 3) Satisfacción plena: se superan las expectativas del cliente. Los clientes esperan: trato cordial, atención pronta, respuesta rápida y eficaz."
+        },
+        {
+          "title": "La comunicación",
+          "content": "Comunicación: intercambio de ideas, pensamientos y sentimientos entre dos o más personas, a través de signos o símbolos. COMUNICACIÓN NEGATIVA: el menor resentimiento produce rompimiento en la comunicación. COMUNICACIÓN POSITIVA: el ingrediente más importante; se logra alabando el trabajo bien hecho, con una sonrisa, con agradecimiento por la preferencia del cliente, mantenerse motivado. LO QUE SE DEBE HACER: expresarse en forma apropiada, usar voz suave y cordial, expresar el punto de vista con claridad, dar libertad al otro de expresarse, aceptar que no todos coincidan con lo que se dice. LO QUE NO SE DEBE HACER: usar expresiones peyorativas, ser dominante en la conversación, usar sarcasmos, amenazar al cliente con el poder, enojarse, usar palabras groseras, tomar lo que se dice como ataque personal, perder la calma."
+        },
+        {
+          "title": "Empatía y análisis transaccional",
+          "content": "EMPATÍA: habilidad de ponerse en el lugar del otro y comprenderlo verdaderamente. ANÁLISIS TRANSACCIONAL (estructura de la personalidad): PADRE CRÍTICO: ordena, regaña y censura. PADRE NUTRICIO: apoya, protege y alcahuetea. ADULTO: comportamiento racional, responde a la realidad con análisis objetivo de los hechos. NIÑO NATURAL: manifestaciones espontáneas, de disfrute, amistosas y sinceras. NIÑO ADAPTADO: resentido, obediente en extremo, rebelde. PEQUEÑO PROFESOR: manipulador en un extremo, o creativo e imaginativo."
+        },
+        {
+          "title": "La calidad en el servicio y el cliente insatisfecho",
+          "content": "Calidad: saber qué quiere un cliente y ofrecérselo. Las quejas son una gran oportunidad: escucharlas y corregir lo que señalan es valioso para ofrecer un servicio excelente. Cliente molesto que se satisface = aliado y efecto multiplicador positivo. Cliente molesto que NO se satisface = enemigo que hace campaña negativa. Para evitar la insatisfacción: interesarse con atención en lo que dice, colocarse en su lugar, proponer opciones de solución en tono de consulta, ofrecer disculpas sin inculpar a terceros, resolver la necesidad de manera efectiva y pronta, cumplir las promesas."
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Ley de Tránsito: especificaciones y sanciones",
+      "sections": [
+        {
+          "title": "Art. 26 — Placas",
+          "content": "PROHIBIDO prestar la placa a otro vehículo. Si el vehículo es de Transporte Público, se cancelará la concesión. Sanción contemplada en el artículo 131 inciso J: multa del 75% de un salario base."
+        },
+        {
+          "title": "Art. 31 — Vehículos de servicio especial",
+          "content": "Los vehículos que presten servicio de transportes especiales deben llevar un rótulo, tanto en la parte anterior como en la posterior, con la leyenda 'ESPECIALES'. Deben cumplir con la Ley y su reglamento y no pueden realizar otras actividades diferentes a las autorizadas."
+        },
+        {
+          "title": "Art. 32 — Requisitos mínimos para la circulación",
+          "content": "Inciso 6, Sub inciso H: Automóviles, autobuses, busetas y microbuses deben contar con un espejo retrovisor interior y dos laterales (izquierdo y derecho). Inciso 1, Sub inciso M: Vehículos de más de dos ruedas deben portar triángulos reflectantes de seguridad. Inciso 1, Sub inciso L: Extintor para incendios. Inciso 6 especial para transporte público: 1) Salida de emergencia. 2) Transporte de estudiantes debe estar rotulado. 3) Transporte de estudiantes debe portar botiquín. 4) Autobuses deben contar con dispositivo (timbre) para indicar la parada. 5) Taxi debe portar y utilizar el taxímetro. Sub inciso P: el grueso del taco de la llanta en transporte público es de 2 mm."
+        },
+        {
+          "title": "Art. 33 — Rotativas",
+          "content": "El uso de rotativas es solo con permiso de la Dirección de Tránsito."
+        },
+        {
+          "title": "Art. 68 — Requisitos para obtener licencia por primera vez",
+          "content": "Aprobar curso de Educación Vial. Examen médico. Aprobar prueba práctica. Licencia A-3 también puede ser solicitada por menores de edad (mayores de 17 años). Mayores de edad en general, salvo excepciones para A-1, A-2 y D-1. Inciso D: no debe haber sido sancionado con el Art. 130 en los 12 meses anteriores a la solicitud."
+        },
+        {
+          "title": "Art. 69 — Requisitos adicionales para Licencia C (Transporte Público)",
+          "content": "Además de los requisitos del Art. 68: Dictamen médico, Bono, Curso de Transporte Público, estar capacitado en el manejo de vehículos de servicio público. Para Licencia C-1: no hay restricciones de años de experiencia, solo aprobar el curso de transporte público. Para Licencia C-2: requisito de cinco años de experiencia en vehículos con licencia B."
+        },
+        {
+          "title": "Art. 81 — Facultades del conductor de transporte público",
+          "content": "Los conductores de vehículos de transporte público quedan autorizados para impedir el ingreso al vehículo de personas: en manifiesto estado de ebriedad, bajo efectos de drogas, con enfermedades que puedan producir contagio a los demás pasajeros, o que dadas las circunstancias puedan ocasionar molestias a los demás pasajeros."
+        },
+        {
+          "title": "Art. 96 — Estacionamiento",
+          "content": "Inciso G: Prohibido estacionar los autobuses en las vías públicas, salvo en las paradas. Inciso H: Prohibido recoger o bajar pasajeros fuera de la parada establecida o sin estar estacionado sin riesgos."
+        },
+        {
+          "title": "Art. 98 — Regulaciones para vehículos de transporte público",
+          "content": "MODALIDADES MICROBÚS, BUSETA Y AUTOBÚS: Deben poseer autorización del Consejo de Transporte Público (CTP) y cumplir estrictamente con paradas, horarios y regulaciones. La densidad de pasajeros de pie no puede exceder 3 personas por metro cuadrado. En las áreas de entrada y salida no puede viajar ningún pasajero (marcadas con franja amarilla de mínimo 10 cm de ancho). Prohibido circular en demanda de pasajeros fuera de las rutas autorizadas; prohibido recoger o bajar pasajeros en carreteras de acceso restringido. Deben llevar en lugar visible el nombre y número de la ruta. Las puertas deben mantenerse cerradas durante el recorrido y abrirse únicamente en paradas autorizadas. La marcha no puede iniciarse sin haber cerrado las puertas. Prohibido a conductores conversar o realizar actos que los distraigan de la conducción. Prohibido fumar dentro del vehículo a conductores, cobradores y pasajeros. Prohibido cobrar tarifa más alta de la autorizada. MODALIDAD TAXI: Deben poseer autorización de la Comisión Técnica de Transportes. No pueden operar en demanda de pasajeros fuera de sus zonas autorizadas. Prohibido cobrar tarifa más alta de la autorizada. Deben llevar el carné de identificación del conductor en lugar visible al usuario, expedido por la Dirección General de Transporte Público. Deben ser de color ROJO con triángulo en ambas puertas delanteras (30 cm base x 30 cm altura, color amarillo) con las siglas y números de las placas + lugar de operación. Deben portar las placas específicas para taxis. AMBAS MODALIDADES: Prohibido aprovisionarse de combustible cuando transportan pasajeros. Por uso indebido de la concesión o infracciones reiteradas: la Comisión puede suspender, revocar o cancelar la concesión."
+        },
+        {
+          "title": "Art. 107 — Conductor temerario Categoría A",
+          "content": "Se considera conductor temerario categoría A quien conduzca: a) Bajo influencia de alcohol con concentración igual o superior a 0.5 gramos por litro de sangre. b) Bajo influencia de drogas tóxicas, estupefacientes o sustancias psicotrópicas. c) A velocidad superior a 120 km/h en cualquier vía pública (salvo competencias de velocidad ilegales/piques). d) En carreteras de dos carriles con sentidos contrarios, al rebasar en curva horizontal o vertical (salvo que el señalamiento lo permita expresamente)."
+        },
+        {
+          "title": "Art. 108 — Conductor temerario Categoría B",
+          "content": "Se considera conductor temerario categoría B quien conduzca: a) Con 20 km/h o más de exceso sobre el límite de velocidad en zona urbana (según Art. 83 incisos b) y c)). b) A velocidad mayor a 25 km/h al pasar frente a la entrada y salida de planteles educativos, hospitales, clínicas y lugares con actividades o espectáculos deportivos, religiosos, sociales, culturales u otros de interés público, cuando se estén desarrollando actividades en esos lugares."
+        },
+        {
+          "title": "Art. 113 — Prohibición de transporte público sin autorización",
+          "content": "Prohibido a propietarios o conductores dedicar vehículos a la actividad del transporte público sin contar con las respectivas autorizaciones y placas legalmente adjudicadas."
+        },
+        {
+          "title": "Art. 125 — Capacidad de pasajeros",
+          "content": "Prohibido transportar un número de pasajeros superior a la capacidad autorizada. Prohibido viajar en los estribos o fuera de la cabina destinada al transporte de pasajeros. La autoridad que sorprenda tal acto expulsará a los pasajeros en exceso; en transporte remunerado, se les debe devolver el pasaje en ese mismo momento."
+        },
+        {
+          "title": "Art. 130 — Multa de un salario base (100%)",
+          "content": "Multa de un salario base mensual del 'Auxiliar administrativo 1' del Poder Judicial por: a) Conducir en forma temeraria conforme al Art. 107. b) Conducir sin licencia o sin el permiso temporal de aprendizaje, o aprendiz sin la persona autorizada. c) Prestar servicio de transporte público sin las respectivas autorizaciones. d) Conducir con la licencia suspendida. e) Contravenir el uso de dispositivos de seguridad para menores de edad (Art. 80, párrafos 3 y 4)."
+        },
+        {
+          "title": "Art. 131 — Multa del 75% del salario base",
+          "content": "Multa del 75% de un salario base mensual por: a) Conducir en forma temeraria conforme al Art. 108. b) Irrespetar señales de tránsito fijas, límites de velocidad o indicaciones de la autoridad (Arts. 79, 83 y 116). c) Virar en 'U' en contravención del Art. 119. d) Irrespetar la señal de alto de la luz roja del semáforo, excepto al virar a la derecha. e) Infringir el Art. 115 (uso de celulares al conducir). f) Conductor de transporte público que permita a pasajeros subir o bajar en lugares no autorizados o que no use las bahías donde existan, si ello provoca atraso en el fluido vehicular o genera riesgo para los transportados. Y la sanción del Art. 26 inciso J (prestar la placa)."
+        },
+        {
+          "title": "Art. 132 — Multa del 50% del salario base",
+          "content": "Multa del 50% de un salario base mensual por: c) Conducir en contravención del Art. 85 (distancia de seguimiento). e) Detenerse en medio de una intersección y obstruir la circulación (Art. 121). g) Conductor de transporte público en contravención del Art. 125 (recargo de pasajeros) y del Art. 32 inciso 6 apartado a) (salidas de emergencia en autobuses sin buen estado de funcionamiento). El oficial actuante procederá a la inmovilización del vehículo (retiro de placas) según Art. 145. k) Conductor de taxi con abusos en el cobro de tarifa reglamentaria. Incumplimiento de paradas y horarios en transporte público."
+        },
+        {
+          "title": "Art. 133 — Multa del 40% del salario base",
+          "content": "Multa del 40% de un salario base mensual por: c) Conductor de transporte público de cualquier modalidad que preste el servicio sin reunir alguna de las condiciones del Art. 32 (inciso 1 apartados d, f, h, i, l, r, s; inciso 4 apartado a; inciso 6 apartados b y f). También al conductor que infrinja el Art. 31. ch) Conductor cuyo vehículo lleve exceso de pasajeros (Art. 98 numeral 2 inciso a y Art. 125). i) Conductor que incurra en prohibiciones del Art. 123 (uso abusivo de bocinas). j) Conductor que altere, no utilice o no porte el taxímetro (Art. 32 inciso 6 apartado ll)."
+        },
+        {
+          "title": "Art. 134 — Multa del 30% del salario base",
+          "content": "Multa del 30% de un salario base mensual por: c) Conductor de automóvil que incumpla disposiciones del Art. 32. ch) Conductor de transporte público sin reunir condiciones del Art. 109 y Art. 32 inciso 1 apartados a, b, g, j, k, n, p, q; inciso 6 apartados d e i. d) Conducir con la licencia de conducir vencida (Art. 71). f) Circular con licencia extranjera por más de 3 meses sin obtener la licencia nacional (Art. 75)."
+        },
+        {
+          "title": "Art. 135 — Multa del 20% del salario base",
+          "content": "Multa del 20% de un salario base mensual por: a) Conducir sin portar la respectiva licencia (estando inscrito como conductor). b) Conducir sin portar los documentos del Art. 4 (título de propiedad, derechos de circulación, revisión técnica). c) Conductor, ayudante o cobrador de vehículos de transporte público que maltrate de palabra o de hecho a los usuarios."
+        },
+        {
+          "title": "Art. 136 — Multa del 10% del salario base",
+          "content": "Multa del 10% de un salario base mensual al conductor de transporte público por violaciones al Art. 98: AUTOBUSES, BUSETAS Y MICROBUSES: circular en demanda de pasajeros, recoger/bajar pasajeros en carreteras de acceso restringido o paradas no autorizadas, no portar en lugar visible el número y nombre de la ruta, circular con puertas abiertas, conversar y distraerse en la conducción, cobrar tarifa más alta que la establecida. TAXIS: circular en demanda de pasajeros, no portar el código de conductor en lugar visible, vehículo de color diferente al autorizado, no llevar triángulos de identificación en ambas puertas delanteras, no portar las placas de este servicio. AMBAS MODALIDADES: aprovisionarse de combustible cuando transportan pasajeros. h) Conductor que traslade personas u objetos en contravención al Art. 81 (personas en estado de ebriedad, con enfermedades contagiosas, con objetos voluminosos, materiales explosivos o animales —salvo perro guía de personas con discapacidad visual—, pasajeros que realicen ofensas o vocabulario soez, que arrojen objetos, causen daños al vehículo, fumen, o irrespeten disposiciones en materia de discapacidad)."
+        },
+        {
+          "title": "Art. 138 — Suspensión de licencias",
+          "content": "La suspensión de cualquier tipo de licencia para conducir implica la inhabilitación para la conducción de TODO tipo de vehículos, hasta tanto no se cumpla con el término de la suspensión."
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "El conductor y la contaminación ambiental",
+      "sections": [
+        {
+          "title": "Composición del aire y fuentes de contaminación",
+          "content": "El aire puro está compuesto por 78% de nitrógeno, 21% de oxígeno y 1% de otros compuestos (argón, dióxido de carbono, ozono). La polución es la contaminación atmosférica. Un litro de gasolina consumido produce medio kilo de dióxido de carbono. 40% de la contaminación de ríos y lagos procede del aceite usado de motor. El monóxido de carbono (CO) es un gas incoloro e inodoro capaz de producir la muerte. San José sobrepasa los límites de los tres contaminantes: CO, NO2 y Pb. Quienes trabajan en el casco urbano 'respiran el equivalente a dos cajetillas de cigarros' (Ministerio de Salud). Costa Rica se ubica entre los países con mayor producción de anhídrido carbónico per cápita."
+        },
+        {
+          "title": "Contaminantes del aire — tipos",
+          "content": "PRIMARIOS: permanecen en la atmósfera tal y como son lanzados. Incluyen: partículas de hidrocarburos (HC), óxidos de azufre (SO2), monóxido de carbono (CO), dióxido de carbono (CO2), óxidos de nitrógeno (NO2) y plomo (Pb). SECUNDARIOS: productos de reacción química de dos o más contaminantes primarios; ejemplo: oxidantes fotoquímicos y ozono (O3). Contaminación sónica, lumínica, calórica y electromagnética también existen en el ambiente."
+        },
+        {
+          "title": "El catalizador (convertidor catalítico)",
+          "content": "El catalizador es importante porque elimina gases tóxicos. Su función: mediante reacción química convierte los gases contaminantes del motor (CO, HC, NOx) en menos contaminantes (CO2 y H2O). Dispositivos del motor relacionados: regulador de presión de combustible, válvula de regulación de gases de escape, válvula de control de gases de escape, depósito de carbón activado, válvula de paso. NUNCA eliminar o alterar las conexiones del sistema de control de emisiones: afecta el funcionamiento del motor, aumenta el consumo y la contaminación."
+        },
+        {
+          "title": "Riesgos del monóxido de carbono",
+          "content": "El tubo de escape y silenciador no deben estar rotos ni taponados para evitar intoxicación por CO. Con una concentración de 1% de CO: primero se produce pérdida del conocimiento y en 30 minutos, la muerte."
+        },
+        {
+          "title": "La conducción eficiente y el mantenimiento preventivo",
+          "content": "Los buenos hábitos de manejo pueden disminuir el consumo de combustible en un 10% o más. Mantenimiento preventivo para conducción eficiente: cambio a tiempo del aceite, afinado del motor, control de la presión en neumáticos, revisión del desgaste de las llantas, planificación de rutas. Revisión periódica: llantas, agua del radiador, líquido de frenos, nivel del aceite, cambio de filtros, luces, carrocería, alineamiento de la dirección, rótulas, escobillas. Malos hábitos a evitar: mantener innecesariamente el pie en el pedal del clutch (desgasta el rol de empuje y el plato de presión); excesivo frenado (desgasta las fibras y lanza partículas de asbesto al ambiente). Mantener el motor bien regulado ahorra hasta 9% de combustible (filtros limpios, bujías nuevas, menos uso del aire acondicionado). Un vehículo que requiera afinación puede sobre consumir un 20% de combustible."
+        },
+        {
+          "title": "Normativa vigente sobre emisiones",
+          "content": "La Ley de Tránsito prohíbe lanzar objetos en calles y carreteras y obliga a mantener libre de obstáculos el frente de la casa y el derecho de vía pública. La ley establece límites permitidos para humo y ruido, con sanciones para vehículos que contaminan más allá de las normas. Los nuevos automóviles deben tener dispositivos que disminuyan la contaminación; está prohibido desarmar el sistema de control de emisiones. Un solo litro de aceite usado puede crear una mancha de una hectárea y contaminar el agua subterránea y el suministro de agua potable."
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "El turismo en Costa Rica",
+      "sections": [
+        {
+          "title": "Datos generales del país",
+          "content": "Ubicación: Centroamérica. Límites: Norte con Nicaragua, noreste y este con el Mar Caribe, sureste con Panamá, oeste con el Océano Pacífico. Idioma oficial: español. Moneda: el Colón. Religión oficial: Católica (con libertad de culto). Capital: San José. Habitantes: aproximadamente cuatro millones. División territorial: 7 provincias, 81 cantones y 433 distritos."
+        },
+        {
+          "title": "Clima y geografía",
+          "content": "Cálido en costas y tierras bajas (0–900 m). Templado en el Valle Central (también llamado Meseta Central, una depresión teutónica), ~20°C. Frío a partir de los 1,500 m en las cordilleras de Talamanca y la Central. Ríos importantes: Caribe: San Carlos, Sarapiquí (afluentes del San Juan), Tortuguero, Reventazón, Parismina, Pacuare, Sixaola. Pacífico: Tempisque (desemboca en el Golfo de Nicoya), Grande de Tárcoles, Diquis o Grande de Térraba. Biodiversidad: bosques secos tropicales, bosques lluviosos y páramos. Microclimas que favorecen la agricultura y el turismo. Costa Rica tiene el 6% de la biodiversidad mundial."
+        },
+        {
+          "title": "Historia y contexto",
+          "content": "1821: llega la noticia de la Independencia del Istmo. 1823: Cartago deja de ser la capital; se traslada a donde se encuentra hoy San José. 1838: Costa Rica se proclama soberana e independiente. 1848: se declara República. 1948: revolución; se nacionalizó la banca. 1949: se abolió el ejército; impulso a la educación e instituciones democráticas. Educación: primaria gratuita y obligatoria; 96% de la población sabe leer y escribir. Universidades estatales: UCR (1940), UNA (1973), UNED (1977), TEC (1975), colegios universitarios (Cartago, Alajuela, Puntarenas) y 54 universidades privadas. Población: originalmente aborigen; hoy el 90% es blanca con presencia africana y asiática. Exportaciones principales: café, banano, azúcar, turismo, tecnología (Intel), frutas."
+        },
+        {
+          "title": "Definiciones de turismo",
+          "content": "TURISMO: desplazamiento humano sin fines de lucro y con carácter de placer, descanso, aventura, salud, religión o deporte, por más de 24 horas y menos de 180 días (6 meses). Genera divisas importantes para Costa Rica. No pertenece al sector primario (no extrae ni produce recursos naturales). TURISTA: persona que se desplaza dentro de una zona geográfica, sin fines de lucro, por motivos de descanso, aventura, placer, salud, religión o estudios, por más de 24 horas y menos de 180 días. INFRAESTRUCTURA TURÍSTICA: dotación de bienes y servicios (comunicaciones, transportes, sanidad/hospitales, energía). PLANTA TURÍSTICA: complemento de la infraestructura; servicios directos al turista (hoteles, restaurantes, clubes nocturnos, discotecas, bares, casinos, cines, teatros, agencias de viaje, casas de cambio, alquiler de vehículos)."
+        },
+        {
+          "title": "Historia institucional del turismo",
+          "content": "16 de julio de 1931: creación de la Junta Nacional de Turismo (fomento del turismo e inmigración). 9 de agosto de 1955: creación del Instituto Costarricense de Turismo (ICT). Leyes destacadas: Ley 6990 de incentivos para el desarrollo turístico (30 de julio de 1985), EXPOTUR (decreto ejecutivo, 18 de abril de 1986, primera feria nacional de artesanos costarricenses). La imagen de Costa Rica como destino ecoturístico se fortaleció con la creación de parques nacionales y áreas protegidas, y ha obtenido premios internacionales por proteger el medio ambiente."
+        },
+        {
+          "title": "Tipos de turista en Costa Rica",
+          "content": "CIENTÍFICO, NATURALISTA O ECOLÓGICO: viajan por investigación o educación; visitan áreas de conservación para investigaciones y estudios. NATURALISMO SUAVE: aman la naturaleza y disfrutan ante su presencia; visitan parques nacionales, áreas de conservación y lugares de observación de flora y fauna. DE AVENTURA: ligan su estadía a la práctica de algún deporte; playas, ríos y bosques. DE SALUD: vienen a recuperar energía física y psíquica; buscan el clima, las aguas termales."
+        },
+        {
+          "title": "Zonas y atractivos turísticos por provincia",
+          "content": "GUANACASTE: turismo científico (Área de Conservación de Guanacaste, PN Santa Rosa, Río Tempisque, Reserva Biológica Lomas de Barbudal, PN Barra Honda, PN Palo Verde, Refugio Ostional, Reserva Cabo Blanco, PN Marino Las Baulas) y aventurero (Bahía de Junquillal, Golfo de Papagayo, Puerto Soley, playas: Hermosa, El Coco, Ocotal, Brasilito, Conchal, Tamarindo, Junquillal, Garza, Sámara, Montezuma, Flamingo). PUNTARENAS: científico (PN Corcovado, Refugio Golfito, Reserva Biológica Carrara, Reserva Biológica Monteverde, PN Manuel Antonio) y aventurero (Jacó, Herradura, Esterillos, Espadilla, Dominical, Doña Ana, Zancudo, Manuel Antonio). LIMÓN: científico (PN Cahuita, Refugio Gandoca-Manzanillo, Refugio Barra del Colorado, PN Tortuguero) y aventurero (Playa Portete, Cahuita, Uva, Chiquita, Puerto Vargas, Puerto Viejo, Cocles, Manzanillo). ALAJUELA: científico (PN Volcán Poás, Volcán Arenal, Refugio Caño Negro, Bosque Nuboso Los Ángeles) y aventurero (Río Sarapiquí, Laguna del Arenal, Fraijanes, Zoo Ave, Río Colorado Bungee). HEREDIA: científico (Volcán Barva, PN Braulio Carrillo). CARTAGO: científico (PN Volcán Irazú, Área Recreativa Prusia, Refugio Tapantí, Monumento Nacional Guayabo, Volcán Turrialba) y aventurero (Represa de Cachí, Valle del Reventazón, Paradero Charrarra). SAN JOSÉ: PN Chirripó, Pico Blanco, Museo Nacional, Teatro Nacional, Museos de Oro y Jade, Museo Arte Contemporáneo, Parque La Sabana, Parque del Este, Parque de la Paz, Serpentario, Parque Zoológico Simón Bolívar."
+        },
+        {
+          "title": "Mapa de San José — estructura urbana",
+          "content": "Límites del Casco Urbano: Norte: Río Torres. Sur: Río María Aguilar. Oeste: Calle 42 Hungría Libre. Este: Calle 37 Calle Los Negritos. División: Calle 0 (Central) y Avenida 0 (Central). Las calles van de norte a sur (o viceversa). Las avenidas van de este a oeste (o viceversa). Hacia el norte: avenidas IMPARES. Hacia el sur: avenidas PARES. Hacia el este: calles IMPARES. Hacia el oeste: calles PARES. Distritos del Cantón Central de San José: 01 Carmen, 02 Merced, 03 Hospital, 04 Catedral, 05 Zapote, 06 San Francisco de Dos Ríos, 07 Uruca, 08 Mata Redonda, 09 Pavas, 10 Hatillo, 11 San Sebastián. Límites de cada distrito: CARMEN (Norte: Río Torres, Sur: Av. 0, Este: Calle 37, Oeste: Calle 0), MERCED (Norte: Río Torres, Sur: Av. 0, Este: Calle 0, Oeste: Calle 42), HOSPITAL (Norte: Av. 0, Sur: Río María Aguilar, Este: Calle 0, Oeste: Calle 42), CATEDRAL (Norte: Av. 0, Sur: Río María Aguilar, Este: Calle 37, Oeste: Calle 0)."
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "La Conducción Técnica Eficiente",
+      "sections": [
+        {
+          "title": "Importancia económica de la conducción eficiente",
+          "content": "Las claves para ser competitivo en la industria del transporte: reducir costos de operación, principalmente reduciendo el consumo de combustible y los costos de mantenimiento. Los costos por combustible son los más importantes en la industria del transporte. Los buenos hábitos de manejo pueden disminuir el consumo de combustible en un 10% o más. Al no ser Costa Rica país productor de petróleo, el consumo desmedido significa mayor erogación de divisas y desajuste de las finanzas nacionales, afectando inversiones en hospitales, carreteras y puertos. La diferencia económica entre conducir técnicamente y hacerlo arbitrariamente puede significar hasta un 30% de ahorro."
+        },
+        {
+          "title": "Fuerzas que se oponen al desplazamiento del vehículo",
+          "content": "1) RESISTENCIA AERODINÁMICA: el movimiento en el aire genera una fuerza de sustentación (vertical, hacia arriba) y una fuerza de arrastre (horizontal, opuesta al movimiento). La fuerza de arrastre depende del coeficiente aerodinámico y el área frontal del vehículo. 2) RESISTENCIA AL RODAMIENTO (F2=KMg): fricción del contacto de las llantas con la calzada; compuesta por el coeficiente de resistencia al movimiento (K, en kg/tonelada), la masa del vehículo (M, en toneladas) y la aceleración de la gravedad (g). 3) RESISTENCIA POR PENDIENTE: en pendiente ascendente la inclinación tiende a detener el vehículo; en pendiente descendente la inclinación acelera el vehículo (peligro de que el motor alcance velocidades que puedan destruirlo). Recomendación: bajar en la misma relación de caja con que se sube la pendiente. 4) RESISTENCIA POR INERCIA (F4=Mji): fuerza que se opone al cambio de velocidad; depende de la masa del vehículo. En tránsito urbano genera alto consumo y desgaste, especialmente en frenadas repentinas (energía se disipa como calor). La potencia se define como P = F × V. 5) FUERZA CENTRÍFUGA (F=MxV²/R): en movimiento curvilíneo, tiende a sacar al vehículo de su trayectoria. En curvas cerradas puede provocar vuelco o derrape; en cisternas, el líquido se desplaza hacia los lados incrementando el riesgo de volcadura. El peralte de la carretera contrarresta (no elimina) el efecto centrífugo."
+        },
+        {
+          "title": "Curvas características del motor",
+          "content": "Las curvas del motor muestran su comportamiento bajo diferentes condiciones de operación. La energía del motor se transmite a través de bielas y cigüeñal, convirtiendo el movimiento alternativo de los pistones en movimiento de rotación hacia la caja de velocidades, el diferencial y las llantas, generando el par torsional. Pérdidas del motor: energía disipada como calor en el sistema de enfriamiento y el escape (algunos vehículos recuperan parte mediante el turbocompresor); energía perdida por fricción mecánica de pistones, válvulas, bielas y demás dispositivos internos. La potencia del motor (POT) se calcula: POT = K × Par × N (donde N = RPM, K depende de las unidades). Se mide en horse power (hp) o kilowatts (kW)."
+        },
+        {
+          "title": "Diagrama de velocidades",
+          "content": "El diagrama de velocidades permite conocer la velocidad del vehículo en función de la relación de la caja y las RPM del motor. Ejemplo: el vehículo tiene una velocidad de 40 km/h con la cuarta velocidad a 1400 rpm. Es una herramienta para conducción económica y para conocer el área de funcionamiento óptimo del motor (zona verde). La transmisión transfiere el par y la potencia del motor a las llantas a través del embrague/clutch, la caja de velocidades, el cardán, el diferencial y las flechas. La velocidad del motor se reduce antes de llegar a las ruedas mediante la caja de velocidades y el diferencial."
+        },
+        {
+          "title": "El tacómetro y la zona verde",
+          "content": "El tacómetro mide las RPM a las que gira el motor. Es el instrumento que permite una conducción técnica, eficiente y económica. Zona de ralentí: 750–900 rpm (cuando el vehículo no está siendo acelerado). Zona verde (rango económico óptimo): 1,500–2,800 rpm al aplicar la inyección de combustible. Rangos de aceleración por marcha: 1ª velocidad: 1,500–2,500 rpm. 2ª velocidad: 2,000–2,500 rpm. 3ª velocidad: 2,000–2,800 rpm. 4ª y 5ª velocidad: no menor de 2,000 ni mayor de 2,800 rpm. El tacómetro puede ser analógico (aguja que gira de izquierda a derecha) o digital (contador ascendente/descendente)."
+        },
+        {
+          "title": "El cambio progresivo de velocidades",
+          "content": "El conductor hace el cambio cuando la máquina ha acelerado al punto donde puede manejar la carga fácilmente en cada relación. Evitar la sobrrrevolución del motor en sus máximos valores, especialmente en marchas bajas (consume más combustible innecesariamente). Si el motor acelera fácilmente: pasar las primeras velocidades con las más bajas revoluciones, incrementando el punto de cambio en 100 rpm para cada velocidad superior. La clave es aprovechar la CAPACIDAD DE CARGA del motor (torque) en lugar de usar las máximas RPM."
+        },
+        {
+          "title": "Manejo en ciudad",
+          "content": "Alcanzar la relación más alta de caja lo más pronto posible y mantenerla tanto como sea posible. Está bien manejar a bajas revoluciones: se puede acelerar desde ese nivel y ahorrar combustible al anticiparse a los semáforos. Los paros y arranques consumen una importante cantidad de combustible: usar la cantidad de movimiento del vehículo para no arrancar desde cero. Bajar lentamente de revoluciones antes de cambiar a relación más baja. Al bajar la velocidad o detenerse: alternar entre el freno y la compresión del motor, siempre a bajas RPM (incrementa la vida útil del sistema de frenos y reduce el riesgo de falla)."
+        },
+        {
+          "title": "En la carretera",
+          "content": "La velocidad afecta el consumo de combustible, el desgaste de llantas, frenos y demás componentes. Mantener la velocidad a 90 km/h = resistencia al aire en nivel razonable = menor consumo. 90 km/h es la velocidad máxima recomendada para autopistas. Mantener la velocidad del motor a 300 rpm por debajo del rango máximo de economía establecido = reducción del consumo. Manejo en pendientes: al subir, acelerar gradualmente antes de entrar al ángulo de ascenso; no acelerar a fondo sobre la misma pendiente, es preferible dejar que la velocidad disminuya y cambiar a marcha más baja. Al bajar una pendiente: no acelerar, dejar que el peso del vehículo impulse el vehículo para ahorrar combustible."
+        },
+        {
+          "title": "Conducción económica — principios fundamentales",
+          "content": "PIE DE PLUMA: usar el acelerador para regular suavemente la cantidad de combustible (no de plomo). Pisar el acelerador a fondo produce hasta cuatro veces más consumo. CONSERVACIÓN DE LA CANTIDAD DE MOVIMIENTO (Q=MxV): la conducción técnica implica conservar constante la cantidad de movimiento del vehículo manteniendo una velocidad constante en cada relación de caja. ZONA VERDE: hacer los primeros cambios antes de llegar a la zona verde (1,500–2,800 rpm) y tratar de realizar los últimos cambios en esta zona. La conducción económica es también una conducción defensiva: conducir siempre con anticipación, mantener la vista en el camino, indicar maniobras a los demás, evitar detenciones súbitas, extremar precauciones en lluvia/neblina, guardar suficiente distancia con el vehículo de adelante (regla de los dos segundos para vehículos livianos)."
+        },
+        {
+          "title": "Recomendaciones prácticas para el conductor inteligente",
+          "content": "ARRANQUE EN FRÍO: no sirve calentar el motor sin poner el vehículo en movimiento (consume combustible sin provecho, daña bujías/inyectores, genera depósitos de carbón). Para un aprovechamiento real: iniciar el recorrido en frío avanzando a velocidad moderada y acelerando progresivamente. VELOCIDAD: pistón a fondo = hasta cuatro veces más consumo. Velocidades altas incrementan la posibilidad de accidentes y el gasto de combustible. ANTICIPACIÓN: mantener velocidad constante, anticiparse a las situaciones de frenado y aceleración. Mirar la situación más lejana posible, reducir el uso del freno. CAMBIO DE MARCHA: en transmisión manual, cambiar a marcha superior en cuanto el sistema motriz lo permita. Las velocidades bajas están diseñadas para empuje y aceleración rápida; las altas ahorran combustible. En la mayoría de los vehículos se puede mantener 60 km/h en cuarta o quinta velocidad. AERODINÁMICA: cerrar las ventanas en carretera y usar la ventilación interior; ventanas abiertas aumentan la resistencia al aire y el consumo. Aire acondicionado incrementa el consumo entre un 10 y 15%; activarlo y desactivarlo según las condiciones. ACTITUD POSITIVA: resistir la tentación de apresurarse; manejo suave y seguro; conservar la distancia; controlar que la velocidad sea la adecuada en todo momento."
+        }
+      ]
+    }
+  ]
+}

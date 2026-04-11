@@ -1,0 +1,729 @@
+{
+  "source": "practicatest.cr/manual-del-conductor-moto/libro-completo",
+  "manual": "Manual del Conductor para Moto - COSEVI Costa Rica 2026",
+  "license_type": "Clase A (A-1, A-2, A-3)",
+  "scraped": "2026-04-06",
+  "total_chapters": 32,
+  "chapters": [
+    {
+      "id": 1,
+      "title": "¿Qué es conducir?",
+      "sections": [
+        {
+          "title": "El verdadero significado de conducir",
+          "content": "Conducir es manejar un vehículo por la vía pública — una motocicleta, bicimoto, triciclo o cuadraciclo — de forma segura, respetuosa y responsable. Toda persona al mando de cualquier vehículo (incluso una bicicleta) es la única responsable de lo que ocurre con él y debe responder ante cualquier infracción."
+        },
+        {
+          "title": "Tipos de conductor según la ley",
+          "content": "Novato: obtiene licencia por primera vez, máximo 3 años de tenerla. Profesional: actividad laboral principal es conducir vehículos a motor para traslado de personas o mercancías. Común (no tipificado): renueva licencia, más de 3 años de haberla obtenido, no profesional. No acreditado: no está inscrito como conductor o no tiene el tipo de licencia correspondiente para el vehículo que usa."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Movilidad segura y sostenible",
+      "sections": [
+        {
+          "title": "El enfoque de Sistema Seguro",
+          "content": "Moverse es necesidad fundamental. Sin importar el medio de transporte, siempre hay riesgo de accidente. El sistema seguro reconoce que el ser humano es vulnerable y comete errores. Propone adecuar vías, diseño, trazado y velocidad para evitar el fallo humano y que no tenga consecuencias fatales."
+        },
+        {
+          "title": "Los cinco pilares de la seguridad vial",
+          "content": "1) Infraestructura vial segura (semáforos peatonales, señalización, carriles exclusivos). 2) Vehículos más seguros (mejores condiciones mecánicas y tecnologías de protección). 3) Usuarios más seguros (conscientes, educados y atentos). 4) Mejores políticas en seguridad vial (normativas y campañas). 5) Mejor asistencia a las víctimas (respuesta rápida y eficiente)."
+        },
+        {
+          "title": "Compromiso del motociclista",
+          "content": "Calles bien delimitadas brindan mayor seguridad al motociclista y le permiten anticipar movimientos de los demás usuarios. Cada decisión al frente de la manivela afecta a quienes le rodean. El manejo debe ser más respetuoso, atento y tolerante."
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Factores de riesgo",
+      "sections": [
+        {
+          "title": "Definición y acumulación de riesgos",
+          "content": "Factores de riesgo: circunstancias, condiciones del entorno o acciones humanas que aumentan la posibilidad de un accidente de tránsito. A más factores acumulados simultáneamente, mayor posibilidad de accidente grave."
+        },
+        {
+          "title": "Grupo 1 — Exposición al riesgo",
+          "content": "Falta de aceras, ciclovías o diseño de vías inadecuado; largas distancias de traslado; volumen de tránsito elevado; tipo de vehículo utilizado."
+        },
+        {
+          "title": "Grupo 2 — Posibilidad de que ocurra un accidente",
+          "content": "Mal estado de carreteras; mal funcionamiento del vehículo por falta de mantenimiento; consumo de alcohol y drogas; velocidad excesiva; fatiga; distracción; irrespeto al señalamiento y legislación."
+        },
+        {
+          "title": "Grupo 3 — Gravedad de las lesiones",
+          "content": "No uso de dispositivos de seguridad obligatorios: sistemas de retención infantil, casco protector (en motociclistas y ciclistas), cinturón de seguridad. El diseño estructural de la vía en el punto del impacto también determina la gravedad."
+        },
+        {
+          "title": "Grupo 4 — Evaluación después del accidente",
+          "content": "Retrasos en detección y atención inicial; falta de servicios de urgencias y paramédicos; demoras en traslado a centro médico; calidad y disponibilidad de atención postraumática y rehabilitación."
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Accidentes de tránsito",
+      "sections": [
+        {
+          "title": "Definición legal",
+          "content": "Acción culposa al transitar por vías públicas, cometida por conductores, pasajeros o peatones. Debe involucrar al menos un vehículo y producir daños materiales, lesiones físicas o la muerte."
+        },
+        {
+          "title": "Tipos principales de accidentes",
+          "content": "Colisión: choque entre 2+ vehículos o contra objeto fijo. Vuelco: el vehículo deja de circular sobre sus llantas y se voltea. Atropello: vehículo golpea o pasa por encima de una persona o animal."
+        },
+        {
+          "title": "Clasificación y causas de las colisiones",
+          "content": "Choque de frente: más letal por suma de fuerzas; causa principal = invasión del carril izquierdo al adelantar. Colisión trasera: no guardar distancia de seguridad, distracción o exceso de velocidad. Choque lateral: colisión por el costado al cambiar de carril o en giros; generalmente por puntos ciegos o falta de precaución."
+        },
+        {
+          "title": "DAM — Declaración de Accidente Menor",
+          "content": "Procedimiento simplificado para choques leves con solo daños materiales y sin personas heridas. Objetivo: mover los vehículos rápidamente para evitar congestionamientos. Formulario disponible en el sitio web del INS."
+        },
+        {
+          "title": "La prevención como regla de oro",
+          "content": "La inmensa mayoría de los accidentes pueden prevenirse. La clave es respetar todas las leyes de tránsito y acatar rigurosamente la señalización vial."
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Medios de transporte en la vía pública",
+      "sections": [
+        {
+          "title": "Vehículos motorizados — uso personal",
+          "content": "Tracción mecánica, 2+ ruedas, sin rieles. Automóvil: hasta 8 pasajeros. Vehículos de 2 a 4 ruedas (motos, bicimotos, scooters, triciclos, cuadraciclos): máximo 2 personas."
+        },
+        {
+          "title": "Transporte público y de carga",
+          "content": "Transporte público: buses, microbuses, busetas y taxis (tarifa establecida). Transporte de carga: camiones, articulados, grúas, plataformas, furgonetas, cisternas (bienes o materiales pesados, livianos o peligrosos)."
+        },
+        {
+          "title": "Vehículos de emergencia y especiales",
+          "content": "Emergencia: bomberos, ambulancias, patrullas, motos policiales (atención de incendios, accidentes, urgencias). Especiales: tractores, cosechadoras, retroexcavadoras, niveladoras para tareas agrícolas, obra civil, emergencias forestales/aeroportuarias."
+        },
+        {
+          "title": "Ferroviarios y no motorizados",
+          "content": "Ferroviarios: rieles, transporte masivo; cruzan y afectan la calzada constantemente. No motorizados: sin motor, tracción humana o animal. Bicicletas: 2+ ruedas, asistencia eléctrica máx. 25 km/h, circulan por sitios establecidos (ciclovías)."
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Entorno Vial",
+      "sections": [
+        {
+          "title": "Espacios para peatones y usuarios vulnerables",
+          "content": "Aceras y puentes peatonales: exclusivo para peatones. Pasos peatonales: a nivel o desnivel para cruce seguro. Ciclovías: exclusivo para bicicletas y triciclos no motorizados (peatones solo si no hay acera). Vías compartidas: ciclistas en igual derecho que otros vehículos."
+        },
+        {
+          "title": "Componentes de circulación vehicular",
+          "content": "Calzada: espacio principal para vehículos, dividida en carriles de una sola dirección. Espaldón: separado por línea blanca, para peatones y emergencias (prohibido estacionar rutinariamente). Medianeras/zonas verdes: separan carriles de sentidos contrarios. Bahías de autobuses: para recogida de pasajeros sin obstruir la vía. Cunetas: drenaje de lluvias. Sistemas de contención: barreras para reducir gravedad al salirse de la carretera."
+        },
+        {
+          "title": "Tipos de vías en Costa Rica",
+          "content": "CARRETERAS: Primarias (volumen alto, viajes internacionales/interprovinciales), Secundarias (cabeceras cantonales, viajes interregionales), Terciarias (dentro de una región, distritos). CALLES: Locales (dentro del cuadrante urbano). CAMINOS: Vecinales (fincas y caseríos, bajo volumen), No clasificados (herradura, sendas, trillos, muy pocos usuarios)."
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "title": "Licencia de conducir",
+      "sections": [
+        {
+          "title": "Requisitos para obtener Licencia Clase A",
+          "content": "Ser mayor de 18 años (o 16 años cumplidos exclusivamente para A-1). Saber leer y escribir. Dictamen médico oficial vigente (digital). Aprobar el curso teórico de educación vial. Aprobar la prueba práctica de manejo. No haber cometido delitos penales de tránsito ni infracciones graves (categorías A y B) en los últimos 12 meses. Para menores de 16-17 años que opten por A-1: autorización escrita autenticada por notario de padres/tutores + póliza de seguro que cubra muerte, lesiones y daños a terceros hasta cumplir 18 años."
+        },
+        {
+          "title": "Modalidades de Licencia Clase A",
+          "content": "A-1: bicimotos y motos de combustión interna ≤125 cc; eléctricas ≤11 kW; triciclos y cuadraciclos ≤250 cc. A-2: motos ≤500 cc; eléctricas ≤35 kW. A-3: sin límite de cilindrada ni potencia; incluye y habilita A-1 y A-2."
+        },
+        {
+          "title": "Permiso temporal de aprendizaje",
+          "content": "Vigencia: 3 meses. ILEGAL practicar solo. El aprendiz SIEMPRE debe ir acompañado de una persona con licencia igual o superior Y con al menos 5 años de experiencia."
+        },
+        {
+          "title": "Prueba práctica de manejo — 4 fases",
+          "content": "Fase 1: Revisión de requisitos legales y documentación personal en ventanillas de Educación Vial. Fase 2: Inspección de la motocicleta por el evaluador (luces, bocina, llantas, direccionales, seguridad). Fase 3: Circuito cerrado con conos — maniobrabilidad, equilibrio y pericia a baja velocidad. Fase 4: Recorrido supervisado en tránsito real — respeto de señales, postura y conducción preventiva."
+        },
+        {
+          "title": "Sistema de puntos",
+          "content": "Novatos (primera licencia, 3 años): límite máximo de 6 puntos. Conductores regulares (renovación 4 años): límite 8 puntos. Conductores regulares (renovación 6 años): límite 12 puntos. Acumulación parcial de 5+ puntos: restricciones al renovar + curso de sensibilización y trabajo comunal. 1ª suspensión completa: 12 meses (puede reducirse a 6 meses con trabajo comunitario). 2ª suspensión: 24 meses. Para reacreditarse: cursos de reeducación vial; en casos de conducción temeraria o bajo alcohol: programas médicos de tratamiento de adicciones y control psicológico."
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "title": "Documentos necesarios para circular con una motocicleta",
+      "sections": [
+        {
+          "title": "Documentos obligatorios",
+          "content": "1) Título de propiedad (físico o digital): nombre del propietario, marca, modelo, carrocería, número de motor, VIN/chasis, color, capacidad. 2) IVE vigente: verifica sistemas mecánicos, eléctricos, electrónicos y emisiones. 3) Marchamo (derecho de circulación): pago anual al INS, incluye seguro básico."
+        },
+        {
+          "title": "VIN y distintivos",
+          "content": "VIN: código de 17 caracteres que detalla fabricante, modelo y año. Todos los distintivos (placa, calcomanía IVE, marchamo) deben concordar exactamente con el VIN. Prohibida la reinscripción de vehículos declarados pérdida total o con VIN manipulado."
+        },
+        {
+          "title": "Placas de la motocicleta",
+          "content": "Placa metálica: SOLO en la parte trasera, en el espacio de fábrica. Calcomanía adhesiva: en lugar visible de la estructura, protegida del clima. Regla: siempre visibles, sin deterioro, completamente legibles, sin obstrucciones. PROHIBIDO: colocar placa en lugar distinto al de fábrica, posición no horizontal, pantallas o cobertores sobre la placa, doblar la placa intencionalmente, dispositivos para ocultar o cambiar posición de las placas."
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "title": "Conducir y convivir con los demás usuarios de la vía pública",
+      "sections": [
+        {
+          "title": "Obligaciones del motociclista",
+          "content": "Respetar a todos los usuarios sin amenazar la vida humana. Acatar todas las reglas y señales. Ser responsable de su condición física y mental, y de sus pasajeros. Mantener el vehículo en condiciones mecánicas y documentales óptimas."
+        },
+        {
+          "title": "Estrés y cortesía en carretera",
+          "content": "El estrés urbano puede escalar a comportamientos violentos y accidentes. La cortesía es la herramienta más efectiva: ceder el paso, evitar maniobras bruscas, no invadir carriles ajenos."
+        },
+        {
+          "title": "Usuarios vulnerables",
+          "content": "Peatones: los más vulnerables; impacto a más de 40 km/h = riesgo casi inminente de muerte; extrema precaución en zonas residenciales, hospitales, escuelas. Ciclistas: distancia lateral mínima de 1.5 metros al rebasarlos. Menores de edad: reacciones impredecibles, no miden el peligro. Adultos mayores (PAM): disminución en visión, audición y movilidad; prioridad de paso. Personas con discapacidad: adaptar el manejo."
+        },
+        {
+          "title": "Vehículos de emergencia",
+          "content": "Identificación por color de luces: ROJO = salud (ambulancias), AMARILLO/ÁMBAR = emergencias (bomberos, rescate), AZUL = policía. Al escuchar sirena o ver luces: disminuir velocidad y orillarse hacia el lado DERECHO de la vía. Prioridad absoluta en cualquier tramo o intersección."
+        },
+        {
+          "title": "Prioridad de paso (jerarquía de 8 niveles para motos)",
+          "content": "1. Vehículos sobre rieles (tren): prioridad máxima siempre. 2. Inspectores de tránsito: sus indicaciones prevalecen sobre cualquier señal. 3. Vehículos de emergencia con sirenas/luces activas. 4. Carreteras primarias > secundarias > terciarias. 5. Intersecciones sin señales: ceder al vehículo que llega por la derecha. 6. Semáforo en verde: prioridad sobre señal de alto. 7. Señal de CEDA: prioridad sobre señal de ALTO. 8. Circulación directa: prioridad sobre quien va a girar a la izquierda."
+        },
+        {
+          "title": "Animales en la carretera",
+          "content": "Frecuente en rutas rurales: domésticos, semovientes (vacas, caballos) y fauna silvestre. Señales preventivas en forma de rombo amarillo advierten sobre su presencia. Al transitar: reducir velocidad y evitar bocina abrupta para prevenir daños y lesiones."
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "title": "Conducción inteligente",
+      "sections": [
+        {
+          "title": "Postura correcta sobre la motocicleta",
+          "content": "Espalda erguida, hombros relajados, codos semiflexionados. Manos firmes en el manubrio sin tensión excesiva. Rodillas abrazando el depósito de combustible. Pies sobre los estribos, parte media del pie, puntas hacia abajo para accionar pedales rápidamente."
+        },
+        {
+          "title": "Sentido de circulación y posición en la calzada",
+          "content": "Siempre por el lado DERECHO. La moto debe ubicarse en el CENTRO de su carril. Prohibido circular sobre líneas divisorias, invadir el carril contrario o usar el espaldón para adelantar. Si se siente incomodado por vehículos que intentan rebasar: moverse un poco hacia la derecha dentro del mismo carril."
+        },
+        {
+          "title": "Tipos de carriles",
+          "content": "Derecho: tránsito normal/lento; si se va a menos de 100 km/h en autopistas, usar este carril. Izquierdo: exclusivo para adelantamiento; regresar al derecho después. Ascenso: zonas montañosas para vehículos pesados/lentos. Exclusivo para buses: restringido al transporte público. Reversible: cambia de sentido según la hora (semáforos especiales). Compartido: motos + ciclistas; velocidad máxima estricta de 30 km/h."
+        },
+        {
+          "title": "Conducción segura en presas",
+          "content": "Al avanzar entre filas: velocidad muy baja, SIEMPRE por debajo de 25 km/h. Atento a apertura de puertas y peatones entre autos. Evitar pasar frente o detrás de vehículos de carga pesada que giran. Nunca adelantar a otros motociclistas dentro de la presa."
+        },
+        {
+          "title": "Regla de los 3 segundos",
+          "content": "Fijar la vista en un punto fijo. Cuando el vehículo de adelante pase por ese punto, contar lentamente '1101, 1102, 1103'. Si el propio vehículo llega ANTES de terminar de contar = demasiado cerca, soltar el acelerador. Ampliar la distancia en condiciones adversas: lluvia, llantas desgastadas, lastre, fatiga."
+        },
+        {
+          "title": "Eco-conducción",
+          "content": "Velocidad constante: evitar acelerones y frenadas bruscas. Cambios de marcha suaves y oportunos. Llantas con presión correcta: reducen fricción y consumo. Mantenimiento riguroso: motor afinado, aceite limpio, filtros en buen estado = mínimas emisiones."
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "title": "Señales de tránsito",
+      "sections": [
+        {
+          "title": "Los 5 grupos de señales y funciones",
+          "content": "Grupos: vertical, horizontal, luminoso, sonoro y manual. 5 funciones: regular el paso y sentido, advertir peligros, guiar el recorrido, informar sobre restricciones legales, orientar a peatones. En Costa Rica se usan dos sistemas: estadounidense (predominante) y europeo."
+        },
+        {
+          "title": "Señalamiento vertical",
+          "content": "Placas metálicas retroreflectivas en postes. REGLAMENTACIÓN: obligaciones/prohibiciones; fondo blanco, círculo rojo (con barra diagonal = prohibición); excepciones: ALTO (octagonal roja), CEDA EL PASO (triangular). PREVENCIÓN: advertencia de peligros; rombo con fondo AMARILLO y símbolos negros; fondo NARANJA si son obras temporales."
+        },
+        {
+          "title": "Señalamiento vertical — Información",
+          "content": "Verde: carreteras importantes/alta velocidad. Blanco con bordes negros: rutas secundarias. Azul: servicios o turismo. Café/marrón: parques nacionales. Subtipos: Identificación (numeración: rutas primarias 1-99, secundarias 100-299, terciarias 300+), Destino, Información general, Recomendación, Servicios y turismo."
+        },
+        {
+          "title": "Señalamiento horizontal — colores y líneas",
+          "content": "AMARILLO: separa sentidos opuestos; en borde de acera = prohibición de estacionamiento. BLANCO: mismo sentido; también ALTO, CEDA, velocidad, línea de borde, flechas, pasos peatonales. AZUL: estacionamiento para personas con discapacidad. VERDE: espacios compartidos con ciclistas. Línea continua = PROHIBIDO adelantar. Línea discontinua = permite adelantar. Carril central de giro izquierdo: no circular ni adelantar. Cajón amarillo: prohibido bloquear intersección. Reductores de velocidad (muertos): lomos, bandas alertadoras, dientes de dragón, pasos peatonales elevados."
+        },
+        {
+          "title": "Señalamiento luminoso, sonoro y manual",
+          "content": "LUMINOSO: semáforos vehiculares y peatonales; paneles informativos transitorios. SONORO: sirenas de emergencia, pito del tren, silbato de oficiales, semáforos peatonales para personas con discapacidad visual. MANUAL: oficiales de tránsito con manos y brazos; también señas manuales de conductores/ciclistas sin direccionales para anunciar giros."
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "title": "Las Velocidades",
+      "sections": [
+        {
+          "title": "Límites sin señalización específica",
+          "content": "Sin demarcación alguna: máximo 60 km/h. Zona urbana de alta densidad: máximo 50 km/h. Autopista: mínimo 50 km/h (para no entorpecer el flujo rápido)."
+        },
+        {
+          "title": "Zonas de especial protección (25 km/h)",
+          "content": "Pasos peatonales en planteles educativos CON ESTUDIANTES PRESENTES: 25 km/h. Frente a centros de salud (hospitales, clínicas): 25 km/h. Lugares con actividades o concentraciones masivas de personas: 25 km/h."
+        },
+        {
+          "title": "Efecto mirón — sanción",
+          "content": "Está PROHIBIDO reducir la velocidad para observar un accidente u otro evento en la carretera ('efecto mirón'). Causar congestionamiento vial por curiosidad = multa categoría E."
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "title": "Mandos y controles claves",
+      "sections": [
+        {
+          "title": "Manillar y aceleración",
+          "content": "Manillar (manivela): equivale al volante; permite dirección, equilibrio y acceso a la mayoría de controles. Acelerador (puño derecho): girar hacia ATRÁS = acelerar; girar hacia ADELANTE = desacelerar. Movimientos cortos y suaves — los bruscos desestabilizan la suspensión."
+        },
+        {
+          "title": "Frenos y embrague",
+          "content": "Freno delantero (palanca frente al puño derecho): freno PRINCIPAL, absorbe la mayor parte del peso durante la detención. Freno trasero (pedal inferior derecho; en automáticas: manilla izquierda): apoyo estabilizador; freno 'natural' para maniobras a menos de 15 km/h. Palanca de embrague/clutch (puño izquierdo): desconecta el motor temporalmente para cambiar marchas; exclusivo de transmisión manual."
+        },
+        {
+          "title": "Sistema de marchas y combustible",
+          "content": "Patilla de cambio de marcha (pie izquierdo inferior): 5 marchas + Neutro en transmisión manual convencional. Llave de paso de combustible (solo en motos carburadas): ON (flujo normal), OFF (cerrado), RES (reserva). VITAL: tras reabastecer en RES, devolver la llave a ON para no consumir toda la reserva sin opción."
+        },
+        {
+          "title": "Encendido y arranque",
+          "content": "Llavín/botón de ignición: ON, OFF, LOCK (traba el manillar). Algunas motos tienen PARK (traba manivela + enciende luz trasera para visibilidad nocturna al estacionar). Botón de arranque eléctrico (puño derecho): presionar entre 2 y 5 segundos (no demasiado corto ni girar el acelerador al límite simultáneamente — la moto se ahoga). Botón de corte de ignición: apaga el motor de emergencia SIN soltar el manillar; NO desconecta el circuito eléctrico (las luces quedan encendidas), siempre girar el llavín a OFF para no descargar la batería. Patilla de arranque auxiliar (arranque de patada): encendido secundario si falla la batería."
+        },
+        {
+          "title": "Controles de iluminación y comunicación",
+          "content": "Puño izquierdo: interruptor de luz alta/baja (obligatorio mantener luces encendidas SIEMPRE en circulación), direccionales (activar con pulgar izquierdo; en la mayoría de motos deben desactivarse manualmente al terminar la maniobra), bocina/pito (SOLO para alertar emergencias; prohibido usar a menos de 100m de hospitales, clínicas, iglesias y centros de enseñanza)."
+        },
+        {
+          "title": "Panel de control e instrumentos",
+          "content": "Velocímetro: velocidad en km/h. Odómetro: kilómetros totales (para programar mantenimientos). Tacómetro: RPM del motor; indica cuándo hacer cambios de marcha. Luces indicadoras (testigos): presión de aceite, nivel de combustible, temperatura del motor, Neutro, luces altas, ABS, falla del motor (Check Engine). Soportes: patilla lateral (estacionamiento rápido con leve inclinación); patilla central (levanta un eje para cambios de llanta, engrase de cadena o reparaciones; mantener engrasadas y revisar resortes)."
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "title": "Indicadores de desempeño y estado de las bicimotos, motocicletas y triciclos",
+      "sections": [
+        {
+          "title": "Nota",
+          "content": "Este capítulo amplía en detalle los mandos y controles del capítulo 13. Cubre en profundidad los mismos temas: manillar/acelerador, sistemas de frenado y embrague, sistema de marchas y llave de combustible, encendido e ignición, controles de iluminación y comunicación sonora, panel de control e instrumentos (velocímetro, odómetro, tacómetro, testigos de colores), y patillas lateral y central. Ver capítulo 13 para el contenido completo."
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "title": "Los espejos retrovisores: Uso e importancia",
+      "sections": [
+        {
+          "title": "Obligatoriedad y ubicación",
+          "content": "Toda motocicleta debe tener OBLIGATORIAMENTE dos espejos retrovisores: uno a la IZQUIERDA y otro a la DERECHA del manubrio, posicionados fuera del área de los puños para que los brazos/cuerpo no obstruyan la visibilidad hacia atrás."
+        },
+        {
+          "title": "Función y ajuste",
+          "content": "Permiten observar con claridad lo que sucede detrás y a los lados. Facilitan maniobras, cambios de carril y giros de forma segura. Ajustar ANTES de iniciar el viaje, tomando la postura final de conducción como referencia. Objetivo: ver la mayor área posible del entorno trasero, minimizando los puntos ciegos. Los espejos son sistemas de SEGURIDAD ACTIVA."
+        },
+        {
+          "title": "Mantenimiento",
+          "content": "Limpios siempre: paño suave y líquido limpiacristales. Reemplazar de inmediato si están rayados, manchados o quebrados (distorsionan la imagen). Los espejos de repuesto deben tener las mismas características, dimensiones y especificaciones técnicas que los originales de fábrica."
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "title": "Luces que salvan vidas",
+      "sections": [
+        {
+          "title": "El principio: ver y ser visto",
+          "content": "Las motos carecen de carrocería protectora. Su principal sistema de seguridad activa es la iluminación. Las luces bajas deben permanecer SIEMPRE encendidas y en perfecto estado — obligación legal y de seguridad propia."
+        },
+        {
+          "title": "Iluminación frontal",
+          "content": "Luz baja (corta/de día): uno o dos focos blancos delanteros; PERMANENTE todo el tiempo que el vehículo circule (de día y de noche). Luz alta (larga): ilumina a gran distancia para conducción nocturna fuera de zonas urbanas; usar con responsabilidad para no encanditar a vehículos de frente."
+        },
+        {
+          "title": "Luces de posición e identificación",
+          "content": "Luces de posición: delanteras (blancas) y traseras (rojas); facilitan la estimación del ancho real de la moto por otros conductores; encendidas siempre durante la marcha. Luz de placa: ilumina la placa metálica trasera para identificación legal nocturna."
+        },
+        {
+          "title": "Luces de advertencia y maniobra",
+          "content": "Luz de frenado (trasera, roja intensa): se activa automáticamente al presionar freno o pedal; advierte a los vehículos de atrás. Luces direccionales (delantera, trasera y costados): se activan manualmente para anunciar giros o cambios de carril; informan la dirección exacta."
+        },
+        {
+          "title": "Dispositivo catadióptrico (reflectivo)",
+          "content": "Ubicado en la parte trasera. Refleja la luz de otros vehículos de forma pasiva. Mantiene la moto visible en la oscuridad incluso si hay fallos eléctricos o el vehículo está apagado. Previene choques por alcance."
+        },
+        {
+          "title": "Normativa estricta de iluminación",
+          "content": "OBLIGATORIO: usar direccionales para cualquier giro; mantener luces de día y de posición SIEMPRE encendidas. PROHIBIDO: instalar luces de otros colores (permitidos: blanco, rojo o anaranjado). PROHIBIDO: luces LED como 'extras' o decorativas (solo si reemplazan exactamente la iluminación de fábrica). Las luces son para ver, ser visto e iluminar, NUNCA para deslumbrar o encandilar."
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "title": "Las llantas",
+      "sections": [
+        {
+          "title": "Importancia crítica",
+          "content": "Único punto de contacto con el suelo. En una moto de dos ruedas, el área de contacto es aproximadamente del tamaño de una tarjeta de crédito. El buen estado garantiza conducción segura, agilidad en maniobras, reduce consumo de combustible y previene accidentes y lesiones fatales."
+        },
+        {
+          "title": "Presión de inflado",
+          "content": "Medir SIEMPRE en frío. Presión demasiado BAJA: más consumo, desgaste excesivo en los lados, aumento de temperatura, conducción inestable. Presión demasiado ALTA: menos agarre, desgaste en el centro, vibración y golpes transmitidos al manubrio y asiento."
+        },
+        {
+          "title": "Adherencia, estriado y acuaplaneo",
+          "content": "Estriado: surcos que evacuan el agua al rodar sobre superficies mojadas. ACUAPLANEO (aquaplaning): cuando los surcos no logran evacuar el agua a alta velocidad, la llanta pierde contacto con el asfalto y la moto se desliza sin control sobre una capa de agua. Imposible frenar o girar durante el aquaplaning."
+        },
+        {
+          "title": "Tipos de llantas",
+          "content": "Slicks/deportivas: lisas o poco labradas, para asfalto en circuitos secos. Turismo/carretera: labranza profunda, caucho duro, alta durabilidad en seco y húmedo. Mixtas/trail/enduro: 'tacos' pronunciados para calles pavimentadas + terrenos destapados, tierra o barro."
+        },
+        {
+          "title": "Nomenclatura en el perfil de la llanta",
+          "content": "Grabada en el costado: marca, tipo de dibujo, anchura, relación de altura, diámetro del aro, código de velocidad máxima, carga máxima, sentido de rotación, TT (requiere cámara interior) o TL (tubeless/sin cámara)."
+        },
+        {
+          "title": "Cuándo reemplazar",
+          "content": "Límite de desgaste legal: 1 mm de profundidad de banda de rodamiento. Deformaciones, roturas, rasguños interiores o desgaste irregular. Grietas por resequedad = riesgo de reventón a alta velocidad. Después de 10 años desde la fabricación (aunque se vea bien). Exposición prolongada a sustancias aceitosas o corrosivas. Cambiar AMBAS llantas del mismo eje simultáneamente."
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "title": "Los frenos",
+      "sections": [
+        {
+          "title": "Tipos de frenos",
+          "content": "Freno de tambor: zapatas internas que se expanden contra un tambor giratorio; más tradicional, común en motos antiguas o de baja cilindrada. Freno de disco: disco de acero + pinzas (calipers) + pastillas + bomba de líquido; rendimiento muy superior y menor calentamiento; estándar en motos modernas y de alta potencia."
+        },
+        {
+          "title": "Función del freno frontal vs trasero",
+          "content": "Freno frontal: PRINCIPAL; al frenar el peso se transfiere hacia adelante, este freno es crucial para la detención efectiva y el control direccional. Freno trasero: APOYO estabilizador; evita que la parte trasera se levante o se descontrole al aplicar el freno delantero. Regla 80/20: freno delantero absorbe ~80% de la fuerza de frenado, trasero el ~20%. AMBOS deben aplicarse simultáneamente y de manera progresiva."
+        },
+        {
+          "title": "Sistema ABS",
+          "content": "Anti-lock Braking System: evita que las ruedas se bloqueen y patinen en frenada de pánico. Ventajas: control total de dirección durante la emergencia, menor distancia de frenado, prevención de derrapes. EN ASFALTO: muy recomendado. EN LASTRE, TIERRA O BARRO: no es ideal (la llanta debe bloquearse un poco para escarbar); algunas motos lo desactivan automáticamente a bajas velocidades o tienen botón de desactivación manual para offroad."
+        },
+        {
+          "title": "Mantenimiento del sistema de frenos",
+          "content": "Revisar el sistema de frenos cada 2,000 kilómetros en taller especializado. Al aplicar el freno trasero, la rueda deja de girar y genera tensión en la cadena — frenos desajustados afectan el desgaste del sistema de tracción."
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "title": "La cadena",
+      "sections": [
+        {
+          "title": "Función y riesgos de descuido",
+          "content": "La cadena recibe la fuerza del motor y la traslada a la rueda trasera para el avance. Se ubica en la parte inferior izquierda trasera. Si se parte o rompe en marcha: puede quedar enredada en la rueda trasera causando bloqueo instantáneo del tren trasero; puede actuar como látigo y golpear el cárter del motor causando daños irreparables + riesgo de lesiones graves."
+        },
+        {
+          "title": "Por qué mantenerla",
+          "content": "Desgaste natural constante por uso y fricción. Seguridad: cadena en mal estado puede romperse en cualquier momento. Rendimiento: cadena mal tensada o sin lubricación dificulta cambios de marcha y reduce eficiencia."
+        },
+        {
+          "title": "Frecuencia de mantenimiento",
+          "content": "Cadenas convencionales: revisión cada 500 km. Cadenas con retenes (O-rings): revisión cada 800-1,000 km (los retenes mantienen la lubricación interna y protegen de la suciedad). Proceso: limpiar con cepillo + desengrasante → lubricar con spray específico para cadenas → verificar tensión. NO tensar en exceso ni dejar demasiado floja."
+        },
+        {
+          "title": "Consecuencias de cadena en mal estado",
+          "content": "Cambios de marcha imprecisos que ataschan = desgaste prematuro del embrague. Ruidos metálicos al rodar = desgaste excesivo en cadena, piñones o bujes = pérdida de potencia. Daño progresivo a piñones, bujes y otros componentes de transmisión."
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "title": "La transmisión",
+      "sections": [
+        {
+          "title": "Función de la transmisión",
+          "content": "Adapta la potencia del motor a las condiciones reales de conducción y la transmite a la rueda. Permite acelerar, desacelerar y mantener velocidades constantes de forma controlada y segura. Protege la vida útil del motor y optimiza el consumo de combustible."
+        },
+        {
+          "title": "Transmisión manual",
+          "content": "El conductor acciona físicamente el embrague (mano izquierda) y mueve la palanca de cambios (pie izquierdo) de forma coordinada. Mayor control directo sobre la respuesta y fuerza de la moto. Exige mayor habilidad técnica, coordinación motora y atención constante."
+        },
+        {
+          "title": "Transmisión automática",
+          "content": "El cambio de marchas se realiza solo, sin intervención del conductor. El mecanismo se ajusta automáticamente según la aceleración/desaceleración al girar el acelerador. Sin palanca de embrague ni pedal de cambios. Más cómoda y relajada, ideal para tránsito urbano con muchas paradas. Popular en scooters/motonetas."
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "title": "Inspección técnica vehicular",
+      "sections": [
+        {
+          "title": "Obligatoriedad y contenido",
+          "content": "Requisito obligatorio anual para la circulación legal de motocicletas, cuadraciclos, bicimotos y triciclos. Evalúa: condiciones técnicas y mecánicas (frenos, llantas, transmisión, luces); control de emisiones dentro de límites ecológicos permitidos; diagnóstico integral para identificar y solucionar desperfectos antes de que causen accidentes."
+        },
+        {
+          "title": "Consecuencia por incumplimiento",
+          "content": "Si no cumple con la IVE aprobada y vigente: multa inmediata por parte de las autoridades."
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "title": "Conocimiento y control de la motocicleta",
+      "sections": [
+        {
+          "title": "Curva de aprendizaje y el mito de las caídas",
+          "content": "La curva de aprendizaje es la etapa crítica donde se adquiere destreza gradualmente. El dicho 'se aprende cayéndose' es TOTALMENTE FALSO: refleja una época de menos vehículos y falta de instructores. Con conocimientos técnicos adecuados y conducción preventiva, se puede evitar la inmensa mayoría de las caídas."
+        },
+        {
+          "title": "Reglas fundamentales antes de conducir",
+          "content": "1) Elección ergonómica: al sentarse, los pies deben tocar el suelo con firmeza; comenzar con motos de menor cilindrada. 2) Estudiar el manual del fabricante exhaustivamente. 3) Memorizar la ubicación y resistencia de cada control sin mirar. 4) Inspección diaria y mantenimiento riguroso. 5) PROHIBIDO instalar modificaciones o accesorios no aprobados por el fabricante (alteran centro de gravedad y maniobrabilidad)."
+        },
+        {
+          "title": "Requisitos legales mínimos de la moto para circular",
+          "content": "Luz delantera (baja y alta), luz trasera de posición y luz de freno (instantánea al presionar frenos), sistemas de frenos delanteros y traseros en perfecto estado, direccionales (delantera y trasera), bocina/pito, DOS espejos retrovisores (uno a cada lado del manubrio)."
+        },
+        {
+          "title": "Peligro al pedir o prestar una moto",
+          "content": "Más del 50% de las muertes de motociclistas ocurren en personas con menos de un año de experiencia en ESA moto en particular. Si PIDE prestada: practicar en zona cerrada, revisar como si fuera propia (direccionales, luces, bocina, tacto de frenos/clutch/acelerador, ubicación del corte de ignición y válvula de combustible), conducir con precaución extrema y mayor margen de frenado. Si VA A PRESTAR: verificar que tiene licencia vigente y adecuada + casco certificado + ropa reflectiva, y exigirle que se familiarice con la moto antes de circular."
+        },
+        {
+          "title": "Postura ergonómica para control milimétrico",
+          "content": "Torso: sentarse orientado hacia adelante; brazos ligeramente flexionados (nunca tensos ni rectos). Manos y muñecas: sujetar firmemente; muñeca derecha COMPLETAMENTE RECTA (si flexionada hacia abajo puede accionar el acelerador accidentalmente en un bache). Rodillas: FUERTEMENTE apretadas contra el tanque = principal punto de anclaje. Pies: firmemente sobre los estribos; PROHIBIDO arrastrarlos o dejarlos colgando (pueden engancharse con pavimento, baches o aceras); puntas hacia abajo, listos para accionar pedales."
+        },
+        {
+          "title": "Protocolo de abordaje y arranque",
+          "content": "Abordar SIEMPRE por el lado IZQUIERDO. Pasar pierna derecha por encima del asiento hasta quedar centrado. Verificar Neutro (N, luz verde). Al presionar ignición: mantener embrague y freno apretados a fondo simultáneamente. Antes de soltar: verificar que la luz delantera esté encendida, ajustar espejos. NUNCA olvidar plegar la patilla lateral — olvidarla abajo es causa frecuente de caídas graves al tomar la primera curva."
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "title": "Antes de iniciar el viaje",
+      "sections": [
+        {
+          "title": "Inspección técnica pre-salida",
+          "content": "Revisar manchas de líquidos en el suelo (indican fugas). Estado de llantas (sin desgastes irregulares). Tensión de la cadena. Nivel de combustible suficiente para el trayecto. Luces de advertencia en el panel (presión de aceite, motor, etc.). Estado de todo el sistema de luces."
+        },
+        {
+          "title": "Autoevaluación del conductor",
+          "content": "Pleno control de capacidades físicas, emocionales y psicológicas. Sin fatiga extrema ni estrés severo. Sin condiciones médicas agudas. Sin influencia de alcohol, drogas o medicamentos que afecten percepción/reacción/atención."
+        },
+        {
+          "title": "Planificación de la ruta",
+          "content": "Conocer la ruta con antelación: ¿montaña o costa? ¿vías difíciles? ¿vehículos pesados? Identificar rutas alternativas. Principiantes: evitar rutas difíciles y horarios nocturnos. Monitorear condiciones climáticas y adaptar la vestimenta."
+        },
+        {
+          "title": "Reglas para pasajeros y equipaje",
+          "content": "PASAJEROS: deben ser MAYORES DE 5 AÑOS. Obligatorio: equipo de seguridad adecuado y postura correcta durante todo el trayecto. EQUIPAJE: evitar carga excesivamente grande o pesada. Los objetos NO deben exceder el ancho físico de la moto ni sobresalir más allá del faro trasero. Prohibido instalar soportes de carga no aprobados por el fabricante."
+        },
+        {
+          "title": "Ajuste de espejos (antes de arrancar)",
+          "content": "Ajustar DESPUÉS de adoptar la postura final de conducción, NUNCA en movimiento. Espejo derecho: enfocado en el carril derecho + parte del propio carril (vehículos por la derecha y detrás). Espejo izquierdo: enfocado en el carril izquierdo (zona de adelantamiento de otros). Giro de cabeza OBLIGATORIO antes de cualquier maniobra para verificar ángulos muertos."
+        },
+        {
+          "title": "Equipo de seguridad y abordaje",
+          "content": "Colocarse guantes, rodilleras, coderas y dispositivos de seguridad. Cinta retrorreflectiva obligatoria. CASCO: centrado y ajustado; correas laterales firmes pero cómodas; hebilla cerrada OBLIGATORIAMENTE bajo la barbilla; verificar que no se mueva. Subir SIEMPRE por el lado izquierdo."
+        },
+        {
+          "title": "Documentación obligatoria para circular",
+          "content": "Cédula de identidad (identificación vigente). Licencia de conducir (vigente y del tipo adecuado). Permiso de circulación. Hoja de Inspección Técnica (IVE) vigente. Título de propiedad."
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "title": "Durante el viaje",
+      "sections": [
+        {
+          "title": "Vigilancia constante 360°",
+          "content": "Al ponerse en movimiento aumentan la acción, la velocidad y los riesgos. El conductor no puede mirar solo al frente — vigilancia constante en 360°: frente, costados y parte trasera por espejos. Actitud mental positiva, respetuosa y consciente de la responsabilidad. Evitar provocaciones, reducir estrés y prevenir conflictos."
+        },
+        {
+          "title": "Estrategias visuales avanzadas",
+          "content": "Mirada hacia lo lejos: enfocar hacia el HORIZONTE de la vía (no el asfalto inmediato), especialmente a alta velocidad. Permite detectar con tiempo suficiente obstáculos, curvas, baches o vehículos detenidos. Visión periférica: percibir y procesar lo que sucede alrededor sin mover la cabeza; crítica en entornos urbanos (peatones cruzando, puertas abriéndose, ciclistas, señales)."
+        },
+        {
+          "title": "Gestión de puntos ciegos (ángulos muertos)",
+          "content": "Propios: giro rápido de cabeza hacia el costado (comprobación de hombro) ANTES de cualquier giro o cambio de carril. Estar en el punto ciego de otros: NUNCA ir emparejado a los costados traseros de camiones o buses. Regla de supervivencia: si no puede ver el espejo lateral del camión y el rostro del conductor, ÉL TAMPOCO PUEDE VERLE. Salir del punto ciego: acelerar suavemente o reducir velocidad; en emergencia usar bocina o destellos de luces."
+        },
+        {
+          "title": "Control dinámico: marchas y frenado",
+          "content": "Cambios en transmisión manual: desacelerar levemente → embrague a fondo → subir palanca → soltar embrague gradualmente + volver a acelerar. Suavidad para no desestabilizar la suspensión. Técnica de frenado (regla 80/20): freno delantero = 80%, trasero = 20%; aplicar SIMULTÁNEAMENTE y de forma PROGRESIVA. Solo delantero brusco = vuelco hacia adelante. Solo trasero = patinaje descontrolado. Freno de motor: en descensos o al acercarse a semáforos, bajar marchas secuencialmente para que la compresión del motor reduzca la velocidad."
+        },
+        {
+          "title": "Conducción segura en curvas",
+          "content": "1) Frenar y reducir marchas SIEMPRE en línea recta, ANTES de entrar a la curva (frenar dentro de la curva = bloqueo + caída). 2) Situarse en la parte exterior del carril para obtener mayor radio de giro. 3) Mirar profundamente hacia el punto de SALIDA de la curva. 4) Mantener aceleración constante o ligeramente sostenida durante el giro (da tracción y estabilidad a la rueda trasera). 5) Al superar el ápice, enderezar gradualmente e incrementar suavemente la aceleración."
+        },
+        {
+          "title": "Adelantamientos e intersecciones",
+          "content": "Adelantamiento: SOLO por el carril izquierdo; SOLO en zonas permitidas (líneas discontinuas) con visibilidad absoluta; NUNCA en curvas, túneles, intersecciones, puentes o con mal clima. Procedimiento: evaluar espacio → direccional izquierda → espejos + punto ciego → acelerar rápidamente → señalizar a la derecha → reincorporarse sin cortar el paso. Intersecciones: siempre disminuir velocidad; dedos sobre las manillas de freno; buscar contacto visual con otros conductores; NUNCA asumir que cederán el paso."
+        },
+        {
+          "title": "Conducción con acompañante y carga",
+          "content": "Acompañante: equipo de protección completo; pies en estribos; sujetarse a agarraderas o cintura del conductor; en curvas ACOMPAÑAR el movimiento e inclinarse en la misma dirección (oponer resistencia desestabiliza peligrosamente el vehículo). Carga: objetos livianos, sujetos con mallas o cordones elásticos, ubicados lo más bajo posible para no elevar el centro de gravedad. Carga suelta o desequilibrada = vibraciones incontrolables."
+        },
+        {
+          "title": "Pausas activas contra la fatiga",
+          "content": "Pausas CADA 2 HORAS de conducción continua. Orillarse en lugar seguro, apagar el motor, bajarse, caminar, estiramientos musculares, hidratarse. Previene dolores, pérdida de sensibilidad por frío o postura, somnolencia y fatiga visual. Conducir cansado equivale a conducir bajo efectos del alcohol."
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "title": "Fin del viaje",
+      "sections": [
+        {
+          "title": "Detenciones operativas en el tránsito",
+          "content": "Al obedecer señales o ceder el paso: anticipar reduciendo velocidad gradualmente con freno de motor (bajar marchas progresivamente) para evitar frenadas de pánico. Paradas cortas (ALTO/CEDA): mantener en primera velocidad con embrague apretado = salida rápida. Paradas largas (semáforos en rojo): pasar a Neutro, soltar controles para descansar manos, apoyar pie(s) en el suelo."
+        },
+        {
+          "title": "Detenciones de emergencia o climáticas",
+          "content": "Ubicar el vehículo en el espaldón DERECHO lo más rápido posible. Colocar en Neutro, desplegar patilla lateral, encender luces de emergencia o direccionales. PROHIBIDO estacionarse en el espaldón IZQUIERDO (riesgo mortal de ser embestido por vehículos del carril rápido). Si el daño obliga a dejar la moto: apagar motor, dejar luces de emergencia encendidas, alejarse físicamente a distancia prudente, NO quitarse la indumentaria retrorreflectiva. Niebla densa: orillarse y usar luces de emergencia. Humo denso: NO detenerse dentro de la nube (riesgo de ser chocado por detrás); continuar avanzando a baja velocidad hasta salir."
+        },
+        {
+          "title": "Técnica de estacionamiento final",
+          "content": "Identificar lugar seguro y legal. Señalizar con direccional correspondiente con suficiente anticipación. Usar espejos + giro de cabeza para verificar que nadie intente rebasar. Ideal: estacionar de frente a la acera o en posición de salida. Freno delantero aplicado; caja de cambios en Neutro. Evaluar el terreno (inclinaciones, desniveles, lastre) antes de desplegar la patilla. Apagar motor. Descender SIEMPRE por el lado izquierdo."
+        },
+        {
+          "title": "Zonas prohibidas para estacionar (moto)",
+          "content": "Frente a: centros educativos, centros de salud, estaciones de bomberos, Cruz Roja, garajes privados, parqueos públicos. Frente a hidrantes o a menos de 5 metros de uno. Menos de 5 metros de un paso peatonal. Sobre la calzada o acera obstruyendo el paso. Menos de 10 metros de una intersección urbana. Menos de 25 metros de una intersección no urbana. Cimas de pendientes, curvas, túneles, puentes, pasos elevados, ciclovías. Sobre la línea del tren o en su derecho de vía. En rampas de aceras para sillas de ruedas. En autopistas, vías principales o espaldones con línea amarilla. En espacios para personas con discapacidad sin permiso. En carriles-bici o aceras-bici."
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "title": "Exigencias al conducir una motocicleta",
+      "sections": [
+        {
+          "title": "La enorme responsabilidad",
+          "content": "Conducir una moto implica responsabilidad directa sobre la propia vida y la integridad de los demás usuarios. La experiencia segura se alcanza con tiempo y repetición de buenas prácticas."
+        },
+        {
+          "title": "Las tres habilidades fundamentales",
+          "content": "Físicas: mantener equilibrio, soportar el peso de la máquina, coordinar los mandos. Técnicas: conocer el funcionamiento del vehículo y aplicar las reglas de tránsito correctas. Emocionales: mantener la calma, evitar impulsos, tomar decisiones maduras bajo presión."
+        },
+        {
+          "title": "Exigencias físicas y condiciones de riesgo",
+          "content": "Un problema de salud repentino puede causar pérdida total del control. Condiciones de alto riesgo: enfermedades crónicas (diabetes, enfermedades cardíacas = crisis al volante); padecimientos comunes (gripe, resfriado fuerte = reducen energía y atención); cualquier condición que ralentice los tiempos de reacción."
+        },
+        {
+          "title": "Equilibrio emocional",
+          "content": "El cerebro necesita trabajar muy rápido para procesar el entorno. Emociones extremas que generan riesgo grave: estrés mental (reduce capacidad de análisis, provoca fatiga psicológica), enojo/ira (fomenta conductas agresivas y decisiones imprudentes), alegría excesiva (puede llevar a exceder la velocidad por exceso de confianza)."
+        },
+        {
+          "title": "Peligro de las distracciones internas",
+          "content": "Situaciones que alteren el estado emocional son peligros potenciales. Discutir con alguien antes de subirse a la moto = los problemas personales ocupan los pensamientos y distraen de la conducción. La disminución en el nivel de concentración limita la capacidad de prever peligros a tiempo."
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "title": "Sistemas de protección y seguridad",
+      "sections": [
+        {
+          "title": "Seguridad activa vs pasiva",
+          "content": "ACTIVA: elementos que previenen el accidente (ABS, llantas en buen estado, control de tracción). PASIVA: implementos de protección personal que actúan en el momento de la caída para minimizar daños. Los accidentes más graves pueden ocurrir a pocos metros del hogar — usar equipo completo SIEMPRE."
+        },
+        {
+          "title": "El casco — protección vital obligatoria",
+          "content": "El elemento de seguridad pasiva MÁS IMPORTANTE. Obligatorio para conductor Y acompañante. La cabeza es la parte más vulnerable; un golpe puede causar lesiones cerebrales graves, secuelas permanentes o muerte instantánea. Las 3 funciones mecánicas del casco: 1) Barrera: previene contacto del cráneo con el asfalto/objetos. 2) Absorción de impactos: estructura interna que se comprime y reduce la aceleración del cráneo. 3) Distribución de fuerza: reparte la energía del golpe por toda la superficie. Vida útil limitada: reemplazar según fecha de caducidad del fabricante O de inmediato tras cualquier impacto fuerte (la estructura interna se deforma y pierde capacidad)."
+        },
+        {
+          "title": "Tipos de cascos",
+          "content": "CERRADOS/INTEGRALES: los más seguros y recomendados; una sola pieza, protección total del cráneo, rostro, mandíbula y barbilla. ABIERTOS/SEMIABIERTOS: altamente peligrosos; dejan el rostro, cuello y mandíbula totalmente expuestos a la fricción con el asfalto."
+        },
+        {
+          "title": "Certificaciones de seguridad del casco",
+          "content": "Un casco sin certificación es solo accesorio decorativo. Certificaciones reconocidas: DOT (Estados Unidos — auto-certificación del fabricante, estándares mínimos), ECE/22.05 (Comunidad Europea — una de las más estrictas del mundo, reconocida en 50+ países), JIS T 8133 (Japón — ley de normalización industrial), SNELL (fundación privada sin fines de lucro, uno de los más rigurosos, frecuente en cascos de competición)."
+        },
+        {
+          "title": "Cómo elegir la talla correcta del casco",
+          "content": "Al ponérselo: debe entrar justo y presionar firmemente mejillas y pómulos (las espumas cederán con el uso). No debe causar dolor pero tampoco sobrar espacio. Si entra un dedo fácilmente por la parte frontal o trasera: el casco es grande, probar talla menor. Con el casco puesto: mover la cabeza a los lados y arriba/abajo; el casco debe moverse con la piel sin deslizarse. Correa: firme bajo la barbilla, máximo un dedo entre el amarre y la garganta."
+        },
+        {
+          "title": "Elementos retrorreflectivos",
+          "content": "Obligatorio de día y de noche. Diseñados para reflejar la luz de los faros de otros vehículos directamente hacia su origen. Formas: chalecos o cintas. Calidad: grado diamante o prismático. Pueden ser verde, naranja o amarillo. Obligatorio para conductor Y acompañante."
+        },
+        {
+          "title": "Guantes",
+          "content": "Por instinto humano de supervivencia, las manos se ponen primero en caídas. Sin protección: abrasiones profundas y fracturas incapacitantes. Funciones: protección mecánica (amortiguación, refuerzos en nudillos), termorregulación (evitan entumecimiento de dedos = control total de frenos y clutch). Tipos por clima: invierno (impermeables, aislamiento térmico) y verano (ligeros, ventilados). Tipos por uso: deportivos (máxima protección), touring (viajes largos) y urbanos (uso diario)."
+        },
+        {
+          "title": "Coderas y rodilleras",
+          "content": "Lesiones en codos y rodillas pueden dañar tendones, ligamentos y cartílagos con secuelas permanentes. Tipos: CONVENCIONALES (almohadilla fuerte, protección básica, fáciles de poner/quitar) y ARTICULADOS (partes móviles que se ajustan al doblez natural; las de pierna cubren también tibia, peroné y parte del fémur, evitando hiperextensión)."
+        },
+        {
+          "title": "Zapatos y botas de seguridad",
+          "content": "Los pies son el primer contacto con la carretera, sostienen el peso del vehículo y controlan la palanca de cambios y freno trasero. Sandalias y tenis convencionales = imprudencia grave. Un buen calzado de motociclista cumple: defensa contra impactos (absorbe energía de golpes laterales o si la moto cae sobre el pie), protección contra abrasión (cuero de plena flor, plásticos duros, kevlar), ergonomía y agarre (suela antideslizante), diseño estructural (doble o triple costura, cuello acolchado para el tobillo, inserciones rígidas en dedos y talón)."
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "title": "Factores de riesgo que intervienen en los accidentes de tránsito",
+      "sections": [
+        {
+          "title": "El entorno en constante cambio",
+          "content": "Error mortal: confiarse ante la aparente tranquilidad del camino. La vía NUNCA es igual dos veces. Cada carretera tiene una velocidad máxima pensada específicamente para la geografía y el diseño del lugar. Una recta larga puede dar la falsa sensación de poder ir más rápido — exceder la velocidad = no poder reaccionar ni frenar a tiempo ante un obstáculo."
+        },
+        {
+          "title": "Peligros físicos en la vía",
+          "content": "Huecos profundos, baches mal reparados, hundimientos del asfalto. Objetos caídos (rocas, ramas, restos de vehículos). Riesgos según la zona: Urbana/poblados = reducir fuertemente la velocidad, atención a ciclistas, peatones distraídos y especialmente menores de edad que pueden salir corriendo. Carreteras rurales = más oscuras, estrechas, menos señalización; riesgo de peatones en el espaldón, ciclistas sin luz, animales de granja o fauna silvestre."
+        },
+        {
+          "title": "Conducción nocturna",
+          "content": "Multiplica exponencialmente los factores de riesgo. Problemas: deslumbramiento/ceguera temporal por luces altas de vehículos de frente; tendencia natural hacia fatiga y somnolencia; dificultad para observar obstáculos lejanos; tiempos de reacción reducidos. Medidas obligatorias: luz baja en zonas pobladas, alta SOLO donde no vienen vehículos de frente; distancia de seguridad mucho mayor; atención doble a señales y cruces; descansos regulares; indumentaria retrorreflectiva obligatoria."
+        },
+        {
+          "title": "Lluvia e hidroplaneo",
+          "content": "Primeras gotas de lluvia: el agua se mezcla con aceites y combustibles derramados en el asfalto → pista de patinaje → pérdida casi total de adherencia en llantas → derrapes o salidas de la vía. HIDROPLANEO: las llantas no logran evacuar el agua suficientemente rápido → deslizamiento total sobre capa líquida → imposible frenar o girar el manubrio. Acciones preventivas: disminuir drásticamente la velocidad, mantener mayor distancia de seguridad, evitar frenadas bruscas, luces bajas encendidas."
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "title": "Factores de distracción al conducir",
+      "sections": [
+        {
+          "title": "Nota",
+          "content": "Capítulo no completamente accesible en el libro completo por límite de caracteres. El tema cubre los principales factores de distracción al conducir una motocicleta: uso del celular, conversaciones, objetos en el manillar, auriculares, fatiga mental, distracciones externas (publicidad, eventos en la vía) y cómo cada segundo de distracción equivale a metros recorridos a ciegas a alta velocidad."
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "title": "Escenarios al vivir situaciones de emergencia",
+      "sections": [
+        {
+          "title": "Nota",
+          "content": "Capítulo no completamente accesible en el libro completo. Cubre protocolos específicos para emergencias en moto: reventón de llanta en marcha (soltar acelerador, no frenar bruscamente, mantener el rumbo hasta detenerse), fallo de frenos (usar el freno alternativo + freno de motor + buscar zona para detención), caída de lluvia intensa repentina, animales cruzando, objetos en la calzada y cómo reaccionar sin perder el control."
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "title": "Generalidades de las leyes vigentes en movilidad y seguridad vial",
+      "sections": [
+        {
+          "title": "Nota",
+          "content": "Capítulo no completamente accesible. Cubre las leyes principales que rigen la conducción de motocicletas en Costa Rica: Ley de Tránsito por Vías Públicas Terrestres y Seguridad Vial (Ley 9078), infracciones y sanciones específicas para motociclistas, derechos del conductor, y el sistema de evaluación permanente (puntos)."
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "title": "Ley de tránsito por vías públicas terrestres y seguridad vial",
+      "sections": [
+        {
+          "title": "Nota",
+          "content": "Capítulo no completamente accesible. Profundiza en artículos específicos de la Ley 9078 aplicables a motociclistas: clasificación de infracciones (categorías A, B, C, D, E), multas correspondientes a cada categoría, conducción temeraria, alcoholemia (0.0 mg/L para novatos y profesionales; 0.5 mg/L para conductores comunes), sanciones por no uso de casco, exceso de velocidad, conducción sin licencia, y prohibiciones específicas para el motociclista."
+        }
+      ]
+    }
+  ]
+}

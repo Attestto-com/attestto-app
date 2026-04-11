@@ -149,14 +149,15 @@ export async function loadManualContext(
 ): Promise<string> {
   const manualFile =
     licenseType === 'A'
-      ? '../../content/manuals/moto.json'
+      ? '/content/manuals/moto.json'
       : licenseType === 'PRO'
-        ? '../../content/manuals/transporte-publico.json'
-        : '../../content/manuals/automovil.json'
+        ? '/content/manuals/transporte-publico.json'
+        : '/content/manuals/automovil.json'
 
   try {
-    const mod = await import(/* @vite-ignore */ manualFile)
-    const data = mod.default ?? mod
+    const res = await fetch(manualFile)
+    if (!res.ok) throw new Error(`Manual fetch failed: ${res.status}`)
+    const data = await res.json()
 
     // Extract chapters matching requested categories
     const chapters = (data.chapters ?? []).filter(
