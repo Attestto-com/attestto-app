@@ -1106,7 +1106,7 @@ document.querySelectorAll('#modules-grid .module-card').forEach(card => {
   const name = card.querySelector('.module-name')?.textContent;
   const id = moduleIdMap[name];
   if (id) {
-    card.addEventListener('click', () => window.location.href = '/demo-module?id=' + id);
+    card.addEventListener('click', () => window.location.href = '/demo-module.html?id=' + id);
   }
 });
 
