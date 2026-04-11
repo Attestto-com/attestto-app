@@ -591,11 +591,12 @@ body {
     <ul class="hero-features">
       <li><span class="material-icons-outlined">fingerprint</span> Identidad soberana (DID + Ed25519)</li>
       <li><span class="material-icons-outlined">verified_user</span> Credenciales verificables (W3C VC)</li>
-      <li><span class="material-icons-outlined">visibility</span> Examenes proctorizados con IA</li>
-      <li><span class="material-icons-outlined">anchor</span> Anclaje en blockchain</li>
-      <li><span class="material-icons-outlined">lock</span> Passkeys (WebAuthn)</li>
+      <li><span class="material-icons-outlined">psychology</span> IA on-device (Gemma 2B, sin servidor)</li>
+      <li><span class="material-icons-outlined">visibility</span> Examenes proctorizados + competencia perpetua</li>
+      <li><span class="material-icons-outlined">anchor</span> Anclaje en blockchain (Solana)</li>
+      <li><span class="material-icons-outlined">lock</span> Passkeys (WebAuthn) + boveda cifrada</li>
       <li><span class="material-icons-outlined">wifi_off</span> Offline-first / Local-first</li>
-      <li><span class="material-icons-outlined">dark_mode</span> Tema oscuro</li>
+      <li><span class="material-icons-outlined">security</span> Trust store centralizado (BCCR PKI)</li>
       <li><span class="material-icons-outlined">install_mobile</span> PWA lista para instalar</li>
     </ul>
     <div class="license">Apache 2.0 &middot; attestto.com</div>
@@ -641,6 +642,7 @@ body {
     <button class="tab" data-domain="docs">Documentos</button>
     <button class="tab" data-domain="exams">Examenes</button>
     <button class="tab" data-domain="payments">Pagos</button>
+    <button class="tab" data-domain="gov">Gobierno</button>
     <button class="tab" data-domain="infra">Infraestructura</button>
   </div>
 
@@ -702,7 +704,7 @@ body {
           <div class="module-country">Universal</div>
         </div>
       </div>
-      <div class="module-desc">Lectura, firma y verificacion de documentos PDF. Firma Ed25519 vinculada al DID del usuario. Verificacion de firmas existentes.</div>
+      <div class="module-desc">Firma inteligente con analisis pre-firma por IA: clasificacion, extraccion de clausulas clave, resumen en lenguaje simple, y nivel de riesgo. Firma Ed25519 vinculada al DID. Verificacion de firmas existentes (BCCR + Attestto).</div>
       <span class="module-status status-functional">Funcional</span>
     </div>
 
@@ -741,7 +743,7 @@ body {
           <div class="module-country">CR</div>
         </div>
       </div>
-      <div class="module-desc">Examen proctorizado con deteccion facial, liveness, cadena de hash SHA-256, firma Ed25519, anclaje blockchain, y modelo de dominio SM-2.</div>
+      <div class="module-desc">Doble modo: examen COSEVI tradicional (40 preguntas, proctorizado) y competencia perpetua Attestto (9 macro-categorias, 90% por categoria). IA on-device genera preguntas unicas. Cadena de hash SHA-256, firma Ed25519, anclaje blockchain.</div>
       <span class="module-status status-functional">Funcional</span>
     </div>
 
@@ -819,7 +821,59 @@ body {
           <div class="module-country">Universal</div>
         </div>
       </div>
-      <div class="module-desc">Mensajes firmados con DID. Comunicacion entre partes verificadas. Sin intermediarios. Cifrado end-to-end con claves de boveda.</div>
+      <div class="module-desc">Mensajes P2P firmados con DID via DIDComm v2. Conversaciones que se convierten en acuerdos con fuerza probatoria. Sin servidor central. Cifrado end-to-end.</div>
+      <span class="module-status status-planned">Planificado</span>
+    </div>
+
+    <!-- ── Gobierno ────────────────────────────────── -->
+
+    <div class="module-card" data-domain="gov" data-country="CR">
+      <div class="module-header">
+        <div class="module-icon"><span class="material-icons-outlined">account_balance</span></div>
+        <div>
+          <div class="module-name">Tramites Municipales</div>
+          <div class="module-country">CR</div>
+        </div>
+      </div>
+      <div class="module-desc">21 tramites ciudadanos en 84 municipalidades: patentes, construccion, tributos, servicios publicos. Identidad y documentos portables en la billetera. Verificacion criptografica sin repetir KYC.</div>
+      <span class="module-status status-planned">Planificado</span>
+    </div>
+
+    <div class="module-card" data-domain="gov" data-country="CR">
+      <div class="module-header">
+        <div class="module-icon"><span class="material-icons-outlined">smart_toy</span></div>
+        <div>
+          <div class="module-name">CivicAssist</div>
+          <div class="module-country">CR</div>
+        </div>
+      </div>
+      <div class="module-desc">Asistente civico con IA. El ciudadano describe un problema en lenguaje natural, el sistema identifica la entidad competente y genera el reporte automaticamente.</div>
+      <span class="module-status status-planned">Planificado</span>
+    </div>
+
+    <div class="module-card" data-domain="gov" data-country="CR">
+      <div class="module-header">
+        <div class="module-icon"><span class="material-icons-outlined">local_police</span></div>
+        <div>
+          <div class="module-name">Oficial de Transito</div>
+          <div class="module-country">CR</div>
+        </div>
+      </div>
+      <div class="module-desc">Verificacion de credenciales en campo: licencia, marchamo, RTV, seguro, permisos. Auto-verificable sin internet. Verificacion mutua — el oficial tambien presenta su credencial.</div>
+      <span class="module-status status-planned">Planificado</span>
+    </div>
+
+    <!-- ── Seguridad ───────────────────────────────── -->
+
+    <div class="module-card" data-domain="identity" data-country="Universal">
+      <div class="module-header">
+        <div class="module-icon"><span class="material-icons-outlined">group</span></div>
+        <div>
+          <div class="module-name">Delegacion y Multi-firma</div>
+          <div class="module-country">Universal</div>
+        </div>
+      </div>
+      <div class="module-desc">4 niveles de delegacion (presentacion, gestion, firma, plena). Multi-firma para actos que requieren varias partes. Anti-phishing: el funcionario tambien se verifica ante el ciudadano.</div>
       <span class="module-status status-planned">Planificado</span>
     </div>
 
