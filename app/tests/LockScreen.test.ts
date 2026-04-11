@@ -163,10 +163,10 @@ describe('LockScreen', () => {
       await vi.waitFor(() => expect(mockRegister).toHaveBeenCalled())
     })
 
-    it('navigates to home on successful registration', async () => {
+    it('navigates to onboarding on first successful registration', async () => {
       const wrapper = mountLockScreen()
       await wrapper.find('.unlock-btn').trigger('click')
-      await vi.waitFor(() => expect(mockReplace).toHaveBeenCalledWith({ name: 'home' }))
+      await vi.waitFor(() => expect(mockReplace).toHaveBeenCalledWith({ name: 'onboarding' }))
     })
 
     it('disables button while unlocking', async () => {
@@ -195,11 +195,19 @@ describe('LockScreen', () => {
       await vi.waitFor(() => expect(mockAuthenticate).toHaveBeenCalled())
     })
 
-    it('navigates to home on successful auth', async () => {
+    it('navigates to home when onboarding already completed', async () => {
       registered = true
+      localStorage.setItem('attestto:onboarding:completed', 'true')
       const wrapper = mountLockScreen()
       await wrapper.find('.unlock-btn').trigger('click')
       await vi.waitFor(() => expect(mockReplace).toHaveBeenCalledWith({ name: 'home' }))
+    })
+
+    it('navigates to onboarding when not yet completed', async () => {
+      registered = true
+      const wrapper = mountLockScreen()
+      await wrapper.find('.unlock-btn').trigger('click')
+      await vi.waitFor(() => expect(mockReplace).toHaveBeenCalledWith({ name: 'onboarding' }))
     })
   })
 
@@ -324,7 +332,7 @@ describe('LockScreen', () => {
       await wrapper.find('.unlock-btn').trigger('click')
       await vi.waitFor(() => {
         expect(wrapper.find('.unlock-error').exists()).toBe(false)
-        expect(mockReplace).toHaveBeenCalledWith({ name: 'home' })
+        expect(mockReplace).toHaveBeenCalledWith({ name: 'onboarding' })
       })
     })
   })

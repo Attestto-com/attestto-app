@@ -21,7 +21,9 @@ async function handleUnlock() {
   try {
     const ok = await vault.unlock()
     if (ok) {
-      router.replace({ name: 'home' })
+      const onboarded = localStorage.getItem('attestto:onboarding:completed')
+        || localStorage.getItem('attestto:onboarding:skipped')
+      router.replace({ name: onboarded ? 'home' : 'onboarding' })
     } else {
       error.value = t('lock.unlockFailed')
     }

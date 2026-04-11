@@ -83,6 +83,30 @@ export interface AttesttoModule {
   getInboxItems?: () => Promise<InboxItem[]>
   /** Provides widget component for home screen */
   getHomeWidget?: () => Component | null
+  /** Module-specific onboarding screens shown on first use.
+   *  Must explain what data the module collects, why, and what happens with it.
+   *  Shell checks this on first module use; completion stored in scoped storage. */
+  getOnboarding?: () => OnboardingFlow | null
+}
+
+// ── Onboarding Flow ──────────────────────────────────────────────
+
+export interface OnboardingFlow {
+  /** Unique ID for tracking completion */
+  id: string
+  /** Screens shown in sequence */
+  screens: OnboardingScreen[]
+  /** VC type minted on completion (optional) */
+  completionCredential?: string
+}
+
+export interface OnboardingScreen {
+  /** Icon name (Material Icons) */
+  icon: string
+  /** Title (short, translated) */
+  title: string
+  /** Body text (2-3 sentences max, translated) */
+  body: string
 }
 
 // ── Shared Domain Types ──────────────────────────────────────────

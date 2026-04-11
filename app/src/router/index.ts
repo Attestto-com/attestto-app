@@ -27,6 +27,12 @@ const router = createRouter({
       component: () => import('@/views/LockScreen.vue'),
     },
     {
+      path: '/onboarding',
+      name: 'onboarding',
+      component: () => import('@/views/OnboardingFlow.vue'),
+      meta: { requiresAuth: true },
+    },
+    {
       path: '/home',
       name: 'home',
       component: () => import('@/views/HomePage.vue'),
