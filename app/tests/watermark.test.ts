@@ -43,18 +43,18 @@ describe('useWatermark', () => {
 
   describe('buildWatermarkPayload', () => {
     it('contains session ID prefix', () => {
-      const payload = buildWatermarkPayload('session-12345678', 'did:sns:user.sol', 5)
+      const payload = buildWatermarkPayload('session-12345678', 'did:web:user.attestto.id', 5)
       expect(payload).toContain('session-')
     })
 
     it('contains question index', () => {
-      const payload = buildWatermarkPayload('abc', 'did:sns:user.sol', 42)
+      const payload = buildWatermarkPayload('abc', 'did:web:user.attestto.id', 42)
       expect(payload).toContain('42')
     })
 
     it('contains DID suffix', () => {
-      const payload = buildWatermarkPayload('abc', 'did:sns:eduardo.sol', 1)
-      expect(payload).toContain('eduardo.sol')
+      const payload = buildWatermarkPayload('abc', 'did:web:eduardo.attestto.id', 1)
+      expect(payload).toContain('.attestto.id')
     })
   })
 

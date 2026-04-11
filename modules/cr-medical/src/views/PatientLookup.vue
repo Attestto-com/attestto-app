@@ -126,7 +126,7 @@ const canContinue = computed(() => {
 async function startQRScan() {
   // Shell QR scanner — in real app, opens camera via shell bridge
   // On scan success, we receive a DID or VC offer URL
-  const fakeDID = 'did:sns:paciente.sol'  // Placeholder — real QR decoder here
+  const fakeDID = 'did:web:paciente.attestto.id'  // Placeholder — real QR decoder here
   await resolveFromDID(fakeDID)
 }
 
@@ -148,7 +148,7 @@ async function proceed() {
 
   // Create doctor info from their vault VC (placeholder — real impl via ctx)
   const doctorInfo = {
-    did: 'did:sns:doctor.sol',   // From vault
+    did: 'did:web:medico.attestto.id',   // From vault
     nombre: 'Dr.',               // From ColegioMedicosVC
     apellidos: '',
     numeroColegiado: '00000',

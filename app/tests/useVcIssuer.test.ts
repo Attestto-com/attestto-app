@@ -7,10 +7,10 @@ function makeVc(contentVersion: string): VerifiableCredential {
     '@context': ['https://www.w3.org/2018/credentials/v1'],
     type: ['VerifiableCredential', 'DrivingCompetencyCR'],
     id: 'urn:uuid:test-001',
-    issuer: { id: 'did:sns:test.sol', name: 'Test' },
+    issuer: { id: 'did:web:test.attestto.id', name: 'Test' },
     issuanceDate: '2026-04-11T00:00:00Z',
     credentialSubject: {
-      id: 'did:sns:test.sol',
+      id: 'did:web:test.attestto.id',
       licenseType: 'B1',
       model: 'perpetual-competency',
       contentVersion,

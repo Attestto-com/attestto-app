@@ -70,10 +70,45 @@ const countryFlags: Record<string, string> = {
     </div>
 
     <!-- Accounts Tab -->
-    <div v-if="activeTab === 'accounts'" class="empty-state">
-      <q-icon name="account_balance" size="48px" color="grey-6" />
-      <p>Proximamente</p>
-      <p class="hint">Attestto Pay — cuentas USD, CRC, EUR</p>
+    <div v-if="activeTab === 'accounts'" class="onboarding-cta">
+      <div class="onboarding-icon">
+        <q-icon name="verified_user" size="40px" color="primary" />
+      </div>
+      <h3 class="onboarding-title">Completa tu identidad</h3>
+      <p class="onboarding-desc">
+        Verifica tu identidad para desbloquear cuentas, pagos y credenciales verificables.
+      </p>
+      <div class="onboarding-steps">
+        <div class="onboarding-step">
+          <span class="step-num">1</span>
+          <div>
+            <div class="step-title">Verificacion de identidad (KYC)</div>
+            <div class="step-hint">Documento + selfie con prueba de vida</div>
+          </div>
+        </div>
+        <div class="onboarding-step">
+          <span class="step-num">2</span>
+          <div>
+            <div class="step-title">Credencial de identidad</div>
+            <div class="step-hint">Recibe tu VC firmado por Attestto</div>
+          </div>
+        </div>
+        <div class="onboarding-step">
+          <span class="step-num">3</span>
+          <div>
+            <div class="step-title">Cuentas y pagos</div>
+            <div class="step-hint">Attestto Pay — USD, CRC, EUR</div>
+          </div>
+        </div>
+      </div>
+      <q-btn
+        label="Iniciar verificacion"
+        color="primary"
+        unelevated
+        rounded
+        class="onboarding-btn"
+        @click="router.push({ name: 'settings' })"
+      />
     </div>
   </q-page>
 </template>
@@ -145,5 +180,83 @@ const countryFlags: Record<string, string> = {
 
 .hint {
   font-size: 13px;
+}
+
+.onboarding-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-lg) var(--space-md);
+  text-align: center;
+}
+
+.onboarding-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(89, 79, 211, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-md);
+}
+
+.onboarding-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: var(--space-xs);
+}
+
+.onboarding-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: var(--space-lg);
+  max-width: 280px;
+}
+
+.onboarding-steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: var(--space-lg);
+  text-align: left;
+}
+
+.onboarding-step {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+}
+
+.step-num {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+
+.step-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.step-hint {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.onboarding-btn {
+  width: 100%;
+  max-width: 280px;
 }
 </style>

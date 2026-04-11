@@ -141,7 +141,7 @@ export function getPublicKeyBase64url(): string {
 }
 
 export function getDID(): string {
-  return localStorage.getItem(DID_KEY) ?? 'did:sns:user.sol'
+  return localStorage.getItem(DID_KEY) ?? 'did:web:demo.attestto.id'
 }
 
 export function setDID(did: string): void {
