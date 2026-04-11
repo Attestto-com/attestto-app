@@ -20,8 +20,8 @@ const errorMessage = ref('')
 const enabled = ref(localStorage.getItem(OPT_IN_KEY) === 'true')
 const modelCached = ref(false)
 
-// Check if model exists in OPFS on load
-checkModelCached()
+// Clean up any leftover data from previous caching attempts
+cleanupLegacyCache()
 
 async function checkModelCached(): Promise<void> {
   try {
@@ -32,6 +32,12 @@ async function checkModelCached(): Promise<void> {
   } catch {
     modelCached.value = false
   }
+}
+
+async function cleanupLegacyCache(): Promise<void> {
+  // Remove old Cache API data that may be consuming quota
+  await caches.delete('attestto-llm-model-v1').catch(() => {})
+  await checkModelCached()
 }
 
 const modelSize = '~1.35 GB'
@@ -157,7 +163,14 @@ async function init(): Promise<void> {
   }
 
   try {
-    const modelBlobUrl = await ensureModelReady()
+    // Try OPFS cache first, fall back to direct URL (MediaPipe handles download)
+    let modelUrl: string
+    try {
+      modelUrl = await ensureModelReady()
+    } catch {
+      // OPFS failed (quota, unsupported) — pass URL directly to MediaPipe
+      modelUrl = MODEL_URL
+    }
 
     status.value = 'loading'
 
@@ -191,7 +204,7 @@ async function init(): Promise<void> {
     }
 
     // Wait for init to complete
-    await sendMessage('init', { modelUrl: modelBlobUrl })
+    await sendMessage('init', { modelUrl })
   } catch (err) {
     status.value = 'error'
     errorMessage.value = err instanceof Error ? err.message : String(err)
