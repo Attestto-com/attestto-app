@@ -32,10 +32,9 @@ onMounted(() => {
 .app-layout {
   background: var(--bg-base);
   min-height: 100dvh;
-  /* 44px = iOS status bar height; safe-area overrides when available */
   padding-top: max(16px, env(safe-area-inset-top, 16px));
-  padding-left: env(safe-area-inset-left, 0px);
-  padding-right: env(safe-area-inset-right, 0px);
+  padding-left: max(12px, env(safe-area-inset-left, 12px));
+  padding-right: max(12px, env(safe-area-inset-right, 12px));
 }
 
 .fade-enter-active,

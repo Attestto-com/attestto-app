@@ -182,20 +182,38 @@ export async function selectQuestions(
     }
   }
 
-  // Prioritize weak topics
-  const weak = unique.filter((q) =>
-    weakTopics.some((t) => q.category.toLowerCase().includes(t.toLowerCase())),
-  )
-  const rest = unique.filter(
-    (q) => !weakTopics.some((t) => q.category.toLowerCase().includes(t.toLowerCase())),
-  )
+  // Track recently asked questions to avoid repetition within session
+  const recentKey = 'cr-driving:recent-questions'
+  const recentRaw = sessionStorage.getItem(recentKey)
+  const recentIds = new Set<string>(recentRaw ? JSON.parse(recentRaw) : [])
 
-  // weakFocused: 100% from weak topics (micro-quiz), otherwise 30%
-  const weakRatio = weakFocused ? 1.0 : 0.3
-  const weakCount = Math.min(Math.floor(seedCount * weakRatio), weak.length)
-  const restCount = seedCount - weakCount
+  // Separate into not-recently-asked (preferred) and recently-asked (fallback)
+  const fresh = unique.filter((q) => !recentIds.has(q.id))
+  const pool = fresh.length >= seedCount ? fresh : unique // fall back to all if too few fresh
 
-  const seedSelected = [...shuffle(weak).slice(0, weakCount), ...shuffle(rest).slice(0, restCount)]
+  // Sort by category weakness — least mastered categories first
+  const weakSet = new Set(weakTopics.map((t) => t.toLowerCase()))
+  const scored = pool.map((q) => {
+    const catLower = q.category.toLowerCase()
+    const isWeak = weakTopics.some((t) => catLower.includes(t.toLowerCase()))
+    // Priority: weak topics first, then alphabetical spread
+    return { q, priority: isWeak ? 0 : 1 }
+  })
+
+  if (weakFocused) {
+    // Micro-quiz: take weak first, fill with rest if not enough
+    scored.sort((a, b) => a.priority - b.priority)
+  } else {
+    // Practice: 30% weak, 70% mixed
+    scored.sort(() => Math.random() - 0.5)
+  }
+
+  const seedSelected = shuffle(scored.map((s) => s.q)).slice(0, seedCount)
+
+  // Record which questions were asked
+  const askedIds = seedSelected.map((q) => q.id)
+  const updatedRecent = [...recentIds, ...askedIds].slice(-200) // keep last 200
+  sessionStorage.setItem(recentKey, JSON.stringify(updatedRecent))
 
   // Merge LLM + seed, shuffle final mix
   const combined = [...(llmQuestions ?? []), ...seedSelected]
