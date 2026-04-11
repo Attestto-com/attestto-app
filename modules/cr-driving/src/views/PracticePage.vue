@@ -182,9 +182,14 @@ function optionClass(index: number): string {
             :class="['option-card', optionClass(i)]"
             @click="selectAnswer(i)"
           >
-            {{ opt }}
+            <span :class="['radio', optionClass(i)]" />
+            <span>{{ opt }}</span>
           </button>
         </div>
+
+        <button v-if="!answered" class="skip-btn" @click="regenerateQuestion">
+          Otra pregunta
+        </button>
 
         <!-- Feedback banner -->
         <div v-if="answered" :class="['feedback-banner', lastCorrect ? 'fb-correct' : 'fb-wrong']">
@@ -203,9 +208,6 @@ function optionClass(index: number): string {
         </div>
 
         <div v-if="answered" class="next-bar">
-          <button class="regen-btn" @click="regenerateQuestion">
-            Otra pregunta
-          </button>
           <button class="next-btn" @click="next">Siguiente</button>
         </div>
       </template>
@@ -410,6 +412,9 @@ function optionClass(index: number): string {
 }
 
 .option-card {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
   padding: var(--space-md);
   background: var(--bg-card);
   border: 2px solid transparent;
@@ -418,6 +423,44 @@ function optionClass(index: number): string {
   font-size: 14px;
   text-align: left;
   cursor: pointer;
+}
+
+.radio {
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  border-radius: 50%;
+  border: 2px solid var(--text-muted);
+  margin-top: 2px;
+  transition: all 0.15s;
+}
+
+.radio.correct {
+  border-color: var(--success);
+  background: var(--success);
+  box-shadow: inset 0 0 0 3px var(--bg-card);
+}
+
+.radio.wrong {
+  border-color: #f87171;
+  background: #f87171;
+  box-shadow: inset 0 0 0 3px var(--bg-card);
+}
+
+.skip-btn {
+  width: 100%;
+  padding: var(--space-sm);
+  margin-top: var(--space-sm);
+  background: transparent;
+  border: none;
+  color: #a5b4fc;
+  font-size: 13px;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.skip-btn:active {
+  opacity: 1;
 }
 
 .option-card.correct {
