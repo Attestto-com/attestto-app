@@ -67,8 +67,17 @@ function next() {
   currentIndex.value++
 }
 
-function regenerateQuestion() {
-  location.reload()
+async function regenerateQuestion() {
+  const config = { ...getDefaultConfig(), questionCount: questions.value.length }
+  answered.value = false
+  selectedOption.value = null
+  lastCorrect.value = null
+  currentIndex.value = 0
+  score.value = 0
+  answers.value = []
+  loading.value = true
+  questions.value = await selectQuestions(config, mastery.value.weakTopics)
+  loading.value = false
 }
 
 function restart() {
