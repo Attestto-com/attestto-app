@@ -41,9 +41,26 @@ async function cleanupLegacyCache(): Promise<void> {
   await caches.delete('attestto-llm-model-v1').catch(() => {})
   await checkModelCached()
 
-  // Auto-init if user opted in and model is cached (survives page refresh)
+  // Auto-init only if user opted in AND model is fully cached locally.
+  // Skip auto-init when storage is tight — user can tap to retry manually.
   if (enabled.value && modelCached.value) {
-    init().catch(() => {})
+    if (navigator.storage?.estimate) {
+      navigator.storage.estimate().then((est) => {
+        const free = (est.quota ?? 0) - (est.usage ?? 0)
+        const MIN_BYTES = 500 * 1024 * 1024 // 500 MB headroom for cached model load
+        if (free >= MIN_BYTES) {
+          init().catch(() => {})
+        } else {
+          status.value = 'error'
+          errorMessage.value = 'Almacenamiento insuficiente para cargar el modelo'
+        }
+      }).catch(() => {
+        // Can't check storage — try anyway
+        init().catch(() => {})
+      })
+    } else {
+      init().catch(() => {})
+    }
   }
 }
 
@@ -211,7 +228,12 @@ async function init(): Promise<void> {
     status.value = 'ready'
   } catch (err) {
     status.value = 'error'
-    errorMessage.value = err instanceof Error ? err.message : String(err)
+    const msg = err instanceof Error ? err.message : String(err)
+    if (msg.includes('quota') || msg.includes('QuotaExceededError')) {
+      errorMessage.value = 'Almacenamiento insuficiente. Libera espacio o desactiva IA en Ajustes.'
+    } else {
+      errorMessage.value = msg
+    }
     throw err
   }
 }
