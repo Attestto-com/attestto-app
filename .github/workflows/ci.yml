@@ -33,9 +33,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Build module-sdk
+        run: pnpm --filter @attestto/module-sdk build
+
       - name: Typecheck
         run: pnpm typecheck
-        continue-on-error: true
 
       - name: Test
         run: pnpm test

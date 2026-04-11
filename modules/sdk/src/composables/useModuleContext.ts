@@ -5,7 +5,7 @@
  */
 
 import { inject } from 'vue'
-import type { ModuleContext } from '../types/module'
+import type { ModuleContext } from '../index'
 
 export const MODULE_CONTEXT_KEY = Symbol('attestto:module-context')
 
@@ -26,8 +26,13 @@ export function useModuleContext(): ModuleContext {
 }
 
 /**
- * Convenience — returns just the scoped VaultAPI.
+ * Convenience — returns credential and storage methods from context.
  */
 export function useVault() {
-  return useModuleContext().vault
+  const ctx = useModuleContext()
+  return {
+    getCredentials: ctx.getCredentials,
+    storeCredential: ctx.storeCredential,
+    requestBiometric: ctx.requestBiometric,
+  }
 }

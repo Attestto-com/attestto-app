@@ -5,7 +5,7 @@
   "description": "Attestto — sovereign citizen wallet. Identity, credentials, documents, money, exams.",
   "scripts": {
     "dev": "pnpm --filter @attestto/app dev",
-    "build": "pnpm --filter @attestto/app build",
+    "build": "pnpm --filter @attestto/module-sdk build && pnpm --filter @attestto/app build",
     "preview": "pnpm --filter @attestto/app preview",
     "lint": "eslint . --ext .vue,.ts,.tsx",
     "typecheck": "pnpm -r typecheck",

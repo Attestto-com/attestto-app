@@ -45,16 +45,16 @@ Hardening tasks required before production deployment. Composables and infrastru
 - **Locale files ready:** `app/src/i18n/es.ts`, `app/src/i18n/en.ts`
 
 ### Typecheck cleanup
-- [ ] Build `@attestto/module-sdk` dist so TS6305 errors resolve across the monorepo
-- [ ] Add explicit types to `modules.ts` createContext callbacks (implicit any warnings)
-- [ ] Consider `tsconfig` references for monorepo type resolution
+- [x] Build `@attestto/module-sdk` dist so TS6305 errors resolve across the monorepo
+- [x] Add explicit types to `modules.ts` createContext callbacks (already typed via ModuleContext)
+- [x] `tsconfig` project references configured (root → app/sdk/cr-driving, each with composite: true)
 
 ### Test coverage expansion
 - [x] Add vault store tests (unlock → credentials loaded, lock → session cleared, sign → returns signature)
-- [ ] Add useExam tests (hash chain integrity, answer recording, incident tracking)
-- [ ] Add useMastery tests (decay calculation, law change reset, renewal gate)
+- [x] Add useExam tests (hash chain integrity, answer recording, incident tracking)
+- [x] Add useMastery tests (decay calculation, law change reset, renewal gate)
 - [ ] Add Vue component tests for LockScreen (registration vs auth flow)
-- **Current:** 175 tests passing across 14 test files
+- **Current:** 232 tests passing across 16 test files
 
 ## Nice-to-have (post-launch)
 
