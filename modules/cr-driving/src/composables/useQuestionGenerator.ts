@@ -104,6 +104,15 @@ export function setLlmHandle(handle: LlmHandle): void {
   llmHandle = handle
 }
 
+export function getLlmStatus(): { available: boolean; status: string; supported: boolean } {
+  if (!llmHandle) return { available: false, status: 'no-handle', supported: false }
+  return {
+    available: llmHandle.status() === 'ready',
+    status: llmHandle.status(),
+    supported: llmHandle.supported,
+  }
+}
+
 /**
  * Generate exam questions using the on-device LLM (MediaPipe + Gemma).
  * Falls back gracefully — caller should use seed bank if this fails.

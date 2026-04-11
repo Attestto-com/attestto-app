@@ -2,6 +2,7 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { selectQuestions, getDefaultConfig } from '../composables/useQuestionBank'
+import { getLlmStatus } from '../composables/useQuestionGenerator'
 import { useMastery } from '../composables/useMastery'
 import type { ExamQuestion } from '../types'
 
@@ -22,6 +23,7 @@ const showConfetti = ref(false)
 
 const current = computed(() => questions.value[currentIndex.value] ?? null)
 const done = computed(() => currentIndex.value >= questions.value.length && questions.value.length > 0)
+const llm = computed(() => getLlmStatus())
 
 async function startWithCount(count: number) {
   questionCount.value = count
@@ -125,7 +127,27 @@ loadQuestions()
           <button class="pick-btn pick-btn-accent" @click="startWithCount(10)">
             <span class="pick-count">10</span>
             <span class="pick-label">Practica</span>
+            <span v-if="llm.available" class="pick-ai">IA</span>
           </button>
+        </div>
+
+        <div class="llm-status">
+          <div v-if="llm.available" class="llm-ready">
+            <span class="llm-dot green" />
+            IA local activa — preguntas unicas con Gemma
+          </div>
+          <div v-else-if="llm.status === 'loading' || llm.status === 'downloading'" class="llm-loading">
+            <q-spinner-dots size="12px" color="primary" />
+            Cargando modelo IA...
+          </div>
+          <div v-else-if="!llm.supported" class="llm-off">
+            <span class="llm-dot gray" />
+            IA no disponible (requiere WebGPU)
+          </div>
+          <div v-else class="llm-off">
+            <span class="llm-dot gray" />
+            Banco de preguntas (141) — activa IA en Ajustes para preguntas unicas
+          </div>
         </div>
       </div>
     </template>
@@ -281,6 +303,48 @@ loadQuestions()
   color: var(--text-muted);
   font-weight: 500;
 }
+
+.pick-ai {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: rgba(74, 222, 128, 0.2);
+  color: var(--success);
+  position: absolute;
+  top: 6px;
+  right: 6px;
+}
+
+.pick-btn {
+  position: relative;
+}
+
+.llm-status {
+  margin-top: var(--space-lg);
+  font-size: 12px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.llm-ready, .llm-loading, .llm-off {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.llm-ready { color: var(--success); }
+
+.llm-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.llm-dot.green { background: var(--success); }
+.llm-dot.gray { background: var(--text-muted); }
 
 .loading-state {
   display: flex;
