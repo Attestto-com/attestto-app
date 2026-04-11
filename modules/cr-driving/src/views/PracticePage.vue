@@ -2,6 +2,7 @@
 import { ref, computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { selectQuestions, getDefaultConfig } from '../composables/useQuestionBank'
+import { generateQuestions, loadManualContext } from '../composables/useQuestionGenerator'
 import { useMastery } from '../composables/useMastery'
 import type { ExamQuestion } from '../types'
 
@@ -20,6 +21,7 @@ const answers = ref<{ category: string; correct: boolean }[]>([])
 const masteryUpdated = ref(false)
 const lastCorrect = ref<boolean | null>(null)
 const showConfetti = ref(false)
+const regenerating = ref(false)
 
 const current = computed(() => questions.value[currentIndex.value] ?? null)
 const done = computed(() => currentIndex.value >= questions.value.length && questions.value.length > 0)
@@ -99,6 +101,32 @@ function next() {
   currentIndex.value++
 }
 
+async function regenerateQuestion() {
+  if (!current.value || regenerating.value) return
+  regenerating.value = true
+  try {
+    const category = current.value.category
+    const context = await loadManualContext('B', [category])
+    const newQuestions = await generateQuestions({
+      licenseType: 'B',
+      categories: [category],
+      count: 1,
+      difficulty: 'medium',
+      context: context || undefined,
+    })
+    if (newQuestions.length > 0) {
+      questions.value[currentIndex.value] = newQuestions[0]
+      answered.value = false
+      selectedOption.value = null
+      lastCorrect.value = null
+    }
+  } catch {
+    // LLM unavailable — silently ignore
+  } finally {
+    regenerating.value = false
+  }
+}
+
 function restart() {
   currentIndex.value = 0
   score.value = 0
@@ -172,6 +200,10 @@ loadQuestions()
       </div>
 
       <div v-if="answered" class="next-bar">
+        <button class="regen-btn" :disabled="regenerating" @click="regenerateQuestion">
+          <q-spinner-dots v-if="regenerating" size="14px" />
+          <template v-else>Otra pregunta sobre este tema</template>
+        </button>
         <button class="next-btn" @click="next">Siguiente</button>
       </div>
     </template>
@@ -321,10 +353,29 @@ loadQuestions()
   bottom: 0;
   left: 0;
   right: 0;
-  padding: var(--space-md);
-  padding-bottom: calc(var(--space-md) + env(safe-area-inset-bottom, 0px));
-  background: linear-gradient(transparent, var(--bg-base) 30%);
+  padding: var(--space-sm) var(--space-md);
+  padding-bottom: calc(var(--space-sm) + env(safe-area-inset-bottom, 0px));
+  background: linear-gradient(transparent, var(--bg-base) 20%);
   z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.regen-btn {
+  width: 100%;
+  padding: var(--space-sm);
+  background: transparent;
+  border: 1px solid rgba(165, 180, 252, 0.3);
+  border-radius: var(--radius-md);
+  color: #a5b4fc;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.regen-btn:disabled {
+  opacity: 0.5;
 }
 
 .next-btn {
