@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useVaultStore } from '@/stores/vault'
@@ -13,6 +13,7 @@ const vault = useVaultStore()
 const inbox = useInboxStore()
 const router = useRouter()
 const llm = useLlm()
+const aiCardDismissed = ref(false)
 
 const llmLabel = computed(() => {
   switch (llm.status.value) {
@@ -25,12 +26,28 @@ const llmLabel = computed(() => {
   }
 })
 
+const showAiCard = computed(() => {
+  if (aiCardDismissed.value) return false
+  return true
+})
+
+// Auto-dismiss after 5 seconds of being ready (but user can tap to dismiss immediately)
+watch(() => llm.status.value, (s) => {
+  if (s === 'ready') {
+    setTimeout(() => { aiCardDismissed.value = true }, 5000)
+  }
+})
+
 function handleInboxTap(item: InboxItem) {
   if (item.route) router.push(item.route)
 }
 
 function handleAiCardTap() {
   const s = llm.status.value
+  if (s === 'ready') {
+    aiCardDismissed.value = true
+    return
+  }
   if (s === 'downloading' || s === 'loading') return // already in progress
   if (s === 'unsupported') return // nothing to do
   if (s === 'idle' || s === 'error') {
@@ -90,15 +107,18 @@ function handleAiCardTap() {
       </div>
     </section>
 
-    <!-- AI feature card (hidden when active — green badge in header is enough) -->
-    <section v-if="llm.status.value !== 'ready'" class="section ai-card" @click="handleAiCardTap">
+    <!-- AI feature card -->
+    <section v-if="showAiCard" class="section ai-card" @click="handleAiCardTap">
       <div class="ai-card-header">
-        <q-icon name="psychology" size="20px" :style="{ color: llm.status.value === 'downloading' || llm.status.value === 'loading' ? 'var(--primary)' : 'var(--warning)' }" />
+        <q-icon name="psychology" size="20px" :style="{ color: llm.status.value === 'ready' ? 'var(--success)' : llm.status.value === 'downloading' || llm.status.value === 'loading' ? 'var(--primary)' : 'var(--warning)' }" />
         <span class="ai-card-title">IA en tu dispositivo</span>
-        <span :class="['ai-status-dot', llm.status.value === 'downloading' || llm.status.value === 'loading' ? 'dot-purple' : 'dot-yellow']" />
+        <span :class="['ai-status-dot', llm.status.value === 'ready' ? 'dot-green' : llm.status.value === 'downloading' || llm.status.value === 'loading' ? 'dot-purple' : 'dot-yellow']" />
       </div>
       <p class="ai-card-desc">
-        <template v-if="llm.status.value === 'downloading'">
+        <template v-if="llm.status.value === 'ready'">
+          Gemma 2B activa. Preguntas generadas con IA, 100% offline. Tus datos nunca salen de tu dispositivo.
+        </template>
+        <template v-else-if="llm.status.value === 'downloading'">
           Descargando modelo Gemma 2B ({{ llm.downloadProgress.value }}%)... Una vez descargado, funciona sin internet.
         </template>
         <template v-else-if="llm.status.value === 'loading'">
@@ -115,10 +135,12 @@ function handleAiCardTap() {
         </template>
       </p>
       <div class="ai-card-footer">
-        <span v-if="llm.status.value === 'downloading' || llm.status.value === 'loading'" class="ai-tag ai-tag-purple">Activando...</span>
+        <span v-if="llm.status.value === 'ready'" class="ai-tag ai-tag-green">Listo</span>
+        <span v-else-if="llm.status.value === 'downloading' || llm.status.value === 'loading'" class="ai-tag ai-tag-purple">Activando...</span>
         <span v-else-if="llm.status.value === 'error'" class="ai-tag ai-tag-red">Reintentar</span>
         <span v-else class="ai-tag ai-tag-yellow">Activar IA</span>
-        <q-icon v-if="llm.status.value === 'idle'" name="download" size="16px" color="grey-6" />
+        <q-icon v-if="llm.status.value === 'ready'" name="check_circle" size="16px" color="positive" />
+        <q-icon v-else-if="llm.status.value === 'idle'" name="download" size="16px" color="grey-6" />
         <q-spinner-dots v-else-if="llm.status.value === 'downloading' || llm.status.value === 'loading'" size="16px" color="primary" />
       </div>
     </section>
