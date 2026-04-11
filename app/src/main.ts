@@ -31,3 +31,8 @@ app.use(Quasar, {
 })
 
 app.mount('#app')
+
+// Track PWA install
+window.addEventListener('appinstalled', () => {
+  window.plausible?.('PWA Install')
+})

@@ -84,4 +84,9 @@ router.beforeEach((to) => {
   }
 })
 
+// Track SPA navigations in Plausible (default script only tracks initial load)
+router.afterEach(() => {
+  window.plausible?.('pageview')
+})
+
 export { router }
