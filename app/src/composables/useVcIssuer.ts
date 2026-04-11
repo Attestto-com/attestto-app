@@ -103,3 +103,77 @@ export async function issueExamCredential(
 
   return vc
 }
+
+// ── Mastery-based VC (perpetual competency model) ────────
+
+interface MasteryInput {
+  contentVersion: string
+  categories: Record<string, { percent: number }>
+  renewalCount: number
+  totalAttempts: number
+}
+
+/**
+ * Issue a VC based on mastery state (all categories ≥90%).
+ * No expirationDate — validity tied to contentVersion.
+ */
+export async function issueMasteryCredential(
+  mastery: MasteryInput,
+  licenseType: string = 'B1',
+): Promise<VerifiableCredential> {
+  const vault = useVaultStore()
+  if (!vault.did) throw new Error('Vault not unlocked')
+
+  const now = new Date().toISOString()
+
+  const vc: VerifiableCredential = {
+    '@context': [
+      'https://www.w3.org/2018/credentials/v1',
+      'https://schema.attestto.com/cr-driving/v2',
+    ],
+    type: ['VerifiableCredential', 'DrivingCompetencyCR'],
+    id: `urn:uuid:${globalThis.crypto.randomUUID()}`,
+    issuer: { id: vault.did, name: 'Attestto' },
+    issuanceDate: now,
+    // No expirationDate — VC is valid until contentVersion changes
+    credentialSubject: {
+      id: vault.did,
+      licenseType,
+      model: 'perpetual-competency',
+      contentVersion: mastery.contentVersion,
+      categories: mastery.categories,
+      renewalCount: mastery.renewalCount,
+      totalAttempts: mastery.totalAttempts,
+    },
+    jurisdiction: 'CR',
+    revocationStatus: 'valid',
+  }
+
+  const canonicalPayload = JSON.stringify({
+    '@context': vc['@context'],
+    type: vc.type,
+    issuer: vc.issuer,
+    issuanceDate: vc.issuanceDate,
+    credentialSubject: vc.credentialSubject,
+  })
+
+  const { signature, verificationMethod } = await vault.sign(canonicalPayload)
+
+  vc.proof = {
+    type: 'Ed25519Signature2020',
+    created: now,
+    verificationMethod,
+    proofPurpose: 'assertionMethod',
+    proofValue: signature,
+    publicKey: crypto.getPublicKeyBase64url(),
+  }
+
+  return vc
+}
+
+/**
+ * Check if a DrivingCompetencyCR VC is still valid against the current content version.
+ */
+export function isVcContentValid(vc: VerifiableCredential, currentVersion: string): boolean {
+  return vc.credentialSubject?.contentVersion === currentVersion
+}

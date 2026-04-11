@@ -48,7 +48,22 @@ export interface ModuleContext {
   navigate: (path: string) => void
   /** Module's persistent storage (scoped key-value) */
   storage: ModuleStorage
+  /** On-device LLM text generation (MediaPipe + Gemma). Returns null if unavailable. */
+  llm: LlmHandle
 }
+
+export interface LlmHandle {
+  /** Current status of the on-device LLM */
+  status: () => LlmStatus
+  /** Initialize the LLM (downloads model on first use, caches for offline) */
+  init: () => Promise<void>
+  /** Generate text from a prompt. Throws if not ready. */
+  generate: (prompt: string) => Promise<string>
+  /** Whether the device supports WebGPU (required for on-device LLM) */
+  supported: boolean
+}
+
+export type LlmStatus = 'idle' | 'downloading' | 'loading' | 'ready' | 'generating' | 'error' | 'unsupported'
 
 export interface ModuleStorage {
   get: <T = unknown>(key: string) => Promise<T | null>

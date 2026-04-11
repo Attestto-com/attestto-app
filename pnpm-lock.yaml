@@ -13,6 +13,9 @@ importers:
       '@attestto/module-sdk':
         specifier: workspace:*
         version: link:../modules/sdk
+      '@mediapipe/tasks-genai':
+        specifier: ^0.10.27
+        version: 0.10.27
       '@noble/curves':
         specifier: ^1.8.0
         version: 1.9.7
@@ -893,6 +896,9 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
+
+  '@mediapipe/tasks-genai@0.10.27':
+    resolution: {integrity: sha512-cv69CPPAtEDBUs6dGZft2S+sBqde1XvEMST367siSyxrhffdWtm4uQIsfdedAbhJ33BwAjuMnAdxDrO9WrzIAQ==}
 
   '@mediapipe/tasks-vision@0.10.34':
     resolution: {integrity: sha512-KFGyhDsjJ+9WUMcMfjTOpcEp3LJNS3KwC7BfvKrCYELn/7G/5kmwnU7z6Spps+iWQoTGL8xW8i68r65OTa3DwA==}
@@ -3715,6 +3721,8 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
+
+  '@mediapipe/tasks-genai@0.10.27': {}
 
   '@mediapipe/tasks-vision@0.10.34': {}
 

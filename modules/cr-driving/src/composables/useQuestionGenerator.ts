@@ -1,6 +1,5 @@
 import type { ExamQuestion } from '../types'
-
-const LLM_URL = import.meta.env.VITE_LLM_URL ?? ''
+import type { LlmHandle } from '@attestto/module-sdk'
 
 interface GenerateRequest {
   licenseType: string
@@ -19,52 +18,121 @@ interface RawGeneratedQuestion {
   category: string
 }
 
+function buildPrompt(request: GenerateRequest): string {
+  const diffLabel =
+    request.difficulty === 'easy' ? 'basica'
+    : request.difficulty === 'hard' ? 'avanzada'
+    : 'intermedia'
+
+  return `Eres un generador de preguntas para el examen teorico de conducir de Costa Rica (COSEVI).
+
+REGLAS ESTRICTAS:
+- Genera exactamente ${request.count} preguntas nuevas y UNICAS sobre: ${request.categories.join(', ')}
+- Dificultad: ${diffLabel}
+- Cada pregunta debe evaluar COMPRENSION del concepto, no memoria textual
+- Reformula usando situaciones practicas, escenarios de conduccion real, o aplicacion de la ley
+- Las 4 opciones deben ser plausibles — no pongas opciones obviamente incorrectas
+- La explicacion ("why") debe enseñar el concepto, no solo decir cual es correcta
+- Responde SOLO con un JSON array valido, sin texto adicional
+
+CONTEXTO DEL MANUAL:
+${request.context ?? 'No disponible'}
+
+FORMATO DE RESPUESTA (JSON array):
+[
+  {
+    "question": "pregunta aqui",
+    "options": ["opcion A", "opcion B", "opcion C", "opcion D"],
+    "correct": 0,
+    "why": "explicacion educativa",
+    "category": "${request.categories[0] ?? 'General'}"
+  }
+]
+
+Genera ${request.count} preguntas:`
+}
+
 /**
- * Generate exam questions from manual content using an LLM API.
+ * Parse LLM response text into structured questions.
+ * Handles common LLM output quirks (markdown fences, trailing text).
+ */
+function parseResponse(text: string, licenseType: string): ExamQuestion[] {
+  // Extract JSON array from response (handle markdown fences)
+  let json = text.trim()
+  const fenceStart = json.indexOf('```')
+  if (fenceStart >= 0) {
+    const afterFence = json.indexOf('\n', fenceStart)
+    const fenceEnd = json.indexOf('```', afterFence)
+    json = json.slice(afterFence + 1, fenceEnd >= 0 ? fenceEnd : undefined).trim()
+  }
+
+  // Find the array bounds
+  const arrStart = json.indexOf('[')
+  const arrEnd = json.lastIndexOf(']')
+  if (arrStart < 0 || arrEnd < 0) return []
+
+  json = json.slice(arrStart, arrEnd + 1)
+
+  const parsed = JSON.parse(json) as RawGeneratedQuestion[]
+  if (!Array.isArray(parsed)) return []
+
+  return parsed
+    .filter((q) =>
+      q.question &&
+      Array.isArray(q.options) &&
+      q.options.length >= 3 &&
+      typeof q.correct === 'number' &&
+      q.correct >= 0 &&
+      q.correct < q.options.length &&
+      q.why,
+    )
+    .map((q, i) => ({
+      id: `llm-${Date.now()}-${i}`,
+      category: q.category || 'General',
+      question: q.question,
+      options: q.options.slice(0, 4),
+      correct: q.correct,
+      why: q.why,
+      licenses: [licenseType],
+    }))
+}
+
+// Module context LLM handle — set by the module on install
+let llmHandle: LlmHandle | null = null
+
+export function setLlmHandle(handle: LlmHandle): void {
+  llmHandle = handle
+}
+
+/**
+ * Generate exam questions using the on-device LLM (MediaPipe + Gemma).
  * Falls back gracefully — caller should use seed bank if this fails.
- *
- * The API endpoint is configurable via VITE_LLM_URL.
- * Expected: POST with body, returns { questions: RawGeneratedQuestion[] }
  */
 export async function generateQuestions(
   request: GenerateRequest,
 ): Promise<ExamQuestion[]> {
-  if (!LLM_URL) {
-    throw new Error('LLM no disponible — configure VITE_LLM_URL')
+  if (!llmHandle || !llmHandle.supported) {
+    throw new Error('LLM no disponible en este dispositivo')
   }
 
-  const res = await fetch(`${LLM_URL}/api/generate-questions`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      license_type: request.licenseType,
-      categories: request.categories,
-      count: request.count,
-      difficulty: request.difficulty,
-      context: request.context,
-    }),
-  })
-
-  if (!res.ok) {
-    throw new Error(`LLM error (${res.status})`)
+  // Initialize LLM if not ready
+  if (llmHandle.status() !== 'ready') {
+    await llmHandle.init()
   }
 
-  const data = (await res.json()) as { questions: RawGeneratedQuestion[] }
+  if (llmHandle.status() !== 'ready') {
+    throw new Error('LLM no pudo inicializar')
+  }
 
-  return data.questions.map((q, i) => ({
-    id: `llm-${Date.now()}-${i}`,
-    category: q.category,
-    question: q.question,
-    options: q.options,
-    correct: q.correct,
-    why: q.why,
-    licenses: [request.licenseType === 'B' ? 'B' : request.licenseType],
-  }))
+  const prompt = buildPrompt(request)
+  const response = await llmHandle.generate(prompt)
+
+  return parseResponse(response, request.licenseType)
 }
 
 /**
  * Load manual chapter content for LLM context.
- * Returns a truncated string suitable for prompt injection.
+ * Returns a truncated string suitable for prompt context.
  */
 export async function loadManualContext(
   licenseType: string,

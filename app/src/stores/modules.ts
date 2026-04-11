@@ -9,6 +9,7 @@ import {
 import { useVaultStore } from './vault'
 import { useInboxStore } from './inbox'
 import { router } from '@/router'
+import { useLlm } from '@/composables/useLlm'
 
 export const useModulesStore = defineStore('modules', () => {
   const installed = ref<Map<string, AttesttoModule>>(new Map())
@@ -29,6 +30,7 @@ export const useModulesStore = defineStore('modules', () => {
   function createContext(moduleId: string): ModuleContext {
     const vault = useVaultStore()
     const inbox = useInboxStore()
+    const llm = useLlm()
 
     return {
       getCredentials: async (types) =>
@@ -53,6 +55,12 @@ export const useModulesStore = defineStore('modules', () => {
         remove: async (key) => {
           localStorage.removeItem(`mod:${moduleId}:${key}`)
         },
+      },
+      llm: {
+        status: () => llm.status.value,
+        init: () => llm.init(),
+        generate: (prompt: string) => llm.generate(prompt),
+        supported: llm.supportsWebGpu(),
       },
     }
   }

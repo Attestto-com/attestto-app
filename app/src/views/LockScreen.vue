@@ -3,7 +3,6 @@ import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useVaultStore } from '@/stores/vault'
-import { seedDemoInbox } from '@/composables/useDemoData'
 import { isRegistered } from '@/composables/useCrypto'
 
 const { t } = useI18n()
@@ -22,7 +21,6 @@ async function handleUnlock() {
   try {
     const ok = await vault.unlock()
     if (ok) {
-      seedDemoInbox()
       router.replace({ name: 'home' })
     } else {
       error.value = t('lock.unlockFailed')

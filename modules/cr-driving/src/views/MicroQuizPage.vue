@@ -3,12 +3,10 @@ import { ref, computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { selectQuestions, getDefaultConfig } from '../composables/useQuestionBank'
 import { useMastery } from '../composables/useMastery'
-import type { ExamQuestion } from '../types'
-
-import type { ExamResult } from '../types'
+import type { ExamQuestion, ExamResult } from '../types'
 
 const router = useRouter()
-const { mastery, updateFromResult } = useMastery()
+const { mastery, updateFromResult, getAllCategories } = useMastery()
 
 const loading = ref(true)
 const questions = ref<ExamQuestion[]>([])
@@ -21,8 +19,8 @@ const masteryUpdated = ref(false)
 
 const current = computed(() => questions.value[currentIndex.value] ?? null)
 const done = computed(() => currentIndex.value >= questions.value.length && questions.value.length > 0)
+const updatedCategories = computed(() => getAllCategories())
 
-// Update mastery when practice is complete
 watch(done, (isDone) => {
   if (isDone && !masteryUpdated.value) {
     masteryUpdated.value = true
@@ -34,7 +32,6 @@ watch(done, (isDone) => {
 function buildResult(): ExamResult | null {
   if (!answers.value.length) return null
 
-  // Group by category
   const cats = new Map<string, { correct: number; total: number }>()
   for (const a of answers.value) {
     const existing = cats.get(a.category) ?? { correct: 0, total: 0 }
@@ -50,10 +47,6 @@ function buildResult(): ExamResult | null {
     percent: Math.round((correct / total) * 100),
   }))
 
-  const weakTopics = categoryBreakdown
-    .filter((c) => c.percent < 70)
-    .map((c) => c.category)
-
   return {
     passed: score.value / questions.value.length >= 0.9,
     score: Math.round((score.value / questions.value.length) * 100),
@@ -62,7 +55,7 @@ function buildResult(): ExamResult | null {
     total: questions.value.length,
     durationSeconds: 0,
     categoryBreakdown,
-    weakTopics,
+    weakTopics: categoryBreakdown.filter((c) => c.percent < 70).map((c) => c.category),
     chainHead: '',
     incidents: [],
   }
@@ -70,9 +63,8 @@ function buildResult(): ExamResult | null {
 
 async function loadQuestions() {
   loading.value = true
-
-  const config = { ...getDefaultConfig(), questionCount: 10 }
-  questions.value = await selectQuestions(config, mastery.value.weakTopics)
+  const config = { ...getDefaultConfig(), questionCount: 5 }
+  questions.value = await selectQuestions(config, mastery.value.weakTopics, true)
   loading.value = false
 }
 
@@ -91,16 +83,6 @@ function next() {
   currentIndex.value++
 }
 
-function restart() {
-  currentIndex.value = 0
-  score.value = 0
-  answered.value = false
-  selectedOption.value = null
-  answers.value = []
-  masteryUpdated.value = false
-  loadQuestions()
-}
-
 function optionClass(index: number): string {
   if (!answered.value) return ''
   if (index === current.value?.correct) return 'correct'
@@ -108,21 +90,26 @@ function optionClass(index: number): string {
   return 'dimmed'
 }
 
+function barColor(pct: number): string {
+  if (pct >= 90) return 'var(--success)'
+  if (pct >= 70) return 'var(--warning)'
+  return 'var(--critical)'
+}
+
 loadQuestions()
 </script>
 
 <template>
-  <q-page class="practice-page" padding>
-    <header class="practice-header">
-      <q-btn flat round icon="arrow_back" color="white" @click="router.back()" />
-      <span>Modo Practica</span>
-      <span class="practice-score">{{ score }}/{{ currentIndex }}</span>
+  <q-page class="quiz-page" padding>
+    <header class="quiz-header">
+      <q-btn flat round icon="arrow_back" color="white" size="sm" @click="router.back()" />
+      <span>Repaso rapido</span>
+      <span class="quiz-score">{{ score }}/{{ currentIndex }}</span>
     </header>
 
     <div v-if="loading" class="loading-state">
-      <q-spinner size="48px" color="primary" />
-      <p>Generando preguntas...</p>
-      <p class="loading-hint">Las preguntas se generan con IA local cuando esta disponible</p>
+      <q-spinner size="40px" color="primary" />
+      <p>Cargando...</p>
     </div>
 
     <template v-else-if="!done && current">
@@ -158,30 +145,44 @@ loadQuestions()
     </template>
 
     <div v-else-if="done" class="done-state">
-      <h2>Practica terminada</h2>
+      <h2>Repaso completado</h2>
       <div class="done-score">{{ score }}/{{ questions.length }}</div>
       <div class="done-percent">{{ Math.round((score / questions.length) * 100) }}%</div>
-      <button class="restart-btn" @click="restart">Practicar otra vez</button>
+
+      <div class="mastery-update">
+        <h3>Tu dominio actualizado</h3>
+        <div v-for="cat in updatedCategories" :key="cat.category" class="cat-row">
+          <span class="cat-label">{{ cat.category }}</span>
+          <div class="cat-bar-bg">
+            <div class="cat-bar-fill" :style="{ width: `${cat.percent}%`, background: barColor(cat.percent) }" />
+            <div class="threshold-marker" />
+          </div>
+          <span class="cat-pct" :style="{ color: cat.isGreen ? 'var(--success)' : 'var(--text-muted)' }">
+            {{ cat.percent }}%
+          </span>
+        </div>
+      </div>
+
       <button class="home-btn" @click="router.push('/home')">Volver al inicio</button>
     </div>
   </q-page>
 </template>
 
 <style scoped>
-.practice-page {
+.quiz-page {
   padding-bottom: 100px;
 }
 
-.practice-header {
+.quiz-header {
   display: flex;
   align-items: center;
   gap: var(--space-sm);
   margin-bottom: var(--space-lg);
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 600;
 }
 
-.practice-score {
+.quiz-score {
   margin-left: auto;
   font-size: 14px;
   color: var(--text-muted);
@@ -194,11 +195,6 @@ loadQuestions()
   gap: var(--space-md);
   padding: var(--space-xl);
   color: var(--text-muted);
-}
-
-.loading-hint {
-  font-size: 12px;
-  opacity: 0.6;
 }
 
 .progress-info {
@@ -236,7 +232,6 @@ loadQuestions()
   border-radius: var(--radius-sm);
   background: rgba(89, 79, 211, 0.2);
   color: var(--primary);
-  letter-spacing: 0.5px;
 }
 
 .question-text {
@@ -294,7 +289,6 @@ loadQuestions()
   font-size: 13px;
   color: var(--text-muted);
   line-height: 1.5;
-  margin-bottom: var(--space-md);
 }
 
 .next-bar {
@@ -325,7 +319,7 @@ loadQuestions()
   flex-direction: column;
   align-items: center;
   gap: var(--space-md);
-  padding: var(--space-xl);
+  padding: var(--space-lg) 0;
   text-align: center;
 }
 
@@ -339,24 +333,78 @@ loadQuestions()
   color: var(--text-muted);
 }
 
-.restart-btn, .home-btn {
+.mastery-update {
   width: 100%;
-  max-width: 300px;
-  padding: var(--space-md);
-  border: none;
+  background: var(--bg-card);
   border-radius: var(--radius-md);
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
+  padding: var(--space-md);
 }
 
-.restart-btn {
-  background: var(--primary);
-  color: white;
+.mastery-update h3 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--space-sm);
+}
+
+.cat-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: 12px;
+  padding: 3px 0;
+}
+
+.cat-label {
+  width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-muted);
+}
+
+.cat-bar-bg {
+  flex: 1;
+  height: 6px;
+  background: var(--bg-elevated);
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+}
+
+.cat-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+}
+
+.threshold-marker {
+  position: absolute;
+  left: 90%;
+  top: -1px;
+  bottom: -1px;
+  width: 2px;
+  background: var(--text-muted);
+  opacity: 0.4;
+}
+
+.cat-pct {
+  width: 36px;
+  text-align: right;
+  font-weight: 600;
 }
 
 .home-btn {
-  background: transparent;
-  color: var(--text-muted);
+  width: 100%;
+  max-width: 300px;
+  padding: var(--space-md);
+  background: var(--primary);
+  border: none;
+  border-radius: var(--radius-md);
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
 }
 </style>

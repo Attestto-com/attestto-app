@@ -2,7 +2,7 @@ import { ref, computed } from 'vue'
 import type { MasteryState, CategoryScore, ExamResult } from '../types'
 
 const STORAGE_KEY = 'cr-driving:mastery'
-const GREEN_THRESHOLD = 80 // percent
+const GREEN_THRESHOLD = 90 // percent — all categories must reach this for VC issuance
 
 /**
  * Decay rate per month based on renewal count.
@@ -15,7 +15,7 @@ const DECAY_RATES: Record<number, number> = {
 const DEFAULT_DECAY = 2 // 2nd+ renewal: -2%/month
 
 /** Current content version — bump when law changes are merged */
-const CONTENT_VERSION = '2026-04-10'
+export const CONTENT_VERSION = '2026-04-10'
 
 const mastery = ref<MasteryState>(loadAndDecay())
 
@@ -169,6 +169,25 @@ export function useMastery() {
       .sort((a, b) => a.percent - b.percent)
   }
 
+  function getCategoryGap(): { category: string; percent: number; gap: number; isGreen: boolean }[] {
+    return Object.entries(mastery.value.categoryScores)
+      .map(([category, { correct, total }]) => {
+        const percent = total > 0 ? Math.round((correct / total) * 100) : 0
+        const gap = Math.max(0, GREEN_THRESHOLD - percent)
+        return { category, percent, gap, isGreen: percent >= GREEN_THRESHOLD }
+      })
+      .sort((a, b) => b.gap - a.gap)
+  }
+
+  function getBelowThresholdCategories(): string[] {
+    return Object.entries(mastery.value.categoryScores)
+      .filter(([, { correct, total }]) => {
+        const pct = total > 0 ? Math.round((correct / total) * 100) : 0
+        return pct < GREEN_THRESHOLD
+      })
+      .map(([cat]) => cat)
+  }
+
   function getOverallAccuracy(): number {
     const entries = Object.values(mastery.value.categoryScores)
     if (!entries.length) return 0
@@ -197,6 +216,8 @@ export function useMastery() {
     canRetry,
     getTopCategories,
     getAllCategories,
+    getCategoryGap,
+    getBelowThresholdCategories,
     getOverallAccuracy,
     getDecayRate,
     acknowledgeLawChange,

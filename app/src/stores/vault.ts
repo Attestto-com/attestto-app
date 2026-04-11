@@ -88,7 +88,6 @@ export const useVaultStore = defineStore('vault', () => {
       await crypto.register('Attestto User')
     }
 
-    unlocked.value = true
     did.value = crypto.getDID()
     displayName.value = crypto.getDisplayName()
     publicKey.value = crypto.getPublicKeyBase64url()
@@ -106,6 +105,10 @@ export const useVaultStore = defineStore('vault', () => {
       credentials.value = seedDemoCredentials()
       await persistCredentials()
     }
+
+    // Set unlocked AFTER credentials are loaded so module bootstrap
+    // watchers see credentials when the gate check runs
+    unlocked.value = true
     return true
   }
 

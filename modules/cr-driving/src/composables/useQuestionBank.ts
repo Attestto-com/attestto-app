@@ -113,23 +113,23 @@ function shuffle<T>(arr: T[]): T[] {
 }
 
 /**
- * Try to generate fresh questions via LLM, fall back to seed banks.
- * Returns null if LLM is unavailable.
+ * Try to generate fresh questions via on-device LLM (MediaPipe + Gemma).
+ * Returns null if LLM is unavailable or WebGPU not supported.
  */
 async function tryLlmQuestions(
   config: ExamConfig,
   weakTopics: string[],
 ): Promise<ExamQuestion[] | null> {
   try {
-    const context = await loadManualContext(config.licenseType, weakTopics)
-    if (!context) return null
+    const categories = weakTopics.length > 0 ? weakTopics : ['General']
+    const context = await loadManualContext(config.licenseType, categories)
 
     const questions = await generateQuestions({
       licenseType: config.licenseType,
-      categories: weakTopics,
-      count: Math.min(config.questionCount, 15),
+      categories,
+      count: Math.min(config.questionCount, 10),
       difficulty: 'medium',
-      context,
+      context: context || undefined,
     })
 
     return questions.length > 0 ? questions : null
@@ -146,6 +146,7 @@ async function tryLlmQuestions(
 export async function selectQuestions(
   config: ExamConfig,
   weakTopics: string[] = [],
+  weakFocused: boolean = false,
 ): Promise<ExamQuestion[]> {
   await loadAllQuestions()
 
@@ -187,8 +188,9 @@ export async function selectQuestions(
     (q) => !weakTopics.some((t) => q.category.toLowerCase().includes(t.toLowerCase())),
   )
 
-  // Take ~30% from weak topics, rest random (from seed pool only)
-  const weakCount = Math.min(Math.floor(seedCount * 0.3), weak.length)
+  // weakFocused: 100% from weak topics (micro-quiz), otherwise 30%
+  const weakRatio = weakFocused ? 1.0 : 0.3
+  const weakCount = Math.min(Math.floor(seedCount * weakRatio), weak.length)
   const restCount = seedCount - weakCount
 
   const seedSelected = [...shuffle(weak).slice(0, weakCount), ...shuffle(rest).slice(0, restCount)]
@@ -196,7 +198,19 @@ export async function selectQuestions(
   // Merge LLM + seed, shuffle final mix
   const combined = [...(llmQuestions ?? []), ...seedSelected]
 
-  return shuffle(combined).slice(0, config.questionCount)
+  // Shuffle option order for seed questions to prevent answer memorization
+  const withShuffledOptions = combined.map((q) => {
+    if (q.id.startsWith('llm-')) return q // LLM questions are already unique
+    const indices = q.options.map((_, i) => i)
+    const shuffledIndices = shuffle(indices)
+    return {
+      ...q,
+      options: shuffledIndices.map((i) => q.options[i]),
+      correct: shuffledIndices.indexOf(q.correct),
+    }
+  })
+
+  return shuffle(withShuffledOptions).slice(0, config.questionCount)
 }
 
 export function getDefaultConfig(): ExamConfig {
