@@ -80,8 +80,8 @@ function handleInboxTap(item: InboxItem) {
       </div>
     </section>
 
-    <!-- AI feature card -->
-    <section class="section ai-card" @click="router.push({ name: 'settings' })">
+    <!-- AI feature card (hidden when active — green badge in header is enough) -->
+    <section v-if="llm.status.value !== 'ready'" class="section ai-card" @click="router.push({ name: 'settings' })">
       <div class="ai-card-header">
         <q-icon name="psychology" size="20px" :style="{ color: llm.status.value === 'ready' ? 'var(--success)' : 'var(--warning)' }" />
         <span class="ai-card-title">IA en tu dispositivo</span>
