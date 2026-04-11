@@ -23,7 +23,7 @@ export default {
   },
   home: {
     greeting: 'Hello, {name}',
-    userFallback: 'user',
+    userFallback: 'Citizen',
     pending: 'Pending',
     allCaughtUp: 'All caught up',
     recent: 'Recent',
