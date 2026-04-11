@@ -42,9 +42,7 @@ async function cleanupLegacyCache(): Promise<void> {
 
 const modelSize = '~1.35 GB'
 
-let worker: Worker | null = null
-let messageId = 0
-const pending = new Map<number, { resolve: (v: string) => void; reject: (e: Error) => void }>()
+let llmInstance: import('@mediapipe/tasks-genai').LlmInference | null = null
 
 function supportsWebGpu(): boolean {
   return 'gpu' in navigator
@@ -148,7 +146,7 @@ async function deleteCache(): Promise<void> {
 }
 
 /**
- * Initialize the LLM worker and load the model.
+ * Initialize MediaPipe LLM Inference directly (no worker).
  * Requires user opt-in via enable().
  */
 async function init(): Promise<void> {
@@ -163,48 +161,33 @@ async function init(): Promise<void> {
   }
 
   try {
-    // Try OPFS cache first, fall back to direct URL (MediaPipe handles download)
+    // Try OPFS cache first, fall back to direct URL
     let modelUrl: string
     try {
       modelUrl = await ensureModelReady()
     } catch {
-      // OPFS failed (quota, unsupported) — pass URL directly to MediaPipe
       modelUrl = MODEL_URL
     }
 
     status.value = 'loading'
 
-    worker = new Worker(
-      new URL('./llmWorker.ts', import.meta.url),
-      { type: 'module' },
+    const { FilesetResolver, LlmInference } = await import('@mediapipe/tasks-genai')
+
+    const genaiFileset = await FilesetResolver.forGenAiTasks(
+      'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-genai@latest/wasm',
     )
 
-    worker.onmessage = (e: MessageEvent) => {
-      const { type, id, text, error } = e.data
-      const p = pending.get(id)
+    llmInstance = await LlmInference.createFromOptions(genaiFileset, {
+      baseOptions: {
+        modelAssetPath: modelUrl,
+      },
+      maxTokens: 2048,
+      temperature: 0.7,
+      topK: 40,
+      randomSeed: Math.floor(Math.random() * 100000),
+    })
 
-      if (type === 'ready') {
-        status.value = 'ready'
-        p?.resolve('')
-        pending.delete(id)
-      } else if (type === 'result') {
-        status.value = 'ready'
-        p?.resolve(text)
-        pending.delete(id)
-      } else if (type === 'error') {
-        status.value = 'error'
-        errorMessage.value = error
-        p?.reject(new Error(error))
-        pending.delete(id)
-      } else if (type === 'destroyed') {
-        status.value = 'idle'
-        p?.resolve('')
-        pending.delete(id)
-      }
-    }
-
-    // Wait for init to complete
-    await sendMessage('init', { modelUrl })
+    status.value = 'ready'
   } catch (err) {
     status.value = 'error'
     errorMessage.value = err instanceof Error ? err.message : String(err)
@@ -212,39 +195,35 @@ async function init(): Promise<void> {
   }
 }
 
-function sendMessage(type: string, data: Record<string, unknown> = {}): Promise<string> {
-  if (!worker) return Promise.reject(new Error('Worker not initialized'))
-  const id = ++messageId
-  return new Promise((resolve, reject) => {
-    pending.set(id, { resolve, reject })
-    worker!.postMessage({ type, id, ...data })
-  })
-}
-
 /**
  * Generate a response from the on-device LLM.
  * Must call init() first.
  */
 async function generate(prompt: string): Promise<string> {
-  if (status.value !== 'ready') {
+  if (!llmInstance || status.value !== 'ready') {
     throw new Error('LLM no inicializado')
   }
   status.value = 'generating'
-  return sendMessage('generate', { prompt })
+  try {
+    const response = await llmInstance.generateResponse(prompt)
+    status.value = 'ready'
+    return response
+  } catch (err) {
+    status.value = 'error'
+    errorMessage.value = err instanceof Error ? err.message : String(err)
+    throw err
+  }
 }
 
 /**
- * Clean up worker and free GPU memory.
+ * Clean up and free GPU memory.
  */
 async function destroy(): Promise<void> {
-  if (!worker) return
-  try {
-    await sendMessage('destroy')
-  } finally {
-    worker.terminate()
-    worker = null
-    status.value = 'idle'
+  if (llmInstance) {
+    llmInstance.close()
+    llmInstance = null
   }
+  status.value = 'idle'
 }
 
 export function useLlm() {
