@@ -41,7 +41,12 @@ const quickActions = [
     <header class="home-header">
       <div class="greeting">{{ t('home.greeting', { name: vault.displayName?.split(' ')[0] ?? t('home.userFallback') }) }}</div>
       <div class="header-actions">
-        <span v-if="llmLabel" :class="['llm-chip', llm.status.value === 'ready' ? 'llm-green' : 'llm-loading']">
+        <span
+          v-if="llmLabel"
+          :class="['llm-chip', llm.status.value === 'ready' ? 'llm-green' : 'llm-loading']"
+          @click="llm.status.value !== 'ready' && router.push({ name: 'settings' })"
+          :style="{ cursor: llm.status.value !== 'ready' ? 'pointer' : 'default' }"
+        >
           {{ llmLabel }}
         </span>
         <q-btn flat round icon="notifications_none" color="white" size="sm" />
