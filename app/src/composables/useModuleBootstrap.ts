@@ -56,5 +56,12 @@ async function loadBundledModules(): Promise<AttesttoModule[]> {
     // Module not available
   }
 
+  try {
+    const docSigning = await import('app-module-doc-signing')
+    mods.push(docSigning.default)
+  } catch {
+    // Module not available
+  }
+
   return mods
 }
