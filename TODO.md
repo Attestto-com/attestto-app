@@ -7,7 +7,7 @@ Hardening tasks required before production deployment. Composables and infrastru
 ### Encrypted vault storage
 - [x] Wire `useEncryptedVault` into `vault.ts` — replace `localStorage.getItem('attestto:vault:credentials')` with `loadEncryptedVault()` / `saveEncryptedVault()`
 - [x] Run migration on first unlock after upgrade (`migrateFromLocalStorage()`)
-- [ ] Test: lock → unlock → credentials still present after encryption round-trip
+- [x] Test: lock → unlock → credentials still present after encryption round-trip
 - **Files:** `app/src/stores/vault.ts`, `app/src/composables/useEncryptedVault.ts`
 
 ### Full Ed25519 signature verification
@@ -50,11 +50,11 @@ Hardening tasks required before production deployment. Composables and infrastru
 - [ ] Consider `tsconfig` references for monorepo type resolution
 
 ### Test coverage expansion
-- [ ] Add vault store tests (unlock → credentials loaded, lock → session cleared, sign → returns signature)
+- [x] Add vault store tests (unlock → credentials loaded, lock → session cleared, sign → returns signature)
 - [ ] Add useExam tests (hash chain integrity, answer recording, incident tracking)
 - [ ] Add useMastery tests (decay calculation, law change reset, renewal gate)
 - [ ] Add Vue component tests for LockScreen (registration vs auth flow)
-- **Current:** 30 tests passing (useCrypto, useAnchor, i18n, watermark, evidenceExport)
+- **Current:** 175 tests passing across 14 test files
 
 ## Nice-to-have (post-launch)
 
