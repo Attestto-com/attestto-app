@@ -1,8 +1,10 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useVaultStore } from '@/stores/vault'
 import { useInboxStore } from '@/stores/inbox'
+import { useLlm } from '@/composables/useLlm'
 import InboxCard from '@/components/InboxCard.vue'
 import type { InboxItem } from '@attestto/module-sdk'
 
@@ -10,6 +12,18 @@ const { t } = useI18n()
 const vault = useVaultStore()
 const inbox = useInboxStore()
 const router = useRouter()
+const llm = useLlm()
+
+const llmLabel = computed(() => {
+  switch (llm.status.value) {
+    case 'ready': return 'IA lista'
+    case 'downloading': return `IA ${llm.downloadProgress.value}%`
+    case 'loading': return 'IA cargando...'
+    case 'generating': return 'IA generando...'
+    case 'error': return 'IA error'
+    default: return null
+  }
+})
 
 function handleInboxTap(item: InboxItem) {
   if (item.route) router.push(item.route)
@@ -27,6 +41,9 @@ const quickActions = [
     <header class="home-header">
       <div class="greeting">{{ t('home.greeting', { name: vault.displayName?.split(' ')[0] ?? t('home.userFallback') }) }}</div>
       <div class="header-actions">
+        <span v-if="llmLabel" :class="['llm-chip', llm.status.value === 'ready' ? 'llm-green' : 'llm-loading']">
+          {{ llmLabel }}
+        </span>
         <q-btn flat round icon="notifications_none" color="white" size="sm" />
         <q-btn flat round icon="person_outline" color="white" size="sm" @click="router.push({ name: 'settings' })" />
       </div>
@@ -100,7 +117,26 @@ const quickActions = [
 
 .header-actions {
   display: flex;
+  align-items: center;
   gap: var(--space-xs);
+}
+
+.llm-chip {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+}
+
+.llm-green {
+  background: rgba(74, 222, 128, 0.15);
+  color: var(--success);
+}
+
+.llm-loading {
+  background: rgba(89, 79, 211, 0.15);
+  color: var(--primary);
 }
 
 .section {
