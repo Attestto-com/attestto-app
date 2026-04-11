@@ -41,6 +41,7 @@ body {
   font-family: var(--font);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 /* ── Hero ─────────────────────────────────────── */
@@ -50,10 +51,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 60px;
+  flex-wrap: wrap;
+  gap: 40px;
   padding: 60px 24px;
-  max-width: 100vw;
-  overflow-x: hidden;
   position: relative;
   overflow: hidden;
 }
@@ -209,6 +209,8 @@ body {
   gap: 12px;
   position: relative;
   z-index: 1;
+  flex-shrink: 0;
+  min-width: 0;
 }
 
 .qr-box {
