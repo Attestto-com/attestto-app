@@ -26,6 +26,9 @@ const llmLabel = computed(() => {
   }
 })
 
+const isPWA = window.matchMedia('(display-mode: standalone)').matches
+  || (window.navigator as any).standalone === true
+
 const showAiCard = computed(() => {
   if (aiCardDismissed.value) return false
   return true
@@ -143,6 +146,9 @@ function handleAiCardTap() {
         <q-icon v-else-if="llm.status.value === 'idle'" name="download" size="16px" color="grey-6" />
         <q-spinner-dots v-else-if="llm.status.value === 'downloading' || llm.status.value === 'loading'" size="16px" color="primary" />
       </div>
+      <p v-if="!isPWA" class="ai-install-note">
+        ~1.3 GB requeridos. <a href="/downloads" @click.stop>Instala la app</a> para que el modelo persista entre sesiones.
+      </p>
     </section>
 
   </q-page>
@@ -298,6 +304,18 @@ function handleAiCardTap() {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.ai-install-note {
+  font-size: 11px;
+  color: var(--text-dim, #5a6577);
+  margin-top: 8px;
+  line-height: 1.5;
+}
+.ai-install-note a {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: none;
 }
 
 .ai-tag {
