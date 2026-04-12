@@ -615,7 +615,7 @@ const mod = MODULES[modId];
 const container = document.getElementById('app');
 
 if (!mod) {
-  container.innerHTML = '<div class="coming-soon"><span class="material-icons-outlined">error_outline</span><h2>Modulo no encontrado</h2><br><a href="/demo.html" class="back-link">Volver</a></div>';
+  container.innerHTML = '<div class="coming-soon"><span class="material-icons-outlined">error_outline</span><h2>Modulo no encontrado</h2><br><a href="/demo/" class="back-link">Volver</a></div>';
 } else {
   document.title = `Attestto — ${mod.name}`;
 
@@ -624,7 +624,7 @@ if (!mod) {
 
 
   let html = `
-    <a href="/demo.html" class="back-link"><span class="material-icons-outlined" style="font-size:16px">arrow_back</span> Volver a modulos</a>
+    <a href="/demo/" class="back-link"><span class="material-icons-outlined" style="font-size:16px">arrow_back</span> Volver a modulos</a>
 
     <div class="mod-header">
       <div class="mod-icon-wrap"><span class="material-icons-outlined">${mod.icon}</span></div>
