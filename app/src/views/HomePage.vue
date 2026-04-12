@@ -26,11 +26,7 @@ const llmLabel = computed(() => {
   }
 })
 
-const isPWA = window.matchMedia('(display-mode: standalone)').matches
-  || (window.navigator as any).standalone === true
-
 const showAiCard = computed(() => {
-  if (!isPWA) return false // Don't offer LLM download in browser — won't persist
   if (aiCardDismissed.value) return false
   return true
 })
