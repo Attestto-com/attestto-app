@@ -66,18 +66,15 @@ import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useIdentityStore } from '../stores/identity.store'
 import { useIdentityIssuance } from '../composables/useIdentityIssuance'
-import type { ModuleContext } from '@attestto/module-sdk'
 import CitizenDataCard from '../components/CitizenDataCard.vue'
 import EvidenceChecklist from '../components/EvidenceChecklist.vue'
 import OrgRoleCard from '../components/OrgRoleCard.vue'
 import NotarialBadge from '../components/NotarialBadge.vue'
 
-const props = defineProps<{ ctx: ModuleContext }>()
-
 const route = useRoute()
 const router = useRouter()
 const store = useIdentityStore()
-const { issuing, issueError, issueIdentityVC } = useIdentityIssuance(props.ctx)
+const { issuing, issueError, issueIdentityVC } = useIdentityIssuance()
 
 const draftId = computed(() => route.params.draftId as string)
 const draft = computed(() => store.getDraft(draftId.value))

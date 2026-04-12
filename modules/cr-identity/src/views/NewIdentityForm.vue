@@ -1,6 +1,6 @@
 <template>
   <q-page padding>
-    <q-btn flat icon="arrow_back" label="Volver" @click="$router.back()" class="q-mb-md" />
+    <q-btn flat icon="arrow_back" label="Volver" @click="$router.push('/module/cr-identity/cr-identity')" class="q-mb-md" />
 
     <div class="text-h5 q-mb-md">Nueva Credencial de Identidad</div>
 
@@ -54,7 +54,7 @@
         <div v-for="(role, idx) in orgRoles" :key="idx" class="q-mb-md q-pa-md" style="border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;">
           <div class="row q-gutter-sm">
             <q-input v-model="role.organization.legalName" label="Nombre de empresa" outlined dense class="col" />
-            <q-input v-model="role.organization.taxId" label="Cedula juridica" outlined dense class="col-4" />
+            <q-input v-model="role.organization.taxId" label="Cedula juridica" outlined dense class="col-12 col-sm-4" />
           </div>
           <div class="row q-gutter-sm q-mt-sm">
             <q-select v-model="role.role" :options="roleOptions" label="Rol" outlined dense emit-value map-options class="col" />

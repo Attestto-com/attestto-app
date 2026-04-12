@@ -14,7 +14,18 @@ const W3C_VC_CONTEXT = 'https://www.w3.org/2018/credentials/v1'
 const CR_IDENTITY_CONTEXT = 'https://schemas.attestto.org/cr/identity/v1'
 const IDENTITY_SCHEMA_URL = 'https://schemas.attestto.org/cr/identity/v1/IdentityVC.schema.json'
 
-export function useIdentityIssuance(ctx: ModuleContext) {
+let moduleCtx: ModuleContext | null = null
+
+export function setIdentityContext(ctx: ModuleContext): void {
+  moduleCtx = ctx
+}
+
+function getCtx(): ModuleContext {
+  if (!moduleCtx) throw new Error('Identity module context not initialized')
+  return moduleCtx
+}
+
+export function useIdentityIssuance() {
   const store = useIdentityStore()
   const issuing = ref(false)
   const issueError = ref<string | null>(null)
@@ -36,7 +47,7 @@ export function useIdentityIssuance(ctx: ModuleContext) {
 
     try {
       // Step 1: Biometric confirmation
-      const confirmed = await ctx.requestBiometric(
+      const confirmed = await getCtx().requestBiometric(
         `Firmar Credencial de Identidad para ${draft.citizen.fullName}`,
       )
       if (!confirmed) {
@@ -48,7 +59,7 @@ export function useIdentityIssuance(ctx: ModuleContext) {
       const vc = buildVC(draft)
 
       // Step 3: Store in vault
-      await ctx.storeCredential(vc)
+      await getCtx().storeCredential(vc)
 
       // Step 4: Update store
       store.markStatus(draftId, 'signed')
@@ -132,7 +143,7 @@ export function useIdentityIssuance(ctx: ModuleContext) {
   }
 
   function anchorInBackground(draftId: string, _vc: VerifiableCredential): void {
-    ctx.pushInboxItem({
+    getCtx().pushInboxItem({
       id: `anchor-${draftId}`,
       moduleId: 'cr-identity',
       type: 'info',

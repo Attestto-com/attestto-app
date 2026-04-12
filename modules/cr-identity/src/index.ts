@@ -11,11 +11,14 @@
 
 import type { AttesttoModule, ModuleContext } from '@attestto/module-sdk'
 import { manifest } from './manifest'
+import { setIdentityContext } from './composables/useIdentityIssuance'
 
 const crIdentityModule: AttesttoModule = {
   manifest,
 
   async install(ctx: ModuleContext) {
+    setIdentityContext(ctx)
+
     const credentials = await ctx.getCredentials(['ColegioAbogadosCRVC'])
     if (credentials.length === 0) {
       console.warn('[cr-identity] No ColegioAbogadosCRVC found — module installed but notary VC missing')
