@@ -70,5 +70,12 @@ async function loadBundledModules(): Promise<AttesttoModule[]> {
     // Module not available
   }
 
+  try {
+    const crIdentity = await import('app-module-cr-identity')
+    mods.push(crIdentity.default)
+  } catch {
+    // Module not available
+  }
+
   return mods
 }
