@@ -56,26 +56,19 @@ async function loadBundledModules(): Promise<AttesttoModule[]> {
     // Module not available
   }
 
-  try {
-    const docSigning = await import('app-module-doc-signing')
-    mods.push(docSigning.default)
-  } catch {
-    // Module not available
-  }
-
-  try {
-    const agreement = await import('app-module-agreement')
-    mods.push(agreement.default)
-  } catch {
-    // Module not available
-  }
-
-  try {
-    const crIdentity = await import('app-module-cr-identity')
-    mods.push(crIdentity.default)
-  } catch {
-    // Module not available
-  }
+  // doc-signing, agreement, cr-identity: kept in dev branch, not loaded in production
+  // try {
+  //   const docSigning = await import('app-module-doc-signing')
+  //   mods.push(docSigning.default)
+  // } catch {}
+  // try {
+  //   const agreement = await import('app-module-agreement')
+  //   mods.push(agreement.default)
+  // } catch {}
+  // try {
+  //   const crIdentity = await import('app-module-cr-identity')
+  //   mods.push(crIdentity.default)
+  // } catch {}
 
   return mods
 }
