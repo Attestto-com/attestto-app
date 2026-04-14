@@ -1,11 +1,11 @@
 <template>
-  <div class="min-h-screen bg-[#0f1923] text-[#e2e8f0] pb-32">
+  <div class="page-root min-h-screen pb-32">
     <!-- Header -->
     <div class="px-4 pt-6 pb-4 flex items-center gap-3">
-      <button class="text-[#94a3b8]" @click="$router.back()">← Volver</button>
+      <button class="btn-back" @click="$router.back()">← Volver</button>
       <div class="flex-1">
         <h1 class="text-lg font-semibold">Examen médico</h1>
-        <p class="text-[#94a3b8] text-sm">{{ draft?.patient.nombre }} {{ draft?.patient.apellidos }}</p>
+        <p class="text-muted text-sm">{{ draft?.patient.nombre }} {{ draft?.patient.apellidos }}</p>
       </div>
     </div>
 
@@ -15,27 +15,27 @@
         v-for="(section, i) in sections"
         :key="i"
         class="flex-1 h-1 rounded-full transition-colors"
-        :class="i <= activeSection ? 'bg-[#594FD3]' : 'bg-[#1a1f2e]'"
+        :class="i <= activeSection ? 'progress-active' : 'progress-inactive'"
       />
     </div>
 
-    <div v-if="!draft" class="px-4 text-[#94a3b8]">Cargando borrador…</div>
+    <div v-if="!draft" class="px-4 text-muted">Cargando borrador…</div>
 
     <div v-else>
       <!-- Section: Categorías solicitadas -->
       <section v-show="activeSection === 0" class="px-4">
         <h2 class="font-semibold mb-4">Categorías de licencia</h2>
-        <p class="text-[#94a3b8] text-sm mb-4">Seleccione las categorías que el paciente solicita:</p>
+        <p class="text-muted text-sm mb-4">Seleccione las categorías que el paciente solicita:</p>
 
         <div class="space-y-2">
           <button
             v-for="(label, cat) in LICENSE_CATEGORY_LABELS"
             :key="cat"
-            class="w-full bg-[#1a1f2e] rounded-xl px-4 py-3 flex items-center gap-3 text-left"
-            :class="selectedCategories.includes(cat) ? 'border border-[#594FD3]' : 'border border-transparent'"
+            class="w-full card-bg rounded-xl px-4 py-3 flex items-center gap-3 text-left"
+            :class="selectedCategories.includes(cat) ? 'cat-selected' : 'cat-unselected'"
             @click="toggleCategory(cat)"
           >
-            <span class="text-[#594FD3]">{{ selectedCategories.includes(cat) ? '☑' : '☐' }}</span>
+            <span class="text-primary">{{ selectedCategories.includes(cat) ? '☑' : '☐' }}</span>
             <span class="text-sm">{{ label }}</span>
           </button>
         </div>
@@ -50,7 +50,7 @@
             v-model="results.vision.rightEye"
             type="text"
             placeholder="20/20"
-            class="w-full bg-[#0f1923] border border-[#2a2f3e] rounded-xl px-4 py-3 text-[#e2e8f0] focus:outline-none focus:border-[#594FD3]"
+            class="form-input w-full rounded-xl px-4 py-3"
           />
         </ExamField>
 
@@ -59,7 +59,7 @@
             v-model="results.vision.leftEye"
             type="text"
             placeholder="20/20"
-            class="w-full bg-[#0f1923] border border-[#2a2f3e] rounded-xl px-4 py-3 text-[#e2e8f0] focus:outline-none focus:border-[#594FD3]"
+            class="form-input w-full rounded-xl px-4 py-3"
           />
         </ExamField>
 
@@ -71,14 +71,14 @@
           <PassFailToggle v-model="results.vision.colorVision" />
         </ExamField>
 
-        <div class="flex items-center gap-3 bg-[#1a1f2e] rounded-xl px-4 py-3">
-          <input id="lenses" v-model="results.vision.requiresLenses" type="checkbox" class="accent-[#594FD3]" />
+        <div class="flex items-center gap-3 card-bg rounded-xl px-4 py-3">
+          <input id="lenses" v-model="results.vision.requiresLenses" type="checkbox" class="checkbox-primary" />
           <label for="lenses" class="text-sm">Requiere uso de lentes</label>
         </div>
 
-        <div class="flex items-center gap-3 bg-[#1a1f2e] rounded-xl px-4 py-3">
+        <div class="flex items-center gap-3 card-bg rounded-xl px-4 py-3">
           <input id="daytime" v-model="results.vision.daytimeOnly" type="checkbox" class="accent-[#f97316]" />
-          <label for="daytime" class="text-sm text-[#f97316]">Solo conducción diurna</label>
+          <label for="daytime" class="text-sm text-orange">Solo conducción diurna</label>
         </div>
       </section>
 
@@ -95,12 +95,12 @@
             v-model.number="results.hearing.dbLoss"
             type="number"
             placeholder="0"
-            class="w-full bg-[#0f1923] border border-[#2a2f3e] rounded-xl px-4 py-3 text-[#e2e8f0] focus:outline-none focus:border-[#594FD3]"
+            class="form-input w-full rounded-xl px-4 py-3"
           />
         </ExamField>
 
-        <div class="flex items-center gap-3 bg-[#1a1f2e] rounded-xl px-4 py-3">
-          <input id="hearing-aid" v-model="results.hearing.requiresHearingAid" type="checkbox" class="accent-[#594FD3]" />
+        <div class="flex items-center gap-3 card-bg rounded-xl px-4 py-3">
+          <input id="hearing-aid" v-model="results.hearing.requiresHearingAid" type="checkbox" class="checkbox-primary" />
           <label for="hearing-aid" class="text-sm">Requiere audífono</label>
         </div>
       </section>
@@ -115,7 +115,7 @@
               v-model.number="results.bloodPressure.systolic"
               type="number"
               placeholder="120"
-              class="w-full bg-[#0f1923] border border-[#2a2f3e] rounded-xl px-4 py-3 text-[#e2e8f0] focus:outline-none focus:border-[#594FD3]"
+              class="form-input w-full rounded-xl px-4 py-3"
             />
           </ExamField>
           <ExamField label="Diastólica (mmHg)">
@@ -123,7 +123,7 @@
               v-model.number="results.bloodPressure.diastolic"
               type="number"
               placeholder="80"
-              class="w-full bg-[#0f1923] border border-[#2a2f3e] rounded-xl px-4 py-3 text-[#e2e8f0] focus:outline-none focus:border-[#594FD3]"
+              class="form-input w-full rounded-xl px-4 py-3"
             />
           </ExamField>
           <ExamField label="Pulso (bpm)">
@@ -131,16 +131,16 @@
               v-model.number="results.bloodPressure.pulse"
               type="number"
               placeholder="72"
-              class="w-full bg-[#0f1923] border border-[#2a2f3e] rounded-xl px-4 py-3 text-[#e2e8f0] focus:outline-none focus:border-[#594FD3]"
+              class="form-input w-full rounded-xl px-4 py-3"
             />
           </ExamField>
         </div>
 
-        <div class="bg-[#1a1f2e] rounded-xl p-3 text-sm text-[#94a3b8]">
-          <span v-if="bpClassification === 'normal'" class="text-[#4ade80]">✅ Presión normal</span>
-          <span v-else-if="bpClassification === 'elevated'" class="text-[#fbbf24]">⚠️ Presión elevada — anote observaciones</span>
-          <span v-else-if="bpClassification === 'high'" class="text-[#ef4444]">🚨 Hipertensión — evalúe aptitud</span>
-          <span v-else class="text-[#94a3b8]">Ingrese valores para clasificar</span>
+        <div class="card-bg rounded-xl p-3 text-sm text-muted">
+          <span v-if="bpClassification === 'normal'" class="bp-normal">✅ Presión normal</span>
+          <span v-else-if="bpClassification === 'elevated'" class="bp-elevated">⚠️ Presión elevada — anote observaciones</span>
+          <span v-else-if="bpClassification === 'high'" class="bp-high">🚨 Hipertensión — evalúe aptitud</span>
+          <span v-else class="text-muted">Ingrese valores para clasificar</span>
         </div>
 
         <ExamField label="Resultado final">
@@ -169,7 +169,7 @@
             v-model="adaptationsText"
             type="text"
             placeholder="Ej: Palanca de cambios automática"
-            class="w-full bg-[#0f1923] border border-[#2a2f3e] rounded-xl px-4 py-3 text-[#e2e8f0] focus:outline-none focus:border-[#594FD3]"
+            class="form-input w-full rounded-xl px-4 py-3"
           />
         </ExamField>
       </section>
@@ -195,7 +195,7 @@
       <section v-show="activeSection === 6" class="px-4 space-y-4">
         <h2 class="font-semibold mb-4">📋 Resultado y observaciones</h2>
 
-        <div class="bg-[#1a1f2e] rounded-2xl p-4 space-y-2">
+        <div class="card-bg rounded-2xl p-4 space-y-2">
           <ResultRow label="Visión" :result="results.vision.visualField" />
           <ResultRow label="Audición" :result="results.hearing.result" />
           <ResultRow label="Presión arterial" :result="results.bloodPressure.result" />
@@ -207,17 +207,17 @@
           <div class="flex gap-3">
             <button
               class="flex-1 py-3 rounded-xl font-semibold transition-colors"
-              :class="results.overallResult === 'pass' ? 'bg-[#4ade80] text-[#0f1923]' : 'bg-[#1a1f2e] text-[#94a3b8]'"
+              :class="results.overallResult === 'pass' ? 'btn-pass-active' : 'btn-inactive'"
               @click="results.overallResult = 'pass'"
             >✅ Apto</button>
             <button
               class="flex-1 py-3 rounded-xl font-semibold transition-colors"
-              :class="results.overallResult === 'conditional' ? 'bg-[#fbbf24] text-[#0f1923]' : 'bg-[#1a1f2e] text-[#94a3b8]'"
+              :class="results.overallResult === 'conditional' ? 'btn-conditional-active' : 'btn-inactive'"
               @click="results.overallResult = 'conditional'"
             >⚠️ Condicional</button>
             <button
               class="flex-1 py-3 rounded-xl font-semibold transition-colors"
-              :class="results.overallResult === 'fail' ? 'bg-[#ef4444] text-white' : 'bg-[#1a1f2e] text-[#94a3b8]'"
+              :class="results.overallResult === 'fail' ? 'btn-fail-active' : 'btn-inactive'"
               @click="results.overallResult = 'fail'"
             >❌ No apto</button>
           </div>
@@ -228,29 +228,29 @@
             v-model="results.observations"
             rows="4"
             placeholder="Notas adicionales, restricciones especiales, recomendaciones…"
-            class="w-full bg-[#0f1923] border border-[#2a2f3e] rounded-xl px-4 py-3 text-[#e2e8f0] placeholder-[#94a3b8] focus:outline-none focus:border-[#594FD3] resize-none"
+            class="form-input form-textarea w-full rounded-xl px-4 py-3 resize-none"
           />
         </ExamField>
       </section>
     </div>
 
     <!-- Bottom nav -->
-    <div class="fixed bottom-0 left-0 right-0 bg-[#0f1923] border-t border-[#1a1f2e] px-4 py-4 flex gap-3">
+    <div class="bottom-bar fixed bottom-0 left-0 right-0 px-4 py-4 flex gap-3">
       <button
         v-if="activeSection > 0"
-        class="flex-1 bg-[#1a1f2e] text-[#e2e8f0] rounded-2xl py-4 font-semibold"
+        class="flex-1 btn-secondary rounded-2xl py-4 font-semibold"
         @click="activeSection--"
       >← Anterior</button>
 
       <button
         v-if="activeSection < sections.length - 1"
-        class="flex-1 bg-[#594FD3] text-white rounded-2xl py-4 font-semibold"
+        class="flex-1 btn-primary text-white rounded-2xl py-4 font-semibold"
         @click="nextSection"
       >Siguiente →</button>
 
       <button
         v-else
-        class="flex-1 bg-[#4ade80] text-[#0f1923] rounded-2xl py-4 font-semibold"
+        class="flex-1 btn-success rounded-2xl py-4 font-semibold"
         @click="saveAndPreview"
       >Revisar dictamen →</button>
     </div>
@@ -328,3 +328,120 @@ function saveAndPreview() {
   router.push(`/cr-medical/vista-previa/${draftId}`)
 }
 </script>
+
+<style scoped>
+.page-root {
+  background: var(--bg-base);
+  color: var(--text-primary);
+}
+
+.btn-back {
+  color: var(--text-muted);
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+.text-primary {
+  color: var(--primary);
+}
+
+.text-orange {
+  color: #f97316;
+}
+
+.card-bg {
+  background: var(--bg-card);
+}
+
+.progress-active {
+  background: var(--primary);
+}
+
+.progress-inactive {
+  background: var(--bg-card);
+}
+
+.cat-selected {
+  border: 1px solid var(--primary);
+}
+
+.cat-unselected {
+  border: 1px solid transparent;
+}
+
+.form-input {
+  background: var(--bg-base);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+}
+
+.form-input::placeholder {
+  color: var(--text-muted);
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.form-textarea::placeholder {
+  color: var(--text-muted);
+}
+
+.checkbox-primary {
+  accent-color: var(--primary);
+}
+
+.bp-normal {
+  color: var(--success);
+}
+
+.bp-elevated {
+  color: var(--alert);
+}
+
+.bp-high {
+  color: var(--critical);
+}
+
+.btn-pass-active {
+  background: var(--success);
+  color: var(--bg-base);
+}
+
+.btn-conditional-active {
+  background: var(--alert);
+  color: var(--bg-base);
+}
+
+.btn-fail-active {
+  background: var(--critical);
+  color: white;
+}
+
+.btn-inactive {
+  background: var(--bg-card);
+  color: var(--text-muted);
+}
+
+.bottom-bar {
+  background: var(--bg-base);
+  border-top: 1px solid var(--bg-card);
+}
+
+.btn-secondary {
+  background: var(--bg-card);
+  color: var(--text-primary);
+}
+
+.btn-primary {
+  background: var(--primary);
+}
+
+.btn-success {
+  background: var(--success);
+  color: var(--bg-base);
+}
+</style>

@@ -7,36 +7,51 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
 <link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 <style>
+/* Tokens — must match app/src/styles/tokens.css exactly */
 :root {
-  --bg-deep: #080e14;
   --bg-base: #0f1923;
   --bg-card: #1a1f2e;
-  --bg-card-hover: #222838;
+  --bg-elevated: #242938;
   --primary: #594FD3;
+  --primary-hover: #6b62e0;
   --primary-glow: rgba(89, 79, 211, 0.25);
   --success: #4ade80;
   --success-dim: rgba(74, 222, 128, 0.15);
-  --warning: #fbbf24;
-  --warning-dim: rgba(251, 191, 36, 0.15);
+  --warning: #f97316;
+  --warning-dim: rgba(247, 150, 22, 0.15);
+  --alert: #fbbf24;
+  --alert-dim: rgba(251, 191, 36, 0.15);
+  --critical: #ef4444;
   --build: #60a5fa;
   --build-dim: rgba(96, 165, 250, 0.15);
-  --text: #e8eaed;
-  --text-muted: #8b95a5;
-  --text-dim: #5a6577;
-  --border: rgba(255, 255, 255, 0.06);
-  --radius: 12px;
-  --font: 'DM Sans', system-ui, sans-serif;
+  --text-primary: #e2e8f0;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  --text-inverse: #0f1923;
+  --border-subtle: rgba(148, 163, 184, 0.12);
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --mono: 'JetBrains Mono', monospace;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-  background: var(--bg-deep);
-  color: var(--text);
+  background: var(--bg-base);
+  color: var(--text-primary);
   font-family: var(--font);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -118,10 +133,10 @@ body {
 .mod-section-title {
   font-size: 16px;
   font-weight: 600;
-  color: var(--text);
+  color: var(--text-primary);
   margin-bottom: 12px;
   padding-bottom: 8px;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .mod-desc {
@@ -167,7 +182,7 @@ body {
 .flow-connector {
   width: 2px;
   height: 16px;
-  background: var(--border);
+  background: var(--border-subtle);
   margin-left: 15px;
 }
 
@@ -181,8 +196,8 @@ body {
 
 .spec-card {
   background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
   padding: 16px;
 }
 
@@ -200,7 +215,7 @@ body {
   align-items: center;
   gap: 10px;
   padding: 10px 0;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--border-subtle);
   font-size: 13px;
 }
 
@@ -228,7 +243,7 @@ body {
   aspect-ratio: 9/16;
   background: var(--bg-card);
   border: 1px dashed rgba(255,255,255,0.1);
-  border-radius: var(--radius);
+  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -251,7 +266,7 @@ body {
   background: var(--primary);
   color: white;
   border: none;
-  border-radius: var(--radius);
+  border-radius: var(--radius-md);
   font-size: 15px;
   font-weight: 600;
   font-family: var(--font);
@@ -263,7 +278,7 @@ body {
 
 .cta-secondary {
   background: transparent;
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-subtle);
   color: var(--text-muted);
   margin-left: 12px;
 }
@@ -285,7 +300,7 @@ body {
   padding: 40px 0;
   font-size: 13px;
   color: var(--text-dim);
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--border-subtle);
 }
 .footer a { color: var(--primary); text-decoration: none; }
 

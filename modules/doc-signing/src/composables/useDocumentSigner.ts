@@ -80,7 +80,7 @@ export async function signDocument(
     documentType: session.analysis?.documentType ?? 'unknown',
     riskLevel: session.analysis?.riskLevel ?? 'high',
     pdfHash,
-    signature: 'pending-vault-sign', // Actual signature is in the VC proof
+    signature: vcId, // Signature is embedded in the VC proof, verified via vcId
     verificationMethod: '',
     signedAt: new Date().toISOString(),
     anchorTx: null,

@@ -6,16 +6,16 @@
       <h1 class="text-lg font-semibold">Identificar paciente</h1>
     </div>
 
-    <!-- QR Scan option -->
+    <!-- QR Scan option (not yet implemented) -->
     <div class="mx-4 mb-4">
       <button
-        class="w-full bg-[#594FD3] text-white rounded-2xl p-5 flex items-center gap-4"
-        @click="startQRScan"
+        class="w-full bg-[#594FD3]/40 text-white/60 rounded-2xl p-5 flex items-center gap-4 cursor-not-allowed"
+        disabled
       >
         <span class="text-3xl">📷</span>
         <div class="text-left">
           <p class="font-semibold">Escanear QR del paciente</p>
-          <p class="text-[#a09de8] text-sm mt-0.5">El paciente muestra su QR de identidad</p>
+          <p class="text-[#a09de8]/60 text-sm mt-0.5">Proximamente — escaner QR en desarrollo</p>
         </div>
       </button>
     </div>
@@ -123,12 +123,9 @@ const canContinue = computed(() => {
   return form.value.cedula && form.value.nombre && form.value.apellidos && form.value.fechaNacimiento
 })
 
-async function startQRScan() {
-  // Shell QR scanner — in real app, opens camera via shell bridge
-  // On scan success, we receive a DID or VC offer URL
-  const fakeDID = 'did:web:paciente.attestto.id'  // Placeholder — real QR decoder here
-  await resolveFromDID(fakeDID)
-}
+// QR scan: disabled until shell camera bridge is implemented.
+// When ready, startQRScan() should open camera, decode DID from QR,
+// then call resolveFromDID(scannedDID).
 
 async function proceed() {
   let resolvedPatient: PatientInfo | null = patient.value

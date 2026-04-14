@@ -1,18 +1,18 @@
 <template>
-  <div class="min-h-screen bg-[#0f1923] text-[#e2e8f0] pb-32">
+  <div class="page-root min-h-screen pb-32">
     <!-- Header -->
     <div class="px-4 pt-6 pb-4 flex items-center gap-3">
-      <button class="text-[#94a3b8]" @click="$router.back()">← Editar</button>
+      <button class="btn-back" @click="$router.back()">← Editar</button>
       <h1 class="text-lg font-semibold">Vista previa</h1>
     </div>
 
-    <div v-if="!draft" class="px-4 text-[#94a3b8]">Cargando borrador…</div>
+    <div v-if="!draft" class="px-4 text-muted">Cargando borrador…</div>
 
     <div v-else class="px-4 space-y-4">
       <!-- Official-style document card -->
-      <div class="bg-[#1a1f2e] rounded-2xl overflow-hidden">
+      <div class="card-bg rounded-2xl overflow-hidden">
         <!-- Document header -->
-        <div class="bg-[#594FD3] px-5 py-4">
+        <div class="doc-header px-5 py-4">
           <div class="flex items-center justify-between">
             <div>
               <p class="text-white/70 text-xs uppercase tracking-widest">República de Costa Rica</p>
@@ -24,8 +24,8 @@
         </div>
 
         <!-- Patient section -->
-        <div class="px-5 py-4 border-b border-[#0f1923]">
-          <p class="text-[#94a3b8] text-xs uppercase tracking-widest mb-3">Paciente</p>
+        <div class="px-5 py-4 section-border">
+          <p class="section-label text-xs uppercase tracking-widest mb-3">Paciente</p>
           <div class="grid grid-cols-2 gap-3">
             <InfoField label="Nombre" :value="`${draft.patient.nombre} ${draft.patient.apellidos}`" />
             <InfoField label="Cédula" :value="draft.patient.cedula" />
@@ -35,8 +35,8 @@
         </div>
 
         <!-- Exam results section -->
-        <div class="px-5 py-4 border-b border-[#0f1923]">
-          <p class="text-[#94a3b8] text-xs uppercase tracking-widest mb-3">Resultados del examen</p>
+        <div class="px-5 py-4 section-border">
+          <p class="section-label text-xs uppercase tracking-widest mb-3">Resultados del examen</p>
           <div class="space-y-2">
             <ResultRow label="Visión" :result="draft.results.vision.visualField" />
             <ResultRow label="Audición" :result="draft.results.hearing.result" />
@@ -48,42 +48,42 @@
 
           <!-- Restrictions -->
           <div v-if="draft.results.vision.requiresLenses || draft.results.vision.daytimeOnly || draft.results.hearing.requiresHearingAid" class="mt-3">
-            <p class="text-[#fbbf24] text-xs uppercase tracking-widest mb-2">Restricciones</p>
+            <p class="alert-label text-xs uppercase tracking-widest mb-2">Restricciones</p>
             <div class="space-y-1">
-              <p v-if="draft.results.vision.requiresLenses" class="text-sm text-[#fbbf24]">⚠️ Uso obligatorio de lentes</p>
-              <p v-if="draft.results.vision.daytimeOnly" class="text-sm text-[#fbbf24]">⚠️ Solo conducción diurna</p>
-              <p v-if="draft.results.hearing.requiresHearingAid" class="text-sm text-[#fbbf24]">⚠️ Uso obligatorio de audífono</p>
+              <p v-if="draft.results.vision.requiresLenses" class="text-sm alert-text">⚠️ Uso obligatorio de lentes</p>
+              <p v-if="draft.results.vision.daytimeOnly" class="text-sm alert-text">⚠️ Solo conducción diurna</p>
+              <p v-if="draft.results.hearing.requiresHearingAid" class="text-sm alert-text">⚠️ Uso obligatorio de audífono</p>
             </div>
           </div>
 
           <div v-if="draft.results.observations" class="mt-3">
-            <p class="text-[#94a3b8] text-xs uppercase tracking-widest mb-1">Observaciones</p>
+            <p class="section-label text-xs uppercase tracking-widest mb-1">Observaciones</p>
             <p class="text-sm">{{ draft.results.observations }}</p>
           </div>
         </div>
 
         <!-- Approved categories -->
-        <div class="px-5 py-4 border-b border-[#0f1923]">
-          <p class="text-[#94a3b8] text-xs uppercase tracking-widest mb-3">Categorías aprobadas</p>
+        <div class="px-5 py-4 section-border">
+          <p class="section-label text-xs uppercase tracking-widest mb-3">Categorías aprobadas</p>
           <div class="flex flex-wrap gap-2">
             <span
               v-for="cat in draft.approvedCategories"
               :key="cat"
-              class="bg-[#594FD3]/20 text-[#594FD3] border border-[#594FD3]/40 px-3 py-1 rounded-full text-sm font-semibold"
+              class="cat-badge px-3 py-1 rounded-full text-sm font-semibold"
             >{{ cat }}</span>
           </div>
         </div>
 
         <!-- Overall result -->
-        <div class="px-5 py-4 border-b border-[#0f1923]">
+        <div class="px-5 py-4 section-border">
           <div class="flex items-center justify-between">
-            <p class="text-[#94a3b8] text-xs uppercase tracking-widest">Resultado general</p>
+            <p class="section-label text-xs uppercase tracking-widest">Resultado general</p>
             <span
               class="font-bold text-lg"
               :class="{
-                'text-[#4ade80]': draft.results.overallResult === 'pass',
-                'text-[#fbbf24]': draft.results.overallResult === 'conditional',
-                'text-[#ef4444]': draft.results.overallResult === 'fail',
+                'result-pass': draft.results.overallResult === 'pass',
+                'result-alert': draft.results.overallResult === 'conditional',
+                'result-critical': draft.results.overallResult === 'fail',
               }"
             >
               {{ resultLabel }}
@@ -92,7 +92,7 @@
         </div>
 
         <!-- Validity and dates -->
-        <div class="px-5 py-4 border-b border-[#0f1923]">
+        <div class="px-5 py-4 section-border">
           <div class="grid grid-cols-2 gap-3">
             <InfoField label="Fecha de examen" :value="draft.examDate" />
             <InfoField label="Válido hasta" :value="draft.expiresAt" />
@@ -101,7 +101,7 @@
 
         <!-- Issuer -->
         <div class="px-5 py-4">
-          <p class="text-[#94a3b8] text-xs uppercase tracking-widest mb-3">Médico firmante</p>
+          <p class="section-label text-xs uppercase tracking-widest mb-3">Médico firmante</p>
           <div class="grid grid-cols-2 gap-3">
             <InfoField label="Nombre" :value="`${draft.doctor.nombre} ${draft.doctor.apellidos}`" />
             <InfoField label="Colegiado #" :value="draft.doctor.numeroColegiado" />
@@ -111,8 +111,8 @@
       </div>
 
       <!-- Legal note -->
-      <div class="bg-[#1a1f2e] rounded-xl p-4">
-        <p class="text-[#94a3b8] text-xs leading-relaxed">
+      <div class="card-bg rounded-xl p-4">
+        <p class="text-muted text-xs leading-relaxed">
           Al firmar este dictamen, el médico certifica bajo la fe de su colegiatura que realizó el
           examen físico y mental del paciente indicado y que los resultados son fidedignos. Este
           documento se emitirá como Credencial Verificable (VC) y será anclado en Solana para
@@ -121,22 +121,22 @@
       </div>
 
       <!-- Error -->
-      <div v-if="issueError" class="bg-[#ef4444]/10 border border-[#ef4444]/30 rounded-xl p-3">
-        <p class="text-[#ef4444] text-sm">⚠️ {{ issueError }}</p>
+      <div v-if="issueError" class="error-box rounded-xl p-3">
+        <p class="error-text text-sm">⚠️ {{ issueError }}</p>
       </div>
     </div>
 
     <!-- Bottom action -->
-    <div class="fixed bottom-0 left-0 right-0 bg-[#0f1923] border-t border-[#1a1f2e] px-4 py-4">
+    <div class="bottom-bar fixed bottom-0 left-0 right-0 px-4 py-4">
       <button
-        class="w-full bg-[#4ade80] text-[#0f1923] rounded-2xl py-4 font-bold text-base disabled:opacity-40"
+        class="btn-sign w-full rounded-2xl py-4 font-bold text-base disabled:opacity-40"
         :disabled="issuing || !draft"
         @click="issue"
       >
         <span v-if="issuing">Firmando con vault… 🔐</span>
         <span v-else>🔐 Firmar y emitir dictamen</span>
       </button>
-      <p class="text-center text-[#94a3b8] text-xs mt-2">Se solicitará confirmación biométrica</p>
+      <p class="text-center text-muted text-xs mt-2">Se solicitará confirmación biométrica</p>
     </div>
   </div>
 </template>
@@ -176,3 +176,79 @@ async function issue() {
   }
 }
 </script>
+
+<style scoped>
+.page-root {
+  background: var(--bg-base);
+  color: var(--text-primary);
+}
+
+.btn-back {
+  color: var(--text-muted);
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+.card-bg {
+  background: var(--bg-card);
+}
+
+.doc-header {
+  background: var(--primary);
+}
+
+.section-border {
+  border-bottom: 1px solid var(--bg-base);
+}
+
+.section-label {
+  color: var(--text-muted);
+}
+
+.alert-label {
+  color: var(--alert);
+}
+
+.alert-text {
+  color: var(--alert);
+}
+
+.cat-badge {
+  background: color-mix(in srgb, var(--primary) 20%, transparent);
+  color: var(--primary);
+  border: 1px solid color-mix(in srgb, var(--primary) 40%, transparent);
+}
+
+.result-pass {
+  color: var(--success);
+}
+
+.result-alert {
+  color: var(--alert);
+}
+
+.result-critical {
+  color: var(--critical);
+}
+
+.error-box {
+  background: color-mix(in srgb, var(--critical) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--critical) 30%, transparent);
+}
+
+.error-text {
+  color: var(--critical);
+}
+
+.bottom-bar {
+  background: var(--bg-base);
+  border-top: 1px solid var(--bg-card);
+}
+
+.btn-sign {
+  background: var(--success);
+  color: var(--bg-base);
+}
+</style>

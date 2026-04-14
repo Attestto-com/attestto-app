@@ -18,16 +18,20 @@ export function usePatient(ctx: ModuleContext) {
 
   /**
    * Resolve patient identity from their DID.
-   * In production, this calls the Attestto resolver to fetch the holder's
-   * presentation of their CedulaVC. For now, it's a stub that the
-   * shell will implement via the vault IPC.
+   *
+   * TODO: This currently queries the LOCAL vault for CedulaVC/DIMEXVC credentials.
+   * In production, the patient presents a Verifiable Presentation (VP) via QR,
+   * the shell camera bridge decodes it, and we verify the VP signature before
+   * extracting the holder's identity. Until the shell VP verification IPC is
+   * implemented, this path is only reachable via manual entry fallback.
    */
   async function resolveFromDID(did: string): Promise<PatientInfo | null> {
     loading.value = true
     error.value = null
 
     try {
-      // Ask vault to fetch the patient's identity credentials
+      // TODO: Replace with VP verification once shell camera bridge is ready.
+      // Current flow queries local vault — will not find external patient VCs.
       const credentials = await ctx.getCredentials(['CedulaVC', 'DIMEXVC'])
 
       // In a real flow: the patient would have presented a VP via QR.

@@ -1,8 +1,8 @@
 <template>
   <div class="flex items-center justify-between py-1.5">
-    <span class="text-sm text-[#94a3b8]">{{ label }}</span>
+    <span class="text-sm label-text">{{ label }}</span>
     <div class="flex items-center gap-2">
-      <span v-if="detail" class="text-xs text-[#94a3b8]">{{ detail }}</span>
+      <span v-if="detail" class="text-xs detail-text">{{ detail }}</span>
       <span class="text-sm font-medium" :class="resultClass">{{ resultText }}</span>
     </div>
   </div>
@@ -28,9 +28,31 @@ const resultText = computed(() => {
 
 const resultClass = computed(() => {
   switch (props.result) {
-    case 'pass': return 'text-[#4ade80]'
-    case 'conditional': return 'text-[#fbbf24]'
-    case 'fail': return 'text-[#ef4444]'
+    case 'pass': return 'result-pass'
+    case 'conditional': return 'result-conditional'
+    case 'fail': return 'result-fail'
   }
 })
 </script>
+
+<style scoped>
+.label-text {
+  color: var(--text-muted);
+}
+
+.detail-text {
+  color: var(--text-muted);
+}
+
+.result-pass {
+  color: var(--success);
+}
+
+.result-conditional {
+  color: var(--alert);
+}
+
+.result-fail {
+  color: var(--critical);
+}
+</style>

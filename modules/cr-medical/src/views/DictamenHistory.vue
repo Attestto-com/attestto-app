@@ -1,8 +1,8 @@
 <template>
-  <div class="min-h-screen bg-[#0f1923] text-[#e2e8f0]">
+  <div class="page-root min-h-screen">
     <!-- Header -->
     <div class="px-4 pt-6 pb-4 flex items-center gap-3">
-      <button class="text-[#94a3b8]" @click="$router.back()">← Volver</button>
+      <button class="btn-back" @click="$router.back()">← Volver</button>
       <h1 class="text-lg font-semibold">Historial de dictámenes</h1>
     </div>
 
@@ -12,7 +12,7 @@
         v-for="f in filters"
         :key="f.key"
         class="whitespace-nowrap px-4 py-2 rounded-full text-sm font-medium transition-colors"
-        :class="activeFilter === f.key ? 'bg-[#594FD3] text-white' : 'bg-[#1a1f2e] text-[#94a3b8]'"
+        :class="activeFilter === f.key ? 'filter-active' : 'filter-inactive'"
         @click="activeFilter = f.key"
       >{{ f.label }}</button>
     </div>
@@ -23,15 +23,15 @@
         v-model="searchQuery"
         type="text"
         placeholder="Buscar por nombre o cédula…"
-        class="w-full bg-[#1a1f2e] border border-[#2a2f3e] rounded-xl px-4 py-3 text-[#e2e8f0] placeholder-[#94a3b8] focus:outline-none focus:border-[#594FD3]"
+        class="search-input w-full rounded-xl px-4 py-3"
       />
     </div>
 
     <!-- List -->
     <div class="px-4 space-y-3">
-      <div v-if="filteredDictamenes.length === 0" class="bg-[#1a1f2e] rounded-2xl p-8 text-center">
+      <div v-if="filteredDictamenes.length === 0" class="empty-state rounded-2xl p-8 text-center">
         <p class="text-3xl mb-3">📋</p>
-        <p class="text-[#94a3b8]">No hay dictámenes{{ activeFilter !== 'all' ? ' con este filtro' : '' }}</p>
+        <p class="empty-text">No hay dictámenes{{ activeFilter !== 'all' ? ' con este filtro' : '' }}</p>
       </div>
 
       <DictamenCard
@@ -86,3 +86,47 @@ const filteredDictamenes = computed(() => {
   return list.slice().sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))
 })
 </script>
+
+<style scoped>
+.page-root {
+  background: var(--bg-base);
+  color: var(--text-primary);
+}
+
+.btn-back {
+  color: var(--text-muted);
+}
+
+.filter-active {
+  background: var(--primary);
+  color: white;
+}
+
+.filter-inactive {
+  background: var(--bg-card);
+  color: var(--text-muted);
+}
+
+.search-input {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+}
+
+.search-input::placeholder {
+  color: var(--text-muted);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.empty-state {
+  background: var(--bg-card);
+}
+
+.empty-text {
+  color: var(--text-muted);
+}
+</style>

@@ -1,0 +1,151 @@
+# attestto-app
+
+> Sovereign citizen wallet — identity, credentials, documents, payments, and country-specific modules. Mobile-first PWA.
+
+Part of the [Attestto Open](https://attestto.org) ecosystem.
+
+## What it is
+
+A Progressive Web App (PWA) that puts identity, verifiable credentials, document signing, and DID-authenticated payments in a citizen's pocket. Installable from the browser, works offline, dark-theme only.
+
+Desktop users are redirected to a demo/marketing page. The app is designed for mobile.
+
+## Monorepo structure
+
+```
+attestto-app/
+  app/                    — Core PWA shell (Vue 3 + Quasar + Vite + PWA)
+  modules/
+    sdk/                  — @attestto/module-sdk — module interface contract
+    cr-driving/           — app-module-cr-driving — CR driving exam module
+    cr-medical/           — app-module-cr-medical — CR medical attestation module
+```
+
+## Stack
+
+- Vue 3 + TypeScript
+- Quasar Framework (components, dark theme)
+- Vite + vite-plugin-pwa
+- Pinia (state management)
+- Vue Router (with dynamic module route registration)
+- `@noble/curves` — Ed25519 signing
+- WebAuthn / WebCrypto API — vault unlock and key operations
+
+## Core screens
+
+| Route | Purpose |
+|---|---|
+| `/lock` | Vault unlock via passkey / biometric |
+| `/home` | Inbox — module items, pending credentials, notifications |
+| `/wallet` | DID-authenticated payments and balances |
+| `/documents` | Signed documents, pending signatures |
+| `/credentials` | Verifiable Credentials vault |
+| `/settings` | Language, security, backup |
+
+Auth guard: all routes with `meta: { requiresAuth: true }` require vault unlock first.
+
+## Crypto
+
+| What | How | Where |
+|---|---|---|
+| Vault unlock | WebAuthn passkey | `composables/useCrypto.ts` |
+| Identity signing | Ed25519 via `@noble/curves`, key in IndexedDB | `composables/useCrypto.ts` |
+| Vault encryption | AES-256-GCM | `composables/useEncryptedVault.ts` |
+| Exam session integrity | SHA-256 hash chain | Web Crypto API |
+| Solana anchoring | HTTP to attestto-anchor | `composables/useAnchor.ts` |
+
+## Module system
+
+Modules implement `AttesttoModule` from `@attestto/module-sdk`. Any module:
+- Declares which Verifiable Credentials it requires (credential-gated install)
+- Registers its routes dynamically via Vue Router
+- Pushes inbox items to the home screen
+- Gets scoped storage (localStorage namespaced by module ID)
+- Has no access to other modules' data or keys
+
+### Built-in modules
+
+`cr-driving` — Costa Rica driving ecosystem: theory exam booking, practical exam results, license credential, RTV status, marchamo.
+
+`cr-medical` — Costa Rica medical attestation: appointment booking, medical fitness credential issuance.
+
+### Building a module
+
+```typescript
+import type { AttesttoModule } from '@attestto/module-sdk'
+
+const myModule: AttesttoModule = {
+  id: 'my-module',
+  name: 'My Module',
+  requiredCredentials: ['DrivingLicense'],    // vault must contain these
+  routes: [
+    { path: '/my-module', component: MyModuleHome },
+  ],
+  inboxItems: (store) => store.getPendingItems(),
+}
+
+export default myModule
+```
+
+## Design tokens
+
+Dark theme only. Tokens in `app/src/styles/tokens.css`:
+
+| Token | Value | Usage |
+|---|---|---|
+| `--bg-base` | `#0f1923` | Background |
+| `--bg-card` | `#1a1f2e` | Cards |
+| `--primary` | `#594FD3` | Action buttons |
+| `--success` | `#4ade80` | Valid / verified |
+| `--critical` | `#ef4444` | Invalid / failed |
+
+## i18n
+
+`vue-i18n` with `es` (Spanish, default) and `en` (English). Language persisted to localStorage. Toggle in Settings.
+
+## Development
+
+```bash
+pnpm dev        # start dev server (app/)
+pnpm build      # build PWA (app/)
+pnpm test       # vitest (30 tests)
+pnpm typecheck  # typecheck all packages
+```
+
+## CI
+
+GitHub Actions: install → typecheck → test → build on push/PR to main.
+
+## Source layout
+
+```
+app/src/
+  main.ts
+  App.vue
+  router/        — route definitions + auth guard
+  stores/        — Pinia stores (vault, credentials, wallet, documents)
+  views/         — page components
+  components/    — shared UI components
+  composables/   — useCrypto, useEncryptedVault, useAnchor, ...
+  modules/       — dynamic module loader
+  i18n/          — es.json, en.json
+  styles/        — tokens.css, global.css
+modules/
+  sdk/src/       — AttesttoModule interface + types
+  cr-driving/    — driving exam module
+  cr-medical/    — medical module
+```
+
+## Related repos
+
+| Repo | Purpose |
+|---|---|
+| `attestto-desktop` | Electron "Station" for heavy signing and mesh node operations |
+| `attestto-mobile` | Camera companion PWA for document/selfie capture |
+| `attestto-mesh` | P2P data layer — credentials sync and recovery via mesh |
+| `@attestto-com/vc-sdk` | Verifiable Credential issuance and verification |
+| `cr-vc-schemas` | CR credential type definitions used by the cr-driving module |
+
+## License
+
+Apache 2.0 — [Attestto Open](https://attestto.org)
