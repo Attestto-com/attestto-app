@@ -328,12 +328,6 @@
     },
 
     {
-      "tab": "poc", "id": "I1",
-      "req": "10+ usuarios reales flujo completo",
-      "status": "construir",
-      "impl": "Hito de prueba de aceptacion: 10 o mas usuarios reales completaran el flujo end-to-end — verificacion de identidad, consentimiento informado, examen con proctoring activo, emision de VC, y verificacion del resultado. Este piloto validara la experiencia de usuario, los umbrales de deteccion, y la robustez del sistema en condiciones reales."
-    },
-    {
       "tab": "poc", "id": "I2",
       "req": "Verificacion facial con liveness",
       "status": "cumple",
