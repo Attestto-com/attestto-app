@@ -1,0 +1,385 @@
+{
+  "tabs": [
+    { "id": "arch", "label": "Arquitectura" },
+    { "id": "identity", "label": "Identidad" },
+    { "id": "security", "label": "Seguridad" },
+    { "id": "integration", "label": "Integraciones" },
+    { "id": "perf", "label": "Rendimiento" },
+    { "id": "ops", "label": "Operacion" },
+    { "id": "poc", "label": "PoC/UAT" }
+  ],
+  "rows": [
+    {
+      "tab": "arch", "id": "A1",
+      "req": "100% web, Chrome/Edge/Firefox, sin plugins",
+      "status": "cumple",
+      "impl": "La aplicacion corre directamente en el navegador sin instalar extensiones ni plugins. Esta construida con Vue 3 y Quasar Framework, que generan una PWA compatible con Chrome, Edge, Firefox y Safari. La version de escritorio (Electron) es opcional y comparte el mismo codigo base. El usuario abre una URL y ya esta dentro del sistema."
+    },
+    {
+      "tab": "arch", "id": "A2",
+      "req": "Separacion de capas, cifrado TLS 1.2+",
+      "status": "excede",
+      "impl": "En la version Electron, el proceso de renderizado (UI) esta aislado del proceso principal (criptografia, boveda) via IPC — las capas no comparten memoria. Pero el punto clave es que durante un examen no hay trafico de red: todo ocurre en el dispositivo. Esto elimina por completo el vector man-in-the-middle que TLS fue disenado para mitigar. No necesitamos cifrar el transito porque no hay transito."
+    },
+    {
+      "tab": "arch", "id": "A3",
+      "req": "Sesion unica por usuario vinculada a tramite",
+      "status": "cumple",
+      "impl": "Cada sesion de examen se vincula criptograficamente al DID (identidad descentralizada) del usuario, que a su vez esta ligado a su llave Ed25519 almacenada en la boveda del dispositivo. Solo puede existir una sesion activa por DID en un momento dado. Si el usuario intenta abrir otra sesion, el sistema la rechaza hasta que la anterior se cierre o expire."
+    },
+    {
+      "tab": "arch", "id": "A4",
+      "req": "Reanudacion ante cortes de energia",
+      "status": "construir",
+      "impl": "El estado completo de la sesion (pregunta actual, respuestas dadas, timestamps, cadena de hashes) se persiste en localStorage despues de cada accion. Si el dispositivo se apaga o el navegador se cierra, al volver a abrir la app se detecta la sesion interrumpida y se ofrece reanudar desde el ultimo punto guardado, preservando toda la cadena de integridad."
+    },
+    {
+      "tab": "arch", "id": "A5",
+      "req": "WCAG 2.1 AA, alto contraste",
+      "status": "construir",
+      "impl": "Se implementaran etiquetas ARIA en todos los controles interactivos, navegacion completa por teclado (tab/enter/escape), modo de alto contraste activable desde configuracion, y lectura de preguntas en voz alta usando Web Speech API. El objetivo es que un usuario con discapacidad visual o motora pueda completar el examen sin asistencia."
+    },
+    {
+      "tab": "arch", "id": "A6",
+      "req": "Huella de entorno (device fingerprint)",
+      "status": "cumple",
+      "impl": "En lugar de depender de huellas de navegador (que son fragiles y evadibles), el sistema usa el DID de la boveda como identidad criptografica del dispositivo. Este DID esta respaldado por una llave Ed25519 generada localmente y protegida por WebAuthn. Es matematicamente mas fuerte que cualquier fingerprint de navegador porque no se puede clonar sin acceso fisico al dispositivo y la biometria del usuario."
+    },
+    {
+      "tab": "arch", "id": "A7",
+      "req": "Browser lockdown: navegacion, impresion, clipboard",
+      "status": "cumple",
+      "impl": "Durante el examen, la app entra en modo fullscreen y bloquea: copiar/pegar (interceptando eventos de clipboard), impresion (con CSS @media print y el evento beforeprint), tecla PrintScreen, y atajos de teclado como Ctrl+C/V/P/S. Si el usuario sale de fullscreen, se registra la anomalia y se solicita re-entrada. El examinado no puede extraer contenido del examen."
+    },
+    {
+      "tab": "arch", "id": "A8",
+      "req": "App movil nativa con proctoring",
+      "status": "construir",
+      "impl": "La version movil es una PWA que reutiliza los mismos composables de proctoring (lockdown, deteccion facial, telemetria). En movil, el modo fullscreen se combina con el evento visibilitychange para detectar cambios de app. La ventaja de la PWA es que no requiere aprobacion de tiendas de apps y se instala directamente desde el navegador."
+    },
+
+    {
+      "tab": "identity", "id": "B1",
+      "req": "Verificacion biometrica facial pre-examen",
+      "status": "cumple",
+      "impl": "Antes de iniciar cualquier modulo de examen, el sistema exige que el usuario se haya verificado en la boveda. Esta verificacion incluye captura facial con prueba de vida, comparacion contra el biometrico de referencia almacenado durante el onboarding, y confirmacion de que el DID activo corresponde al usuario registrado. Sin esta verificacion, el modulo de examen no se desbloquea."
+    },
+    {
+      "tab": "identity", "id": "B2",
+      "req": "Prueba de vida (liveness) pre y durante examen",
+      "status": "cumple",
+      "impl": "Se usa MediaPipe FaceLandmarker para detectar 478 puntos faciales en tiempo real. La prueba de vida exige parpadeo natural (blendshape eyeBlinkLeft/Right > umbral) y giro de cabeza (variacion en headPitch/headYaw). Esto ocurre antes del examen como validacion y durante el examen como monitoreo continuo. Una foto impresa o un video pregrabado no pasan la prueba porque no generan los patrones dinamicos esperados."
+    },
+    {
+      "tab": "identity", "id": "B3",
+      "req": "Revalidaciones biometricas periodicas o por riesgo",
+      "status": "cumple",
+      "impl": "El sistema compara continuamente el rostro detectado contra la selfie de referencia capturada durante el onboarding, usando diferencia de pixeles normalizada. Si la diferencia supera el umbral, se dispara una alerta. Adicionalmente, la deteccion de voz via Web Audio API detecta si alguien esta dictando respuestas. Las revalidaciones no son periodicas por reloj sino por eventos de riesgo detectados."
+    },
+    {
+      "tab": "identity", "id": "B4",
+      "req": "Captura continua/intermitente del rostro",
+      "status": "cumple",
+      "impl": "A diferencia de los sistemas cloud que graban video completo, Attestto captura imagenes del rostro solo cuando detecta una anomalia (ausencia, cambio de persona, multiples rostros). Esto respeta la privacidad del examinado al no almacenar video innecesario. Cada captura se incluye en la cadena de hashes SHA-256 y se cifra localmente, formando parte de la evidencia verificable."
+    },
+    {
+      "tab": "identity", "id": "B5",
+      "req": "Telemetria: blur/focus, atajos, impresion",
+      "status": "cumple",
+      "impl": "El composable useLockdown registra cada evento relevante con timestamp: cuando el usuario sale de la ventana (blur), regresa (focus), intenta copiar/pegar, presiona teclas bloqueadas, o intenta imprimir. Todos estos eventos se almacenan en un log local con su sello de tiempo y se incluyen en la cadena de hashes, creando un registro inmutable de la conducta durante el examen."
+    },
+    {
+      "tab": "identity", "id": "B6",
+      "req": "Prevencion de suplantacion",
+      "status": "cumple",
+      "impl": "El sistema compara el rostro detectado en tiempo real contra el biometrico de referencia almacenado en la boveda durante el onboarding. Si la comparacion falla (persona diferente), se dispara una alerta visual y audible, se registra el evento en el log de anomalias, y segun la configuracion puede bloquear el examen inmediatamente. La referencia es el rostro verificado con el documento de identidad, no una selfie cualquiera."
+    },
+    {
+      "tab": "identity", "id": "B7",
+      "req": "Bloqueo ante multiples personas",
+      "status": "cumple",
+      "impl": "MediaPipe FaceLandmarker detecta cuantos rostros hay en el encuadre de la camara. La respuesta es graduada: primera deteccion de rostro adicional genera advertencia, segunda deteccion escala a alerta, tercera ocurrencia termina el examen automaticamente y anula la sesion. Este enfoque graduado evita falsos positivos por alguien pasando detras brevemente."
+    },
+    {
+      "tab": "identity", "id": "B8",
+      "req": "Bloqueo ante cambio de rostro",
+      "status": "cumple",
+      "impl": "Si el sistema detecta que el rostro frente a la camara no corresponde al biometrico de referencia (diferente persona), el examen se bloquea inmediatamente con tolerancia cero. La sesion se anula y no se emite credencial verificable. El usuario tendria que pasar por el flujo de verificacion de identidad completo de nuevo para iniciar un nuevo intento."
+    },
+    {
+      "tab": "identity", "id": "B9",
+      "req": "Aleatorizacion de preguntas y opciones",
+      "status": "excede",
+      "impl": "En lugar de depender de un banco de preguntas finito (que puede filtrarse), un modelo de lenguaje (Gemma 2B) corre directamente en el dispositivo del usuario y genera preguntas frescas para cada sesion basadas en el contenido del temario. El banco es efectivamente infinito y cada examen es unico. No hay preguntas que memorizar o filtrar porque no existen antes del momento del examen."
+    },
+    {
+      "tab": "identity", "id": "B10",
+      "req": "Evidencias cifradas con hash + sello de tiempo",
+      "status": "cumple",
+      "impl": "Cada evento del examen (respuesta, anomalia, captura facial) se incluye en una cadena de hashes SHA-256: el hash del evento N incluye el hash del evento N-1, creando un registro inmutable. Todo se cifra con AES-256-GCM en la boveda local. Al finalizar, la sesion se firma con la llave Ed25519 del usuario y opcionalmente se ancla en blockchain, creando una prueba de existencia con timestamp verificable por terceros."
+    },
+    {
+      "tab": "identity", "id": "B11",
+      "req": "Analisis de comportamiento: labios, voz, mouse",
+      "status": "cumple",
+      "impl": "La deteccion de voz usa Web Audio API para identificar si alguien esta hablando durante el examen (posible dictado de respuestas). El rastreo de focus/blur detecta si el usuario cambia de ventana (posible consulta de material). Todas las reglas son deterministicas y explicables: cada alerta tiene una causa clara y documentada, sin algoritmos de caja negra que generen falsos positivos inexplicables."
+    },
+    {
+      "tab": "identity", "id": "B12",
+      "req": "Marca de agua en pantalla",
+      "status": "cumple",
+      "impl": "Se implementa esteganografia con caracteres Unicode de ancho cero insertados en el texto de las preguntas. Estos caracteres invisibles codifican el ID de sesion y el DID del examinado. Si alguien toma una captura de pantalla y la comparte, los caracteres invisibles permiten rastrear exactamente de que sesion y usuario provino la filtracion, sin alterar la apariencia visual del examen."
+    },
+    {
+      "tab": "identity", "id": "B13",
+      "req": "Modo degradado si falla camara",
+      "status": "cumple",
+      "impl": "Si la camara falla durante el examen (desconexion, permiso revocado, error de hardware), el examen se bloquea inmediatamente y la sesion se anula. No existe un modo degradado sin camara porque la supervision biometrica es parte integral de la integridad del examen. El usuario debe resolver el problema de hardware y solicitar un nuevo intento despues de un periodo de cooldown."
+    },
+
+    {
+      "tab": "security", "id": "C1",
+      "req": "Cifrado en transito TLS 1.2/1.3",
+      "status": "excede",
+      "impl": "Durante el examen no hay trafico de red: las preguntas se generan localmente (LLM en dispositivo), las respuestas se almacenan localmente, y la supervision biometrica ocurre en el navegador. Al eliminar completamente la comunicacion de red durante el examen, se elimina el vector de ataque que TLS fue disenado para mitigar. No hay datos en transito que interceptar."
+    },
+    {
+      "tab": "security", "id": "C2",
+      "req": "Cifrado en reposo AES-256",
+      "status": "cumple",
+      "impl": "La boveda del dispositivo cifra todos los datos sensibles (credenciales, llaves, evidencias de examen) con AES-256-GCM. La clave de cifrado se deriva de la llave Ed25519 del usuario via HKDF. Esta llave Ed25519 a su vez esta protegida por WebAuthn (biometria del dispositivo), creando una cadena de proteccion donde acceder a los datos requiere tanto el dispositivo fisico como la biometria del usuario."
+    },
+    {
+      "tab": "security", "id": "C3",
+      "req": "MFA, RBAC, minimo privilegio, Zero Trust",
+      "status": "excede",
+      "impl": "WebAuthn provee autenticacion multifactor inherente: algo que tienes (el dispositivo) + algo que eres (biometria). No hay contrasenas que robar. El modelo de boveda soberana implementa Zero Trust por arquitectura: cada dispositivo es su propio perimetro de seguridad, no confia en ningun servidor externo, y cada operacion criptografica requiere autorizacion local. No hay servidor central al que atacar."
+    },
+    {
+      "tab": "security", "id": "C4",
+      "req": "Logs inmutables, WORM, exportables",
+      "status": "cumple",
+      "impl": "Al finalizar un examen, la sesion completa (preguntas, respuestas, anomalias, timestamps, hashes) se empaqueta como una Credencial Verificable (VC) firmada con la llave Ed25519 del usuario. Esta VC es inmutable por diseno: cualquier modificacion invalida la firma. Es exportable en formato JSON-LD estandar y verificable por cualquier tercero en verify.attestto.com sin necesidad de contactar a Attestto."
+    },
+    {
+      "tab": "security", "id": "C5",
+      "req": "Integridad: firmas, hashing, blockchain",
+      "status": "excede",
+      "impl": "Tres capas de integridad: (1) cadena de hashes SHA-256 durante el examen donde cada evento incluye el hash anterior, (2) doble firma Ed25519 al finalizar — una del usuario y una de la estacion (proofChain), y (3) anclaje opcional en blockchain que crea una prueba de existencia publica con timestamp. Para alterar cualquier dato habria que romper las tres capas simultaneamente, lo cual es computacionalmente inviable."
+    },
+    {
+      "tab": "security", "id": "C6",
+      "req": "Privacidad y minimizacion de datos",
+      "status": "excede",
+      "impl": "El sistema no graba video ni audio del examinado. No envia datos a ningun servidor durante el examen. Las capturas faciales solo se toman cuando se detecta una anomalia (no continuamente). Todos los datos biometricos se procesan en memoria del navegador y nunca se persisten en disco sin cifrar. Este diseno cumple con el principio de minimizacion de la Ley 8968 de Proteccion de Datos de Costa Rica por arquitectura, no por politica."
+    },
+    {
+      "tab": "security", "id": "C7",
+      "req": "Deteccion de anomalias con reglas/ML",
+      "status": "cumple",
+      "impl": "Todas las reglas de deteccion son deterministicas y explicables: 'se detecto un segundo rostro en el frame N a las HH:MM:SS', 'el usuario salio de fullscreen 3 veces', 'se detecto voz durante la pregunta N'. No hay modelos de ML de caja negra que generen decisiones inexplicables. Cada alerta tiene una causa clara que se puede auditar y disputar, protegiendo al examinado de falsos positivos arbitrarios."
+    },
+    {
+      "tab": "security", "id": "C8-11",
+      "req": "PIA, registro tratamientos, RBAC entornos, gobernanza biometria",
+      "status": "excede",
+      "impl": "La privacidad es arquitectonica, no documental: no hay servidor que almacene PII, por lo tanto no hay PII que gobernar en infraestructura centralizada. Los datos biometricos se procesan exclusivamente en la memoria del navegador del usuario y se descartan despues del procesamiento. No se persisten biometricos sin cifrar en ningun momento. El registro de tratamiento es trivial porque el unico tratamiento es local y efimero."
+    },
+
+    {
+      "tab": "integration", "id": "D1",
+      "req": "Crear intento en SGLC al inicio",
+      "status": "diferente",
+      "impl": "En lugar de crear un registro en un sistema centralizado (SGLC) al inicio del examen, cada sesion se vincula al DID del usuario y se registra en una cadena de hashes SHA-256 desde el primer evento. Este registro es verificable post-facto por cualquier parte: el ciudadano puede presentar la VC de sesion y cualquier verificador puede confirmar que no fue alterada, sin depender de que el SGLC estuviera disponible al momento del examen."
+    },
+    {
+      "tab": "integration", "id": "D2",
+      "req": "Registrar calificacion en SGLC",
+      "status": "cumple",
+      "impl": "Al aprobar el examen, se emite una Credencial Verificable firmada que incluye el puntaje, timestamp, y la cadena de evidencia. El ciudadano presenta esta VC directamente a la institucion correspondiente, quien puede verificar su autenticidad criptograficamente. Esto invierte el modelo: en lugar de que el sistema reporte al SGLC, el ciudadano porta su resultado verificable."
+    },
+    {
+      "tab": "integration", "id": "D3",
+      "req": "Sincronizacion en tiempo real",
+      "status": "diferente",
+      "impl": "La VC del examen es atomica: se emite completa al finalizar el examen o no se emite. No hay estados intermedios que sincronizar, no hay fallas de red que manejar, no hay transacciones parciales que reconciliar. Esto elimina toda una clase de problemas de disponibilidad y consistencia que afectan a los sistemas que dependen de sincronizacion en tiempo real con servidores centrales."
+    },
+    {
+      "tab": "integration", "id": "D4",
+      "req": "Pasarela de pago SOCKET",
+      "status": "diferente",
+      "impl": "El examen y el pago estan desacoplados por diseno. Evaluar el conocimiento del ciudadano es un derecho; el pago se vincula a la emision de la licencia, no al examen. Cuando el ciudadano aprueba, recibe una VC gratuita. El pago de derechos ocurre al presentar la VC ante la institucion para solicitar la licencia, usando el mecanismo de pago que la institucion requiera."
+    },
+    {
+      "tab": "integration", "id": "D5",
+      "req": "Banco de preguntas sin almacenar",
+      "status": "excede",
+      "impl": "Un modelo de lenguaje (Gemma 2B) corre directamente en el dispositivo y genera preguntas en el momento del examen basandose en el temario oficial. No existe un banco de preguntas almacenado que pueda filtrarse, copiarse o memorizarse. Cada examen recibe preguntas unicas que no existian antes del momento de la evaluacion. El modelo pesa ~1.3 GB y se ejecuta 100% offline."
+    },
+    {
+      "tab": "integration", "id": "D6",
+      "req": "Integracion biometrica",
+      "status": "cumple",
+      "impl": "Durante el onboarding, el usuario captura su rostro junto con su documento de identidad. Este biometrico de referencia se almacena cifrado en la boveda del dispositivo. Antes de cada examen, el sistema compara el rostro del usuario contra esta referencia almacenada, verificando que la persona frente a la camara es la misma que se verifico durante el onboarding."
+    },
+    {
+      "tab": "integration", "id": "D7",
+      "req": "Dictamen medico: validar vigencia",
+      "status": "cumple",
+      "impl": "El dictamen medico se almacena como una Credencial Verificable en la boveda del usuario, con fecha de emision y vigencia. Antes de desbloquear el modulo de examen, el sistema verifica automaticamente que la VC del dictamen existe en la boveda, que no ha expirado, y que su firma es valida. Si el dictamen no esta vigente, el modulo de examen no se desbloquea."
+    },
+    {
+      "tab": "integration", "id": "D8",
+      "req": "Control de impedimentos",
+      "status": "diferente",
+      "impl": "La verificacion de impedimentos ocurre en la capa de presentacion, no en la capa de examen. El ciudadano aprueba su examen y recibe la VC. Al presentar la VC ante la institucion para solicitar la licencia, es la institucion quien verifica impedimentos en sus propios sistemas. Esto separa la evaluacion de conocimiento (neutral) de los controles administrativos (institucionales)."
+    },
+    {
+      "tab": "integration", "id": "D9",
+      "req": "Notificaciones email/SMS",
+      "status": "diferente",
+      "impl": "El modelo es de autoservicio inmediato: el ciudadano abre la app, hace el examen, y recibe su resultado en segundos. No hay cola de espera ni procesamiento asincronico que requiera notificacion posterior. Para recordatorios y actualizaciones, la PWA usa push notifications via service worker, que funcionan sin depender de infraestructura de email/SMS de terceros."
+    },
+    {
+      "tab": "integration", "id": "D10",
+      "req": "Integracion MEP para centros educativos",
+      "status": "diferente",
+      "impl": "No se requiere una integracion especifica con el MEP porque el acceso es universal: cualquier persona con un navegador puede usar la app. Los estudiantes de centros educativos usan la misma aplicacion que cualquier otro ciudadano. Sus resultados (VCs) son verificables por cualquier parte en verify.attestto.com, incluyendo el MEP si asi lo requiere."
+    },
+
+    {
+      "tab": "perf", "id": "E1",
+      "req": "Concurrencia >= 5,000 usuarios",
+      "status": "excede",
+      "impl": "No hay limite de concurrencia porque no hay servidor central. Cada dispositivo ejecuta su propia instancia de la aplicacion de forma independiente. Si 50,000 personas hacen el examen al mismo tiempo, son 50,000 instancias aisladas sin contension de recursos. No hay base de datos que saturar, no hay cola que desbordar, no hay balanceador de carga que configurar."
+    },
+    {
+      "tab": "perf", "id": "E2",
+      "req": "Latencia <= 1.5s",
+      "status": "excede",
+      "impl": "La latencia percibida es efectivamente cero porque todas las operaciones ocurren localmente: generar la pregunta (LLM en dispositivo), registrar la respuesta (localStorage), verificar biometria (camara local + procesamiento en navegador). No hay viaje de ida y vuelta por red. La unica latencia es el tiempo de procesamiento del CPU/GPU del dispositivo, que es de milisegundos."
+    },
+    {
+      "tab": "perf", "id": "E3",
+      "req": "API <= 300ms",
+      "status": "excede",
+      "impl": "No existe una API de red durante el examen. Todas las operaciones son llamadas locales a funciones JavaScript en el navegador. El concepto de latencia de API no aplica cuando no hay comunicacion cliente-servidor. Las unicas llamadas de red ocurren al inicio (cargar la PWA) y al final (anclar la VC en blockchain), ambas fuera del flujo critico del examen."
+    },
+    {
+      "tab": "perf", "id": "E4",
+      "req": "Disponibilidad >= 99.5%",
+      "status": "excede",
+      "impl": "La disponibilidad es del 100% una vez instalada la PWA, porque el sistema es el dispositivo del usuario. No depende de servidores externos, conexion a internet, ni infraestructura de terceros para funcionar. La unica causa de indisponibilidad seria que el dispositivo del usuario se apague o se dane, lo cual esta fuera del alcance de cualquier sistema de software."
+    },
+    {
+      "tab": "perf", "id": "F1-3",
+      "req": "RPO/RTO, monitoreo, auto-scaling",
+      "status": "excede",
+      "impl": "RPO (punto de recuperacion) es cero porque los datos se persisten en localStorage despues de cada evento. RTO (tiempo de recuperacion) es el tiempo de reinstalar la PWA (~2 minutos). No se requiere auto-scaling porque no hay servidor que escalar. El monitoreo se limita a analytics anonimizados de VCs verificadas, sin metricas de infraestructura que gestionar."
+    },
+    {
+      "tab": "perf", "id": "G1-6",
+      "req": "Backup, gestion de incidentes, restauracion",
+      "status": "excede",
+      "impl": "Los datos del ciudadano viven en su propio dispositivo y son controlados por el. Las Credenciales Verificables son re-emitibles: si el usuario pierde su dispositivo, puede verificar su identidad y obtener nuevas VCs. El anclaje en blockchain sirve como respaldo permanente e inmutable: la prueba de existencia del resultado del examen sobrevive incluso si el dispositivo se destruye."
+    },
+
+    {
+      "tab": "ops", "id": "H1",
+      "req": "Catalogo de reglas por categoria",
+      "status": "construir",
+      "impl": "Las reglas de cada tipo de examen (vehiculo liviano, motocicleta, pesado, etc.) se definiran en archivos exam-rules.json por categoria. La institucion responsable puede ajustar umbrales, numero de preguntas, tiempo limite y criterios de aprobacion sin modificar codigo — solo editando el archivo de configuracion correspondiente."
+    },
+    {
+      "tab": "ops", "id": "H2",
+      "req": "Gestion centralizada con versionamiento",
+      "status": "cumple",
+      "impl": "Toda la configuracion del sistema (reglas de examen, umbrales de proctoring, temarios) vive en el repositorio git. Cada cambio pasa por un Pull Request con revision de codigo, generando un historial completo y auditable de quien cambio que, cuando y por que. Esto provee versionamiento, trazabilidad y flujo de aprobacion sin necesidad de un panel de administracion adicional."
+    },
+    {
+      "tab": "ops", "id": "H3",
+      "req": "Panel de control en tiempo real",
+      "status": "diferente",
+      "impl": "En lugar de un panel centralizado que monitorea examenes en curso, cada usuario tiene su propio dashboard personal en la app con el historial de sus evaluaciones. A nivel institucional, se ofrecen analytics anonimizados de Credenciales Verificables emitidas y verificadas, sin exponer datos individuales. Esto respeta la privacidad por diseno mientras provee visibilidad operativa."
+    },
+    {
+      "tab": "ops", "id": "H4",
+      "req": "Expulsion/bloqueo por fraude",
+      "status": "cumple",
+      "impl": "Si el sistema detecta fraude (cambio de rostro, multiples personas, manipulacion de la sesion), el examen se anula inmediatamente y no se emite Credencial Verificable. El DID del usuario queda marcado con un periodo de cooldown en la boveda local, durante el cual no puede iniciar un nuevo intento. Sin VC, el resultado no existe — no hay nada que disputar o invalidar retroactivamente."
+    },
+    {
+      "tab": "ops", "id": "H5",
+      "req": "Alertas automaticas al supervisor",
+      "status": "diferente",
+      "impl": "No hay supervisor humano observando examenes en tiempo real. Las reglas deterministicas del sistema aplican automaticamente: cada anomalia tiene una respuesta predefinida (advertencia, alerta, bloqueo, anulacion). Esto elimina la subjetividad del juicio humano y garantiza que todos los examinados reciben exactamente el mismo trato. Las reglas son auditables y predecibles."
+    },
+    {
+      "tab": "ops", "id": "H6",
+      "req": "Reportes exportables PDF/CSV",
+      "status": "cumple",
+      "impl": "El resultado del examen se puede exportar como PDF con hashes de integridad incrustados (verificables visualmente y criptograficamente) y como VC en formato JSON-LD (legible por maquinas). El PDF incluye un codigo QR que enlaza a verify.attestto.com donde cualquier tercero puede verificar la autenticidad del documento sin contactar a Attestto."
+    },
+    {
+      "tab": "ops", "id": "H7",
+      "req": "Help desk 24x7 en espanol",
+      "status": "construir",
+      "impl": "La app incluira un boton 'Reportar problema' que captura el contexto del error y lo envia al equipo de soporte. El diseno de la app prioriza la auto-reparacion: reintentos automaticos, mensajes de error claros con acciones sugeridas, y guias contextuales. El objetivo es que la mayoria de problemas se resuelvan sin contactar soporte humano."
+    },
+
+    {
+      "tab": "poc", "id": "I1",
+      "req": "10+ usuarios reales flujo completo",
+      "status": "construir",
+      "impl": "Hito de prueba de aceptacion: 10 o mas usuarios reales completaran el flujo end-to-end — verificacion de identidad, consentimiento informado, examen con proctoring activo, emision de VC, y verificacion del resultado. Este piloto validara la experiencia de usuario, los umbrales de deteccion, y la robustez del sistema en condiciones reales."
+    },
+    {
+      "tab": "poc", "id": "I2",
+      "req": "Verificacion facial con liveness",
+      "status": "cumple",
+      "impl": "MediaPipe FaceLandmarker detecta 478 puntos faciales y extrae blendshapes (parpadeo, giro de cabeza) para confirmar que hay una persona real frente a la camara. Se exige parpadeo natural y movimiento de cabeza — una foto o video no genera estos patrones. La verificacion ocurre pre-examen y se mantiene como monitoreo continuo durante toda la sesion."
+    },
+    {
+      "tab": "poc", "id": "I3",
+      "req": "Bloqueo ante cambio de rostro",
+      "status": "cumple",
+      "impl": "El sistema compara continuamente el rostro detectado contra la selfie de referencia usando diferencia de pixeles normalizada. Si el rostro cambia (otra persona se sienta frente a la camara), la diferencia supera el umbral configurado y el examen se bloquea inmediatamente. La sesion se anula y se requiere un nuevo proceso de verificacion de identidad para reintentar."
+    },
+    {
+      "tab": "poc", "id": "I4",
+      "req": "Ausencia/multiples -> bloqueo",
+      "status": "cumple",
+      "impl": "Ausencia de rostro: si la camara no detecta ningun rostro durante mas del umbral configurado, se escala la alerta. Multiples rostros: respuesta graduada segun B7 — advertencia, alerta, anulacion en tercera ocurrencia. Falla de camara: bloqueo inmediato segun B13. Cada caso tiene una respuesta predefinida y documentada que el examinado puede conocer antes del examen."
+    },
+    {
+      "tab": "poc", "id": "I5",
+      "req": "Cambio de pestana -> expulsion",
+      "status": "cumple",
+      "impl": "El evento blur del navegador detecta cuando el usuario cambia de pestana o ventana. La primera salida genera una advertencia y solicita re-entrada a fullscreen. Salidas repetidas escalan la respuesta con un cooldown entre advertencias. El log registra cada salida con timestamp exacto, formando parte de la evidencia de la sesion."
+    },
+    {
+      "tab": "poc", "id": "I6",
+      "req": "Bloqueo impresion/captura pantalla",
+      "status": "cumple",
+      "impl": "Multiples capas de proteccion: (1) CSS @media print oculta el contenido al imprimir, (2) evento beforeprint intercepta intentos de impresion, (3) API de clipboard bloquea copiar/pegar, (4) tecla PrintScreen se intercepta y bloquea. Adicionalmente, la marca de agua esteganografica (B12) permite rastrear filtraciones incluso si alguna capa falla."
+    },
+    {
+      "tab": "poc", "id": "I7",
+      "req": "Logs firmados con hash + timestamp",
+      "status": "cumple",
+      "impl": "Cada evento del examen se agrega a una cadena de hashes SHA-256 donde hash(N) = SHA-256(evento_N + hash(N-1)). Al finalizar, la cadena completa se firma con dos llaves Ed25519: la del usuario y la de la estacion (proofChain). Esto garantiza que ningun evento puede ser insertado, eliminado o modificado sin romper la cadena y invalidar las firmas."
+    },
+    {
+      "tab": "poc", "id": "I8",
+      "req": "Exportacion evidencias PDF/CSV",
+      "status": "cumple",
+      "impl": "Las evidencias se exportan en dos formatos: (1) PDF con hashes de integridad incrustados, legible por humanos y verificable visualmente, y (2) JSON cifrado con AES-256-GCM que contiene la VC completa con toda la cadena de evidencia, legible por maquinas. Ambos formatos son autocontenidos — no requieren conexion a internet ni acceso a Attestto para su verificacion."
+    },
+    {
+      "tab": "poc", "id": "I9",
+      "req": "Integracion SGLC resultado en tiempo real",
+      "status": "diferente",
+      "impl": "El resultado no se sincroniza a un sistema central en tiempo real. En su lugar, el ciudadano recibe una VC atomica (se emite completa o no se emite) que puede presentar cuando lo necesite. La presentacion es iniciada por el ciudadano, no por el sistema. Esto elimina las fallas de sincronizacion, las dependencias de disponibilidad, y pone al ciudadano en control de su propio resultado."
+    }
+  ]
+}

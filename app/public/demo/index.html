@@ -893,154 +893,64 @@ body {
   <div class="section-title">Matriz de Cumplimiento</div>
   <p class="section-sub">Contra el pliego de contratacion MOPT/DGEV 2026 para la prueba teorica virtual. Cada requisito mapeado a nuestra implementacion.</p>
 
-  <div class="summary-bar">
-    <div class="summary-stat">
-      <div class="summary-num" style="color:var(--success)">43</div>
-      <div class="summary-label">Cumple /<br>Excede</div>
-    </div>
-    <div class="summary-stat">
-      <div class="summary-num" style="color:var(--warning)">9</div>
-      <div class="summary-label">Por<br>construir</div>
-    </div>
-    <div class="summary-stat">
-      <div class="summary-num" style="color:var(--build)">12</div>
-      <div class="summary-label">Resuelto<br>diferente</div>
-    </div>
-  </div>
+  <div class="summary-bar" id="matrix-summary"></div>
 
-  <div class="tabs">
-    <button class="tab active" data-tab="arch">Arquitectura</button>
-    <button class="tab" data-tab="identity">Identidad</button>
-    <button class="tab" data-tab="security">Seguridad</button>
-    <button class="tab" data-tab="integration">Integraciones</button>
-    <button class="tab" data-tab="perf">Rendimiento</button>
-    <button class="tab" data-tab="ops">Operacion</button>
-    <button class="tab" data-tab="poc">PoC/UAT</button>
-  </div>
+  <div class="tabs" id="matrix-tabs"></div>
+  <div id="matrix-panels"></div>
 
-  <!-- Arquitectura -->
-  <div class="tab-panel active" id="tab-arch">
-    <table class="compliance-table">
-      <thead><tr><th>Ref</th><th>Requisito</th><th>Estado</th><th>Implementacion</th></tr></thead>
-      <tbody>
-        <tr><td class="req-id">A1</td><td class="req-desc">100% web, Chrome/Edge/Firefox, sin plugins</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">Frontend Vue/Quasar. PWA movil, Electron escritorio.</td></tr>
-        <tr><td class="req-id">A2</td><td class="req-desc">Separacion de capas, cifrado TLS 1.2+</td><td><span class="badge badge-excede">Excede</span></td><td class="req-impl">Aislamiento IPC proceso renderer/principal. Sin frontera de red = sin vector MITM.</td></tr>
-        <tr><td class="req-id">A3</td><td class="req-desc">Sesion unica por usuario vinculada a tramite</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">Ed25519 de boveda vinculado a dispositivo + identidad. Una sesion activa por DID.</td></tr>
-        <tr><td class="req-id">A4</td><td class="req-desc">Reanudacion ante cortes de energia</td><td><span class="badge badge-construir">Por construir</span></td><td class="req-impl">Estado de sesion en localStorage. Reanudar desde ultimo indice.</td></tr>
-        <tr><td class="req-id">A5</td><td class="req-desc">WCAG 2.1 AA, alto contraste</td><td><span class="badge badge-construir">Por construir</span></td><td class="req-impl">ARIA labels, navegacion teclado, alto contraste, voz (Web Speech API).</td></tr>
-        <tr><td class="req-id">A6</td><td class="req-desc">Huella de entorno (device fingerprint)</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">DID de boveda = identidad criptografica. Mas fuerte que browser fingerprint.</td></tr>
-        <tr><td class="req-id">A7</td><td class="req-desc">Browser lockdown: navegacion, impresion, clipboard</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">Fullscreen + bloqueo teclado + clipboard + @media print + PrintScreen.</td></tr>
-        <tr><td class="req-id">A8</td><td class="req-desc">App movil nativa con proctoring</td><td><span class="badge badge-construir">Por construir</span></td><td class="req-impl">PWA con mismos composables. Fullscreen + visibilitychange.</td></tr>
-      </tbody>
-    </table>
-  </div>
+  <script>
+  (function() {
+    var STATUS_LABELS = { cumple: 'Cumple', excede: 'Excede', construir: 'Por construir', diferente: 'Diferente' };
+    var STATUS_BADGE = { cumple: 'badge-cumple', excede: 'badge-excede', construir: 'badge-construir', diferente: 'badge-diferente' };
 
-  <!-- Identidad -->
-  <div class="tab-panel" id="tab-identity">
-    <table class="compliance-table">
-      <thead><tr><th>Ref</th><th>Requisito</th><th>Estado</th><th>Implementacion</th></tr></thead>
-      <tbody>
-        <tr><td class="req-id">B1</td><td class="req-desc">Verificacion biometrica facial pre-examen</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">Verificacion de identidad en boveda antes del modulo de examen.</td></tr>
-        <tr><td class="req-id">B2</td><td class="req-desc">Prueba de vida (liveness) pre y durante examen</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">FaceLandmarker blendshapes: parpadeo + giro de cabeza. Selfie de referencia + comparacion continua.</td></tr>
-        <tr><td class="req-id">B3</td><td class="req-desc">Revalidaciones biometricas periodicas o por riesgo</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">Comparacion facial continua pixel-diff. Deteccion de voz (Web Audio API).</td></tr>
-        <tr><td class="req-id">B4</td><td class="req-desc">Captura continua/intermitente del rostro</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">Captura solo por anomalia (privacidad). Hash en cadena, cifrado local.</td></tr>
-        <tr><td class="req-id">B5</td><td class="req-desc">Telemetria: blur/focus, atajos, impresion</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">useLockdown captura blur/focus, teclas bloqueadas, timestamps, paste, print.</td></tr>
-        <tr><td class="req-id">B6</td><td class="req-desc">Prevencion de suplantacion</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">Comparacion facial contra biometrico almacenado + alerta audible/visual.</td></tr>
-        <tr><td class="req-id">B7</td><td class="req-desc">Bloqueo ante multiples personas</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">Deteccion multi-rostro con respuesta graduada. Terminal en 3ra ocurrencia.</td></tr>
-        <tr><td class="req-id">B8</td><td class="req-desc">Bloqueo ante cambio de rostro</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">Bloqueo inmediato. Tolerancia cero. Sesion anulada.</td></tr>
-        <tr><td class="req-id">B9</td><td class="req-desc">Aleatorizacion de preguntas y opciones</td><td><span class="badge badge-excede">Excede</span></td><td class="req-impl">LLM en dispositivo genera preguntas frescas. Banco infinito. Sin filtracion posible.</td></tr>
-        <tr><td class="req-id">B10</td><td class="req-desc">Evidencias cifradas con hash + sello de tiempo</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">SHA-256 hash chain + AES-256-GCM + firma estacion + anclaje blockchain.</td></tr>
-        <tr><td class="req-id">B11</td><td class="req-desc">Analisis de comportamiento: labios, voz, mouse</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">Deteccion de voz (Web Audio), rastreo de focus/blur. Reglas explicables.</td></tr>
-        <tr><td class="req-id">B12</td><td class="req-desc">Marca de agua en pantalla</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">Esteganografia zero-width Unicode. Sesion + DID codificados invisiblemente.</td></tr>
-        <tr><td class="req-id">B13</td><td class="req-desc">Modo degradado si falla camara</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">Camara falla = examen bloqueado. Sesion anulada. Nuevo intento tras cooldown.</td></tr>
-      </tbody>
-    </table>
-  </div>
+    fetch('/demo/matrix-data.json').then(function(r) { return r.json(); }).then(function(data) {
+      var tabsEl = document.getElementById('matrix-tabs');
+      var panelsEl = document.getElementById('matrix-panels');
+      var summaryEl = document.getElementById('matrix-summary');
 
-  <!-- Seguridad -->
-  <div class="tab-panel" id="tab-security">
-    <table class="compliance-table">
-      <thead><tr><th>Ref</th><th>Requisito</th><th>Estado</th><th>Implementacion</th></tr></thead>
-      <tbody>
-        <tr><td class="req-id">C1</td><td class="req-desc">Cifrado en transito TLS 1.2/1.3</td><td><span class="badge badge-excede">Excede</span></td><td class="req-impl">Sin trafico de red durante examen. Vector de ataque eliminado por completo.</td></tr>
-        <tr><td class="req-id">C2</td><td class="req-desc">Cifrado en reposo AES-256</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">Boveda cifrada con AES-256-GCM. Clave derivada de Ed25519 via HKDF.</td></tr>
-        <tr><td class="req-id">C3</td><td class="req-desc">MFA, RBAC, minimo privilegio, Zero Trust</td><td><span class="badge badge-excede">Excede</span></td><td class="req-impl">WebAuthn (biometrico + dispositivo) = MFA inherente. Boveda soberana = Zero Trust.</td></tr>
-        <tr><td class="req-id">C4</td><td class="req-desc">Logs inmutables, WORM, exportables</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">VC de sesion = log inmutable. Firmada, verificable, exportable JSON-LD.</td></tr>
-        <tr><td class="req-id">C5</td><td class="req-desc">Integridad: firmas, hashing, blockchain</td><td><span class="badge badge-excede">Excede</span></td><td class="req-impl">Ed25519 + SHA-256 chain + proofChain (user + station) + anclaje blockchain.</td></tr>
-        <tr><td class="req-id">C6</td><td class="req-desc">Privacidad y minimizacion de datos</td><td><span class="badge badge-excede">Excede</span></td><td class="req-impl">Sin grabacion video/audio. Sin servidor. Captura solo por anomalia. Ley 8968.</td></tr>
-        <tr><td class="req-id">C7</td><td class="req-desc">Deteccion de anomalias con reglas/ML</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">Reglas deterministicas explicables. Sin ML de caja negra. Cada bandera tiene regla clara.</td></tr>
-        <tr><td class="req-id">C8-11</td><td class="req-desc">PIA, registro tratamientos, RBAC entornos, gobernanza biometria</td><td><span class="badge badge-excede">Excede</span></td><td class="req-impl">Privacidad arquitectonica. Sin PII en servidor. Biometricos procesados en memoria, nunca persistidos.</td></tr>
-      </tbody>
-    </table>
-  </div>
+      var counts = { pass: 0, build: 0, diff: 0 };
+      data.rows.forEach(function(r) {
+        if (r.status === 'cumple' || r.status === 'excede') counts.pass++;
+        else if (r.status === 'construir') counts.build++;
+        else if (r.status === 'diferente') counts.diff++;
+      });
+      summaryEl.innerHTML =
+        '<div class="summary-stat"><div class="summary-num" style="color:var(--success)">' + counts.pass + '</div><div class="summary-label">Cumple /<br>Excede</div></div>' +
+        '<div class="summary-stat"><div class="summary-num" style="color:var(--warning)">' + counts.build + '</div><div class="summary-label">Por<br>construir</div></div>' +
+        '<div class="summary-stat"><div class="summary-num" style="color:var(--build)">' + counts.diff + '</div><div class="summary-label">Resuelto<br>diferente</div></div>';
 
-  <!-- Integraciones -->
-  <div class="tab-panel" id="tab-integration">
-    <table class="compliance-table">
-      <thead><tr><th>Ref</th><th>Requisito</th><th>Estado</th><th>Implementacion</th></tr></thead>
-      <tbody>
-        <tr><td class="req-id">D1</td><td class="req-desc">Crear intento en SGLC al inicio</td><td><span class="badge badge-diferente">Diferente</span></td><td class="req-impl">Sesion vinculada a DID con SHA-256 chain. Verificable post-facto sin SGLC en tiempo real.</td></tr>
-        <tr><td class="req-id">D2</td><td class="req-desc">Registrar calificacion en SGLC</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">VC firmada con puntaje + timestamp. Ciudadano presenta a COSEVI.</td></tr>
-        <tr><td class="req-id">D3</td><td class="req-desc">Sincronizacion en tiempo real</td><td><span class="badge badge-diferente">Diferente</span></td><td class="req-impl">VC atomica: se emite o no. Sin estado intermedio. Sin fallas de sincronizacion.</td></tr>
-        <tr><td class="req-id">D4</td><td class="req-desc">Pasarela de pago SOCKET</td><td><span class="badge badge-diferente">Diferente</span></td><td class="req-impl">Pago desacoplado. Examen = evaluacion libre. Pago al solicitar licencia via SINPE.</td></tr>
-        <tr><td class="req-id">D5</td><td class="req-desc">Banco de preguntas sin almacenar</td><td><span class="badge badge-excede">Excede</span></td><td class="req-impl">LLM en dispositivo genera preguntas dinamicas. No hay banco que filtrar.</td></tr>
-        <tr><td class="req-id">D6</td><td class="req-desc">Integracion TSE biometrica</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">Biometrico capturado en onboarding. Comparacion contra almacenado.</td></tr>
-        <tr><td class="req-id">D7</td><td class="req-desc">Dictamen medico: validar vigencia</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">VC de dictamen en boveda. Verificacion pre-examen automatica.</td></tr>
-        <tr><td class="req-id">D8</td><td class="req-desc">Control de impedimentos</td><td><span class="badge badge-diferente">Diferente</span></td><td class="req-impl">Verificacion en capa de presentacion. COSEVI valida impedimentos al emitir licencia.</td></tr>
-        <tr><td class="req-id">D9</td><td class="req-desc">Notificaciones email/SMS</td><td><span class="badge badge-diferente">Diferente</span></td><td class="req-impl">Autoservicio inmediato. Push notifications via PWA service worker.</td></tr>
-        <tr><td class="req-id">D10</td><td class="req-desc">Integracion MEP para centros educativos</td><td><span class="badge badge-diferente">Diferente</span></td><td class="req-impl">Acceso universal. Estudiantes usan misma app. Verificacion via verify.attestto.com.</td></tr>
-      </tbody>
-    </table>
-  </div>
+      data.tabs.forEach(function(tab, i) {
+        var btn = document.createElement('button');
+        btn.className = 'tab' + (i === 0 ? ' active' : '');
+        btn.dataset.tab = tab.id;
+        btn.textContent = tab.label;
+        tabsEl.appendChild(btn);
 
-  <!-- Rendimiento -->
-  <div class="tab-panel" id="tab-perf">
-    <table class="compliance-table">
-      <thead><tr><th>Ref</th><th>Requisito</th><th>Estado</th><th>Implementacion</th></tr></thead>
-      <tbody>
-        <tr><td class="req-id">E1</td><td class="req-desc">Concurrencia >= 5,000 usuarios</td><td><span class="badge badge-excede">Excede</span></td><td class="req-impl">Concurrencia infinita. Cada dispositivo es su propia instancia aislada.</td></tr>
-        <tr><td class="req-id">E2</td><td class="req-desc">Latencia <= 1.5s</td><td><span class="badge badge-excede">Excede</span></td><td class="req-impl">Latencia cero. Sin viaje de ida y vuelta por red.</td></tr>
-        <tr><td class="req-id">E3</td><td class="req-desc">API <= 300ms</td><td><span class="badge badge-excede">Excede</span></td><td class="req-impl">Sin API. Todo local.</td></tr>
-        <tr><td class="req-id">E4</td><td class="req-desc">Disponibilidad >= 99.5%</td><td><span class="badge badge-excede">Excede</span></td><td class="req-impl">100%. Cada dispositivo ES el sistema. No puede caerse.</td></tr>
-        <tr><td class="req-id">F1-3</td><td class="req-desc">RPO/RTO, monitoreo, auto-scaling</td><td><span class="badge badge-excede">Excede</span></td><td class="req-impl">RPO cero. RTO = 2 min reinstalar. Sin servidor = sin scaling.</td></tr>
-        <tr><td class="req-id">G1-6</td><td class="req-desc">Backup, gestion de incidentes, restauracion</td><td><span class="badge badge-excede">Excede</span></td><td class="req-impl">Datos en dispositivo del ciudadano. VCs re-emitibles. Anclaje on-chain = respaldo permanente.</td></tr>
-      </tbody>
-    </table>
-  </div>
+        var panel = document.createElement('div');
+        panel.className = 'tab-panel' + (i === 0 ? ' active' : '');
+        panel.id = 'tab-' + tab.id;
 
-  <!-- Operacion -->
-  <div class="tab-panel" id="tab-ops">
-    <table class="compliance-table">
-      <thead><tr><th>Ref</th><th>Requisito</th><th>Estado</th><th>Implementacion</th></tr></thead>
-      <tbody>
-        <tr><td class="req-id">H1</td><td class="req-desc">Catalogo de reglas por categoria</td><td><span class="badge badge-construir">Por construir</span></td><td class="req-impl">exam-rules.json por tipo de vehiculo. DGEV ajusta sin tocar codigo.</td></tr>
-        <tr><td class="req-id">H2</td><td class="req-desc">Gestion centralizada con versionamiento</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">Configuracion en git. Cambios via PR = historial completo + flujo de aprobacion.</td></tr>
-        <tr><td class="req-id">H3</td><td class="req-desc">Panel de control en tiempo real</td><td><span class="badge badge-diferente">Diferente</span></td><td class="req-impl">Dashboard de dominio personal. Analytics anonimizados de VCs verificadas.</td></tr>
-        <tr><td class="req-id">H4</td><td class="req-desc">Expulsion/bloqueo por fraude</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">Fraude = examen anulado, sin VC. Cooldown aplicado en boveda vinculado a DID.</td></tr>
-        <tr><td class="req-id">H5</td><td class="req-desc">Alertas automaticas al supervisor</td><td><span class="badge badge-diferente">Diferente</span></td><td class="req-impl">Aplicacion automatica. Reglas deterministicas. Sin juicio humano necesario.</td></tr>
-        <tr><td class="req-id">H6</td><td class="req-desc">Reportes exportables PDF/CSV</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">PDF con hashes incrustados + VC JSON-LD + evidencia cifrada.</td></tr>
-        <tr><td class="req-id">H7</td><td class="req-desc">Help desk 24x7 en espanol</td><td><span class="badge badge-construir">Por construir</span></td><td class="req-impl">Boton "Reportar problema" en app. Auto-reparacion via reintentos.</td></tr>
-      </tbody>
-    </table>
-  </div>
+        var rows = data.rows.filter(function(r) { return r.tab === tab.id; });
+        var html = '<table class="compliance-table"><thead><tr><th>Ref</th><th>Requisito</th><th>Estado</th><th>Implementacion</th></tr></thead><tbody>';
+        rows.forEach(function(r) {
+          html += '<tr><td class="req-id">' + r.id + '</td><td class="req-desc">' + r.req + '</td><td><span class="badge ' + STATUS_BADGE[r.status] + '">' + STATUS_LABELS[r.status] + '</span></td><td class="req-impl">' + r.impl + '</td></tr>';
+        });
+        html += '</tbody></table>';
+        panel.innerHTML = html;
+        panelsEl.appendChild(panel);
+      });
 
-  <!-- PoC/UAT -->
-  <div class="tab-panel" id="tab-poc">
-    <table class="compliance-table">
-      <thead><tr><th>Ref</th><th>Requisito</th><th>Estado</th><th>Implementacion</th></tr></thead>
-      <tbody>
-        <tr><td class="req-id">I1</td><td class="req-desc">10+ usuarios reales flujo completo</td><td><span class="badge badge-construir">Por construir</span></td><td class="req-impl">Hito de prueba. Identidad -> consentimiento -> examen -> VC.</td></tr>
-        <tr><td class="req-id">I2</td><td class="req-desc">Verificacion facial con liveness</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">FaceLandmarker + blendshapes. Parpadeo + giro de cabeza.</td></tr>
-        <tr><td class="req-id">I3</td><td class="req-desc">Bloqueo ante cambio de rostro</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">Comparacion continua contra selfie de referencia. Pixel-diff + umbral.</td></tr>
-        <tr><td class="req-id">I4</td><td class="req-desc">Ausencia/multiples -> bloqueo</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">Respuesta graduada (B7) + bloqueo inmediato por falla camara (B13).</td></tr>
-        <tr><td class="req-id">I5</td><td class="req-desc">Cambio de pestana -> expulsion</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">Rastreo focus/blur + cooldown. Fullscreen re-request automatico.</td></tr>
-        <tr><td class="req-id">I6</td><td class="req-desc">Bloqueo impresion/captura pantalla</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">Clipboard + @media print + beforeprint + PrintScreen bloqueados.</td></tr>
-        <tr><td class="req-id">I7</td><td class="req-desc">Logs firmados con hash + timestamp</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">SHA-256 chain + proofChain (user Ed25519 + station Ed25519).</td></tr>
-        <tr><td class="req-id">I8</td><td class="req-desc">Exportacion evidencias PDF/CSV</td><td><span class="badge badge-cumple">Cumple</span></td><td class="req-impl">PDF con hashes + JSON cifrado AES-256-GCM. Doble formato.</td></tr>
-        <tr><td class="req-id">I9</td><td class="req-desc">Integracion SGLC resultado en tiempo real</td><td><span class="badge badge-diferente">Diferente</span></td><td class="req-impl">Presentacion iniciada por ciudadano. VC atomica. Sin fallas de sync.</td></tr>
-      </tbody>
-    </table>
-  </div>
+      tabsEl.querySelectorAll('.tab').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          tabsEl.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+          panelsEl.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+          btn.classList.add('active');
+          document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+        });
+      });
+    });
+  })();
+  </script>
 </section>
 
 <!-- ════════════════════════════════════════════════ -->
@@ -1055,18 +965,6 @@ body {
 </footer>
 
 <script>
-// ── Compliance tab switching ──────────────────
-document.querySelectorAll('.tabs:not(#module-tabs) .tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    const parent = tab.closest('.section');
-    const target = tab.dataset.tab;
-    parent.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    parent.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-    tab.classList.add('active');
-    document.getElementById('tab-' + target).classList.add('active');
-  });
-});
-
 // ── Module filtering ──────────────────────────
 let activeDomain = 'all';
 let activeCountry = 'all';
