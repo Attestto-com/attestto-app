@@ -295,7 +295,7 @@ function handleAiCardTap() {
 
 .ai-card-desc {
   font-size: 12px;
-  color: var(--text-muted);
+  color: var(--text-secondary, #cbd5e1);
   line-height: 1.5;
   margin-bottom: var(--space-sm);
 }
@@ -308,7 +308,7 @@ function handleAiCardTap() {
 
 .ai-install-note {
   font-size: 11px;
-  color: var(--text-dim, #5a6577);
+  color: var(--text-muted, #94a3b8);
   margin-top: 8px;
   line-height: 1.5;
 }
