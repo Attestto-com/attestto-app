@@ -170,15 +170,15 @@
 
     {
       "tab": "integration", "id": "D1",
-      "req": "Crear intento en SGLC al inicio",
+      "req": "Crear intento en sistema central al inicio",
       "status": "diferente",
-      "impl": "En lugar de crear un registro en un sistema centralizado (SGLC) al inicio del examen, cada sesion se vincula al DID del usuario y se registra en una cadena de hashes SHA-256 desde el primer evento. Este registro es verificable post-facto por cualquier parte: el ciudadano puede presentar la VC de sesion y cualquier verificador puede confirmar que no fue alterada, sin depender de que el SGLC estuviera disponible al momento del examen."
+      "impl": "En lugar de crear un registro en un sistema centralizado (sistema central) al inicio del examen, cada sesion se vincula al DID del usuario y se registra en una cadena de hashes SHA-256 desde el primer evento. Este registro es verificable post-facto por cualquier parte: el ciudadano puede presentar la VC de sesion y cualquier verificador puede confirmar que no fue alterada, sin depender de que el sistema central estuviera disponible al momento del examen."
     },
     {
       "tab": "integration", "id": "D2",
-      "req": "Registrar calificacion en SGLC",
+      "req": "Registrar calificacion en sistema central",
       "status": "cumple",
-      "impl": "Al aprobar el examen, se emite una Credencial Verificable firmada que incluye el puntaje, timestamp, y la cadena de evidencia. El ciudadano presenta esta VC directamente a la institucion correspondiente, quien puede verificar su autenticidad criptograficamente. Esto invierte el modelo: en lugar de que el sistema reporte al SGLC, el ciudadano porta su resultado verificable."
+      "impl": "Al aprobar el examen, se emite una Credencial Verificable firmada que incluye el puntaje, timestamp, y la cadena de evidencia. El ciudadano presenta esta VC directamente a la institucion correspondiente, quien puede verificar su autenticidad criptograficamente. Esto invierte el modelo: en lugar de que el sistema reporte al sistema central, el ciudadano porta su resultado verificable."
     },
     {
       "tab": "integration", "id": "D3",
@@ -341,7 +341,7 @@
     },
     {
       "tab": "poc", "id": "I9",
-      "req": "Integracion SGLC resultado en tiempo real",
+      "req": "Integracion sistema central resultado en tiempo real",
       "status": "diferente",
       "impl": "El resultado no se sincroniza a un sistema central en tiempo real. En su lugar, el ciudadano recibe una VC atomica (se emite completa o no se emite) que puede presentar cuando lo necesite. La presentacion es iniciada por el ciudadano, no por el sistema. Esto elimina las fallas de sincronizacion, las dependencias de disponibilidad, y pone al ciudadano en control de su propio resultado."
     }

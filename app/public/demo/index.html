@@ -608,10 +608,10 @@ body {
       <li><span class="material-icons-outlined">verified_user</span> Credenciales verificables (W3C VC)</li>
       <li><span class="material-icons-outlined">psychology</span> IA on-device (Gemma 2B, sin servidor)</li>
       <li><span class="material-icons-outlined">visibility</span> Examenes proctorizados + competencia perpetua</li>
-      <li><span class="material-icons-outlined">anchor</span> Anclaje en blockchain (Solana)</li>
+      <li><span class="material-icons-outlined">anchor</span> Anclaje en registro publico</li>
       <li><span class="material-icons-outlined">lock</span> Passkeys (WebAuthn) + boveda cifrada</li>
       <li><span class="material-icons-outlined">wifi_off</span> Offline-first / Local-first</li>
-      <li><span class="material-icons-outlined">security</span> Trust store centralizado (BCCR PKI)</li>
+      <li><span class="material-icons-outlined">security</span> Trust store nacional (PKI por jurisdiccion)</li>
       <li><span class="material-icons-outlined">install_mobile</span> PWA lista para instalar</li>
     </ul>
     <div class="license">Apache 2.0 &middot; attestto.com</div>
@@ -680,7 +680,7 @@ body {
           <div class="module-country">CR</div>
         </div>
       </div>
-      <div class="module-desc">Credencial de identidad nacional vinculada al TSE. Firma digital atada a la cedula. Base para todos los demas modulos.</div>
+      <div class="module-desc">Credencial de identidad nacional. Verificacion biometrica + documento. Base para todos los demas modulos.</div>
       <span class="module-status status-functional">Funcional</span>
     </div>
 
@@ -717,11 +717,11 @@ body {
       <div class="module-header">
         <div class="module-icon"><span class="material-icons-outlined">draw</span></div>
         <div>
-          <div class="module-name">Firma Digital BCCR</div>
+          <div class="module-name">Firma Digital Nacional</div>
           <div class="module-country">CR</div>
         </div>
       </div>
-      <div class="module-desc">Integracion con la infraestructura de Firma Digital del BCCR. Firma de documentos PDF con tarjeta criptografica y validez legal.</div>
+      <div class="module-desc">Integracion con infraestructura de firma digital nacional. Firma de documentos PDF con tarjeta criptografica y validez legal.</div>
       <div class="progress-row"><div class="progress-bar"><div class="progress-fill" style="width:40%"></div></div><span class="progress-pct">40%</span></div>
       <span class="module-status status-progress">En progreso</span>
     </div>
@@ -744,11 +744,11 @@ body {
       <div class="module-header">
         <div class="module-icon"><span class="material-icons-outlined">directions_car</span></div>
         <div>
-          <div class="module-name">Examen Teorico COSEVI</div>
+          <div class="module-name">Examen Teorico de Conducir</div>
           <div class="module-country">CR</div>
         </div>
       </div>
-      <div class="module-desc">Doble modo: examen COSEVI tradicional (40 preguntas, proctorizado) y competencia perpetua Attestto (9 macro-categorias, 90% por categoria). IA on-device genera preguntas unicas. Cadena de hash SHA-256, firma Ed25519, anclaje blockchain.</div>
+      <div class="module-desc">Doble modo: examen oficial (40 preguntas, proctorizado) y competencia perpetua (9 macro-categorias, 90% por categoria). IA on-device genera preguntas unicas. Cadena de hash SHA-256, firma Ed25519, anclaje en registro publico.</div>
       <span class="module-status status-functional">Funcional</span>
     </div>
 
@@ -781,11 +781,11 @@ body {
       <div class="module-header">
         <div class="module-icon"><span class="material-icons-outlined">local_hospital</span></div>
         <div>
-          <div class="module-name">Modulo COSEVI/SGLC</div>
+          <div class="module-name">Presentacion de Licencia</div>
           <div class="module-country">CR</div>
         </div>
       </div>
-      <div class="module-desc">Presentacion de VCs a COSEVI para tramite de licencia. Verificacion de dictamen, examen, impedimentos en un solo flujo.</div>
+      <div class="module-desc">Presentacion de credenciales verificables para tramite de licencia. Verificacion de dictamen, examen e impedimentos en un solo flujo.</div>
       <span class="module-status status-planned">Planificado</span>
     </div>
 
@@ -891,7 +891,7 @@ body {
 
 <section class="section">
   <div class="section-title">Matriz de Cumplimiento</div>
-  <p class="section-sub">Contra el pliego de contratacion MOPT/DGEV 2026 para la prueba teorica virtual. Cada requisito mapeado a nuestra implementacion.</p>
+  <p class="section-sub">Matriz de cumplimiento para la prueba teorica virtual de conducir. Cada requisito mapeado a nuestra implementacion.</p>
 
   <div class="summary-bar" id="matrix-summary"></div>
 
@@ -990,18 +990,18 @@ document.querySelectorAll('#module-tabs .tab').forEach(tab => {
 
 // Module card click → detail page
 const moduleIdMap = {
-  'Examen Teorico COSEVI': 'cr-driving',
+  'Examen Teorico de Conducir': 'cr-driving',
   'Dictamen Medico': 'dictamen',
   'Licencia Digital (mDL)': 'mdl',
   'Cedula de Identidad': 'cedula',
-  'Firma Digital BCCR': 'firma-digital',
+  'Firma Digital Nacional': 'firma-digital',
   'Attestto Pay': 'attestto-pay',
   'vLEI Issuance': 'vlei',
   'Modulo Notarial': 'notarial',
   'Titulo Profesional': 'titulo',
   'Mensajeria Verificada': 'mensajeria',
   'Attestto Mesh': 'mesh',
-  'Modulo COSEVI/SGLC': 'cosevi-sglc',
+  'Presentacion de Licencia': 'cosevi-sglc',
 };
 
 document.querySelectorAll('#modules-grid .module-card').forEach(card => {
