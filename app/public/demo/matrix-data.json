@@ -28,18 +28,6 @@
       "impl": "Cada sesion de examen se vincula criptograficamente al DID (identidad descentralizada) del usuario, que a su vez esta ligado a su llave Ed25519 almacenada en la boveda del dispositivo. Solo puede existir una sesion activa por DID en un momento dado. Si el usuario intenta abrir otra sesion, el sistema la rechaza hasta que la anterior se cierre o expire."
     },
     {
-      "tab": "arch", "id": "A4",
-      "req": "Reanudacion ante cortes de energia",
-      "status": "construir",
-      "impl": "El estado completo de la sesion (pregunta actual, respuestas dadas, timestamps, cadena de hashes) se persiste en localStorage despues de cada accion. Si el dispositivo se apaga o el navegador se cierra, al volver a abrir la app se detecta la sesion interrumpida y se ofrece reanudar desde el ultimo punto guardado, preservando toda la cadena de integridad."
-    },
-    {
-      "tab": "arch", "id": "A5",
-      "req": "WCAG 2.1 AA, alto contraste",
-      "status": "construir",
-      "impl": "Se implementaran etiquetas ARIA en todos los controles interactivos, navegacion completa por teclado (tab/enter/escape), modo de alto contraste activable desde configuracion, y lectura de preguntas en voz alta usando Web Speech API. El objetivo es que un usuario con discapacidad visual o motora pueda completar el examen sin asistencia."
-    },
-    {
       "tab": "arch", "id": "A6",
       "req": "Huella de entorno (device fingerprint)",
       "status": "cumple",
@@ -50,12 +38,6 @@
       "req": "Browser lockdown: navegacion, impresion, clipboard",
       "status": "cumple",
       "impl": "Durante el examen, la app entra en modo fullscreen y bloquea: copiar/pegar (interceptando eventos de clipboard), impresion (con CSS @media print y el evento beforeprint), tecla PrintScreen, y atajos de teclado como Ctrl+C/V/P/S. Si el usuario sale de fullscreen, se registra la anomalia y se solicita re-entrada. El examinado no puede extraer contenido del examen."
-    },
-    {
-      "tab": "arch", "id": "A8",
-      "req": "App movil nativa con proctoring",
-      "status": "construir",
-      "impl": "La version movil es una PWA que reutiliza los mismos composables de proctoring (lockdown, deteccion facial, telemetria). En movil, el modo fullscreen se combina con el evento visibilitychange para detectar cambios de app. La ventaja de la PWA es que no requiere aprobacion de tiendas de apps y se instala directamente desde el navegador."
     },
 
     {
@@ -285,12 +267,6 @@
     },
 
     {
-      "tab": "ops", "id": "H1",
-      "req": "Catalogo de reglas por categoria",
-      "status": "construir",
-      "impl": "Las reglas de cada tipo de examen (vehiculo liviano, motocicleta, pesado, etc.) se definiran en archivos exam-rules.json por categoria. La institucion responsable puede ajustar umbrales, numero de preguntas, tiempo limite y criterios de aprobacion sin modificar codigo — solo editando el archivo de configuracion correspondiente."
-    },
-    {
       "tab": "ops", "id": "H2",
       "req": "Gestion centralizada con versionamiento",
       "status": "cumple",
@@ -319,12 +295,6 @@
       "req": "Reportes exportables PDF/CSV",
       "status": "cumple",
       "impl": "El resultado del examen se puede exportar como PDF con hashes de integridad incrustados (verificables visualmente y criptograficamente) y como VC en formato JSON-LD (legible por maquinas). El PDF incluye un codigo QR que enlaza a verify.attestto.com donde cualquier tercero puede verificar la autenticidad del documento sin contactar a Attestto."
-    },
-    {
-      "tab": "ops", "id": "H7",
-      "req": "Help desk 24x7 en espanol",
-      "status": "construir",
-      "impl": "La app incluira un boton 'Reportar problema' que captura el contexto del error y lo envia al equipo de soporte. El diseno de la app prioriza la auto-reparacion: reintentos automaticos, mensajes de error claros con acciones sugeridas, y guias contextuales. El objetivo es que la mayoria de problemas se resuelvan sin contactar soporte humano."
     },
 
     {
