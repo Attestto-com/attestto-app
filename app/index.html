@@ -4,10 +4,101 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <meta name="theme-color" content="#0f1923" />
-  <title>Attestto</title>
+  <title>Attestto — Billetera Ciudadana Soberana</title>
+  <meta name="description" content="Identidad soberana, credenciales verificables y exámenes proctorizados. Tus datos en tu dispositivo. Sin servidores. Sin intermediarios. Apache 2.0." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://app.attestto.com" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Attestto — Billetera Ciudadana Soberana" />
+  <meta property="og:description" content="Identidad soberana, credenciales verificables y exámenes proctorizados. Offline-first. Código abierto." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://app.attestto.com" />
+  <meta property="og:site_name" content="Attestto" />
+  <meta property="og:locale" content="es_CR" />
+  <meta property="og:image" content="https://attestto.org/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Attestto — Billetera Ciudadana Soberana" />
+  <meta name="twitter:description" content="Identidad soberana, credenciales verificables y exámenes proctorizados. Offline-first. Código abierto." />
+  <meta name="twitter:image" content="https://attestto.org/og-image.png" />
+
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
   <link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png" />
 
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  [
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Attestto",
+      "url": "https://app.attestto.com",
+      "description": "Billetera ciudadana soberana. Identidad, credenciales verificables, exámenes proctorizados, IA on-device — todo offline-first, sin servidores.",
+      "applicationCategory": "SecurityApplication",
+      "applicationSubCategory": "Digital Identity Wallet",
+      "operatingSystem": "Android, iOS, Desktop (PWA)",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "license": "https://www.apache.org/licenses/LICENSE-2.0",
+      "softwareVersion": "0.1.0",
+      "creator": {
+        "@type": "Organization",
+        "name": "Attestto",
+        "url": "https://attestto.org"
+      },
+      "featureList": [
+        "Identidad soberana (DID + Ed25519)",
+        "Credenciales verificables (W3C VC)",
+        "IA on-device (Gemma 2B, sin servidor)",
+        "Exámenes proctorizados con competencia perpetua",
+        "Passkeys (WebAuthn) + bóveda cifrada",
+        "Offline-first / Local-first",
+        "Trust store nacional (PKI por jurisdicción)"
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "¿Qué es Attestto?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Attestto es una billetera ciudadana soberana — identidad, credenciales verificables, exámenes proctorizados y firma digital en tu dispositivo. Todo funciona offline, sin servidores ni intermediarios. Código abierto bajo Apache 2.0."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Mis datos salen de mi dispositivo?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Attestto es offline-first y local-first. Tu clave privada Ed25519 se genera en tu dispositivo, se protege con WebAuthn (passkeys) y nunca se transmite. Las credenciales se almacenan en una bóveda cifrada con AES-256-GCM en tu navegador."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Attestto es gratis?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí. Identidad, firma, verificación, anclaje y recuperación son gratuitos para siempre. Es infraestructura pública — el comercio financia la red para que los ciudadanos nunca paguen."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cómo instalo la app?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Attestto es una Progressive Web App (PWA). Abre app.attestto.com en tu navegador móvil y selecciona 'Instalar' o 'Agregar a pantalla de inicio'. No necesitas app store. Funciona en Android, iOS y escritorio."
+          }
+        }
+      ]
+    }
+  ]
+  </script>
 </head>
 <body>
   <div id="app"></div>

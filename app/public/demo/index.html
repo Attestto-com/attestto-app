@@ -3,7 +3,82 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Attestto — Billetera Ciudadana Soberana</title>
+<title>Attestto — Billetera Ciudadana Soberana | Demo Interactiva</title>
+<meta name="description" content="Explora los módulos de Attestto: identidad soberana, credenciales verificables, exámenes proctorizados, firma digital y más. Demo interactiva en vivo. Código abierto, Apache 2.0.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://app.attestto.com/demo/">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Attestto — Billetera Ciudadana Soberana">
+<meta property="og:description" content="Identidad soberana, credenciales verificables y exámenes proctorizados. Demo interactiva — pruébalo en vivo.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://app.attestto.com/demo/">
+<meta property="og:site_name" content="Attestto">
+<meta property="og:locale" content="es_CR">
+<meta property="og:image" content="https://attestto.org/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Attestto — Billetera Ciudadana Soberana">
+<meta name="twitter:description" content="Identidad soberana, credenciales verificables y exámenes proctorizados. Demo interactiva.">
+<meta name="twitter:image" content="https://attestto.org/og-image.png">
+
+<!-- Structured Data -->
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Attestto",
+    "url": "https://app.attestto.com",
+    "description": "Billetera ciudadana soberana. Identidad, credenciales verificables, exámenes proctorizados, IA on-device — todo offline-first.",
+    "applicationCategory": "SecurityApplication",
+    "operatingSystem": "Android, iOS, Desktop (PWA)",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "license": "https://www.apache.org/licenses/LICENSE-2.0",
+    "softwareVersion": "0.1.0",
+    "creator": {
+      "@type": "Organization",
+      "name": "Attestto",
+      "url": "https://attestto.org",
+      "logo": "https://attestto.org/logo.svg"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "¿Qué módulos tiene Attestto?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Attestto incluye módulos de identidad (cédula, pasaporte), documentos (firma digital, acuerdos legales), exámenes (licencia de conducir, médico), pagos (DID-authenticated), gobierno (revisión de pliegos) e infraestructura (trust store, mesh). Cada módulo se activa solo si tienes la credencial requerida."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Cómo funciona la IA on-device?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Attestto ejecuta Gemma 2B localmente en tu dispositivo via WebGPU. El modelo de IA ayuda con preparación para exámenes, análisis de documentos y consultas contextuales — todo sin enviar datos a ningún servidor."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Puedo construir módulos para Attestto?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sí. El SDK de módulos (@attestto/module-sdk) permite a desarrolladores crear módulos independientes que se integran con la identidad, bóveda, LLM y distribución de la plataforma. Los desarrolladores ganan 60% de las comisiones de transacción de su módulo."
+        }
+      }
+    ]
+  }
+]
+</script>
+
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
 <link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png">
 

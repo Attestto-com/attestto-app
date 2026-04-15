@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Allow: /demo/
+
+Sitemap: https://app.attestto.com/sitemap.xml
