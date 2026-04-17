@@ -141,7 +141,9 @@ export function getPublicKeyBase64url(): string {
 }
 
 export function getDID(): string {
-  return localStorage.getItem(DID_KEY) ?? 'did:web:demo.attestto.id'
+  const stored = localStorage.getItem(DID_KEY)
+  if (!stored) throw new Error('No DID registered — complete onboarding first')
+  return stored
 }
 
 export function setDID(did: string): void {

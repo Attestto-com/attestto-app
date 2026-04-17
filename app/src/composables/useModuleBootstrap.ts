@@ -49,12 +49,13 @@ async function loadBundledModules(): Promise<AttesttoModule[]> {
     // Module not available
   }
 
-  try {
-    const crMedical = await import('app-module-cr-medical')
-    mods.push(crMedical.default)
-  } catch {
-    // Module not available
-  }
+  // cr-medical: gated until VP presentation bridge is built.
+  // Has hardcoded doctor DID and local-vault-as-VP workaround.
+  // try {
+  //   const crMedical = await import('app-module-cr-medical')
+  //   mods.push(crMedical.default)
+  // } catch {}
+
 
   try {
     const docSigning = await import('app-module-doc-signing')

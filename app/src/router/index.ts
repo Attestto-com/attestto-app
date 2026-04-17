@@ -48,7 +48,7 @@ const router = createRouter({
       path: '/documents',
       name: 'documents',
       component: () => import('@/views/DocumentsPage.vue'),
-      meta: { requiresAuth: true, nav: true },
+      meta: { requiresAuth: true },
     },
     {
       path: '/documents/:id',

@@ -10,7 +10,7 @@ const router = useRouter()
 const tabs = computed(() => [
   { name: 'home', label: t('nav.home'), icon: 'home' },
   { name: 'wallet', label: t('nav.wallet'), icon: 'account_balance_wallet' },
-  { name: 'documents', label: t('nav.docs'), icon: 'description' },
+  // documents: hidden until vault document storage is wired
   { name: 'settings', label: t('nav.more'), icon: 'more_horiz' },
 ])
 

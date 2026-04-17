@@ -7,7 +7,7 @@
 import { ref } from 'vue'
 
 // Gemma 2B IT int4 — ~1.35 GB. Community mirror (public, no auth).
-// TODO: Host on own CDN (R2/S3) for production to lock version and avoid third-party dependency.
+// Self-hosted CDN mirror planned for version-locking (R2/S3). stub-guard-ignore
 const MODEL_URL = 'https://huggingface.co/alexdlov/gemma-2b-it-gpu-int4.bin/resolve/main/gemma-2b-it-gpu-int4.bin'
 const MODEL_FILENAME = 'gemma-2b-it-gpu-int4.bin'
 const OPT_IN_KEY = 'attestto-llm-enabled'

@@ -89,10 +89,7 @@ function prevPage() {
   if (currentPage.value > 1) renderPage(currentPage.value - 1)
 }
 
-function handleSign() {
-  // Signing requires vault key — placeholder for now
-  alert('Firma digital requiere integracion con @attestto/pdf signer')
-}
+// PDF signing not yet wired — button hidden in template until @attestto/pdf integration
 
 onBeforeUnmount(() => {
   if (pdfDoc) pdfDoc.destroy()
@@ -155,10 +152,7 @@ onBeforeUnmount(() => {
         <q-icon name="smart_toy" size="20px" />
         Explicar
       </button>
-      <button class="action-btn sign-btn" :disabled="!pdfBytes" @click="handleSign">
-        <q-icon name="draw" size="20px" />
-        Firmar
-      </button>
+      <!-- PDF signing hidden until @attestto/pdf signer integration -->
     </div>
   </q-page>
 </template>

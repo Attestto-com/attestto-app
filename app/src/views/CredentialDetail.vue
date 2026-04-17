@@ -113,13 +113,7 @@ const statusLabel = computed(() => {
         <div class="info-value mono">{{ credential.credentialSubject.id }}</div>
       </div>
 
-      <!-- QR placeholder -->
-      <div class="qr-section">
-        <div class="qr-placeholder">
-          <q-icon name="qr_code_2" size="120px" color="grey-6" />
-          <div class="qr-hint">Escanear para verificar</div>
-        </div>
-      </div>
+      <!-- QR verification: hidden until VP presentation protocol is wired -->
     </template>
 
     <div v-else class="not-found">

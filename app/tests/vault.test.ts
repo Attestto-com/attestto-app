@@ -95,30 +95,11 @@ describe('vault store', () => {
       expect(vault.unlocked).toBe(true)
     })
 
-    it('seeds demo credentials on first unlock', async () => {
+    it('starts with empty wallet on first unlock', async () => {
       const vault = useVaultStore()
       await vault.unlock()
 
-      expect(vault.credentials.length).toBe(3)
-      expect(vault.credentials[0].type).toContain('CedulaIdentidadCR')
-      expect(vault.credentials[1].type).toContain('DictamenMedicoCR')
-      expect(vault.credentials[2].type).toContain('PassportUS')
-    })
-
-    it('persists demo credentials to encrypted vault', async () => {
-      const vault = useVaultStore()
-      await vault.unlock()
-
-      // Encrypted data was written to idb-keyval
-      expect(mockStore.has('attestto:vault:encrypted')).toBe(true)
-      const stored = mockStore.get('attestto:vault:encrypted') as {
-        version: number
-        ciphertext: string
-        iv: string
-      }
-      expect(stored.version).toBe(1)
-      expect(stored.ciphertext).toBeTruthy()
-      expect(stored.iv).toBeTruthy()
+      expect(vault.credentials.length).toBe(0)
     })
   })
 
@@ -137,10 +118,20 @@ describe('vault store', () => {
     it('credentials survive lock → unlock cycle', async () => {
       const vault = useVaultStore()
 
-      // First unlock: seeds demo credentials + persists encrypted
+      // First unlock: empty wallet
       await vault.unlock()
-      expect(vault.credentials.length).toBe(3)
-      const firstIds = vault.credentials.map((vc) => vc.id)
+      expect(vault.credentials.length).toBe(0)
+
+      // Add a credential
+      await vault.addCredential({
+        '@context': ['https://www.w3.org/2018/credentials/v1'],
+        type: ['VerifiableCredential', 'TestCredential'],
+        id: 'urn:uuid:roundtrip-001',
+        issuer: { id: 'did:web:test.issuer', name: 'Test' },
+        issuanceDate: '2026-01-01T00:00:00Z',
+        credentialSubject: { id: 'did:web:test.attestto.id' },
+      })
+      expect(vault.credentials.length).toBe(1)
 
       // Lock clears session
       vault.lock()
@@ -151,10 +142,10 @@ describe('vault store', () => {
       registered = true
       const vault2 = useVaultStore()
 
-      // Second unlock: loads from encrypted vault (not demo seed)
+      // Second unlock: loads from encrypted vault
       await vault2.unlock()
-      expect(vault2.credentials.length).toBe(3)
-      expect(vault2.credentials.map((vc) => vc.id)).toEqual(firstIds)
+      expect(vault2.credentials.length).toBe(1)
+      expect(vault2.credentials[0].id).toBe('urn:uuid:roundtrip-001')
     })
   })
 
@@ -170,7 +161,7 @@ describe('vault store', () => {
         id: 'urn:uuid:test-add-001',
         issuer: { id: 'did:web:test.issuer', name: 'Test Issuer' },
         issuanceDate: '2026-01-01T00:00:00Z',
-        credentialSubject: { id: 'did:web:demo.attestto.id' },
+        credentialSubject: { id: 'did:web:test.attestto.id' },
       })
 
       expect(vault.credentials.length).toBe(initialCount + 1)
@@ -182,12 +173,22 @@ describe('vault store', () => {
     it('removes and persists without the credential', async () => {
       const vault = useVaultStore()
       await vault.unlock()
-      const initialCount = vault.credentials.length
 
-      await vault.removeCredential('urn:uuid:cedula-demo-001')
+      // Add a credential first
+      await vault.addCredential({
+        '@context': ['https://www.w3.org/2018/credentials/v1'],
+        type: ['VerifiableCredential', 'TestCredential'],
+        id: 'urn:uuid:remove-test-001',
+        issuer: { id: 'did:web:test.issuer', name: 'Test' },
+        issuanceDate: '2026-01-01T00:00:00Z',
+        credentialSubject: { id: 'did:web:test.attestto.id' },
+      })
+      expect(vault.credentials.length).toBe(1)
 
-      expect(vault.credentials.length).toBe(initialCount - 1)
-      expect(vault.credentials.find((vc) => vc.id === 'urn:uuid:cedula-demo-001')).toBeUndefined()
+      await vault.removeCredential('urn:uuid:remove-test-001')
+
+      expect(vault.credentials.length).toBe(0)
+      expect(vault.credentials.find((vc) => vc.id === 'urn:uuid:remove-test-001')).toBeUndefined()
     })
   })
 
@@ -212,17 +213,55 @@ describe('vault store', () => {
       const vault = useVaultStore()
       await vault.unlock()
 
+      // Add credentials to test computed properties
+      await vault.addCredential({
+        '@context': ['https://www.w3.org/2018/credentials/v1'],
+        type: ['VerifiableCredential', 'CedulaIdentidadCR'],
+        id: 'urn:uuid:computed-001',
+        issuer: { id: 'did:web:tse.go.cr', name: 'TSE' },
+        issuanceDate: '2026-01-01T00:00:00Z',
+        credentialSubject: { id: 'did:web:test.attestto.id' },
+        jurisdiction: 'CR',
+      })
+      await vault.addCredential({
+        '@context': ['https://www.w3.org/2018/credentials/v1'],
+        type: ['VerifiableCredential', 'PassportCR'],
+        id: 'urn:uuid:computed-002',
+        issuer: { id: 'did:web:tse.go.cr', name: 'TSE' },
+        issuanceDate: '2026-01-01T00:00:00Z',
+        credentialSubject: { id: 'did:web:test.attestto.id' },
+        jurisdiction: 'CR',
+      })
+
       expect(vault.credentialTypes).toContain('VerifiableCredential')
       expect(vault.credentialTypes).toContain('CedulaIdentidadCR')
-      expect(vault.credentialTypes).toContain('DictamenMedicoCR')
-      expect(vault.credentialTypes).toContain('PassportUS')
+      expect(vault.credentialTypes).toContain('PassportCR')
     })
 
     it('credentialsByCountry groups correctly', async () => {
       const vault = useVaultStore()
       await vault.unlock()
 
-      expect(vault.credentialsByCountry.get('CR')?.length).toBe(2)
+      await vault.addCredential({
+        '@context': ['https://www.w3.org/2018/credentials/v1'],
+        type: ['VerifiableCredential', 'CedulaIdentidadCR'],
+        id: 'urn:uuid:country-001',
+        issuer: { id: 'did:web:tse.go.cr', name: 'TSE' },
+        issuanceDate: '2026-01-01T00:00:00Z',
+        credentialSubject: { id: 'did:web:test.attestto.id' },
+        jurisdiction: 'CR',
+      })
+      await vault.addCredential({
+        '@context': ['https://www.w3.org/2018/credentials/v1'],
+        type: ['VerifiableCredential', 'PassportUS'],
+        id: 'urn:uuid:country-002',
+        issuer: { id: 'did:web:state.gov', name: 'State' },
+        issuanceDate: '2026-01-01T00:00:00Z',
+        credentialSubject: { id: 'did:web:test.attestto.id' },
+        jurisdiction: 'US',
+      })
+
+      expect(vault.credentialsByCountry.get('CR')?.length).toBe(1)
       expect(vault.credentialsByCountry.get('US')?.length).toBe(1)
     })
   })

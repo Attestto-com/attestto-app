@@ -101,7 +101,7 @@ async function complete() {
     issuer: { id: 'did:web:app.attestto.id', name: 'Attestto' },
     issuanceDate: new Date().toISOString(),
     credentialSubject: {
-      id: vault.did ?? 'did:web:demo.attestto.id',
+      id: vault.did ?? '',
       completedAt: new Date().toISOString(),
       modules: ['privacy', 'data-consent', 'cybersecurity', 'self-custody'],
     },

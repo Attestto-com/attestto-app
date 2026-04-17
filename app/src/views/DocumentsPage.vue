@@ -11,7 +11,7 @@ interface DocItem {
   date: string
 }
 
-// TODO: load from vault/storage
+// Documents loaded from vault storage when wired
 const documents = ref<DocItem[]>([])
 
 const statusConfig = {

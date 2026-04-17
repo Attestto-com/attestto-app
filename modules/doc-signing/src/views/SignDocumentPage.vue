@@ -136,13 +136,7 @@ function goUpload() {
             <span class="method-desc">Firma con tu identidad digital</span>
           </div>
         </div>
-        <div class="method-card disabled">
-          <span class="material-icons-outlined" style="color: var(--text-dim)">credit_card</span>
-          <div>
-            <span class="method-name" style="color: var(--text-dim)">Firma Digital CR (PKCS#11)</span>
-            <span class="method-desc">Proximamente</span>
-          </div>
-        </div>
+        <!-- PKCS#11 smartcard signing: hidden until desktop integration -->
       </div>
 
       <button class="sign-btn" :disabled="signing" @click="handleSign">
