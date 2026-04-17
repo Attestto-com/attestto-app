@@ -1,17 +1,41 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { ref, watch, onMounted, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useQrScanner } from '@/composables/useQrScanner'
 import { usePresentationRequest } from '@/composables/usePresentationRequest'
 
 const route = useRoute()
 const router = useRouter()
+const qr = useQrScanner()
+const videoEl = ref<HTMLVideoElement | null>(null)
 const { step, request, matchResult, error, verifierName, canPresent, handleRequest, present, reset } =
   usePresentationRequest()
 
-onMounted(() => {
+onMounted(async () => {
   const raw = route.query.raw as string
-  if (raw) handleRequest(raw)
+  if (raw) {
+    handleRequest(raw)
+  } else {
+    await nextTick()
+    startScanner()
+  }
 })
+
+watch(() => qr.result.value, (data) => {
+  if (data) handleRequest(data)
+})
+
+async function startScanner() {
+  if (videoEl.value) {
+    qr.reset()
+    await qr.start(videoEl.value)
+  }
+}
+
+function handleReset() {
+  reset()
+  nextTick(() => startScanner())
+}
 
 function credentialLabel(id: string): string {
   const matched = matchResult.value?.matches.get(id)
@@ -114,13 +138,26 @@ function credentialLabel(id: string): string {
     <div v-else-if="step === 'error'" class="status-card error">
       <q-icon name="error_outline" size="48px" color="negative" />
       <p>{{ error }}</p>
-      <q-btn flat label="Reintentar" color="primary" @click="reset()" />
+      <q-btn flat label="Reintentar" color="primary" @click="handleReset()" />
     </div>
 
-    <!-- Idle -->
-    <div v-else class="status-card">
-      <q-icon name="qr_code_scanner" size="48px" color="grey-6" />
-      <p>Escanea un codigo QR de un verificador</p>
+    <!-- Idle: QR scanner -->
+    <div v-else class="scanner-section">
+      <div class="scanner-area">
+        <video ref="videoEl" class="scanner-video" autoplay playsinline muted />
+        <div v-if="qr.error.value" class="scanner-error">
+          <q-icon name="videocam_off" size="48px" color="grey-6" />
+          <p>{{ qr.error.value }}</p>
+        </div>
+        <div v-else-if="!qr.scanning.value && !qr.result.value" class="scanner-frame">
+          <q-icon name="qr_code_scanner" size="64px" color="grey-6" />
+          <p>Iniciando camara...</p>
+        </div>
+        <div class="scanner-overlay">
+          <div class="scanner-corners" />
+        </div>
+      </div>
+      <p class="scanner-hint">Escanea el codigo QR del verificador</p>
     </div>
   </q-page>
 </template>
@@ -162,4 +199,28 @@ function credentialLabel(id: string): string {
   font-size: 13px; color: #ffb74d;
 }
 .action-row { display: flex; justify-content: flex-end; gap: var(--space-sm); }
+.scanner-section { display: flex; flex-direction: column; align-items: center; gap: var(--space-md); }
+.scanner-area {
+  position: relative; width: 100%; aspect-ratio: 1; max-width: 360px;
+  background: var(--bg-card); border-radius: var(--radius-lg); overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.scanner-video { width: 100%; height: 100%; object-fit: cover; }
+.scanner-frame {
+  position: absolute; display: flex; flex-direction: column;
+  align-items: center; gap: var(--space-md); color: var(--text-muted); font-size: 14px;
+}
+.scanner-error {
+  position: absolute; display: flex; flex-direction: column;
+  align-items: center; gap: var(--space-sm); color: var(--text-muted); font-size: 13px;
+}
+.scanner-overlay {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  pointer-events: none;
+}
+.scanner-corners {
+  width: 200px; height: 200px;
+  border: 3px solid var(--primary); border-radius: var(--radius-md); opacity: 0.6;
+}
+.scanner-hint { font-size: 14px; color: var(--text-muted); text-align: center; }
 </style>

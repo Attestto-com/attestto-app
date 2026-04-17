@@ -1,11 +1,45 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useVaultStore } from '@/stores/vault'
+import * as crypto from '@/composables/useCrypto'
+import { buildPresentation } from '@attestto/vc-sdk'
 
 const route = useRoute()
 const router = useRouter()
 const vault = useVaultStore()
+
+const showQr = ref(false)
+const qrDataUrl = ref<string | null>(null)
+const qrError = ref('')
+
+async function generateQr() {
+  if (!credential.value || !vault.did) return
+  qrError.value = ''
+
+  try {
+    const privKey = crypto.getPrivateKeyBytes()
+    const nonce = globalThis.crypto.randomUUID()
+    const vp = buildPresentation([credential.value as any], {
+      holderDid: vault.did,
+      privateKey: privKey,
+      algorithm: 'Ed25519',
+      nonce,
+    })
+
+    const vpJson = JSON.stringify(vp)
+    const QRCode = await import('qrcode')
+    qrDataUrl.value = await QRCode.toDataURL(vpJson, {
+      width: 280,
+      margin: 2,
+      color: { dark: '#000000', light: '#ffffff' },
+      errorCorrectionLevel: 'L',
+    })
+    showQr.value = true
+  } catch (e: unknown) {
+    qrError.value = e instanceof Error ? e.message : 'Error al generar QR'
+  }
+}
 
 const credential = computed(() =>
   vault.credentials.find((vc) => vc.id === route.params.id),
@@ -113,7 +147,24 @@ const statusLabel = computed(() => {
         <div class="info-value mono">{{ credential.credentialSubject.id }}</div>
       </div>
 
-      <!-- QR verification: hidden until VP presentation protocol is wired -->
+      <!-- QR code for credential sharing -->
+      <div class="qr-section">
+        <q-btn
+          v-if="!showQr"
+          unelevated
+          icon="qr_code_2"
+          label="Mostrar QR"
+          color="primary"
+          :disable="!vault.unlocked"
+          @click="generateQr"
+        />
+        <div v-if="showQr && qrDataUrl" class="qr-display">
+          <img :src="qrDataUrl" alt="QR de credencial" class="qr-image" />
+          <p class="qr-hint">Un verificador puede escanear este codigo</p>
+          <q-btn flat dense label="Ocultar" color="grey" @click="showQr = false" />
+        </div>
+        <p v-if="qrError" class="qr-error">{{ qrError }}</p>
+      </div>
     </template>
 
     <div v-else class="not-found">
@@ -214,23 +265,34 @@ const statusLabel = computed(() => {
 
 .qr-section {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   margin-top: var(--space-lg);
+  gap: var(--space-md);
 }
 
-.qr-placeholder {
+.qr-display {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--space-sm);
-  padding: var(--space-lg);
+  padding: var(--space-md);
   background: var(--bg-card);
   border-radius: var(--radius-lg);
+}
+
+.qr-image {
+  border-radius: var(--radius-sm);
 }
 
 .qr-hint {
   font-size: 12px;
   color: var(--text-muted);
+}
+
+.qr-error {
+  font-size: 13px;
+  color: var(--critical);
 }
 
 .demo-badge {
