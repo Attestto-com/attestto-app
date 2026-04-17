@@ -34,6 +34,7 @@ export const manifest: ModuleManifest = {
     { path: '/cr-medical/paciente', name: 'cr-medical-patient', component: () => import('./views/PatientLookup.vue') },
     { path: '/cr-medical/examen/:patientDid', name: 'cr-medical-exam', component: () => import('./views/ExaminationForm.vue') },
     { path: '/cr-medical/vista-previa/:draftId', name: 'cr-medical-preview', component: () => import('./views/DictamenPreview.vue') },
+    { path: '/cr-medical/emitido/:draftId', name: 'cr-medical-issued', component: () => import('./views/IssuePage.vue') },
     { path: '/cr-medical/historial', name: 'cr-medical-history', component: () => import('./views/DictamenHistory.vue') },
   ],
 

@@ -171,8 +171,7 @@ const resultLabel = computed(() => {
 async function issue() {
   const vc = await issueDictamen(draftId)
   if (vc) {
-    router.push('/cr-medical')
-    // Shell notification injected via ctx.pushInboxItem in useDictamen
+    router.push(`/cr-medical/emitido/${draftId}`)
   }
 }
 </script>
