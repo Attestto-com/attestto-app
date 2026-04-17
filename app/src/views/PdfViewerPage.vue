@@ -1,9 +1,13 @@
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount, watch } from 'vue'
+import { ref, onMounted, onBeforeUnmount, watch, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useVaultStore } from '@/stores/vault'
+import { signPdf, extractSignature, verifySignature } from '@/composables/usePdfSigner'
+import type { AttesttoPdfSignature, VerifyResult } from '@/composables/usePdfSigner'
 
 const route = useRoute()
 const router = useRouter()
+const vault = useVaultStore()
 const docId = route.params.id as string
 
 const canvasEl = ref<HTMLCanvasElement | null>(null)
@@ -14,6 +18,14 @@ const loading = ref(false)
 const error = ref('')
 const pdfBytes = ref<Uint8Array | null>(null)
 const fileName = ref('')
+
+// Signing state
+const signing = ref(false)
+const signed = ref(false)
+const signedPdfBytes = ref<Uint8Array | null>(null)
+const signatureInfo = ref<AttesttoPdfSignature | null>(null)
+const verifyResult = ref<VerifyResult | null>(null)
+const canSign = computed(() => vault.unlocked && !!pdfBytes.value && !signing.value)
 
 let pdfDoc: any = null
 let pdfjsLib: any = null
@@ -60,6 +72,7 @@ async function openPdf(bytes: Uint8Array) {
     pageCount.value = pdfDoc.numPages
     pdfBytes.value = bytes
     await renderPage(1)
+    await checkSignature(bytes)
   } catch (e: unknown) {
     error.value = e instanceof Error ? e.message : 'Error al abrir PDF'
   } finally {
@@ -89,7 +102,52 @@ function prevPage() {
   if (currentPage.value > 1) renderPage(currentPage.value - 1)
 }
 
-// PDF signing not yet wired — button hidden in template until @attestto/pdf integration
+async function checkSignature(bytes: Uint8Array) {
+  signatureInfo.value = await extractSignature(bytes)
+  if (signatureInfo.value) {
+    verifyResult.value = await verifySignature(bytes)
+  }
+}
+
+async function handleSign() {
+  if (!pdfBytes.value || signing.value) return
+  signing.value = true
+  error.value = ''
+
+  try {
+    const result = await signPdf({
+      pdfBytes: pdfBytes.value,
+      fileName: fileName.value,
+      mode: 'final',
+    })
+
+    signedPdfBytes.value = result.pdfBytes
+    signatureInfo.value = result.signature
+    signed.value = true
+
+    // Re-render signed PDF
+    await openPdf(result.pdfBytes)
+    await checkSignature(result.pdfBytes)
+  } catch (e: unknown) {
+    error.value = e instanceof Error ? e.message : 'Error al firmar'
+  } finally {
+    signing.value = false
+  }
+}
+
+function downloadSigned() {
+  const bytes = signedPdfBytes.value
+  if (!bytes) return
+
+  const blob = new Blob([bytes as BlobPart], { type: 'application/pdf' })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  const base = fileName.value.replace(/\.pdf$/i, '')
+  a.download = `${base}-firmado.pdf`
+  a.click()
+  URL.revokeObjectURL(url)
+}
 
 onBeforeUnmount(() => {
   if (pdfDoc) pdfDoc.destroy()
@@ -146,13 +204,39 @@ onBeforeUnmount(() => {
       <q-btn flat round icon="chevron_right" color="white" :disable="currentPage >= pageCount" @click="nextPage" />
     </div>
 
+    <!-- Signature status -->
+    <div v-if="verifyResult" class="sig-status" :class="verifyResult.valid ? 'sig-valid' : 'sig-invalid'">
+      <q-icon :name="verifyResult.valid ? 'verified' : 'error_outline'" size="18px" />
+      <div class="sig-info">
+        <span class="sig-label">{{ verifyResult.valid ? 'Firma verificada' : 'Firma invalida' }}</span>
+        <span class="sig-detail">{{ signatureInfo?.issuerName || signatureInfo?.issuer }}</span>
+      </div>
+    </div>
+
     <!-- Actions -->
     <div class="pdf-actions">
       <button class="action-btn ai-btn" :disabled="!pdfBytes">
         <q-icon name="smart_toy" size="20px" />
         Explicar
       </button>
-      <!-- PDF signing hidden until @attestto/pdf signer integration -->
+      <button
+        v-if="!signed"
+        class="action-btn sign-btn"
+        :disabled="!canSign"
+        @click="handleSign"
+      >
+        <q-spinner-dots v-if="signing" size="20px" color="white" />
+        <q-icon v-else name="draw" size="20px" />
+        {{ signing ? 'Firmando...' : 'Firmar' }}
+      </button>
+      <button
+        v-if="signed"
+        class="action-btn download-btn"
+        @click="downloadSigned"
+      >
+        <q-icon name="download" size="20px" />
+        Descargar
+      </button>
     </div>
   </q-page>
 </template>
@@ -282,5 +366,49 @@ onBeforeUnmount(() => {
 .sign-btn {
   background: var(--primary);
   color: white;
+}
+
+.download-btn {
+  background: var(--success);
+  color: var(--bg-base);
+}
+
+.sig-status {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin: 0 var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-md);
+  font-size: 13px;
+}
+
+.sig-valid {
+  background: rgba(74, 222, 128, 0.1);
+  color: var(--success);
+}
+
+.sig-invalid {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--critical);
+}
+
+.sig-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sig-label {
+  font-weight: 600;
+}
+
+.sig-detail {
+  font-size: 11px;
+  opacity: 0.8;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 240px;
 }
 </style>
