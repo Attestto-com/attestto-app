@@ -12,7 +12,7 @@
     "vue-router": "^4.5.0",
     "pinia": "^2.3.0",
     "quasar": "^2.17.7",
-    "jspdf": "^2.5.2",
+    "jspdf": "^4.2.1",
     "tesseract.js": "^5.1.1",
     "@attestto/module-sdk": "workspace:*"
   },
