@@ -10,6 +10,7 @@ import { useVaultStore } from './vault'
 import { useInboxStore } from './inbox'
 import { router } from '@/router'
 import { useLlm } from '@/composables/useLlm'
+import * as crypto from '@/composables/useCrypto'
 
 export const useModulesStore = defineStore('modules', () => {
   const installed = ref<Map<string, AttesttoModule>>(new Map())
@@ -62,6 +63,15 @@ export const useModulesStore = defineStore('modules', () => {
         generate: (prompt: string) => llm.generate(prompt),
         supported: llm.supportsWebGpu(),
       },
+      getDID: () => {
+        if (!vault.did) throw new Error('Vault locked')
+        return vault.did
+      },
+      getPublicKey: () => {
+        if (!vault.publicKey) throw new Error('Vault locked')
+        return vault.publicKey
+      },
+      sign: (payload: string) => vault.sign(payload),
     }
   }
 

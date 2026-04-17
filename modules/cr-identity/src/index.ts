@@ -1,91 +1,120 @@
 /**
  * app-module-cr-identity
  *
- * Notary-facing module for issuing IdentityVC (Credencial de Identidad Notarial).
- * The ROOT credential in Attestto — everything else derives from it.
- *
- * Credential gate: ColegioAbogadosCRVC required.
- * Issues: IdentityVC
- * Anchors: Solana
+ * Citizen identity management: scan cedula, license, passport → self-attested VCs.
+ * Notary mode: issue IdentityVC with fe publica notarial (runtime-gated).
  */
 
 import type { AttesttoModule, ModuleContext } from '@attestto/module-sdk'
 import { manifest } from './manifest'
 import { setIdentityContext } from './composables/useIdentityIssuance'
+import { setBuilderContext } from './composables/useCredentialBuilder'
+
+let ctx: ModuleContext | null = null
 
 const crIdentityModule: AttesttoModule = {
   manifest,
 
-  async install(ctx: ModuleContext) {
-    setIdentityContext(ctx)
+  async install(moduleCtx: ModuleContext) {
+    ctx = moduleCtx
+    setIdentityContext(moduleCtx)
+    setBuilderContext(moduleCtx)
 
-    const credentials = await ctx.getCredentials(['ColegioAbogadosCRVC'])
-    if (credentials.length === 0) {
-      console.warn('[cr-identity] No ColegioAbogadosCRVC found — module installed but notary VC missing')
-      return
-    }
+    // Citizen mode: always show scan CTA
+    moduleCtx.pushInboxItem({
+      id: 'cr-identity:scan-cta',
+      moduleId: 'cr-identity',
+      type: 'action',
+      icon: 'fingerprint',
+      title: 'Identidad Digital',
+      subtitle: 'Escanea tu cedula, licencia o pasaporte',
+      action: 'Escanear',
+      route: '/module/cr-identity/cr-identity',
+      timestamp: Date.now(),
+      priority: 9,
+    })
 
-    // Check for pending drafts
-    const raw = localStorage.getItem('cr-identity:drafts')
-    if (raw) {
-      try {
-        const drafts = JSON.parse(raw) as Array<{ status: string; citizen: { fullName: string } }>
-        const pending = drafts.filter((d) => d.status === 'draft' || d.status === 'review')
+    // Notary mode: check if user has notary credential
+    const notaryCredentials = await moduleCtx.getCredentials(['ColegioAbogadosCRVC'])
+    if (notaryCredentials.length > 0) {
+      await moduleCtx.storage.set('notaryMode', true)
+
+      // Check for pending notary drafts
+      const draftsRaw = await moduleCtx.storage.get<Array<{ status: string; citizen: { fullName: string } }>>('drafts')
+      if (draftsRaw) {
+        const pending = draftsRaw.filter((d) => d.status === 'draft' || d.status === 'review')
         if (pending.length > 0) {
-          ctx.pushInboxItem({
+          moduleCtx.pushInboxItem({
             id: 'cr-identity:pending-drafts',
             moduleId: 'cr-identity',
             type: 'warning',
             icon: 'pending_actions',
-            title: `${pending.length} credencial${pending.length > 1 ? 'es' : ''} pendiente${pending.length > 1 ? 's' : ''}`,
+            title: `${pending.length} credencial${pending.length > 1 ? 'es' : ''} notarial${pending.length > 1 ? 'es' : ''} pendiente${pending.length > 1 ? 's' : ''}`,
             subtitle: `Ultimo: ${pending[0].citizen.fullName}`,
             action: 'Continuar',
-            route: '/module/cr-identity/cr-identity',
+            route: '/module/cr-identity/cr-identity/notarial',
             timestamp: Date.now(),
             priority: 8,
           })
         }
-      } catch {
-        // Corrupted storage — ignore
       }
+    } else {
+      await moduleCtx.storage.set('notaryMode', false)
     }
   },
 
   uninstall() {
-    // Session state cleared; drafts preserved for continuity
+    ctx = null
+  },
+
+  getOnboarding() {
+    return {
+      id: 'cr-identity-onboarding',
+      screens: [
+        {
+          icon: 'fingerprint',
+          title: 'Tu Identidad Digital',
+          body: 'Escanea tu cedula, licencia de conducir o pasaporte. Los datos se extraen localmente con OCR — nada sale de tu dispositivo.',
+        },
+        {
+          icon: 'verified_user',
+          title: 'Credenciales Verificables',
+          body: 'Cada documento escaneado se convierte en una credencial firmada con tu llave Ed25519. Puedes compartirla sin revelar datos innecesarios.',
+        },
+        {
+          icon: 'gavel',
+          title: 'Atestacion Notarial',
+          body: 'Un notario puede elevar tu credencial auto-atestada a una credencial con fe publica, añadiendo un nivel superior de confianza.',
+        },
+      ],
+      completionCredential: 'IdentityOnboarding',
+    }
   },
 
   async getInboxItems() {
-    const raw = localStorage.getItem('cr-identity:drafts')
-    if (!raw) return []
-    try {
-      const drafts = JSON.parse(raw) as Array<{
-        draftId: string
-        status: string
-        citizen: { fullName: string }
-        updatedAt: string
-      }>
-      return drafts
-        .filter((d) => d.status === 'draft' || d.status === 'review')
-        .map((d) => ({
-          id: `cr-identity:draft:${d.draftId}`,
-          moduleId: 'cr-identity',
-          type: 'action' as const,
-          icon: 'fingerprint',
-          title: 'Credencial de identidad pendiente',
-          subtitle: d.citizen.fullName,
-          action: 'Continuar',
-          route: `/module/cr-identity/cr-identity/revision/${d.draftId}`,
-          timestamp: new Date(d.updatedAt).getTime(),
-          priority: 7,
-        }))
-    } catch {
-      return []
-    }
+    return [
+      {
+        id: 'cr-identity:scan-cta',
+        moduleId: 'cr-identity',
+        type: 'action' as const,
+        icon: 'fingerprint',
+        title: 'Identidad Digital',
+        subtitle: 'Escanea tu cedula, licencia o pasaporte',
+        action: 'Escanear',
+        route: '/module/cr-identity/cr-identity',
+        timestamp: Date.now(),
+        priority: 9,
+      },
+    ]
   },
 }
 
 export default crIdentityModule
 
-export type { IdentityDraft, CitizenData, NotaryData, EvidenceEntry, OrganizationRole } from './types/identity'
+export type {
+  IdentityDraft, CitizenData, NotaryData, EvidenceEntry, OrganizationRole,
+  DocumentType, ScanResult, CedulaSubject, DrivingLicenseSubject, PassportSubject,
+  LicenseCategory, MRZResult, PassportMRZResult, SelfAttestedEvidence,
+} from './types/identity'
+
 export { manifest } from './manifest'

@@ -56,10 +56,27 @@ export function useIdentityIssuance() {
       }
 
       // Step 2: Build VC
-      const vc = buildVC(draft)
+      const vc = buildNotarialIdentityVC(draft)
 
-      // Step 3: Store in vault
-      await getCtx().storeCredential(vc)
+      // Step 3: Sign with Ed25519 and store in vault
+      const ctx = getCtx()
+      const canonicalPayload = JSON.stringify({
+        '@context': vc['@context'],
+        type: vc.type,
+        issuer: vc.issuer,
+        issuanceDate: vc.issuanceDate,
+        credentialSubject: vc.credentialSubject,
+      })
+      const { signature, verificationMethod } = await ctx.sign(canonicalPayload)
+      vc.proof = {
+        type: 'Ed25519Signature2020',
+        created: new Date().toISOString(),
+        verificationMethod,
+        proofPurpose: 'assertionMethod',
+        proofValue: signature,
+        publicKey: ctx.getPublicKey(),
+      }
+      await ctx.storeCredential(vc)
 
       // Step 4: Update store
       store.markStatus(draftId, 'signed')
@@ -85,7 +102,7 @@ export function useIdentityIssuance() {
     }
   }
 
-  function buildVC(draft: IdentityDraft): VerifiableCredential {
+  function buildNotarialIdentityVC(draft: IdentityDraft): VerifiableCredential {
     const now = new Date().toISOString()
     const vcId = `urn:uuid:${crypto.randomUUID()}`
 
@@ -191,5 +208,5 @@ export function useIdentityIssuance() {
     return true
   }
 
-  return { issuing, issueError, issueIdentityVC, buildVC, validateDraft }
+  return { issuing, issueError, issueIdentityVC, buildNotarialIdentityVC, validateDraft }
 }

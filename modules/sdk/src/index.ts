@@ -50,6 +50,12 @@ export interface ModuleContext {
   storage: ModuleStorage
   /** On-device LLM text generation (MediaPipe + Gemma). Returns null if unavailable. */
   llm: LlmHandle
+  /** Get the user's DID (e.g. "did:web:demo.attestto.id"). Throws if vault locked. */
+  getDID: () => string
+  /** Get the user's public key as base64url. Throws if vault locked. */
+  getPublicKey: () => string
+  /** Sign a payload with the user's Ed25519 key (biometric-gated). */
+  sign: (payload: string) => Promise<{ signature: string; verificationMethod: string }>
 }
 
 export interface LlmHandle {

@@ -1,6 +1,6 @@
 /**
- * Types for the IdentityVC notarial issuance module.
- * Mirrors cr-vc-schemas/schemas/notarial/IdentityVC.schema.json
+ * Types for the Identity module.
+ * Covers citizen self-attestation (cedula, license, passport) and notarial issuance.
  */
 
 // ── National ID ─────────────────────────────────────────────────
@@ -158,4 +158,137 @@ export interface IssuedIdentityRecord {
   nationalIdNumber: string
   issuedAt: string
   anchorTx: string | null
+}
+
+// ══════════════════════════════════════════════════════════════════
+// Citizen Self-Attestation Types
+// ══════════════════════════════════════════════════════════════════
+
+// ── Document Scanning ───────────────────────────────────────────
+
+export type DocumentType = 'cedula' | 'licencia' | 'pasaporte'
+
+export const DOCUMENT_TYPE_LABELS: Record<DocumentType, string> = {
+  cedula: 'Cedula de Identidad',
+  licencia: 'Licencia de Conducir',
+  pasaporte: 'Pasaporte',
+}
+
+export const DOCUMENT_TYPE_ICONS: Record<DocumentType, string> = {
+  cedula: 'badge',
+  licencia: 'directions_car',
+  pasaporte: 'flight',
+}
+
+export type ScanSource = 'mrz-td1' | 'mrz-td3' | 'front-ocr'
+
+export interface ScanResult {
+  success: boolean
+  documentType: DocumentType
+  extractedFields: Record<string, string>
+  rawMRZ: string[]
+  confidence: number
+  source: ScanSource
+  frontImage?: string
+  backImage?: string
+}
+
+// ── Self-Attested Evidence ──────────────────────────────────────
+
+export interface SelfAttestedEvidence {
+  type: 'SelfAttestation'
+  method: 'document-scan'
+  ocrConfidence: number
+  scannedAt: string
+}
+
+// ── Cedula Credential Subject ───────────────────────────────────
+
+export interface CedulaSubject {
+  cedula: string
+  fullName: string
+  apellido1: string
+  apellido2: string
+  nombre: string
+  dateOfBirth: string
+  dateOfExpiry: string
+  nationality: string
+  sex: string
+  photoHash?: string
+}
+
+// ── Driving License Credential Subject ──────────────────────────
+
+export type LicenseStatus = 'active' | 'suspended' | 'revoked' | 'expired'
+
+export interface LicenseCategory {
+  code: string
+  from: string
+  to: string
+}
+
+export const LICENSE_CATEGORY_CODES = [
+  'A1', 'A2', 'A3',
+  'B1', 'B2', 'B3', 'B4',
+  'C1', 'C2', 'C3',
+  'D1', 'D2', 'D3',
+  'E1', 'E2', 'E3',
+] as const
+
+export interface DrivingLicenseSubject {
+  cedula: string
+  fullName: string
+  dateOfBirth: string
+  dateOfExpiry: string
+  categories: LicenseCategory[]
+  points: number
+  status: LicenseStatus
+  restrictions: string[]
+  bloodType?: string
+  photoHash?: string
+}
+
+// ── Passport Credential Subject ─────────────────────────────────
+
+export interface PassportSubject {
+  documentNumber: string
+  surname: string
+  givenNames: string
+  nationality: string
+  dateOfBirth: string
+  sex: string
+  dateOfExpiry: string
+  issuingCountry: string
+  photoHash?: string
+}
+
+// ── MRZ Parser Types ────────────────────────────────────────────
+
+export interface MRZResult {
+  success: boolean
+  cedula: string
+  nombre: string
+  apellido1: string
+  apellido2: string
+  fechaNacimiento: string
+  fechaVencimiento: string
+  nacionalidad: string
+  sexo: string
+  rawMRZ: string[]
+  confidence: number
+  source?: ScanSource
+}
+
+export interface PassportMRZResult {
+  success: boolean
+  documentNumber: string
+  surname: string
+  givenNames: string
+  nationality: string
+  dateOfBirth: string
+  sex: string
+  dateOfExpiry: string
+  issuingCountry: string
+  rawMRZ: string[]
+  confidence: number
 }

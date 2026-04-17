@@ -18,7 +18,7 @@ async function hashPdf(pdfBytes: Uint8Array): Promise<string> {
     .join('')
 }
 
-// ── VC Issuance ─────────────────────────────────────────────────
+// ── VC Issuance with Real Ed25519 Proof ─────────────────────────
 
 async function issueDocumentSignatureVC(
   session: SigningSession,
@@ -26,11 +26,10 @@ async function issueDocumentSignatureVC(
 ): Promise<VerifiableCredential> {
   if (!moduleCtx) throw new Error('Contexto de modulo no disponible')
 
+  const did = moduleCtx.getDID()
   const now = new Date().toISOString()
   const vcId = `urn:uuid:${globalThis.crypto.randomUUID()}`
 
-  // Get DID from vault — we use getCredentials to infer the user's DID
-  // The vault sign function handles biometric gating
   const vc: VerifiableCredential = {
     '@context': [
       'https://www.w3.org/2018/credentials/v1',
@@ -38,10 +37,10 @@ async function issueDocumentSignatureVC(
     ],
     type: ['VerifiableCredential', 'DocumentSignatureVC'],
     id: vcId,
-    issuer: { id: 'self' },
+    issuer: { id: did, name: 'Attestto' },
     issuanceDate: now,
     credentialSubject: {
-      id: '', // Will be filled after signing
+      id: did,
       documentType: session.analysis?.documentType ?? 'unknown',
       riskLevel: session.analysis?.riskLevel ?? 'high',
       pdfHash,
@@ -52,7 +51,27 @@ async function issueDocumentSignatureVC(
     },
   }
 
-  return { ...vc, _vcId: vcId } as VerifiableCredential & { _vcId: string }
+  // Sign the canonical payload with Ed25519 (biometric-gated)
+  const canonicalPayload = JSON.stringify({
+    '@context': vc['@context'],
+    type: vc.type,
+    issuer: vc.issuer,
+    issuanceDate: vc.issuanceDate,
+    credentialSubject: vc.credentialSubject,
+  })
+
+  const { signature, verificationMethod } = await moduleCtx.sign(canonicalPayload)
+
+  vc.proof = {
+    type: 'Ed25519Signature2020',
+    created: now,
+    verificationMethod,
+    proofPurpose: 'assertionMethod',
+    proofValue: signature,
+    publicKey: moduleCtx.getPublicKey(),
+  }
+
+  return vc
 }
 
 // ── Sign Document ───────────────────────────────────────────────
@@ -66,25 +85,26 @@ export async function signDocument(
   // 1. Hash the original PDF
   const pdfHash = await hashPdf(pdfBytes)
 
-  // 2. Build the VC
+  // 2. Build and sign the VC with real Ed25519 proof
   const vc = await issueDocumentSignatureVC(session, pdfHash)
-  const vcId = (vc as VerifiableCredential & { _vcId?: string })._vcId ?? vc.id ?? ''
 
-  // 3. Store credential in vault (this triggers biometric via the shell)
+  // 3. Store credential in vault
   await moduleCtx.storeCredential(vc)
 
-  // 4. Return the signed record
+  // 4. Extract proof details for the signed record
+  const proof = Array.isArray(vc.proof) ? vc.proof[0] : vc.proof
+
   return {
     sessionId: session.id,
     fileName: session.fileName,
     documentType: session.analysis?.documentType ?? 'unknown',
     riskLevel: session.analysis?.riskLevel ?? 'high',
     pdfHash,
-    signature: vcId, // Signature is embedded in the VC proof, verified via vcId
-    verificationMethod: '',
+    signature: (proof?.proofValue as string) ?? '',
+    verificationMethod: (proof?.verificationMethod as string) ?? '',
     signedAt: new Date().toISOString(),
     anchorTx: null,
-    vcId,
+    vcId: vc.id,
   }
 }
 
@@ -227,7 +247,9 @@ export async function generateAuditPdf(
   doc.setFont('helvetica', 'normal')
   const proofLines = [
     `VC ID: ${record.vcId}`,
+    `Firmante: ${record.verificationMethod}`,
     `Hash del documento: ${record.pdfHash}`,
+    `Firma Ed25519: ${record.signature.slice(0, 32)}...`,
     `Firmado: ${record.signedAt}`,
   ]
   if (record.anchorTx) {
