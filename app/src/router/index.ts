@@ -75,6 +75,18 @@ const router = createRouter({
       meta: { requiresAuth: true },
     },
     {
+      path: '/receive',
+      name: 'receive-credential',
+      component: () => import('@/views/ReceiveCredentialPage.vue'),
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/present',
+      name: 'present-credentials',
+      component: () => import('@/views/PresentCredentialsPage.vue'),
+      meta: { requiresAuth: true },
+    },
+    {
       path: '/settings',
       name: 'settings',
       component: () => import('@/views/SettingsPage.vue'),

@@ -158,6 +158,11 @@ export function getVerificationMethod(): string {
   return `${getDID()}#key-1`
 }
 
+export function getPrivateKeyBytes(): Uint8Array {
+  if (!sessionPrivateKey) throw new Error('Vault locked — authenticate first')
+  return sessionPrivateKey
+}
+
 export function sign(payload: Uint8Array): Uint8Array {
   if (!sessionPrivateKey) throw new Error('Vault locked — authenticate first')
   return ed25519.sign(payload, sessionPrivateKey)
