@@ -7,7 +7,14 @@
   <title>Attestto — La App Soberana</title>
   <meta name="description" content="Identidad, credenciales, exámenes, firma digital, IA on-device y módulos — todo soberano, todo en tu dispositivo. Sin servidores. Sin intermediarios. Código abierto." />
   <meta name="robots" content="index, follow" />
+  <meta name="keywords" content="identidad soberana, credenciales verificables, firma digital, PWA, Costa Rica, DID, WebAuthn, offline-first, código abierto" />
+  <meta name="application-name" content="Attestto" />
   <link rel="canonical" href="https://app.attestto.com" />
+
+  <!-- PWA iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Attestto" />
 
   <!-- Open Graph -->
   <meta property="og:title" content="Attestto — La App Soberana" />
@@ -16,7 +23,7 @@
   <meta property="og:url" content="https://app.attestto.com" />
   <meta property="og:site_name" content="Attestto" />
   <meta property="og:locale" content="es_CR" />
-  <meta property="og:image" content="https://attestto.org/og-image.png" />
+  <meta property="og:image" content="https://app.attestto.com/og-app.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
 
@@ -24,10 +31,15 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Attestto — La App Soberana" />
   <meta name="twitter:description" content="Identidad, credenciales, exámenes, firma y módulos — todo soberano, todo en tu dispositivo. Código abierto." />
-  <meta name="twitter:image" content="https://attestto.org/og-image.png" />
+  <meta name="twitter:image" content="https://app.attestto.com/og-app.png" />
 
+  <!-- Icons -->
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
-  <link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/icon-192.png" />
+
+  <!-- Performance hints -->
+  <link rel="dns-prefetch" href="https://attestto.org" />
+  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
 
   <!-- Structured Data -->
   <script type="application/ld+json">
@@ -43,7 +55,8 @@
       "operatingSystem": "Android, iOS, Desktop (PWA)",
       "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
       "license": "https://www.apache.org/licenses/LICENSE-2.0",
-      "softwareVersion": "0.1.0",
+      "softwareVersion": "0.2.0",
+      "screenshot": "https://app.attestto.com/og-app.png",
       "creator": {
         "@type": "Organization",
         "name": "Attestto",
@@ -52,9 +65,10 @@
       "featureList": [
         "Identidad soberana (DID + Ed25519)",
         "Credenciales verificables (W3C VC)",
+        "Escaneo de cédula, licencia y pasaporte con OCR",
         "IA on-device (Gemma 2B, sin servidor)",
         "Exámenes proctorizados con competencia perpetua",
-        "Passkeys (WebAuthn) + bóveda cifrada",
+        "Passkeys (WebAuthn) + bóveda cifrada (AES-256-GCM)",
         "Offline-first / Local-first",
         "Trust store nacional (PKI por jurisdicción)"
       ]
