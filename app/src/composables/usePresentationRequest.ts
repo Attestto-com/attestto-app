@@ -42,8 +42,16 @@ export function usePresentationRequest() {
     try {
       const parsed = parseAuthorizationRequest(input)
 
-      // JAR by reference — need to fetch
+      // JAR by reference — need to fetch (SSRF guard: HTTPS only, no private IPs)
       if (parsed.source === 'request_uri' && parsed.request.request_uri) {
+        const reqUrl = new URL(parsed.request.request_uri)
+        if (reqUrl.protocol !== 'https:') {
+          throw new Error('request_uri must use HTTPS')
+        }
+        if (/^(127\.|10\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.|localhost|0\.0\.0\.0)/.test(reqUrl.hostname)) {
+          throw new Error('request_uri must not point to private networks')
+        }
+
         const method = parsed.request.request_uri_method ?? 'get'
         const jarRes = method === 'post'
           ? await fetch(parsed.request.request_uri, { method: 'POST' })

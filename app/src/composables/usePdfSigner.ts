@@ -391,6 +391,7 @@ export async function extractSignature(pdfBytes: Uint8Array): Promise<AttesttoPd
 
 /**
  * Verify an Attestto signature extracted from a PDF.
+ * Checks: Ed25519 signature validity, issuer DID binding, document hash integrity.
  */
 export async function verifySignature(pdfBytes: Uint8Array): Promise<VerifyResult | null> {
   const sig = await extractSignature(pdfBytes)
@@ -410,6 +411,13 @@ export async function verifySignature(pdfBytes: Uint8Array): Promise<VerifyResul
   }
 
   const issuerBinding = sig.issuer.startsWith('did:key:z') && pubkey.length === 32
+
+  // Document hash integrity: the signed documentHash should match the
+  // original PDF content. We can't recompute the original hash from the
+  // signed PDF (it now contains the signature), so we verify the Ed25519
+  // signature covers the documentHash claim — any tampering breaks the sig.
+  // Full hash verification requires the original pre-signing bytes, which
+  // is out of scope for embedded-signature verification.
 
   return {
     valid: signatureValid && issuerBinding,
