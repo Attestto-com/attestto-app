@@ -21,6 +21,7 @@
     "app-module-cr-driving": "workspace:*",
     "app-module-cr-identity": "workspace:*",
     "app-module-cr-medical": "workspace:*",
+    "app-module-chat": "workspace:*",
     "app-module-doc-signing": "workspace:*",
     "idb-keyval": "^6.2.0",
     "pdf-lib": "^1.17.1",

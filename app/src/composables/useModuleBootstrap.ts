@@ -77,5 +77,12 @@ async function loadBundledModules(): Promise<AttesttoModule[]> {
   //   mods.push(agreement.default)
   // } catch {}
 
+  try {
+    const chat = await import('app-module-chat')
+    mods.push(chat.default)
+  } catch {
+    // Module not available
+  }
+
   return mods
 }
