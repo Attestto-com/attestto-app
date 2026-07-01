@@ -18,7 +18,8 @@ async function hashAgreement(session: AgreementSession): Promise<string> {
     createdAt: session.createdAt,
   })
   const data = new TextEncoder().encode(canonical)
-  const copy = new Uint8Array(data).buffer as ArrayBuffer
+  const copy = new ArrayBuffer(data.byteLength)
+  new Uint8Array(copy).set(data)
   const hashBuffer = await globalThis.crypto.subtle.digest('SHA-256', copy)
   return Array.from(new Uint8Array(hashBuffer))
     .map((b) => b.toString(16).padStart(2, '0'))

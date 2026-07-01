@@ -11,7 +11,8 @@ export function setSignerContext(ctx: ModuleContext): void {
 // ── PDF Hashing ─────────────────────────────────────────────────
 
 async function hashPdf(pdfBytes: Uint8Array): Promise<string> {
-  const copy = new Uint8Array(pdfBytes).buffer as ArrayBuffer
+  const copy = new ArrayBuffer(pdfBytes.byteLength)
+  new Uint8Array(copy).set(pdfBytes)
   const hashBuffer = await globalThis.crypto.subtle.digest('SHA-256', copy)
   return Array.from(new Uint8Array(hashBuffer))
     .map((b) => b.toString(16).padStart(2, '0'))
