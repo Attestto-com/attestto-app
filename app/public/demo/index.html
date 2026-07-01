@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Attestto — La App Soberana | Demo Interactiva</title>
-<meta name="description" content="Explora los módulos de Attestto: identidad, credenciales, exámenes, firma digital, IA on-device y más. Demo interactiva en vivo. Código abierto, Apache 2.0.">
+<title>Instala Attestto — Wallet de Identidad Digital</title>
+<meta name="description" content="Attestto Wallet. Tu identidad digital, tus credenciales verificables y tu firma de documentos, en tu telefono. Instalable como PWA en iOS, Android y desktop. Codigo abierto Apache 2.0.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://app.attestto.com/demo/">
 
 <!-- Open Graph -->
-<meta property="og:title" content="Attestto — La App Soberana">
-<meta property="og:description" content="Identidad, credenciales, exámenes, firma y módulos — todo soberano. Demo interactiva — pruébalo en vivo.">
+<meta property="og:title" content="Instala Attestto — Wallet de Identidad Digital">
+<meta property="og:description" content="Identidad digital, credenciales verificables y firma de documentos, en tu telefono. Instalable como PWA. Codigo abierto.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://app.attestto.com/demo/">
 <meta property="og:site_name" content="Attestto">
@@ -21,8 +21,8 @@
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Attestto — La App Soberana">
-<meta name="twitter:description" content="Identidad soberana, credenciales verificables y exámenes proctorizados. Demo interactiva.">
+<meta name="twitter:title" content="Instala Attestto — Wallet de Identidad Digital">
+<meta name="twitter:description" content="Identidad digital, credenciales verificables y firma de documentos, en tu telefono. PWA instalable.">
 <meta name="twitter:image" content="https://app.attestto.com/og-demo.png">
 
 <!-- Structured Data -->
@@ -31,9 +31,9 @@
   {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    "name": "Attestto",
+    "name": "Attestto Wallet",
     "url": "https://app.attestto.com",
-    "description": "La app soberana. Identidad, credenciales verificables, exámenes proctorizados, firma digital, IA on-device y módulos extensibles — todo offline-first.",
+    "description": "Attestto Wallet. Identidad digital, credenciales verificables y firma de documentos. Instalable como PWA en iOS, Android y desktop. Apache 2.0.",
     "applicationCategory": "SecurityApplication",
     "operatingSystem": "Android, iOS, Desktop (PWA)",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
@@ -42,8 +42,8 @@
     "creator": {
       "@type": "Organization",
       "name": "Attestto",
-      "url": "https://attestto.org",
-      "logo": "https://attestto.org/logo.svg"
+      "url": "https://attestto.com",
+      "logo": "https://attestto.com/logo.svg"
     }
   },
   {
@@ -52,26 +52,26 @@
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "¿Qué módulos tiene Attestto?",
+        "name": "Como instalo Attestto en mi telefono?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Attestto incluye módulos de identidad (cédula, pasaporte), documentos (firma digital, acuerdos legales), exámenes (licencia de conducir, médico), pagos (DID-authenticated), gobierno (revisión de pliegos) e infraestructura (trust store, mesh). Cada módulo se activa solo si tienes la credencial requerida."
+          "text": "Escanea el codigo QR de esta pagina con tu telefono, o abre app.attestto.com en el navegador de tu telefono. En iOS toca Compartir y luego Agregar a Pantalla de Inicio. En Android usa el menu del navegador y toca Instalar app. Attestto se instala como PWA sin pasar por App Store o Google Play."
         }
       },
       {
         "@type": "Question",
-        "name": "¿Cómo funciona la IA on-device?",
+        "name": "Que puedo hacer con Attestto?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Attestto ejecuta Gemma 2B localmente en tu dispositivo via WebGPU. El modelo de IA ayuda con preparación para exámenes, análisis de documentos y consultas contextuales — todo sin enviar datos a ningún servidor."
+          "text": "Guardar credenciales verificables W3C, firmar documentos PDF con validez legal, y verificar documentos de terceros. Tus claves privadas y tus datos viven en tu dispositivo, no en un servidor. Todo funciona sin conexion despues de instalada."
         }
       },
       {
         "@type": "Question",
-        "name": "¿Puedo construir módulos para Attestto?",
+        "name": "Attestto es codigo abierto?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Sí. El SDK de módulos (@attestto/module-sdk) permite a desarrolladores crear módulos independientes que se integran con la identidad, bóveda, LLM y distribución de la plataforma. Los desarrolladores ganan 60% de las comisiones de transacción de su módulo."
+          "text": "Si. El codigo fuente de la aplicacion esta en github.com/Attestto-com/attestto-app bajo licencia Apache 2.0. Los SDKs de identidad y verificacion tambien son publicos. Detalles tecnicos y especificaciones en attestto.com."
         }
       }
     ]
@@ -86,6 +86,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+
+<script src="/demo/i18n/i18n.js" defer></script>
+
 <style>
 /* Tokens — must match app/src/styles/tokens.css exactly */
 :root {
@@ -146,6 +149,53 @@ body {
   padding: 60px 24px;
   position: relative;
   overflow: hidden;
+}
+
+/* ── Language toggle ──────────────────────────── */
+
+.lang-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  color: var(--text-primary);
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  box-shadow: var(--shadow-card);
+}
+
+.lang-toggle:hover {
+  background: var(--bg-elevated);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.lang-toggle::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: var(--primary);
+  border-radius: 50%;
+}
+
+@media (max-width: 768px) {
+  .lang-toggle {
+    top: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
 }
 
 .hero::before {
@@ -342,6 +392,37 @@ body {
   color: var(--text-muted);
   margin-bottom: 40px;
   max-width: 600px;
+}
+
+/* ── Status disclosure ────────────────────────── */
+
+.status-section {
+  padding-top: 32px;
+  padding-bottom: 0;
+}
+
+.status-card {
+  border: 1px solid rgba(247, 150, 22, 0.35);
+  border-left: 3px solid var(--warning);
+  background: var(--warning-dim);
+  border-radius: var(--radius-md);
+  padding: 18px 22px;
+}
+
+.status-card__label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--warning);
+  margin-bottom: 8px;
+}
+
+.status-card__text {
+  color: var(--text-primary);
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0;
 }
 
 /* ── Modules grid ─────────────────────────────── */
@@ -664,6 +745,8 @@ body {
 </head>
 <body>
 
+<button id="lang-toggle" class="lang-toggle" type="button" aria-label="Cambiar idioma a ingles">EN</button>
+
 <!-- ════════════════════════════════════════════════ -->
 <!-- HERO                                            -->
 <!-- ════════════════════════════════════════════════ -->
@@ -672,41 +755,40 @@ body {
   <div class="hero-left">
     <img src="/icon-192.png" alt="Attestto" class="logo-img">
     <div class="logo">Attestto</div>
-    <div class="logo-sub">Sovereign Citizen Wallet</div>
+    <div class="logo-sub" data-i18n="hero.tagline">Wallet de Identidad Digital</div>
     <div class="version-badge">v0.1.0</div>
-    <p class="hero-desc">
-      Identidad soberana, credenciales verificables y examenes proctorizados
-      en un solo lugar. Tus datos en tu dispositivo. Sin servidores. Sin intermediarios.
+    <p class="hero-desc" data-i18n="hero.desc">
+      Tu identidad digital, tus credenciales verificables y tu firma de documentos,
+      en tu telefono. Tus datos en tu dispositivo. Sin servidores. Sin intermediarios.
     </p>
     <ul class="hero-features">
-      <li><span class="material-icons-outlined">fingerprint</span> Identidad soberana (DID + Ed25519)</li>
-      <li><span class="material-icons-outlined">verified_user</span> Credenciales verificables (W3C VC)</li>
-      <li><span class="material-icons-outlined">psychology</span> IA on-device (Gemma 2B, sin servidor)</li>
-      <li><span class="material-icons-outlined">visibility</span> Examenes proctorizados + competencia perpetua</li>
-      <li><span class="material-icons-outlined">anchor</span> Anclaje en registro publico</li>
-      <li><span class="material-icons-outlined">lock</span> Passkeys (WebAuthn) + boveda cifrada</li>
-      <li><span class="material-icons-outlined">wifi_off</span> Offline-first / Local-first</li>
-      <li><span class="material-icons-outlined">security</span> Trust store nacional (PKI por jurisdiccion)</li>
-      <li><span class="material-icons-outlined">install_mobile</span> PWA lista para instalar</li>
+      <li><span class="material-icons-outlined">fingerprint</span> <span data-i18n="hero.feat.fingerprint">Identidad digital (DID + Ed25519)</span></li>
+      <li><span class="material-icons-outlined">verified_user</span> <span data-i18n="hero.feat.verifiedUser">Credenciales verificables (W3C VC)</span></li>
+      <li><span class="material-icons-outlined">draw</span> <span data-i18n="hero.feat.sign">Firma de documentos con validez legal</span></li>
+      <li><span class="material-icons-outlined">anchor</span> <span data-i18n="hero.feat.anchor">Anclaje en registro publico</span></li>
+      <li><span class="material-icons-outlined">lock</span> <span data-i18n="hero.feat.lock">Passkeys (WebAuthn) + boveda cifrada</span></li>
+      <li><span class="material-icons-outlined">wifi_off</span> <span data-i18n="hero.feat.wifiOff">Offline-first / Local-first</span></li>
+      <li><span class="material-icons-outlined">security</span> <span data-i18n="hero.feat.security">Trust store nacional (PKI por jurisdiccion)</span></li>
+      <li><span class="material-icons-outlined">install_mobile</span> <span data-i18n="hero.feat.installMobile">PWA lista para instalar</span></li>
     </ul>
-    <div class="license">Apache 2.0 &middot; attestto.com</div>
+    <div class="license">Apache 2.0 &middot; <a href="https://attestto.com" style="color:inherit;">attestto.com</a></div>
   </div>
 
   <div class="phone-wrap">
     <div class="phone">
-      <iframe src="/" title="Attestto App"></iframe>
+      <iframe src="/" title="Attestto App" data-i18n-attr="title:hero.phoneIframeTitle"></iframe>
     </div>
     <div class="phone-hint">
-      <span class="phone-hint-icon">&#9757;</span> La app es interactiva — toca, navega y prueba en vivo
+      <span class="phone-hint-icon">&#9757;</span> <span data-i18n="hero.phoneHint">La app es interactiva — toca, navega y prueba en vivo</span>
     </div>
   </div>
 
   <div class="hero-right">
     <div style="text-align:center;margin-bottom:12px;">
-      <div style="font-size:15px;font-weight:600;color:var(--text-primary);margin-bottom:2px;">Instala la App</div>
-      <div style="font-size:12px;color:var(--text-muted);">Escanea el codigo con tu telefono</div>
+      <div style="font-size:15px;font-weight:600;color:var(--text-primary);margin-bottom:2px;" data-i18n="hero.installApp">Instala la App</div>
+      <div style="font-size:12px;color:var(--text-muted);" data-i18n="hero.scanQr">Escanea el codigo con tu telefono</div>
     </div>
-    <div class="qr-box"><img id="qr-img" alt="QR app.attestto.com" width="150" height="150"></div>
+    <div class="qr-box"><img id="qr-img" alt="QR app.attestto.com" width="150" height="150" data-i18n-attr="alt:hero.qrAlt"></div>
     <div class="qr-label"><a href="https://app.attestto.com" style="color:var(--text-muted);text-decoration:none;">app.attestto.com</a></div>
     <script>
       // Generate QR code via public API — no npm dependency needed
@@ -718,384 +800,30 @@ body {
 </section>
 
 <!-- ════════════════════════════════════════════════ -->
-<!-- MODULES                                         -->
+<!-- STATUS DISCLOSURE                              -->
 <!-- ════════════════════════════════════════════════ -->
 
-<section class="section">
-  <div class="section-title">Modulos</div>
-  <p class="section-sub">Cada modulo es una capacidad independiente, protegida por credenciales. Solo se instala si tienes la credencial requerida en tu boveda.</p>
-
-  <!-- Domain tabs -->
-  <div class="tabs" id="module-tabs">
-    <button class="tab active" data-domain="all">Todos</button>
-    <button class="tab" data-domain="identity">Identidad</button>
-    <button class="tab" data-domain="docs">Documentos</button>
-    <button class="tab" data-domain="exams">Examenes</button>
-    <button class="tab" data-domain="payments">Pagos</button>
-    <button class="tab" data-domain="gov">Gobierno</button>
-    <button class="tab" data-domain="infra">Infraestructura</button>
-  </div>
-
-  <!-- Country filter -->
-  <div class="country-filter">
-    <button class="country-btn active" data-country="all">Todos</button>
-    <button class="country-btn" data-country="CR">CR</button>
-    <button class="country-btn" data-country="Universal">Universal</button>
-  </div>
-
-  <div class="modules-grid" id="modules-grid">
-
-    <!-- ── Identidad ──────────────────────────────── -->
-
-    <div class="module-card" data-domain="identity" data-country="CR">
-      <div class="module-header">
-        <div class="module-icon"><span class="material-icons-outlined">assignment_ind</span></div>
-        <div>
-          <div class="module-name">Cedula de Identidad</div>
-          <div class="module-country">CR</div>
-        </div>
-      </div>
-      <div class="module-desc">Credencial de identidad nacional. Verificacion biometrica + documento. Base para todos los demas modulos.</div>
-      <span class="module-status status-functional">Funcional</span>
-    </div>
-
-    <div class="module-card" data-domain="identity" data-country="Universal">
-      <div class="module-header">
-        <div class="module-icon"><span class="material-icons-outlined">verified</span></div>
-        <div>
-          <div class="module-name">vLEI Issuance</div>
-          <div class="module-country">Universal</div>
-        </div>
-      </div>
-      <div class="module-desc">Emision de credenciales vLEI (verifiable Legal Entity Identifier). Identidad juridica verificable para empresas y organizaciones via GLEIF.</div>
-      <div class="progress-row"><div class="progress-bar"><div class="progress-fill" style="width:25%"></div></div><span class="progress-pct">25%</span></div>
-      <span class="module-status status-progress">En progreso</span>
-    </div>
-
-    <div class="module-card" data-domain="identity" data-country="CR">
-      <div class="module-header">
-        <div class="module-icon"><span class="material-icons-outlined">school</span></div>
-        <div>
-          <div class="module-name">Titulo Profesional</div>
-          <div class="module-country">CR</div>
-        </div>
-      </div>
-      <div class="module-desc">Atestacion profesional emitida por Colegios. Fe publica digital para abogados, ingenieros, medicos. Verificacion de colegiatura activa.</div>
-      <span class="module-status status-planned">Planificado</span>
-    </div>
-
-    <!-- ── Documentos ─────────────────────────────── -->
-
-    <!-- Firma Inteligente and Acuerdo Conversacional: moved to dev branch -->
-
-    <div class="module-card" data-domain="docs" data-country="CR">
-      <div class="module-header">
-        <div class="module-icon"><span class="material-icons-outlined">draw</span></div>
-        <div>
-          <div class="module-name">Firma Digital Nacional</div>
-          <div class="module-country">CR</div>
-        </div>
-      </div>
-      <div class="module-desc">Integracion con infraestructura de firma digital nacional. Firma de documentos PDF con tarjeta criptografica y validez legal.</div>
-      <div class="progress-row"><div class="progress-bar"><div class="progress-fill" style="width:40%"></div></div><span class="progress-pct">40%</span></div>
-      <span class="module-status status-progress">En progreso</span>
-    </div>
-
-    <div class="module-card" data-domain="docs" data-country="CR">
-      <div class="module-header">
-        <div class="module-icon"><span class="material-icons-outlined">gavel</span></div>
-        <div>
-          <div class="module-name">Modulo Notarial</div>
-          <div class="module-country">CR</div>
-        </div>
-      </div>
-      <div class="module-desc">Fe publica digital. El notario emite credenciales verificables con su firma profesional. Actos notariales como VCs auditables.</div>
-      <span class="module-status status-planned">Planificado</span>
-    </div>
-
-    <!-- ── Examenes ───────────────────────────────── -->
-
-    <div class="module-card" data-domain="exams" data-country="CR">
-      <div class="module-header">
-        <div class="module-icon"><span class="material-icons-outlined">directions_car</span></div>
-        <div>
-          <div class="module-name">Examen Teorico de Conducir</div>
-          <div class="module-country">CR</div>
-        </div>
-      </div>
-      <div class="module-desc">Doble modo: examen oficial (40 preguntas, proctorizado) y competencia perpetua (9 macro-categorias, 90% por categoria). IA on-device genera preguntas unicas. Cadena de hash SHA-256, firma Ed25519, anclaje en registro publico.</div>
-      <span class="module-status status-functional">Funcional</span>
-    </div>
-
-    <div class="module-card" data-domain="exams" data-country="CR">
-      <div class="module-header">
-        <div class="module-icon"><span class="material-icons-outlined">medical_services</span></div>
-        <div>
-          <div class="module-name">Dictamen Medico</div>
-          <div class="module-country">CR</div>
-        </div>
-      </div>
-      <div class="module-desc">Emision de dictamen medico como credencial verificable. El profesional de salud firma con su identidad soberana.</div>
-      <div class="progress-row"><div class="progress-bar"><div class="progress-fill" style="width:60%"></div></div><span class="progress-pct">60%</span></div>
-      <span class="module-status status-progress">En progreso</span>
-    </div>
-
-    <div class="module-card" data-domain="exams" data-country="CR">
-      <div class="module-header">
-        <div class="module-icon"><span class="material-icons-outlined">badge</span></div>
-        <div>
-          <div class="module-name">Licencia Digital (mDL)</div>
-          <div class="module-country">CR</div>
-        </div>
-      </div>
-      <div class="module-desc">Presentacion de licencia de conducir digital en formato ISO 18013-5. Verificable sin conexion.</div>
-      <span class="module-status status-planned">Planificado</span>
-    </div>
-
-    <div class="module-card" data-domain="exams" data-country="CR">
-      <div class="module-header">
-        <div class="module-icon"><span class="material-icons-outlined">local_hospital</span></div>
-        <div>
-          <div class="module-name">Presentacion de Licencia</div>
-          <div class="module-country">CR</div>
-        </div>
-      </div>
-      <div class="module-desc">Presentacion de credenciales verificables para tramite de licencia. Verificacion de dictamen, examen e impedimentos en un solo flujo.</div>
-      <span class="module-status status-planned">Planificado</span>
-    </div>
-
-    <!-- ── Pagos ──────────────────────────────────── -->
-
-    <div class="module-card" data-domain="payments" data-country="Universal">
-      <div class="module-header">
-        <div class="module-icon"><span class="material-icons-outlined">payments</span></div>
-        <div>
-          <div class="module-name">Attestto Pay</div>
-          <div class="module-country">Universal</div>
-        </div>
-      </div>
-      <div class="module-desc">Pagos con identidad soberana. El DID firma la intencion, la infraestructura ejecuta. Claves de identidad y financieras nunca en el mismo dispositivo. Pendiente: contratos con Zunify y Circle.</div>
-      <div class="progress-row"><div class="progress-bar"><div class="progress-fill" style="width:80%"></div></div><span class="progress-pct">80%</span></div>
-      <span class="module-status status-progress">En progreso</span>
-    </div>
-
-    <!-- ── Infraestructura ────────────────────────── -->
-
-    <div class="module-card" data-domain="infra" data-country="Universal">
-      <div class="module-header">
-        <div class="module-icon"><span class="material-icons-outlined">hub</span></div>
-        <div>
-          <div class="module-name">Attestto Mesh</div>
-          <div class="module-country">Universal</div>
-        </div>
-      </div>
-      <div class="module-desc">Red peer-to-peer para resolucion de DIDs, distribucion de credenciales y anclaje descentralizado. Cada PWA es un nodo. Nodos dedicados en Fly.io.</div>
-      <span class="module-status status-functional">Funcional</span>
-    </div>
-
-    <div class="module-card" data-domain="infra" data-country="Universal">
-      <div class="module-header">
-        <div class="module-icon"><span class="material-icons-outlined">chat</span></div>
-        <div>
-          <div class="module-name">Mensajeria Verificada</div>
-          <div class="module-country">Universal</div>
-        </div>
-      </div>
-      <div class="module-desc">Mensajes P2P firmados con DID via DIDComm v2. Conversaciones que se convierten en acuerdos con fuerza probatoria. Sin servidor central. Cifrado end-to-end.</div>
-      <span class="module-status status-planned">Planificado</span>
-    </div>
-
-    <!-- ── Gobierno ────────────────────────────────── -->
-
-    <div class="module-card" data-domain="gov" data-country="CR">
-      <div class="module-header">
-        <div class="module-icon"><span class="material-icons-outlined">account_balance</span></div>
-        <div>
-          <div class="module-name">Tramites Municipales</div>
-          <div class="module-country">CR</div>
-        </div>
-      </div>
-      <div class="module-desc">21 tramites ciudadanos en 84 municipalidades: patentes, construccion, tributos, servicios publicos. Identidad y documentos portables en la billetera. Verificacion criptografica sin repetir KYC.</div>
-      <span class="module-status status-planned">Planificado</span>
-    </div>
-
-    <div class="module-card" data-domain="gov" data-country="CR">
-      <div class="module-header">
-        <div class="module-icon"><span class="material-icons-outlined">smart_toy</span></div>
-        <div>
-          <div class="module-name">CivicAssist</div>
-          <div class="module-country">CR</div>
-        </div>
-      </div>
-      <div class="module-desc">Asistente civico con IA. El ciudadano describe un problema en lenguaje natural, el sistema identifica la entidad competente y genera el reporte automaticamente.</div>
-      <span class="module-status status-planned">Planificado</span>
-    </div>
-
-    <div class="module-card" data-domain="gov" data-country="CR">
-      <div class="module-header">
-        <div class="module-icon"><span class="material-icons-outlined">local_police</span></div>
-        <div>
-          <div class="module-name">Oficial de Transito</div>
-          <div class="module-country">CR</div>
-        </div>
-      </div>
-      <div class="module-desc">Verificacion de credenciales en campo: licencia, marchamo, RTV, seguro, permisos. Auto-verificable sin internet. Verificacion mutua — el oficial tambien presenta su credencial.</div>
-      <span class="module-status status-planned">Planificado</span>
-    </div>
-
-    <!-- ── Seguridad ───────────────────────────────── -->
-
-    <div class="module-card" data-domain="identity" data-country="Universal">
-      <div class="module-header">
-        <div class="module-icon"><span class="material-icons-outlined">group</span></div>
-        <div>
-          <div class="module-name">Delegacion y Multi-firma</div>
-          <div class="module-country">Universal</div>
-        </div>
-      </div>
-      <div class="module-desc">4 niveles de delegacion (presentacion, gestion, firma, plena). Multi-firma para actos que requieren varias partes. Anti-phishing: el funcionario tambien se verifica ante el ciudadano.</div>
-      <span class="module-status status-planned">Planificado</span>
-    </div>
-
+<section class="section status-section">
+  <div class="status-card">
+    <div class="status-card__label" data-i18n="phaseStatus.label">Estado — version 0.1.0</div>
+    <p class="status-card__text" data-i18n="phaseStatus.text">Attestto Wallet esta en version 0.1.0. Identidad, credenciales y firma de documentos funcionan hoy. El anclaje en cadena corre sobre Solana devnet mientras completamos el servicio attestto-anchor en Fly.io; las claves nunca salen del dispositivo del ciudadano. Estado detallado y hoja de ruta en <a href="https://attestto.com/roadmap" style="color:var(--primary);text-decoration:underline;">attestto.com/roadmap</a>.</p>
   </div>
 </section>
 
-<!-- ════════════════════════════════════════════════ -->
-<!-- COMPLIANCE MATRIX                               -->
-<!-- ════════════════════════════════════════════════ -->
-
-<section class="section">
-  <div class="section-title">Matriz de Cumplimiento</div>
-  <p class="section-sub">Matriz de cumplimiento para la prueba teorica virtual de conducir. Cada requisito mapeado a nuestra implementacion.</p>
-
-  <div class="summary-bar" id="matrix-summary"></div>
-
-  <div class="tabs" id="matrix-tabs"></div>
-  <div id="matrix-panels"></div>
-
-  <script>
-  (function() {
-    var STATUS_LABELS = { cumple: 'Cumple', excede: 'Excede', construir: 'Por construir', diferente: 'Diferente' };
-    var STATUS_BADGE = { cumple: 'badge-cumple', excede: 'badge-excede', construir: 'badge-construir', diferente: 'badge-diferente' };
-
-    fetch('/demo/matrix-data.json').then(function(r) { return r.json(); }).then(function(data) {
-      var tabsEl = document.getElementById('matrix-tabs');
-      var panelsEl = document.getElementById('matrix-panels');
-      var summaryEl = document.getElementById('matrix-summary');
-
-      var counts = { pass: 0, build: 0, diff: 0 };
-      data.rows.forEach(function(r) {
-        if (r.status === 'cumple' || r.status === 'excede') counts.pass++;
-        else if (r.status === 'construir') counts.build++;
-        else if (r.status === 'diferente') counts.diff++;
-      });
-      summaryEl.innerHTML =
-        '<div class="summary-stat"><div class="summary-num" style="color:var(--success)">' + counts.pass + '</div><div class="summary-label">Cumple /<br>Excede</div></div>' +
-        '<div class="summary-stat"><div class="summary-num" style="color:var(--warning)">' + counts.build + '</div><div class="summary-label">Por<br>construir</div></div>' +
-        '<div class="summary-stat"><div class="summary-num" style="color:var(--build)">' + counts.diff + '</div><div class="summary-label">Resuelto<br>diferente</div></div>';
-
-      data.tabs.forEach(function(tab, i) {
-        var btn = document.createElement('button');
-        btn.className = 'tab' + (i === 0 ? ' active' : '');
-        btn.dataset.tab = tab.id;
-        btn.textContent = tab.label;
-        tabsEl.appendChild(btn);
-
-        var panel = document.createElement('div');
-        panel.className = 'tab-panel' + (i === 0 ? ' active' : '');
-        panel.id = 'tab-' + tab.id;
-
-        var rows = data.rows.filter(function(r) { return r.tab === tab.id; });
-        var html = '<table class="compliance-table"><thead><tr><th>Ref</th><th>Requisito</th><th>Estado</th><th>Implementacion</th></tr></thead><tbody>';
-        rows.forEach(function(r) {
-          html += '<tr><td class="req-id">' + r.id + '</td><td class="req-desc">' + r.req + '</td><td><span class="badge ' + STATUS_BADGE[r.status] + '">' + STATUS_LABELS[r.status] + '</span></td><td class="req-impl">' + r.impl + '</td></tr>';
-        });
-        html += '</tbody></table>';
-        panel.innerHTML = html;
-        panelsEl.appendChild(panel);
-      });
-
-      tabsEl.querySelectorAll('.tab').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-          tabsEl.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
-          panelsEl.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
-          btn.classList.add('active');
-          document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
-        });
-      });
-    });
-  })();
-  </script>
-</section>
 
 <!-- ════════════════════════════════════════════════ -->
 <!-- FOOTER                                          -->
 <!-- ════════════════════════════════════════════════ -->
 
 <footer class="footer">
+  <div style="margin-block-end:6px;"><a href="https://attestto.com">Detalles tecnicos y hoja de ruta en attestto.com</a></div>
   Apache 2.0 &middot;
-  <a href="https://attestto.com">attestto.com</a> &middot;
-  <a href="https://attestto.org/ark/">attestto.org/ark</a> &middot;
-  <a href="https://github.com/Attestto-com/attestto-app">GitHub</a>
+  <a href="https://github.com/Attestto-com/attestto-app">attestto-app</a> &middot;
+  <a href="https://github.com/Attestto-com/id-wallet-adapter">id-wallet-adapter</a> &middot;
+  <a href="https://github.com/Attestto-com/vc-sdk">vc-sdk</a> &middot;
+  <a href="https://github.com/Attestto-com/attestto-verify">attestto-verify</a>
 </footer>
 
-<script>
-// ── Module filtering ──────────────────────────
-let activeDomain = 'all';
-let activeCountry = 'all';
-
-function filterModules() {
-  document.querySelectorAll('#modules-grid .module-card').forEach(card => {
-    const domain = card.dataset.domain;
-    const country = card.dataset.country;
-    const domainMatch = activeDomain === 'all' || domain === activeDomain;
-    const countryMatch = activeCountry === 'all' || country === activeCountry;
-    card.style.display = domainMatch && countryMatch ? '' : 'none';
-  });
-}
-
-document.querySelectorAll('#module-tabs .tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('#module-tabs .tab').forEach(t => t.classList.remove('active'));
-    tab.classList.add('active');
-    activeDomain = tab.dataset.domain;
-    filterModules();
-  });
-});
-
-// Module card click → detail page
-const moduleIdMap = {
-  'Examen Teorico de Conducir': 'cr-driving',
-  'Dictamen Medico': 'dictamen',
-  'Licencia Digital (mDL)': 'mdl',
-  'Cedula de Identidad': 'cedula',
-  'Firma Digital Nacional': 'firma-digital',
-  'Attestto Pay': 'attestto-pay',
-  'vLEI Issuance': 'vlei',
-  'Modulo Notarial': 'notarial',
-  'Titulo Profesional': 'titulo',
-  'Mensajeria Verificada': 'mensajeria',
-  'Attestto Mesh': 'mesh',
-  'Presentacion de Licencia': 'cosevi-sglc',
-};
-
-document.querySelectorAll('#modules-grid .module-card').forEach(card => {
-  const name = card.querySelector('.module-name')?.textContent;
-  const id = moduleIdMap[name];
-  if (id) {
-    card.addEventListener('click', () => window.location.href = '/demo-module/?id=' + id);
-  }
-});
-
-document.querySelectorAll('.country-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.country-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    activeCountry = btn.dataset.country;
-    filterModules();
-  });
-});
-</script>
 
 </body>
 </html>

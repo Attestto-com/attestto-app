@@ -1,0 +1,37 @@
+{
+  "meta": {
+    "title": "Install Attestto — Digital ID Wallet",
+    "description": "Attestto Wallet. Your Digital ID, verifiable credentials, and legally binding document signing, on your phone. Installable as PWA on iOS, Android, and desktop. Apache 2.0.",
+    "ogTitle": "Install Attestto — Digital ID Wallet",
+    "ogDescription": "Digital ID, verifiable credentials, and legally binding document signing on your phone. Installable PWA. Open source.",
+    "twitterTitle": "Install Attestto — Digital ID Wallet",
+    "twitterDescription": "Digital ID, verifiable credentials, and legally binding document signing on your phone. Installable PWA."
+  },
+  "nav": {
+    "langOpposite": "ES",
+    "langSwitcherAria": "Switch language to Spanish"
+  },
+  "hero": {
+    "tagline": "Digital ID Wallet",
+    "desc": "Your Digital ID, your verifiable credentials, and your document signing, on your phone. Your data on your device. No servers, no middlemen.",
+    "feat": {
+      "fingerprint": "Digital identity (DID + Ed25519)",
+      "verifiedUser": "Verifiable credentials (W3C VC)",
+      "sign": "Legally binding document signing",
+      "anchor": "Public registry anchoring",
+      "lock": "Passkeys (WebAuthn) + encrypted vault",
+      "wifiOff": "Offline-first / Local-first",
+      "security": "National trust store (PKI per jurisdiction)",
+      "installMobile": "PWA ready to install"
+    },
+    "phoneHint": "The app is interactive: tap, navigate, and try it live",
+    "installApp": "Install the App",
+    "scanQr": "Scan the code with your phone",
+    "qrAlt": "QR app.attestto.com",
+    "phoneIframeTitle": "Attestto App"
+  },
+  "phaseStatus": {
+    "label": "Status: version 0.1.0",
+    "text": "Attestto Wallet is at version 0.1.0. Identity, credentials, and document signing work today. On-chain anchoring runs on Solana devnet while we complete the attestto-anchor service on Fly.io; keys never leave the citizen's device. Detailed status and roadmap at <a href=\"https://attestto.com/roadmap\" style=\"color:var(--primary);text-decoration:underline;\">attestto.com/roadmap</a>."
+  }
+}

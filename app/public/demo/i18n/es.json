@@ -1,0 +1,37 @@
+{
+  "meta": {
+    "title": "Instala Attestto — Wallet de Identidad Digital",
+    "description": "Attestto Wallet. Tu identidad digital, tus credenciales verificables y tu firma de documentos, en tu telefono. Instalable como PWA en iOS, Android y desktop. Codigo abierto Apache 2.0.",
+    "ogTitle": "Instala Attestto — Wallet de Identidad Digital",
+    "ogDescription": "Identidad digital, credenciales verificables y firma de documentos, en tu telefono. PWA instalable. Codigo abierto.",
+    "twitterTitle": "Instala Attestto — Wallet de Identidad Digital",
+    "twitterDescription": "Identidad digital, credenciales verificables y firma de documentos, en tu telefono. PWA instalable."
+  },
+  "nav": {
+    "langOpposite": "EN",
+    "langSwitcherAria": "Cambiar idioma a ingles"
+  },
+  "hero": {
+    "tagline": "Wallet de Identidad Digital",
+    "desc": "Tu identidad digital, tus credenciales verificables y tu firma de documentos, en tu telefono. Tus datos en tu dispositivo. Sin servidores. Sin intermediarios.",
+    "feat": {
+      "fingerprint": "Identidad digital (DID + Ed25519)",
+      "verifiedUser": "Credenciales verificables (W3C VC)",
+      "sign": "Firma de documentos con validez legal",
+      "anchor": "Anclaje en registro publico",
+      "lock": "Passkeys (WebAuthn) + boveda cifrada",
+      "wifiOff": "Offline-first / Local-first",
+      "security": "Trust store nacional (PKI por jurisdiccion)",
+      "installMobile": "PWA lista para instalar"
+    },
+    "phoneHint": "La app es interactiva: toca, navega y prueba en vivo",
+    "installApp": "Instala la App",
+    "scanQr": "Escanea el codigo con tu telefono",
+    "qrAlt": "QR app.attestto.com",
+    "phoneIframeTitle": "Attestto App"
+  },
+  "phaseStatus": {
+    "label": "Estado: version 0.1.0",
+    "text": "Attestto Wallet esta en version 0.1.0. Identidad, credenciales y firma de documentos funcionan hoy. El anclaje en cadena corre sobre Solana devnet mientras completamos el servicio attestto-anchor en Fly.io; las claves nunca salen del dispositivo del ciudadano. Estado detallado y hoja de ruta en <a href=\"https://attestto.com/roadmap\" style=\"color:var(--primary);text-decoration:underline;\">attestto.com/roadmap</a>."
+  }
+}
