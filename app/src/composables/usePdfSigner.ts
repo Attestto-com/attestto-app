@@ -72,7 +72,7 @@ function base64ToBytes(b64: string): Uint8Array {
 }
 
 async function sha256Hex(bytes: Uint8Array): Promise<string> {
-  const hash = await globalThis.crypto.subtle.digest('SHA-256', new Uint8Array(bytes).buffer as ArrayBuffer)
+  const hash = await globalThis.crypto.subtle.digest('SHA-256', bytes)
   return Array.from(new Uint8Array(hash))
     .map((b) => b.toString(16).padStart(2, '0'))
     .join('')
