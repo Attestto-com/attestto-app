@@ -397,7 +397,6 @@ async function hashMessages(msgs: ChatMessage[]): Promise<string> {
               icon="gavel"
               color="primary"
               class="col"
-              :loading="crystallizeStep === 'signing'"
               @click="confirmCrystallize"
             />
             <q-btn
