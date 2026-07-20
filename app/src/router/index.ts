@@ -7,10 +7,11 @@ if (ghPagesRedirect) {
   window.history.replaceState(null, '', ghPagesRedirect + window.location.hash)
 }
 
-// Desktop users see the marketing/demo page; mobile users get the app
+// Desktop users see the marketing/demo page; mobile users get the app.
+// Bypass in dev so we can iterate the app UI on a laptop without emulating a phone.
 const isDesktop = window.innerWidth > 768 && !/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)
 const isIframe = window.self !== window.top
-if (isDesktop && !isIframe && !window.location.pathname.startsWith('/demo')) {
+if (!import.meta.env.DEV && isDesktop && !isIframe && !window.location.pathname.startsWith('/demo')) {
   window.location.replace('/demo/')
 }
 
@@ -27,27 +28,27 @@ const router = createRouter({
       component: () => import('@/views/LockScreen.vue'),
     },
     {
-      path: '/onboarding',
-      name: 'onboarding',
-      component: () => import('@/views/OnboardingFlow.vue'),
-      meta: { requiresAuth: true },
-    },
-    {
       path: '/home',
       name: 'home',
       component: () => import('@/views/HomePage.vue'),
       meta: { requiresAuth: true, nav: true },
     },
     {
-      path: '/wallet',
-      name: 'wallet',
-      component: () => import('@/views/WalletPage.vue'),
+      path: '/pagos',
+      name: 'pagos',
+      component: () => import('@/views/PagosPage.vue'),
       meta: { requiresAuth: true, nav: true },
     },
     {
-      path: '/documents',
-      name: 'documents',
+      path: '/firmar',
+      name: 'firmar',
       component: () => import('@/views/DocumentsPage.vue'),
+      meta: { requiresAuth: true, nav: true },
+    },
+    {
+      path: '/wallet',
+      name: 'wallet',
+      component: () => import('@/views/WalletPage.vue'),
       meta: { requiresAuth: true },
     },
     {
@@ -63,10 +64,13 @@ const router = createRouter({
       meta: { requiresAuth: true },
     },
     {
+      // Public on purpose: verifying someone else's credential (scanned from a
+      // website or another phone) reads no vault data, so it must be reachable
+      // straight from the lock screen without unlocking. Verify is free and
+      // permissionless — no account, no unlock.
       path: '/verify',
       name: 'verify',
       component: () => import('@/views/VerifyPage.vue'),
-      meta: { requiresAuth: true },
     },
     {
       path: '/modules',

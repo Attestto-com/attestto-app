@@ -22,9 +22,7 @@ async function handleUnlock() {
   try {
     const ok = await vault.unlock()
     if (ok) {
-      const onboarded = localStorage.getItem('attestto:onboarding:completed')
-        || localStorage.getItem('attestto:onboarding:skipped')
-      router.replace({ name: onboarded ? 'home' : 'onboarding' })
+      router.replace({ name: 'home' })
     } else {
       error.value = t('lock.unlockFailed')
     }
@@ -56,6 +54,12 @@ async function handleRecovery() {
   showRecovery.value = false
   error.value = ''
 }
+
+// Verifying a credential (scanned from a website or another phone) reads no
+// vault data, so it's available straight from the lock screen — no unlock.
+function goScan() {
+  router.push({ name: 'verify' })
+}
 </script>
 
 <template>
@@ -78,6 +82,14 @@ async function handleRecovery() {
       <button v-if="showRecovery" class="recovery-btn" @click="handleRecovery">
         {{ t('lock.resetIdentity') }}
       </button>
+
+      <div class="lock-divider"><span>o</span></div>
+
+      <button class="scan-btn" @click="goScan">
+        <q-icon name="qr_code_scanner" size="22px" />
+        <span>{{ t('lock.scanVerify') }}</span>
+      </button>
+      <p class="scan-hint">{{ t('lock.scanVerifyHint') }}</p>
     </div>
 
     <PwaInstallBanner />
@@ -161,5 +173,50 @@ async function handleRecovery() {
   color: var(--critical);
   font-size: 13px;
   cursor: pointer;
+}
+
+.lock-divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  width: 200px;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.lock-divider::before,
+.lock-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border-subtle);
+}
+
+.scan-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-lg);
+  background: transparent;
+  border: 1px solid var(--primary);
+  border-radius: var(--radius-full);
+  color: var(--primary);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.scan-btn:active {
+  transform: scale(0.97);
+  background: var(--bg-elevated);
+}
+
+.scan-hint {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: center;
+  max-width: 260px;
+  margin-top: calc(var(--space-md) * -1);
 }
 </style>
