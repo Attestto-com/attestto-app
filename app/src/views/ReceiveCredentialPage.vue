@@ -39,12 +39,12 @@ function goToWallet() {
   <q-page class="receive-page" padding>
     <q-btn flat round icon="arrow_back" color="white" @click="router.back()" class="back-btn" />
 
-    <h2 class="page-title">Recibir credencial</h2>
+    <h2 class="page-title">{{ $t('receive.title') }}</h2>
 
     <!-- Parsing / Loading -->
     <div v-if="step === 'parsing'" class="status-card">
       <q-spinner-dots size="32px" color="primary" />
-      <p>Procesando oferta...</p>
+      <p>{{ $t('receive.parsing') }}</p>
     </div>
 
     <!-- Review offer -->
@@ -52,13 +52,13 @@ function goToWallet() {
       <div class="issuer-section">
         <q-icon name="verified" size="24px" color="primary" />
         <div>
-          <div class="issuer-label">Emisor</div>
+          <div class="issuer-label">{{ $t('receive.issuerLabel') }}</div>
           <div class="issuer-url">{{ offer.credential_issuer }}</div>
         </div>
       </div>
 
       <div class="cred-list">
-        <div class="section-label">Credenciales ofrecidas</div>
+        <div class="section-label">{{ $t('receive.offered') }}</div>
         <div
           v-for="configId in offer.credential_configuration_ids"
           :key="configId"
@@ -69,8 +69,8 @@ function goToWallet() {
       </div>
 
       <div class="action-row">
-        <q-btn flat label="Cancelar" color="grey" @click="router.back()" />
-        <q-btn unelevated label="Aceptar" color="primary" @click="accept()" />
+        <q-btn flat :label="$t('common.cancel')" color="grey" @click="router.back()" />
+        <q-btn unelevated :label="$t('receive.accept')" color="primary" @click="accept()" />
       </div>
     </div>
 
@@ -79,14 +79,14 @@ function goToWallet() {
       <div class="issuer-section">
         <q-icon name="pin" size="24px" color="primary" />
         <div>
-          <div class="issuer-label">Codigo de verificacion</div>
+          <div class="issuer-label">{{ $t('receive.txCode') }}</div>
           <div class="issuer-url">{{ offer.credential_issuer }}</div>
         </div>
       </div>
 
       <q-input
         v-model="txCodeInput"
-        label="Codigo"
+        :label="$t('receive.code')"
         outlined
         dark
         class="tx-input"
@@ -95,10 +95,10 @@ function goToWallet() {
       />
 
       <div class="action-row">
-        <q-btn flat label="Cancelar" color="grey" @click="router.back()" />
+        <q-btn flat :label="$t('common.cancel')" color="grey" @click="router.back()" />
         <q-btn
           unelevated
-          label="Verificar"
+          :label="$t('receive.verify')"
           color="primary"
           :disable="!txCodeInput"
           @click="accept(txCodeInput)"
@@ -109,27 +109,27 @@ function goToWallet() {
     <!-- Exchanging -->
     <div v-else-if="step === 'exchanging'" class="status-card">
       <q-spinner-dots size="32px" color="primary" />
-      <p>Intercambiando credencial...</p>
+      <p>{{ $t('receive.exchanging') }}</p>
     </div>
 
     <!-- Success -->
     <div v-else-if="step === 'success'" class="status-card success">
       <q-icon name="check_circle" size="48px" color="positive" />
-      <p>Credencial recibida</p>
-      <q-btn unelevated label="Ver en billetera" color="primary" @click="goToWallet()" />
+      <p>{{ $t('receive.success') }}</p>
+      <q-btn unelevated :label="$t('receive.viewInWallet')" color="primary" @click="goToWallet()" />
     </div>
 
     <!-- Error -->
     <div v-else-if="step === 'error'" class="status-card error">
       <q-icon name="error_outline" size="48px" color="negative" />
       <p>{{ error }}</p>
-      <q-btn flat label="Reintentar" color="primary" @click="reset()" />
+      <q-btn flat :label="$t('receive.retry')" color="primary" @click="reset()" />
     </div>
 
     <!-- Idle — no offer provided -->
     <div v-else class="status-card">
       <q-icon name="qr_code_scanner" size="48px" color="grey-6" />
-      <p>Escanea un codigo QR con una oferta de credencial</p>
+      <p>{{ $t('receive.scanHint') }}</p>
     </div>
   </q-page>
 </template>

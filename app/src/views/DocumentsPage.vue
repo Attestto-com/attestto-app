@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 
 const router = useRouter()
+const { t } = useI18n()
 
 interface DocItem {
   id: string
@@ -11,19 +13,32 @@ interface DocItem {
   date: string
 }
 
-// Documents loaded from vault storage when wired
 const documents = ref<DocItem[]>([])
 
-const statusConfig = {
-  pending: { label: 'Pendiente de firma', icon: 'schedule', color: 'var(--alert)' },
-  signed: { label: 'Firmado', icon: 'check_circle', color: 'var(--success)' },
-  anchored: { label: 'Firmado + anclado', icon: 'link', color: 'var(--success)' },
-}
+const statusConfig = computed(() => ({
+  pending: { label: t('documents.pendingSignature'), icon: 'schedule', color: 'var(--alert)' },
+  signed: { label: t('documents.signed'), icon: 'check_circle', color: 'var(--success)' },
+  anchored: { label: t('documents.signedAnchored'), icon: 'link', color: 'var(--success)' },
+}))
 </script>
 
 <template>
   <q-page class="docs-page" padding>
-    <h2 class="page-title">Documentos</h2>
+    <header class="page-header">
+      <h2 class="page-title">{{ $t('firmar.title') }}</h2>
+      <q-btn flat round icon="person_outline" color="white" size="sm" @click="router.push({ name: 'settings' })" />
+    </header>
+
+    <div class="action-row">
+      <button class="action-btn primary" @click="() => {}">
+        <q-icon name="draw" size="22px" />
+        <span>{{ $t('firmar.signNew') }}</span>
+      </button>
+      <button class="action-btn" @click="router.push({ name: 'verify' })">
+        <q-icon name="check_circle" size="22px" />
+        <span>{{ $t('firmar.verify') }}</span>
+      </button>
+    </div>
 
     <div v-if="documents.length" class="doc-list">
       <div
@@ -46,13 +61,8 @@ const statusConfig = {
 
     <div v-else class="empty-state">
       <q-icon name="folder_open" size="48px" color="grey-6" />
-      <p>No hay documentos</p>
+      <p>{{ $t('firmar.noDocuments') }}</p>
     </div>
-
-    <button class="add-doc-btn" @click="() => {}">
-      <q-icon name="add" size="20px" />
-      Abrir documento
-    </button>
   </q-page>
 </template>
 
@@ -61,10 +71,51 @@ const statusConfig = {
   padding-bottom: 80px;
 }
 
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-lg);
+}
+
 .page-title {
   font-size: 22px;
   font-weight: 700;
+  margin: 0;
+}
+
+.action-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-sm);
   margin-bottom: var(--space-lg);
+}
+
+.action-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: var(--space-md) 0;
+  background: var(--bg-card);
+  border: none;
+  border-radius: var(--radius-md);
+  color: var(--text-base, white);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.action-btn:active { background: var(--bg-elevated); }
+
+.action-btn.primary {
+  background: var(--primary);
+  color: white;
+}
+
+.action-btn.primary:active {
+  background: color-mix(in srgb, var(--primary) 85%, black);
 }
 
 .doc-list {

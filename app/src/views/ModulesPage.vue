@@ -18,12 +18,12 @@ const countryFlags: Record<string, string> = {
   <q-page class="modules-page" padding>
     <header class="modules-header">
       <q-btn flat round icon="arrow_back" color="white" @click="router.back()" />
-      <span class="modules-title">Modulos</span>
+      <span class="modules-title">{{ $t('modules.title') }}</span>
     </header>
 
     <!-- Installed -->
     <section v-if="modules.installedList.length" class="section">
-      <h3 class="section-title">Instalados</h3>
+      <h3 class="section-title">{{ $t('modules.installed') }}</h3>
       <div class="module-list">
         <div
           v-for="m in modules.installedList"
@@ -42,10 +42,10 @@ const countryFlags: Record<string, string> = {
 
     <!-- Available -->
     <section class="section">
-      <h3 class="section-title">Disponibles</h3>
+      <h3 class="section-title">{{ $t('modules.available') }}</h3>
 
       <div v-if="!modules.availableForUser.length" class="empty-hint">
-        No hay modulos adicionales disponibles
+        {{ $t('modules.noModules') }}
       </div>
 
       <div class="module-list">
@@ -59,14 +59,14 @@ const countryFlags: Record<string, string> = {
             <div class="module-name">{{ manifest.name }}</div>
             <div class="module-desc">{{ manifest.description }}</div>
             <div v-if="!gate.allowed" class="module-gate">
-              Requiere: {{ gate.missing.join(', ') }}
+              {{ $t('modules.requires', { missing: gate.missing.join(', ') }) }}
             </div>
           </div>
           <button
             v-if="gate.allowed"
             class="install-btn"
           >
-            Instalar
+            {{ $t('modules.install') }}
           </button>
           <span v-else class="locked-badge">
             <q-icon name="lock" size="16px" />

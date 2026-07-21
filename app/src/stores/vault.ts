@@ -53,7 +53,31 @@ export const useVaultStore = defineStore('vault', () => {
     // Set unlocked AFTER credentials are loaded so module bootstrap
     // watchers see credentials when the gate check runs
     unlocked.value = true
+
+    // Notify a browser-extension wallet (if installed) so it can auto-link
+    // this DID without the user re-pasting it. Idempotent — extension upserts
+    // by DID. Payload carries only the public DID + verificationMethod; never
+    // the private key or seed.
+    emitDidSyncToExtension()
+
     return true
+  }
+
+  function emitDidSyncToExtension(): void {
+    if (typeof window === 'undefined' || !did.value) return
+    try {
+      window.postMessage(
+        {
+          type: 'ATTESTTO_DID_SYNC',
+          requestId: `vault-${Date.now().toString(36)}`,
+          holderDid: did.value,
+          verificationMethod: crypto.getVerificationMethod(),
+        },
+        window.location.origin,
+      )
+    } catch {
+      // postMessage should never throw; swallow defensively
+    }
   }
 
   async function persistCredentials() {

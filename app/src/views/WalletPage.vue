@@ -1,44 +1,46 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useVaultStore } from '@/stores/vault'
 import CredentialCard from '@/components/CredentialCard.vue'
 import type { VerifiableCredential } from '@attestto/module-sdk'
 
 const router = useRouter()
 const vault = useVaultStore()
+const { t } = useI18n()
 const activeTab = ref<'credentials' | 'accounts'>('credentials')
 
 function handleCredentialTap(vc: VerifiableCredential) {
   router.push({ name: 'credential-detail', params: { id: vc.id } })
 }
 
-const countryFlags: Record<string, string> = {
+const countryFlags = computed<Record<string, string>>(() => ({
   CR: '🇨🇷 Costa Rica',
   US: '🇺🇸 United States',
   BR: '🇧🇷 Brasil',
   MX: '🇲🇽 Mexico',
   PA: '🇵🇦 Panama',
-  universal: 'Universal',
-}
+  universal: t('wallet.universal'),
+}))
 </script>
 
 <template>
   <q-page class="wallet-page" padding>
-    <h2 class="page-title">Wallet</h2>
+    <h2 class="page-title">{{ $t('wallet.title') }}</h2>
 
     <div class="tab-bar">
       <button
         :class="['tab', { active: activeTab === 'credentials' }]"
         @click="activeTab = 'credentials'"
       >
-        Credenciales
+        {{ $t('wallet.credentials') }}
       </button>
       <button
         :class="['tab', { active: activeTab === 'accounts' }]"
         @click="activeTab = 'accounts'"
       >
-        Cuentas
+        {{ $t('wallet.accounts') }}
       </button>
     </div>
 
@@ -64,8 +66,8 @@ const countryFlags: Record<string, string> = {
 
       <div v-else class="empty-state">
         <q-icon name="badge" size="48px" color="grey-6" />
-        <p>No hay credenciales aun</p>
-        <p class="hint">Las credenciales apareceran aqui cuando las recibas</p>
+        <p>{{ $t('wallet.noCredentials') }}</p>
+        <p class="hint">{{ $t('wallet.noCredentialsHint') }}</p>
       </div>
     </div>
 
@@ -74,35 +76,35 @@ const countryFlags: Record<string, string> = {
       <div class="onboarding-icon">
         <q-icon name="verified_user" size="40px" color="primary" />
       </div>
-      <h3 class="onboarding-title">Completa tu identidad</h3>
+      <h3 class="onboarding-title">{{ $t('wallet.completeIdentity') }}</h3>
       <p class="onboarding-desc">
-        Verifica tu identidad para desbloquear cuentas, pagos y credenciales verificables.
+        {{ $t('wallet.completeIdentityDesc') }}
       </p>
       <div class="onboarding-steps">
         <div class="onboarding-step">
           <span class="step-num">1</span>
           <div>
-            <div class="step-title">Verificacion de identidad (KYC)</div>
-            <div class="step-hint">Documento + selfie con prueba de vida</div>
+            <div class="step-title">{{ $t('wallet.kycStep') }}</div>
+            <div class="step-hint">{{ $t('wallet.kycStepHint') }}</div>
           </div>
         </div>
         <div class="onboarding-step">
           <span class="step-num">2</span>
           <div>
-            <div class="step-title">Credencial de identidad</div>
-            <div class="step-hint">Recibe tu VC firmado por Attestto</div>
+            <div class="step-title">{{ $t('wallet.idCredStep') }}</div>
+            <div class="step-hint">{{ $t('wallet.idCredStepHint') }}</div>
           </div>
         </div>
         <div class="onboarding-step">
           <span class="step-num">3</span>
           <div>
-            <div class="step-title">Cuentas y pagos</div>
-            <div class="step-hint">Attestto Pay — USD, CRC, EUR</div>
+            <div class="step-title">{{ $t('wallet.payStep') }}</div>
+            <div class="step-hint">{{ $t('wallet.payStepHint') }}</div>
           </div>
         </div>
       </div>
       <q-btn
-        label="Iniciar verificacion"
+        :label="$t('wallet.startVerification')"
         color="primary"
         unelevated
         rounded

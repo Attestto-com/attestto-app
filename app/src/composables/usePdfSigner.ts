@@ -412,7 +412,16 @@ export async function verifySignature(pdfBytes: Uint8Array): Promise<VerifyResul
     signatureValid = false
   }
 
-  const issuerBinding = sig.issuer.startsWith('did:key:z') && pubkey.length === 32
+  // Bind the signing key to the issuer DID (SOC-10). For a did:key issuer the
+  // DID *is* the key: re-encode the verifying key and require it to equal the
+  // issuer (and verificationMethod) DID. This defeats embedding an arbitrary key
+  // in the proof — a mere format check ("starts with did:key:z") does not.
+  const vmDid = proof.verificationMethod.split('#')[0]
+  const issuerBinding =
+    sig.issuer.startsWith('did:key:z') &&
+    pubkey.length === 32 &&
+    crypto.didKeyFromEd25519PublicKey(pubkey) === sig.issuer &&
+    vmDid === sig.issuer
 
   // Document hash integrity: the signed documentHash should match the
   // original PDF content. We can't recompute the original hash from the

@@ -25,6 +25,40 @@ function fromBase64url(str: string): Uint8Array {
   return Uint8Array.from(binStr, (c) => c.charCodeAt(0))
 }
 
+// ── did:key (Ed25519) via base58btc multibase ──────────────────
+
+const BASE58_ALPHABET = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
+
+function base58btcEncode(bytes: Uint8Array): string {
+  let zeros = 0
+  while (zeros < bytes.length && bytes[zeros] === 0) zeros++
+  const digits: number[] = []
+  for (let i = 0; i < bytes.length; i++) {
+    let carry = bytes[i]
+    for (let j = 0; j < digits.length; j++) {
+      carry += digits[j] * 256
+      digits[j] = carry % 58
+      carry = Math.floor(carry / 58)
+    }
+    while (carry > 0) {
+      digits.push(carry % 58)
+      carry = Math.floor(carry / 58)
+    }
+  }
+  let result = '1'.repeat(zeros)
+  for (let i = digits.length - 1; i >= 0; i--) result += BASE58_ALPHABET[digits[i]]
+  return result
+}
+
+export function didKeyFromEd25519PublicKey(publicKey: Uint8Array): string {
+  // Multicodec prefix for Ed25519 public key: 0xED 0x01 (varint-encoded)
+  const prefixed = new Uint8Array(publicKey.length + 2)
+  prefixed[0] = 0xed
+  prefixed[1] = 0x01
+  prefixed.set(publicKey, 2)
+  return `did:key:z${base58btcEncode(prefixed)}`
+}
+
 // ── WebAuthn helpers ───────────────────────────────────────────
 
 function getRpId(): string {
@@ -87,6 +121,7 @@ export async function register(displayName: string): Promise<void> {
   await idbSet(IDB_SIGNING_KEY, privateKey)
   localStorage.setItem(PUBKEY_KEY, toBase64url(publicKey))
   localStorage.setItem(DISPLAY_NAME_KEY, displayName)
+  localStorage.setItem(DID_KEY, didKeyFromEd25519PublicKey(publicKey))
 
   // Request persistent storage to prevent Safari eviction
   if (navigator.storage?.persist) {
@@ -126,6 +161,15 @@ export async function authenticate(): Promise<void> {
 
   sessionPrivateKey = privateKey
   sessionKeySeed = privateKey.slice()
+
+  // Backfill did:key for identities registered before did:key derivation
+  // was added to register(). Idempotent — no-op if DID already present.
+  if (!localStorage.getItem(DID_KEY)) {
+    const pubkey = localStorage.getItem(PUBKEY_KEY)
+    if (pubkey) {
+      localStorage.setItem(DID_KEY, didKeyFromEd25519PublicKey(fromBase64url(pubkey)))
+    }
+  }
 }
 
 export function getPublicKeyBytes(): Uint8Array {

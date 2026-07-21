@@ -1,17 +1,24 @@
 <script setup lang="ts">
 import { ref, onMounted, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useQrScanner } from '@/composables/useQrScanner'
-import { verify as ed25519Verify, fromBase64url } from '@/composables/useCrypto'
+import { verify as ed25519Verify, fromBase64url, didKeyFromEd25519PublicKey } from '@/composables/useCrypto'
 
 const router = useRouter()
 const qr = useQrScanner()
+const { t } = useI18n()
 const videoEl = ref<HTMLVideoElement | null>(null)
 
-type SignatureStatus = 'valid' | 'invalid' | 'unverifiable' | 'none'
+type SignatureStatus = 'valid' | 'self-asserted' | 'invalid' | 'unverifiable' | 'none'
+// Trust level shown on the result card. `self-asserted` = cryptographically
+// sound but signed by a self-generated did:key (no third-party authority);
+// `unverifiable` = issuer DID cannot be resolved to confirm authorship.
+type TrustLevel = 'verified' | 'self-asserted' | 'unverifiable' | 'invalid'
 
 interface VerifyResult {
   valid: boolean
+  trust: TrustLevel
   type: string
   holder: string
   issuer: string
@@ -25,6 +32,33 @@ interface VerifyResult {
 const verifyResult = ref<VerifyResult | null>(null)
 const verifying = ref(false)
 const verifyError = ref('')
+
+// Map signature status (+ lifecycle) to the trust level shown on the card.
+// `verified` (issuer-authenticated) is reserved for when third-party issuer DID
+// resolution lands; today the strongest a signature reaches is `self-asserted`.
+function computeTrust(active: boolean, notRevoked: boolean, sig: SignatureStatus): TrustLevel {
+  if (!active || !notRevoked || sig === 'invalid') return 'invalid'
+  if (sig === 'valid') return 'verified'
+  if (sig === 'self-asserted') return 'self-asserted'
+  return 'unverifiable' // 'unverifiable' | 'none'
+}
+
+// Card presentation per trust level.
+function trustCardClass(tr: TrustLevel): string {
+  return tr === 'verified' ? 'valid' : tr === 'invalid' ? 'invalid' : tr
+}
+function trustIcon(tr: TrustLevel): string {
+  return tr === 'verified' ? 'verified' : tr === 'invalid' ? 'cancel' : 'gpp_maybe'
+}
+function trustColor(tr: TrustLevel): string {
+  return tr === 'verified' ? 'positive' : tr === 'invalid' ? 'negative' : 'warning'
+}
+function trustLabel(tr: TrustLevel): string {
+  if (tr === 'verified') return t('verify.validCredential')
+  if (tr === 'invalid') return t('verify.invalidCredential')
+  if (tr === 'self-asserted') return t('verify.selfAssertedCredential')
+  return t('verify.unverifiableCredential')
+}
 
 onMounted(async () => {
   await nextTick()
@@ -57,19 +91,19 @@ async function processQrData(data: string) {
       // Might be a URL — try fetching
       if (data.startsWith('http')) {
         const res = await fetch(data)
-        if (!res.ok) throw new Error('URL no valida')
+        if (!res.ok) throw new Error(t('verify.invalidUrl'))
         vc = await res.json()
       } else {
-        throw new Error('Formato de QR no reconocido')
+        throw new Error(t('verify.unrecognizedQr'))
       }
     }
 
     // Extract VC fields
     const types = (vc.type as string[]) ?? []
-    const mainType = types.find((t) => t !== 'VerifiableCredential') ?? types[0] ?? 'Desconocido'
-    const issuer = typeof vc.issuer === 'string' ? vc.issuer : (vc.issuer as { name?: string })?.name ?? 'Desconocido'
+    const mainType = types.find((ty) => ty !== 'VerifiableCredential') ?? types[0] ?? t('common.unknown')
+    const issuer = typeof vc.issuer === 'string' ? vc.issuer : (vc.issuer as { name?: string })?.name ?? t('common.unknown')
     const subject = vc.credentialSubject as Record<string, unknown> | undefined
-    const holder = (subject?.id as string) ?? 'Desconocido'
+    const holder = (subject?.id as string) ?? t('common.unknown')
 
     // Check expiration
     const expDate = vc.expirationDate as string | undefined
@@ -100,10 +134,34 @@ async function processQrData(data: string) {
         const pubKeyB64 = proof.publicKey as string | undefined
 
         if (pubKeyB64) {
-          // Public key embedded in proof (self-issued VCs)
+          // Public key embedded in the proof. A valid signature over an embedded
+          // key only proves self-consistency (SOC-10) — it does NOT prove the
+          // CLAIMED issuer signed it. Bind the key to the issuer DID: for a
+          // did:key issuer the DID *is* the key, so re-encode the verifying key
+          // and require it to equal the issuer (and verificationMethod) DID.
           const pubKey = fromBase64url(pubKeyB64)
           const sig = fromBase64url(proofValue)
-          signatureStatus = ed25519Verify(payloadBytes, sig, pubKey) ? 'valid' : 'invalid'
+          if (!ed25519Verify(payloadBytes, sig, pubKey)) {
+            signatureStatus = 'invalid'
+          } else {
+            const issuerDid = typeof vc.issuer === 'string'
+              ? vc.issuer
+              : (vc.issuer as { id?: string } | undefined)?.id
+            const vmDid = vm ? vm.split('#')[0] : undefined
+            if (issuerDid && issuerDid.startsWith('did:key:z')) {
+              const boundToIssuer =
+                didKeyFromEd25519PublicKey(pubKey) === issuerDid && (!vmDid || vmDid === issuerDid)
+              // Bound → self-asserted (sound, but a self-generated DID, not an
+              // authority). Not bound → the claimed did:key issuer's key does
+              // not match the signing key: a forgery.
+              signatureStatus = boundToIssuer ? 'self-asserted' : 'invalid'
+            } else {
+              // did:web / did:sns issuer: resolving that DID is out of scope
+              // here, so we cannot confirm the claimed issuer signed this —
+              // never present it as 'valid'.
+              signatureStatus = 'unverifiable'
+            }
+          }
         } else if (vm && proofValue) {
           // No embedded key — can't resolve DID yet
           signatureStatus = 'unverifiable'
@@ -116,11 +174,19 @@ async function processQrData(data: string) {
     // Check anchor
     const anchorTx = (vc as Record<string, unknown>).anchorTx as string | undefined
 
+    // Derive the trust level shown on the card. Expired/revoked/forged → invalid;
+    // an issuer-authenticated signature → verified; a self-generated did:key →
+    // self-asserted; anything we cannot confirm → unverifiable.
+    const trust = computeTrust(active, notRevoked, signatureStatus)
+
     verifyResult.value = {
-      valid: active && notRevoked && signatureStatus === 'valid',
+      // `valid` means issuer-authenticated. Self-asserted / unverifiable are
+      // surfaced via `trust` so the UI does not overclaim authority.
+      valid: trust === 'verified',
+      trust,
       type: mainType,
       holder,
-      issuer: typeof issuer === 'string' ? issuer : 'Desconocido',
+      issuer: typeof issuer === 'string' ? issuer : t('common.unknown'),
       active: active && notRevoked,
       signatureStatus,
       anchored: !!anchorTx,
@@ -128,7 +194,7 @@ async function processQrData(data: string) {
       raw: vc,
     }
   } catch (e: unknown) {
-    verifyError.value = e instanceof Error ? e.message : 'Error al verificar'
+    verifyError.value = e instanceof Error ? e.message : t('verify.verifyError')
   } finally {
     verifying.value = false
   }
@@ -149,7 +215,7 @@ async function scanAgain() {
   <q-page class="verify-page" padding>
     <header class="verify-header">
       <q-btn flat round icon="arrow_back" color="white" @click="router.back()" />
-      <span class="verify-title">Verificar</span>
+      <span class="verify-title">{{ $t('verify.title') }}</span>
     </header>
 
     <!-- Scanner -->
@@ -161,7 +227,7 @@ async function scanAgain() {
       </div>
       <div v-else-if="!qr.scanning.value" class="scanner-frame">
         <q-icon name="qr_code_scanner" size="64px" color="grey-6" />
-        <p>Escanea el QR de la credencial</p>
+        <p>{{ $t('verify.scanInstruction') }}</p>
       </div>
       <div class="scanner-overlay">
         <div class="scanner-corners" />
@@ -171,66 +237,68 @@ async function scanAgain() {
     <!-- Verifying spinner -->
     <div v-if="verifying" class="verifying">
       <q-spinner-dots size="32px" color="primary" />
-      <p>Verificando credencial...</p>
+      <p>{{ $t('verify.verifying') }}</p>
     </div>
 
     <!-- Error -->
     <div v-if="verifyError" class="error-card">
       <q-icon name="error_outline" size="32px" color="negative" />
       <p>{{ verifyError }}</p>
-      <button class="scan-again-btn" @click="scanAgain">Intentar de nuevo</button>
+      <button class="scan-again-btn" @click="scanAgain">{{ $t('common.retry') }}</button>
     </div>
 
     <!-- Result -->
-    <div v-if="verifyResult" class="result-card" :class="{ valid: verifyResult.valid, invalid: !verifyResult.valid }">
+    <div v-if="verifyResult" class="result-card" :class="trustCardClass(verifyResult.trust)">
       <div class="result-header">
         <q-icon
-          :name="verifyResult.valid ? 'verified' : 'cancel'"
+          :name="trustIcon(verifyResult.trust)"
           size="32px"
-          :color="verifyResult.valid ? 'positive' : 'negative'"
+          :color="trustColor(verifyResult.trust)"
         />
         <span class="result-label">
-          {{ verifyResult.valid ? 'CREDENCIAL VALIDA' : 'CREDENCIAL INVALIDA' }}
+          {{ trustLabel(verifyResult.trust) }}
         </span>
       </div>
 
       <div class="result-fields">
         <div class="field">
-          <span class="field-label">Tipo</span>
+          <span class="field-label">{{ $t('verify.type') }}</span>
           <span class="field-value">{{ verifyResult.type }}</span>
         </div>
         <div class="field">
-          <span class="field-label">Titular</span>
+          <span class="field-label">{{ $t('verify.holder') }}</span>
           <span class="field-value">{{ verifyResult.holder }}</span>
         </div>
         <div class="field">
-          <span class="field-label">Emisor</span>
+          <span class="field-label">{{ $t('verify.issuer') }}</span>
           <span class="field-value">{{ verifyResult.issuer }}</span>
         </div>
         <div class="field">
-          <span class="field-label">Vigente</span>
-          <span class="field-value">{{ verifyResult.active ? 'Si' : 'No' }}</span>
+          <span class="field-label">{{ $t('verify.active') }}</span>
+          <span class="field-value">{{ verifyResult.active ? $t('common.yes') : $t('common.no') }}</span>
         </div>
         <div class="field">
-          <span class="field-label">Firma</span>
+          <span class="field-label">{{ $t('verify.signature') }}</span>
           <span
             class="field-value"
             :style="{
               color: verifyResult.signatureStatus === 'valid' ? 'var(--success)'
                 : verifyResult.signatureStatus === 'invalid' ? 'var(--critical)'
+                : verifyResult.signatureStatus === 'self-asserted' ? 'var(--warning, #f59e0b)'
                 : 'var(--text-muted)'
             }"
           >
             {{
-              verifyResult.signatureStatus === 'valid' ? 'Ed25519 valida'
-              : verifyResult.signatureStatus === 'invalid' ? 'Firma invalida'
-              : verifyResult.signatureStatus === 'unverifiable' ? 'Firma no verificable'
-              : 'Sin firma'
+              verifyResult.signatureStatus === 'valid' ? $t('verify.signatureValid')
+              : verifyResult.signatureStatus === 'invalid' ? $t('verify.signatureInvalid')
+              : verifyResult.signatureStatus === 'self-asserted' ? $t('verify.signatureSelfAsserted')
+              : verifyResult.signatureStatus === 'unverifiable' ? $t('verify.signatureUnverifiable')
+              : $t('verify.signatureNone')
             }}
           </span>
         </div>
         <div class="field">
-          <span class="field-label">Ancla</span>
+          <span class="field-label">{{ $t('verify.anchor') }}</span>
           <span v-if="verifyResult.anchored" class="field-value">
             <a
               :href="`https://explorer.solana.com/tx/${verifyResult.anchorTx}?cluster=devnet`"
@@ -240,12 +308,12 @@ async function scanAgain() {
               Solana
             </a>
           </span>
-          <span v-else class="field-value" style="color: var(--text-muted)">N/A</span>
+          <span v-else class="field-value" style="color: var(--text-muted)">{{ $t('verify.notAvailable') }}</span>
         </div>
       </div>
 
       <button class="scan-again-btn" @click="scanAgain">
-        Escanear otra
+        {{ $t('verify.scanAnother') }}
       </button>
     </div>
   </q-page>
@@ -356,6 +424,11 @@ async function scanAgain() {
 
 .result-card.invalid {
   border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.result-card.self-asserted,
+.result-card.unverifiable {
+  border: 1px solid rgba(245, 158, 11, 0.35);
 }
 
 .result-header {

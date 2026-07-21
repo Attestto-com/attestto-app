@@ -8,10 +8,9 @@ const route = useRoute()
 const router = useRouter()
 
 const tabs = computed(() => [
-  { name: 'home', label: t('nav.home'), icon: 'home' },
-  { name: 'wallet', label: t('nav.wallet'), icon: 'account_balance_wallet' },
-  // documents: hidden until vault document storage is wired
-  { name: 'settings', label: t('nav.more'), icon: 'more_horiz' },
+  { name: 'home', label: t('nav.identity'), icon: 'badge' },
+  { name: 'pagos', label: t('nav.payments'), icon: 'payments' },
+  { name: 'firmar', label: t('nav.sign'), icon: 'draw' },
 ])
 
 const active = computed(() => route.name as string)

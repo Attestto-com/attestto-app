@@ -16,6 +16,8 @@ vi.mock('@/composables/useCrypto', () => ({
     // Verify that signature and pubkey match our mocks
     return sig.every((b, i) => b === mockSignature[i]) && pubkey.every((b, i) => b === mockPublicKey[i])
   },
+  // The mock signing key encodes to mockDid (issuer-binding, SOC-10).
+  didKeyFromEd25519PublicKey: vi.fn(() => mockDid),
 }))
 
 import {
@@ -24,6 +26,7 @@ import {
   verifySignature,
   hasExistingSignature,
 } from '../src/composables/usePdfSigner'
+import * as cryptoModule from '../src/composables/useCrypto'
 
 async function createTestPdf(): Promise<Uint8Array> {
   const doc = await PDFDocument.create()
@@ -125,7 +128,27 @@ describe('PDF Signer', () => {
 
       expect(result).not.toBeNull()
       expect(result!.signatureValid).toBe(true)
+      expect(result!.issuerBinding).toBe(true) // signing key encodes to the issuer DID
+      expect(result!.valid).toBe(true)
       expect(result!.signature.issuer).toBe(mockDid)
+    })
+
+    it('rejects a signature whose signing key is not bound to the issuer DID (SOC-10)', async () => {
+      const signed = await signPdf({ pdfBytes: testPdf, fileName: 'test.pdf' })
+
+      // Simulate a signing key that does NOT encode to the claimed issuer DID
+      // (the forgery: attacker embeds their own key under someone else's issuer).
+      // The signature still verifies over the embedded key, isolating the
+      // issuer-binding check.
+      vi.mocked(cryptoModule.didKeyFromEd25519PublicKey).mockReturnValueOnce(
+        'did:key:z6MkOTHERKEYdoesNotMatchTheClaimedIssuerAtAll00'
+      )
+
+      const result = await verifySignature(signed.pdfBytes)
+      expect(result).not.toBeNull()
+      expect(result!.signatureValid).toBe(true) // signature over the key still checks out…
+      expect(result!.issuerBinding).toBe(false) // …but the key is not bound to the claimed issuer
+      expect(result!.valid).toBe(false)
     })
 
     it('returns null for unsigned PDF', async () => {

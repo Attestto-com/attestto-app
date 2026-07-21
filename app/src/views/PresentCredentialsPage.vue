@@ -50,12 +50,12 @@ function credentialLabel(id: string): string {
   <q-page class="present-page" padding>
     <q-btn flat round icon="arrow_back" color="white" @click="router.back()" class="back-btn" />
 
-    <h2 class="page-title">Compartir credenciales</h2>
+    <h2 class="page-title">{{ $t('present.title') }}</h2>
 
     <!-- Parsing -->
     <div v-if="step === 'parsing'" class="status-card">
       <q-spinner-dots size="32px" color="primary" />
-      <p>Procesando solicitud...</p>
+      <p>{{ $t('present.parsing') }}</p>
     </div>
 
     <!-- Select credentials to share -->
@@ -63,14 +63,14 @@ function credentialLabel(id: string): string {
       <div class="verifier-section">
         <q-icon name="shield" size="24px" color="primary" />
         <div>
-          <div class="verifier-label">Verificador</div>
+          <div class="verifier-label">{{ $t('present.verifierLabel') }}</div>
           <div class="verifier-name">{{ verifierName ?? request.client_id }}</div>
         </div>
       </div>
 
       <!-- Requested credentials -->
       <div v-if="request.dcql_query" class="cred-list">
-        <div class="section-label">Credenciales solicitadas</div>
+        <div class="section-label">{{ $t('present.requestedCreds') }}</div>
 
         <div
           v-for="cq in request.dcql_query.credentials"
@@ -96,8 +96,8 @@ function credentialLabel(id: string): string {
               request.dcql_query.credential_sets.find(cs =>
                 cs.options.some(opt => opt.includes(cq.id))
               )?.required !== false
-                ? 'Requerido'
-                : 'Opcional'
+                ? $t('present.required')
+                : $t('present.optional')
             }}
           </div>
         </div>
@@ -106,14 +106,14 @@ function credentialLabel(id: string): string {
       <!-- Not satisfiable -->
       <div v-if="!canPresent" class="warning-box">
         <q-icon name="warning" size="20px" color="warning" />
-        <span>Tu billetera no contiene todas las credenciales requeridas</span>
+        <span>{{ $t('present.notSatisfiable') }}</span>
       </div>
 
       <div class="action-row">
-        <q-btn flat label="Cancelar" color="grey" @click="router.back()" />
+        <q-btn flat :label="$t('common.cancel')" color="grey" @click="router.back()" />
         <q-btn
           unelevated
-          label="Compartir"
+          :label="$t('present.share')"
           color="primary"
           :disable="!canPresent"
           @click="present()"
@@ -124,21 +124,21 @@ function credentialLabel(id: string): string {
     <!-- Presenting -->
     <div v-else-if="step === 'presenting'" class="status-card">
       <q-spinner-dots size="32px" color="primary" />
-      <p>Enviando presentacion...</p>
+      <p>{{ $t('present.presenting') }}</p>
     </div>
 
     <!-- Success -->
     <div v-else-if="step === 'success'" class="status-card success">
       <q-icon name="check_circle" size="48px" color="positive" />
-      <p>Credenciales compartidas</p>
-      <q-btn unelevated label="Volver" color="primary" @click="router.push({ name: 'home' })" />
+      <p>{{ $t('present.success') }}</p>
+      <q-btn unelevated :label="$t('present.backHome')" color="primary" @click="router.push({ name: 'home' })" />
     </div>
 
     <!-- Error -->
     <div v-else-if="step === 'error'" class="status-card error">
       <q-icon name="error_outline" size="48px" color="negative" />
       <p>{{ error }}</p>
-      <q-btn flat label="Reintentar" color="primary" @click="handleReset()" />
+      <q-btn flat :label="$t('present.retry')" color="primary" @click="handleReset()" />
     </div>
 
     <!-- Idle: QR scanner -->
@@ -151,13 +151,13 @@ function credentialLabel(id: string): string {
         </div>
         <div v-else-if="!qr.scanning.value && !qr.result.value" class="scanner-frame">
           <q-icon name="qr_code_scanner" size="64px" color="grey-6" />
-          <p>Iniciando camara...</p>
+          <p>{{ $t('present.startingCamera') }}</p>
         </div>
         <div class="scanner-overlay">
           <div class="scanner-corners" />
         </div>
       </div>
-      <p class="scanner-hint">Escanea el codigo QR del verificador</p>
+      <p class="scanner-hint">{{ $t('present.scannerHint') }}</p>
     </div>
   </q-page>
 </template>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useVaultStore } from '@/stores/vault'
 import * as crypto from '@/composables/useCrypto'
 import { buildPresentation } from '@attestto/vc-sdk'
@@ -8,6 +9,7 @@ import { buildPresentation } from '@attestto/vc-sdk'
 const route = useRoute()
 const router = useRouter()
 const vault = useVaultStore()
+const { t } = useI18n()
 
 const showQr = ref(false)
 const qrDataUrl = ref<string | null>(null)
@@ -37,7 +39,7 @@ async function generateQr() {
     })
     showQr.value = true
   } catch (e: unknown) {
-    qrError.value = e instanceof Error ? e.message : 'Error al generar QR'
+    qrError.value = e instanceof Error ? e.message : t('credential.qrError')
   }
 }
 
@@ -53,8 +55,8 @@ const issuerName = computed(() => {
 
 const mainType = computed(() => {
   if (!credential.value) return ''
-  const types = credential.value.type.filter((t) => t !== 'VerifiableCredential')
-  return types[0] ?? 'Credential'
+  const types = credential.value.type.filter((ty) => ty !== 'VerifiableCredential')
+  return types[0] ?? t('credential.fallbackType')
 })
 
 const fields = computed(() => {
@@ -78,9 +80,9 @@ const statusColor = computed(() => {
 
 const statusLabel = computed(() => {
   switch (credential.value?.revocationStatus) {
-    case 'valid': return 'Verificada'
-    case 'revoked': return 'Revocada'
-    default: return 'Sin verificar'
+    case 'valid': return t('credential.verified')
+    case 'revoked': return t('credential.revoked')
+    default: return t('credential.unverified')
   }
 })
 </script>
@@ -97,8 +99,8 @@ const statusLabel = computed(() => {
       <div v-if="credential.id?.includes('demo')" class="demo-badge">
         <q-icon name="science" size="14px" />
         <div>
-          <div>Datos de ejemplo — no son reales</div>
-          <div class="demo-install">Instala la app como PWA para crear tu identidad real</div>
+          <div>{{ $t('credential.demoBadge') }}</div>
+          <div class="demo-install">{{ $t('credential.demoInstall') }}</div>
         </div>
       </div>
 
@@ -114,25 +116,25 @@ const statusLabel = computed(() => {
 
       <!-- Issuer -->
       <div class="info-section">
-        <div class="info-label">Emisor</div>
+        <div class="info-label">{{ $t('credential.issuer') }}</div>
         <div class="info-value">{{ issuerName }}</div>
       </div>
 
       <!-- Dates -->
       <div class="info-row">
         <div class="info-section">
-          <div class="info-label">Emitida</div>
+          <div class="info-label">{{ $t('credential.issued') }}</div>
           <div class="info-value">{{ credential.issuanceDate.slice(0, 10) }}</div>
         </div>
         <div v-if="credential.expirationDate" class="info-section">
-          <div class="info-label">Vence</div>
+          <div class="info-label">{{ $t('credential.expires') }}</div>
           <div class="info-value">{{ credential.expirationDate.slice(0, 10) }}</div>
         </div>
       </div>
 
       <!-- Subject fields -->
       <div class="fields-section">
-        <div class="info-label">Datos</div>
+        <div class="info-label">{{ $t('credential.data') }}</div>
         <div class="fields-card">
           <div v-for="field in fields" :key="field.key" class="field-row">
             <span class="field-key">{{ field.key }}</span>
@@ -143,7 +145,7 @@ const statusLabel = computed(() => {
 
       <!-- DID -->
       <div class="info-section">
-        <div class="info-label">DID del titular</div>
+        <div class="info-label">{{ $t('credential.holderDid') }}</div>
         <div class="info-value mono">{{ credential.credentialSubject.id }}</div>
       </div>
 
@@ -153,22 +155,22 @@ const statusLabel = computed(() => {
           v-if="!showQr"
           unelevated
           icon="qr_code_2"
-          label="Mostrar QR"
+          :label="$t('credential.showQr')"
           color="primary"
           :disable="!vault.unlocked"
           @click="generateQr"
         />
         <div v-if="showQr && qrDataUrl" class="qr-display">
-          <img :src="qrDataUrl" alt="QR de credencial" class="qr-image" />
-          <p class="qr-hint">Un verificador puede escanear este codigo</p>
-          <q-btn flat dense label="Ocultar" color="grey" @click="showQr = false" />
+          <img :src="qrDataUrl" :alt="$t('credential.qrAlt')" class="qr-image" />
+          <p class="qr-hint">{{ $t('credential.qrHint') }}</p>
+          <q-btn flat dense :label="$t('credential.hide')" color="grey" @click="showQr = false" />
         </div>
         <p v-if="qrError" class="qr-error">{{ qrError }}</p>
       </div>
     </template>
 
     <div v-else class="not-found">
-      <p>Credencial no encontrada</p>
+      <p>{{ $t('credential.notFound') }}</p>
     </div>
   </q-page>
 </template>

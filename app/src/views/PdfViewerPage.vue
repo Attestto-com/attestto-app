@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount, watch, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useVaultStore } from '@/stores/vault'
 import { signPdf, extractSignature, verifySignature } from '@/composables/usePdfSigner'
 import type { AttesttoPdfSignature, VerifyResult } from '@/composables/usePdfSigner'
@@ -8,6 +9,7 @@ import type { AttesttoPdfSignature, VerifyResult } from '@/composables/usePdfSig
 const route = useRoute()
 const router = useRouter()
 const vault = useVaultStore()
+const { t } = useI18n()
 const docId = route.params.id as string
 
 const canvasEl = ref<HTMLCanvasElement | null>(null)
@@ -55,7 +57,7 @@ async function renderPage(pageNum: number) {
     await page.render({ canvasContext: ctx, viewport }).promise
     currentPage.value = pageNum
   } catch (e: unknown) {
-    error.value = e instanceof Error ? e.message : 'Error al renderizar pagina'
+    error.value = e instanceof Error ? e.message : t('pdf.renderError')
   } finally {
     loading.value = false
   }
@@ -74,7 +76,7 @@ async function openPdf(bytes: Uint8Array) {
     await renderPage(1)
     await checkSignature(bytes)
   } catch (e: unknown) {
-    error.value = e instanceof Error ? e.message : 'Error al abrir PDF'
+    error.value = e instanceof Error ? e.message : t('pdf.openError')
   } finally {
     loading.value = false
   }
@@ -129,7 +131,7 @@ async function handleSign() {
     await openPdf(result.pdfBytes)
     await checkSignature(result.pdfBytes)
   } catch (e: unknown) {
-    error.value = e instanceof Error ? e.message : 'Error al firmar'
+    error.value = e instanceof Error ? e.message : t('pdf.signError')
   } finally {
     signing.value = false
   }
@@ -158,7 +160,7 @@ onBeforeUnmount(() => {
   <q-page class="pdf-page">
     <header class="pdf-header">
       <q-btn flat round icon="arrow_back" color="white" @click="router.back()" />
-      <span class="pdf-title">{{ fileName || 'Documento' }}</span>
+      <span class="pdf-title">{{ fileName || $t('pdf.document') }}</span>
       <q-btn flat round icon="more_vert" color="white" />
     </header>
 
@@ -167,8 +169,8 @@ onBeforeUnmount(() => {
       <!-- Empty state: file picker -->
       <div v-if="!pdfBytes && !loading" class="pdf-placeholder" @click="fileInput?.click()">
         <q-icon name="upload_file" size="64px" color="grey-6" />
-        <p>Seleccionar PDF</p>
-        <p class="hint">o arrastra un archivo aqui</p>
+        <p>{{ $t('pdf.selectPdf') }}</p>
+        <p class="hint">{{ $t('pdf.dragHint') }}</p>
         <input
           ref="fileInput"
           type="file"
@@ -208,7 +210,7 @@ onBeforeUnmount(() => {
     <div v-if="verifyResult" class="sig-status" :class="verifyResult.valid ? 'sig-valid' : 'sig-invalid'">
       <q-icon :name="verifyResult.valid ? 'verified' : 'error_outline'" size="18px" />
       <div class="sig-info">
-        <span class="sig-label">{{ verifyResult.valid ? 'Firma verificada' : 'Firma invalida' }}</span>
+        <span class="sig-label">{{ verifyResult.valid ? $t('pdf.signatureVerified') : $t('pdf.signatureInvalid') }}</span>
         <span class="sig-detail">{{ signatureInfo?.issuerName || signatureInfo?.issuer }}</span>
       </div>
     </div>
@@ -217,7 +219,7 @@ onBeforeUnmount(() => {
     <div class="pdf-actions">
       <button class="action-btn ai-btn" :disabled="!pdfBytes">
         <q-icon name="smart_toy" size="20px" />
-        Explicar
+        {{ $t('pdf.explain') }}
       </button>
       <button
         v-if="!signed"
@@ -227,7 +229,7 @@ onBeforeUnmount(() => {
       >
         <q-spinner-dots v-if="signing" size="20px" color="white" />
         <q-icon v-else name="draw" size="20px" />
-        {{ signing ? 'Firmando...' : 'Firmar' }}
+        {{ signing ? $t('pdf.signing') : $t('pdf.sign') }}
       </button>
       <button
         v-if="signed"
@@ -235,7 +237,7 @@ onBeforeUnmount(() => {
         @click="downloadSigned"
       >
         <q-icon name="download" size="20px" />
-        Descargar
+        {{ $t('pdf.download') }}
       </button>
     </div>
   </q-page>
