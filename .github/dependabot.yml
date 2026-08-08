@@ -1,0 +1,30 @@
+# Grouped Dependabot config.
+#
+# Why grouping: these repos previously had no config at all, so Dependabot
+# opened one PR per alert. The PRs accumulated unmerged and GitHub paused
+# security updates entirely (SOC-94) — alerts kept being reported while no
+# fix PRs were produced. Ungrouped updates are what caused the pause, so
+# re-enabling without grouping would recreate it.
+version: 2
+updates:
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+    open-pull-requests-limit: 5
+    groups:
+      production-dependencies:
+        dependency-type: 'production'
+        update-types: ['minor', 'patch']
+      development-dependencies:
+        dependency-type: 'development'
+      major-updates:
+        update-types: ['major']
+
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+    groups:
+      github-actions:
+        patterns: ['*']
