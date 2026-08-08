@@ -18,6 +18,6 @@
     "pdfjs-dist": "^4.10.38"
   },
   "devDependencies": {
-    "typescript": "^5.8.0"
+    "typescript": "^7.0.2"
   }
 }
