@@ -16,6 +16,6 @@
     "@attestto/module-sdk": "workspace:*"
   },
   "devDependencies": {
-    "typescript": "^5.8.0"
+    "typescript": "^7.0.2"
   }
 }
